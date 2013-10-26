@@ -1,0 +1,94 @@
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+package dz.alkhwarizmix.moqawalati.flex.view
+{
+
+import flash.events.Event;
+
+import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
+
+/**
+ *  <p>
+ *  TODO: ASDOC
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ */
+public class MainControlBarMediator extends MoqawalatiMediator
+	implements IMoqawalatiMediator
+{
+	//--------------------------------------------------------------------------
+	//
+	//  Constants
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * The mediator name
+	 */
+	public static const NAME:String = "MainControlBarMediator";
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Constructor
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 *  Constructor.
+	 */
+	public function MainControlBarMediator(viewComponent:Object = null)
+	{
+		super(NAME, viewComponent);
+		
+		mainControlBar.addEventListener(MainControlBar.OPEN_WINDOW,
+			mainControlBar_openWindowHandler);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Properties
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * TODO: ASDOC Definition of mainControlBar
+	 */
+	public final function get mainControlBar():MainControlBar
+	{
+		return viewComponent as MainControlBar;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Event handlers
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * @private
+	 */
+	private function mainControlBar_openWindowHandler(event:Event):void
+	{
+		log.debug("mainControlBar_openWindowHandler");
+		
+		sendNotification(MoqawalatiConstants.OPEN_WINDOW,
+			{
+				moduleName : "ClientModule"
+			});
+	}
+	
+} // class
+} // package

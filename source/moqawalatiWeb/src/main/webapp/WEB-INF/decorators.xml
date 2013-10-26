@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO:
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ */
+-->
+
+<decorators defaultdir="/">
+	<excludes>
+		<pattern>*.js</pattern>
+		<pattern>*.jpg</pattern>
+		<pattern>*.jpeg</pattern>
+		<pattern>/login.jsp*</pattern>
+		<pattern>/spring_security_login*</pattern>
+	</excludes>
+
+	<decorator name="frames" page="/WEB-INF/jsp/frames.jsp" />
+
+	<decorator name="nolayout" page="/WEB-INF/jsp/nolayout.jsp">
+		<pattern>/login.jsp</pattern>
+		<pattern>/denied.jsp</pattern>
+	</decorator>
+
+	<decorator name="layout" page="/WEB-INF/jsp/layout.jsp">
+		<pattern>*</pattern>
+	</decorator>
+</decorators>

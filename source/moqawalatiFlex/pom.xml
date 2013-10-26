@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO:
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ */
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>dz.alkhwarizmix.moqawalati</groupId>
+		<artifactId>moqawalati</artifactId>
+		<version>1.0.0.1</version>
+	</parent>
+
+	<artifactId>moqawalatiFlex</artifactId>
+	<name>moqawalatiFlex Maven Flex</name>
+	<packaging>swf</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>dz.alkhwarizmix.framework</groupId>
+			<artifactId>AlkhwarizmixFlexFramework</artifactId>
+			<version>1.0.0.1</version>
+			<type>swc</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src/main/flex</sourceDirectory>
+		<testSourceDirectory>src/test/flex</testSourceDirectory>
+
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.flexmojos</groupId>
+				<artifactId>flexmojos-maven-plugin</artifactId>
+
+				<configuration>
+					<sourceFile>MoqawalatiFlex.mxml</sourceFile>
+					<modules>
+						<module>
+							<sourceFile>dz/alkhwarizmix/moqawalati/flex/modules/clientModule/ClientModule.as</sourceFile>
+							<optimize>true</optimize>
+						</module>
+					</modules>
+
+					<includeTestFiles>
+						<includeTestFile>*TestCase.as</includeTestFile>
+					</includeTestFiles>
+					<excludeTestFiles>
+						<exclude>dz/alkhwarizmix/moqawalati/flex/testutils/*</exclude>
+						<exclude>dz/alkhwarizmix/moqawalati/flex/model/MoqawalatiConfigProxyTestCase.as</exclude>
+					</excludeTestFiles>
+
+					<coverageExclusions>
+						<coverageExclusion>**/MoqawalatiFlexTestRunner.mxml</coverageExclusion>
+					</coverageExclusions>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.sonatype.flexmojos</groupId>
+					<artifactId>flexmojos-maven-plugin</artifactId>
+					<extensions>true</extensions>
+					<executions>
+						<execution>
+							<id>generate-html-wrapper</id>
+							<phase>generate-resources</phase>
+							<goals>
+								<goal>wrapper</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

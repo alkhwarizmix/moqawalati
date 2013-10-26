@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO: ASDOC
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ */
+-->
+
+<mx:ApplicationControlBar
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:flex="dz.alkhwarizmix.moqawalati.flex.*"
+	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
+	creationComplete="this_creationCompleteHandler(event)"
+	>
+	
+	<fx:Declarations>
+		<!-- Placer ici les éléments non visuels (services et objets de valeur, par exemple). -->
+	</fx:Declarations>
+	
+	<fx:Script>
+	<![CDATA[
+		import mx.events.FlexEvent;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Constants
+		//
+		//--------------------------------------------------------------------------
+		
+		// EVENTS
+		public static const OPEN_WINDOW:String = "MainControlBar_open_window";
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Methods
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * send the named event to parents until mediator eventualy
+		 */
+		protected function sendEvent(eventName:String):void
+		{
+			dispatchEvent(new Event(eventName, true));
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Event handlers
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * @private
+		 */
+		private function button1_clickHandler(event:MouseEvent):void
+		{
+			sendEvent(OPEN_WINDOW);
+		}
+		
+		/**
+		 * @private
+		 */
+		private function this_creationCompleteHandler(event:FlexEvent):void
+		{
+			// NOOP
+		}
+		
+	]]>
+	</fx:Script>
+	
+	<controls:MoqawalatiButton id="button1"
+		label="Add Window"
+		click="button1_clickHandler(event)"/>
+	
+	<mx:VRule height="35"/>
+	
+	<!--
+	<controls:BMButton label="Cascade" click="mdiCanvas.windowManager.cascade()"/>
+	
+	<controls:BMButton
+	label="Tile"
+	click="mdiCanvas.windowManager.tile(false, Number(tileGap.text))"/>
+	
+	<controls:BMButton
+	label="Tile + Fill Space"
+	click="mdiCanvas.windowManager.tile(true, Number(tileGap.text))"/>
+	-->
+	
+	<controls:MoqawalatiLabel text="Tile Gap"/>
+	<controls:MoqawalatiTextInput id="tileGap" text="10" width="30" textAlign="center"/>
+	<mx:VRule height="35"/>
+	<controls:MoqawalatiCheckBox id="confirmCloseCb" label="Confirm window close"/>
+	<mx:VRule height="35" />
+	
+	<!--
+	<mx:ComboBox id="effectsListCb" prompt="- Effects -" change="changeEffects()" />
+	<mx:ComboBox id="stylesListCb" prompt="- Styles -" change="changeStyle(event)" />
+	-->
+</mx:ApplicationControlBar>

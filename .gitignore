@@ -1,0 +1,7 @@
+source/moqawalatiFlex/bin-debug/**
+source/moqawalatiFlex/target/**
+source/moqawalatiFlex/libs/*.swc
+source/moqawalatiWeb/target/**
+source/moqawalatiWeb/.classpath
+source/moqawalatiWeb/.project
+source/moqawalatiWeb/.settings/org.eclipse.wst.common.component

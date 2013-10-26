@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO:
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٢٤ ذو القعدة ١٤٣٤ (September 29, 2013)
+ */
+-->
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+
+	<appender name="reactorRollFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/moqawalati.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %-5p: %c{1}::%m%n" />
+		</layout>
+	</appender>
+
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss-SSS} %-5p: %c{1}::%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Use this for test if needed -->
+	<logger name="org.hibernate.SQL">
+		<level value="debug" />
+	</logger>
+	<logger name="org.hibernate.type">
+		<level value="debug" />
+	</logger>
+	<!-- -->
+
+	<logger name="dz.alkhwarizmix">
+		<level value="trace" />
+	</logger>
+
+
+	<!-- Use this for test if needed -->
+	<logger name="org.springframework.web">
+		<level value="debug" />
+	</logger>
+	<!-- -->
+
+	<root>
+		<priority value="info" />
+		<appender-ref ref="reactorRollFileAppender" />
+
+		<!-- For debug purpose only - -> <appender-ref ref="consoleAppender"/> 
+			<!- - -->
+	</root>
+
+</log4j:configuration>
