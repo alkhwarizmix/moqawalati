@@ -35,6 +35,7 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 	//
 	//--------------------------------------------------------------------------
 	
+	[Before]
 	override public function setUp():void
 	{
 		super.setUp();
@@ -44,6 +45,7 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 		moqawalatiConfigProxy.setData(configDico);
 	}
 	
+	[After]
 	override public function tearDown():void
 	{
 		super.tearDown();
@@ -56,7 +58,7 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 	
 	private function get moqawalatiConfigProxy():MoqawalatiConfigProxy
 	{
-		return classInstance as MoqawalatiConfigProxy;
+		return classInstanceUnderTest as MoqawalatiConfigProxy;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -68,10 +70,10 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 	private function getAppParameters():Object
 	{
 		return {
-			appURL : "http://localhost:8080/bin-debug/MoqawalatiFlex.swf"
+			appURL : "http://localhost:8080/moqawalati/MoqawalatiFlex.swf"
 		}
 	}
-
+	
 	//--------------------------------------------------------------------------
 	//
 	//  TESTS
@@ -88,14 +90,14 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 	public function test01_swfURL():void
 	{
 		assertNotNull(moqawalatiConfigProxy.appURL);
-		assertEquals(50, moqawalatiConfigProxy.appURL.length);
+		assertEquals(51, moqawalatiConfigProxy.appURL.length);
 	}
 	
 	[Test]
 	public function test02_swfURLPath():void
 	{
 		assertNotNull(moqawalatiConfigProxy.appURLPath);
-		assertEquals(50 - 18, moqawalatiConfigProxy.appURLPath.length);
+		assertEquals(51 - 18, moqawalatiConfigProxy.appURLPath.length);
 	}
 	
 } // class

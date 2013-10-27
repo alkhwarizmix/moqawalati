@@ -39,7 +39,7 @@ public class MoqawalatiUITestCase extends MoqawalatiTestCase
 	
 	private function get displayObjectUnderTest():DisplayObject
 	{
-		return classInstance as DisplayObject;
+		return classInstanceUnderTest as DisplayObject;
 	}
 	
 	[Before(async, ui)]

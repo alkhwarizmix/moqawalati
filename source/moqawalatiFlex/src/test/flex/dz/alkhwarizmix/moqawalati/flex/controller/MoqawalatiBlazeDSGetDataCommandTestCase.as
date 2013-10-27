@@ -12,7 +12,9 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
-import flexunit.framework.TestCase;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+
+import org.flexunit.asserts.assertNotNull;
 
 /**
  *  <p>
@@ -22,7 +24,7 @@ import flexunit.framework.TestCase;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ٢٣ ذو القعدة ١٤٣٤ (September 28, 2013)
  */
-public class MoqawalatiBlazeDSGetDataCommandTestCase extends TestCase
+public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -30,18 +32,30 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends TestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	private var classUnderTest:MoqawalatiBlazeDSGetDataCommand = null;
-	
+	[Before]
 	override public function setUp():void
 	{
+		registerMoqawalatiConfigProxy();
+		
 		super.setUp();
 	}
 	
+	[After]
 	override public function tearDown():void
 	{
-		classUnderTest = null;
-		
 		super.tearDown();
+		
+		removeMoqawalatiConfigProxy();
+	}
+	
+	override protected function get classUnderTest():Class
+	{
+		return MoqawalatiBlazeDSGetDataCommand;
+	}
+	
+	private function get moqawalatiBlazeDSGetDataCommand():MoqawalatiBlazeDSGetDataCommand
+	{
+		return classInstanceUnderTest as MoqawalatiBlazeDSGetDataCommand;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -51,11 +65,9 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends TestCase
 	//--------------------------------------------------------------------------
 	
 	[Test]
-	public function test01_constructor():void
+	public function test00_constructor():void
 	{
-		// classUnderTest = new MoqawalatiBlazeDSGetDataCommand();
-		// assertNotNull(classUnderTest);
-		assertTrue(true);
+		assertNotNull(moqawalatiBlazeDSGetDataCommand);
 	}
 	
 } // class

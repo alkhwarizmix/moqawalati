@@ -15,6 +15,7 @@ package dz.alkhwarizmix.moqawalati.flex.view
 import flash.system.System;
 
 import mx.events.ModuleEvent;
+import mx.modules.IModule;
 
 import spark.modules.ModuleLoader;
 
@@ -22,6 +23,7 @@ import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDICanvas;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDIWindow;
 
@@ -166,7 +168,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	 */
 	private function getModuleRelativeURL(notifBody:Object):String
 	{
-		var mavenBuild:Boolean = true;
+		var mavenBuild:Boolean = false;
 		var result:String = !mavenBuild
 			? "dz/alkhwarizmix/moqawalati/flex/modules/" + notifBody.moduleName
 			: "moqawalatiFlex-1.0.0.1-clientmodule";
@@ -199,12 +201,12 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		
 		var win:MoqawalatiMDIWindow = event.window as MoqawalatiMDIWindow;
 		var moduleLoader:ModuleLoader = win.getChildAt(0) as ModuleLoader;
-		// var module:IModule = moduleLoader.child as IModule;
-		// module.facadeShutdown();
+		var module:IMoqawalatiModule = moduleLoader.child as IMoqawalatiModule;
+		module.facadeShutdown();
 		win.removeChild(moduleLoader);
 		mdiCanvas.windowManager.remove(win);
 		
-		// module = null;
+		module = null;
 		moduleLoader = null;
 		win = null;
 		
