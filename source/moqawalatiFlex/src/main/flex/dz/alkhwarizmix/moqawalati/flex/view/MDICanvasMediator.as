@@ -15,7 +15,6 @@ package dz.alkhwarizmix.moqawalati.flex.view
 import flash.system.System;
 
 import mx.events.ModuleEvent;
-import mx.modules.IModule;
 
 import spark.modules.ModuleLoader;
 
@@ -146,7 +145,6 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		mdiCanvas.windowManager.add(win);
 		win.addEventListener(MDIWindowEvent.CLOSE,
 			win_closeHandler);
-		notifBody.moduleName = "clientModule/ClientModule";
 		var moduleLoader:ModuleLoader = new ModuleLoader();
 		moduleLoader.percentWidth = 100;
 		moduleLoader.percentHeight = 100;
@@ -168,7 +166,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	 */
 	private function getModuleRelativeURL(notifBody:Object):String
 	{
-		var mavenBuild:Boolean = false;
+		var mavenBuild:Boolean = true;
 		var result:String = !mavenBuild
 			? "dz/alkhwarizmix/moqawalati/flex/modules/" + notifBody.moduleName
 			: "moqawalatiFlex-1.0.0.1-clientmodule";

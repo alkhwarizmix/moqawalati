@@ -21,10 +21,12 @@ import spark.skins.spark.DataGridSkin;
 import spark.skins.spark.ScrollerSkin;
 
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediator;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvas;
 
 import org.puremvc.as3.multicore.interfaces.INotification;
 
@@ -53,7 +55,7 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 	 */
 	override protected function execute_try(notif:INotification):void	
 	{
-		var app:MoqawalatiFlex = notif.getBody() as MoqawalatiFlex;
+		var app:IMoqawalatiApplication = notif.getBody() as IMoqawalatiApplication;
 		
 		// REGISTER NEEDED CLASSES
 		registerNeededClasses();
@@ -77,12 +79,13 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 	/**
 	 * TODO: ASDOC Definition of registerMediators
 	 */
-	private function registerMediators(app:MoqawalatiFlex):void
+	private function registerMediators(app:IMoqawalatiApplication):void
 	{
+		var mainCanvas:MainCanvas = app.mainCanvas as MainCanvas;
 		facade.registerMediator(new MainControlBarMediator(
-			app.mainCanvas.mainControlBar));
+			mainCanvas.mainControlBar));
 		facade.registerMediator(new MDICanvasMediator(
-			app.mainCanvas.mdiCanvas));
+			mainCanvas.mdiCanvas));
 	}
 	
 	/**
@@ -101,7 +104,7 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 	/**
 	 * TODO: ASDOC Definition of registerProxies
 	 */
-	private function registerProxies(app:MoqawalatiFlex):void
+	private function registerProxies(app:IMoqawalatiApplication):void
 	{
 		facade.registerProxy(new MoqawalatiConfigProxy(
 			getConfigDico(app.parameters)));

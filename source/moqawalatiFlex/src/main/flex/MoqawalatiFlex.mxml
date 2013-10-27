@@ -27,6 +27,7 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
+	implements="dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication"
 	minWidth="955" minHeight="600"
 	preinitialize="this_preinitializeHandler(event)"
 	addedToStage="this_addedToStageHandler(event)"
@@ -42,6 +43,7 @@
 		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 		import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 		import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacade;
+		import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvas;
 		
 		//--------------------------------------------------------------------------
 		//
@@ -54,6 +56,17 @@
 		 */
 		private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 			getLogger(MoqawalatiFlex);
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Properties
+		//
+		//--------------------------------------------------------------------------
+		
+		public function get mainCanvas():MoqawalatiCanvas
+		{
+			return mainCanvasInternal;
+		}
 		
 		//--------------------------------------------------------------------------
 		//
@@ -89,7 +102,7 @@
 	]]>
 	</fx:Script>
 	
-	<containers:MainCanvas id="mainCanvas"
+	<containers:MainCanvas id="mainCanvasInternal"
 		width="100%" height="100%"/>
 	
 </s:Application>

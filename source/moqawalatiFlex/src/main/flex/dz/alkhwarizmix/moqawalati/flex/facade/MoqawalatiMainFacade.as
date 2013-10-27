@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.facade
 
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 
 /**
  *  <p>
@@ -85,7 +86,7 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 * 
 	 * @param app a reference to the application component 
 	 */  
-	public function startup(app:MoqawalatiFlex):void
+	public function startup(app:IMoqawalatiApplication):void
 	{
 		sendNotification(MoqawalatiConstants.STARTUP, app);
 	}
