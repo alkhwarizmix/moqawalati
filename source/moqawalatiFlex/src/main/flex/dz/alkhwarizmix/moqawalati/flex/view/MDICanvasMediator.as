@@ -150,6 +150,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		moduleLoader.percentHeight = 100;
 		win.addChild(moduleLoader);
 		moduleLoader.addEventListener(ModuleEvent.ERROR, moduleLoader_errorHandler);
+		notifBody.moduleName = "clientModule/ClientModule";
 		moduleLoader.loadModule(getModuleAbsoluteURL(notifBody));
 	}
 	
@@ -166,7 +167,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	 */
 	private function getModuleRelativeURL(notifBody:Object):String
 	{
-		var mavenBuild:Boolean = true;
+		var mavenBuild:Boolean = false;
 		var result:String = !mavenBuild
 			? "dz/alkhwarizmix/moqawalati/flex/modules/" + notifBody.moduleName
 			: "moqawalatiFlex-1.0.0.1-clientmodule";
