@@ -167,7 +167,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	 */
 	private function getModuleRelativeURL(notifBody:Object):String
 	{
-		var mavenBuild:Boolean = false;
+		var mavenBuild:Boolean = true;
 		var result:String = !mavenBuild
 			? "dz/alkhwarizmix/moqawalati/flex/modules/" + notifBody.moduleName
 			: "moqawalatiFlex-1.0.0.1-clientmodule";
