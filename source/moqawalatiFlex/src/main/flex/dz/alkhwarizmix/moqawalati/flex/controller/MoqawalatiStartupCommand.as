@@ -21,6 +21,7 @@ import spark.skins.spark.DataGridSkin;
 import spark.skins.spark.ScrollerSkin;
 
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
@@ -99,6 +100,8 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 			DataGridSkin);
 		registerClassAlias("spark.skins.spark.ScrollerSkin",
 			ScrollerSkin);
+		registerClassAlias("dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO",
+			ClientVO);
 	}
 	
 	/**

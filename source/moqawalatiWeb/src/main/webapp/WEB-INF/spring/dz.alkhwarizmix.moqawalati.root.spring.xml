@@ -80,8 +80,7 @@
 	<bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="packagesToScan">
 			<list>
-				<value>dz.alkhwarizmix.moqawalati.model.vo</value>
-				<value>dz.alkhwarizmix.moqawalati.java.modules.client.model.vo</value>
+				<value>dz.alkhwarizmix.moqawalati.java.dtos</value>
 			</list>
 		</property>
 		<property name="marshallerProperties">

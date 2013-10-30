@@ -15,7 +15,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.clientModule.model
 import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxy;
-import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.model.vo.ClientVO;
+import dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModuleConstants;
 
 /**

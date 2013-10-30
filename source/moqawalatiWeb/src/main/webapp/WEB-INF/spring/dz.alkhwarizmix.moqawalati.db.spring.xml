@@ -57,8 +57,7 @@
 		</property>
 		<property name="packagesToScan">
 			<list>
-				<value>dz.alkhwarizmix.moqawalati.model.vo</value>
-				<value>dz.alkhwarizmix.moqawalati.java.modules.client.model.vo</value>
+				<value>dz.alkhwarizmix.moqawalati.java.dtos</value>
 			</list>
 		</property>
 		<property name="entityInterceptor" ref="entityInterceptor" />

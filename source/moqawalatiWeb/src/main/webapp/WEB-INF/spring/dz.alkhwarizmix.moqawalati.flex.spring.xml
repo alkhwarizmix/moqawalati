@@ -27,5 +27,5 @@
 	>
 <beans>
 	<bean id="clientBean"
-		class="dz.alkhwarizmix.moqawalati.services.ClientService" />
+		class="dz.alkhwarizmix.moqawalati.java.services.ClientService" />
 </beans>
