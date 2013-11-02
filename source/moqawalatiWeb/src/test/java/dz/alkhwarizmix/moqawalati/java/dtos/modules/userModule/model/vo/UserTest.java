@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.modules.client.model.vo;
+package dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,18 +18,16 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
-
 /**
  * <p>
  * TODO: Javadoc
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٨ ذو الحجة ١٤٣٤ (October 12, 2013)
+ * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class ClientTest {
+public class UserTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -38,7 +36,7 @@ public class ClientTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private Client utClient;
+	private User utUser;
 
 	// --------------------------------------------------------------------------
 	//
@@ -47,10 +45,10 @@ public class ClientTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_set_then_get_ClientId() {
-		String value = "ClientTest";
-		utClient.setClientId(value);
-		assertEquals(value, utClient.getClientId());
+	public void test01_set_then_get_UserId() {
+		String value = "UserTest";
+		utUser.setUserId(value);
+		assertEquals(value, utUser.getUserId());
 	}
 
 } // Class

@@ -11,17 +11,63 @@
 
 package dz.alkhwarizmix.moqawalati.java.interfaces;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.security.access.annotation.Secured;
+
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
+import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 
 /**
- *  <p>
- *  TODO: Javadoc
- *  </p>
+ * <p>
+ * TODO: Javadoc
+ * </p>
  * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ * @author فارس بلحواس (Fares Belhaouas)
+ * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public interface IUserService extends UserDetailsService
-{
-	
+// extends UserDetailsService
+public interface IUserService extends IAlKhwarizmixService {
+	/**
+	 */
+	public void addUser(User user) throws MoqawalatiException;
+
+	/**
+	 */
+	public String addUser(String userXml, String creatorId)
+			throws MoqawalatiException;
+
+	/**
+	 */
+	public User getUser(User user) throws MoqawalatiException;
+
+	/**
+	 */
+	public String getUserAsXML(User user) throws MoqawalatiException;
+
+	/**
+	 */
+	public String getUserAsXML(String partialXml) throws MoqawalatiException;
+
+	/**
+	 */
+	public User updateUser(User user) throws MoqawalatiException;
+
+	/**
+	 */
+	public String updateUser(String userXml, String updaterId)
+			throws MoqawalatiException;
+
+	/**
+	 */
+	@Secured("ROLE_TELLER")
+	public String getUserListAsXML(DetachedCriteria criteria)
+			throws MoqawalatiException;
+
+	/**
+	 */
+	public String userListToXML(List<User> userList);
+
 } // Class

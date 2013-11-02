@@ -23,7 +23,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 
 /**
  * <p>
@@ -31,10 +31,10 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٨ ذو الحجة ١٤٣٤ (October 12, 2013)
+ * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class ClientServiceTest {
+public class UserServiceTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -43,7 +43,7 @@ public class ClientServiceTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private ClientService utClientService;
+	private UserService utUserService;
 
 	@Mock
 	private MoqawalatiDAO mockMoqawalatiDAO;
@@ -55,9 +55,9 @@ public class ClientServiceTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_addClient_calls_dao_saveOrUpdate() throws Exception {
-		utClientService.setMoqawalatiDAO(mockMoqawalatiDAO);
-		utClientService.addClient(new Client());
+	public void test01_addUser_calls_dao_saveOrUpdate() throws Exception {
+		utUserService.setMoqawalatiDAO(mockMoqawalatiDAO);
+		utUserService.addUser(new User());
 		verify(mockMoqawalatiDAO, times(1)).saveOrUpdate(
 				any(AlKhwarizmixDomainObject.class));
 	}

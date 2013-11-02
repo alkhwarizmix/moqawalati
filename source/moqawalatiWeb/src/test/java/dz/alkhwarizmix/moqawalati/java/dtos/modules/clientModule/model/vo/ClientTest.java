@@ -9,21 +9,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.services;
+package dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 
 /**
  * <p>
@@ -34,7 +27,7 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client
  * @since ٠٨ ذو الحجة ١٤٣٤ (October 12, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class ClientServiceTest {
+public class ClientTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -43,10 +36,7 @@ public class ClientServiceTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private ClientService utClientService;
-
-	@Mock
-	private MoqawalatiDAO mockMoqawalatiDAO;
+	private Client utClient;
 
 	// --------------------------------------------------------------------------
 	//
@@ -55,11 +45,10 @@ public class ClientServiceTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_addClient_calls_dao_saveOrUpdate() throws Exception {
-		utClientService.setMoqawalatiDAO(mockMoqawalatiDAO);
-		utClientService.addClient(new Client());
-		verify(mockMoqawalatiDAO, times(1)).saveOrUpdate(
-				any(AlKhwarizmixDomainObject.class));
+	public void test01_set_then_get_ClientId() {
+		String value = "ClientTest";
+		utClient.setClientId(value);
+		assertEquals(value, utClient.getClientId());
 	}
 
 } // Class

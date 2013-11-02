@@ -56,6 +56,14 @@ public class ClientGetListCommand extends MoqawalatiBlazeDSGetDataCommand
 	/**
 	 *  @inheritDoc
 	 */
+	override public function get operationName():String
+	{
+		return "getClientList";		
+	}
+	
+	/**
+	 *  @inheritDoc
+	 */
 	override public function get proxyName():String
 	{
 		return ClientProxy.NAME;

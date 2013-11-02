@@ -32,7 +32,7 @@
 		>
 		<containers:MainControlBar id="mainControlBar"
 			verticalAlign="middle"
-			width="100%" height="50"/>
+			width="100%"/>
 		
 		<containers:MoqawalatiMDICanvas id="mdiCanvas"
 			backgroundColor="#FFFFFF" backgroundAlpha="0"

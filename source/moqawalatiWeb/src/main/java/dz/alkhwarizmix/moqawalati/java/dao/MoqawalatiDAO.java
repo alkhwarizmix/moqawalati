@@ -12,7 +12,6 @@
 package dz.alkhwarizmix.moqawalati.java.dao;
 
 import org.hibernate.Criteria;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +27,7 @@ import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 
 /**
  * <p>
@@ -89,9 +89,9 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		getLogger().trace("saveOrUpdate({})", object);
 
 		try {
-			getObjectAsClient(object).setupAddress();
-			getHibernateTemplate().saveOrUpdate(
-					getObjectAsClient(object).getAddress());
+			// getObjectAsClient(object).setupAddress();
+			// getHibernateTemplate().saveOrUpdate(
+			//		getObjectAsClient(object).getAddress());
 			getHibernateTemplate().saveOrUpdate(object);
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
@@ -123,6 +123,24 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 					.getCurrentSession().createCriteria(Client.class);
 			criteria.add(Restrictions.eq("Client.CLIENTID", clientId));
 			return (Client) criteria.uniqueResult();
+		} catch (DataAccessException e) {
+			MoqawalatiException ex = new MoqawalatiException(
+					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
+			throw ex;
+		}
+	}
+
+	/**
+	 */
+	public User getUser(User user) throws MoqawalatiException {
+		getLogger().debug("getUser()");
+
+		try {
+			String userId = "";// user.getClientId();
+			Criteria criteria = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession().createCriteria(User.class);
+			criteria.add(Restrictions.eq("User.USERID", userId));
+			return (User) criteria.uniqueResult();
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!--
 ////////////////////////////////////////////////////////////////////////////////
@@ -14,20 +14,17 @@
 --><!---
 /**
  *  <p>
- *  TODO:
+ *  TODO: ASDOC
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٤ ذو القعدة ١٤٣٤ (September 29, 2013)
+ *  @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 -->
 
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
-	"http://www.springframework.org/dtd/spring-beans.dtd"
+<components:MoqawalatiDataListCanvas
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:components="dz.alkhwarizmix.moqawalati.flex.view.components.*"
 	>
-<beans>
-	<bean id="clientBean"
-		class="dz.alkhwarizmix.moqawalati.java.services.ClientService" />
-	<bean id="userBean"
-		class="dz.alkhwarizmix.moqawalati.java.services.UserService" />
-</beans>
+</components:MoqawalatiDataListCanvas>
