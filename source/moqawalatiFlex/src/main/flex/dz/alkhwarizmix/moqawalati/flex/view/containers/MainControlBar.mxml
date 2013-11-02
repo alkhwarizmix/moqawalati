@@ -32,7 +32,7 @@
 	>
 	
 	<fx:Declarations>
-		<fx:XML id="menuList" source="/assets/xml/application-mainmenu.xml"/>
+		<fx:XML id="menuList" source="../../../../../../../resources/assets/xml/application-mainmenu.xml"/>
 	</fx:Declarations>
 	
 	<fx:Script>
