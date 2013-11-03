@@ -36,7 +36,7 @@ Setup
 * export PATH=$M2:$PATH
 * export CATALINA_HOME=~/Developer/tools/tomcat
 
-MVN Build
+Maven Build
 
 * cd ~/Developer/git/alkhwarizmix/frameworks/source/
 * mvn -f alkhwarizmix-common.pom.xml clean install
