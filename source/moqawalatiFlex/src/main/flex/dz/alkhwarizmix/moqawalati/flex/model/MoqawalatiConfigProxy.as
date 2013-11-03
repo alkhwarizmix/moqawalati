@@ -132,6 +132,17 @@ public class MoqawalatiConfigProxy extends MoqawalatiProxy
 		return result;
 	}
 	
+	//----------------------------------
+	//  mavenBuild
+	//----------------------------------
+	
+	public function get flashBuilderBuild():Boolean
+	{
+		if (appParameters["flashBuilderBuild"] == null)
+			appParameters["flashBuilderBuild"] = "false";
+		return (appParameters["flashBuilderBuild"] == "true");
+	}
+	
 	//--------------------------------------------------------------------------
 	//
 	//  Overriden methods

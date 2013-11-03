@@ -18,6 +18,7 @@ import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 
 import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
@@ -70,7 +71,8 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 	private function getAppParameters():Object
 	{
 		return {
-			appURL : "http://localhost:8080/moqawalati/MoqawalatiFlex.swf"
+			appURL : "http://localhost:8080/moqawalati/MoqawalatiFlex.swf",
+			flashBuilderBuild : "true"
 		}
 	}
 	
@@ -98,6 +100,13 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 	{
 		assertNotNull(moqawalatiConfigProxy.appURLPath);
 		assertEquals(51 - 18, moqawalatiConfigProxy.appURLPath.length);
+	}
+	
+	[Test]
+	public function test03_flashBuilderBuild():void
+	{
+		assertNotNull(moqawalatiConfigProxy.flashBuilderBuild);
+		assertTrue(moqawalatiConfigProxy.flashBuilderBuild);
 	}
 	
 } // class

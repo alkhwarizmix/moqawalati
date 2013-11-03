@@ -32,12 +32,14 @@
 	>
 	
 	<fx:Declarations>
-		<!-- Placer ici les éléments non visuels (services et objets de valeur, par exemple). -->
+		<fx:XML id="menuList" source="../../../../../../../resources/assets/xml/application-mainmenu.xml"/>
 	</fx:Declarations>
 	
 	<fx:Script>
 	<![CDATA[
 		import mx.events.FlexEvent;
+		import mx.events.MenuEvent;
+		import mx.events.PropertyChangeEvent;
 		
 		//--------------------------------------------------------------------------
 		//
@@ -57,9 +59,9 @@
 		/**
 		 * send the named event to parents until mediator eventualy
 		 */
-		protected function sendEvent(eventName:String):void
+		protected function sendEvent(eventName:String, data:Object):void
 		{
-			dispatchEvent(new Event(eventName, true));
+			dispatchEvent(new PropertyChangeEvent(eventName, true, false, null, data));
 		}
 		
 		//--------------------------------------------------------------------------
@@ -71,48 +73,27 @@
 		/**
 		 * @private
 		 */
-		private function button1_clickHandler(event:MouseEvent):void
-		{
-			sendEvent(OPEN_WINDOW);
-		}
-		
-		/**
-		 * @private
-		 */
 		private function this_creationCompleteHandler(event:FlexEvent):void
 		{
 			// NOOP
 		}
 		
+		/**
+		 * @private
+		 */
+		private function menuBar_itemClickHandler(event:MenuEvent):void
+		{
+			sendEvent(OPEN_WINDOW, XML(event.item).@value[0].toString());
+		}
+		
 	]]>
 	</fx:Script>
 	
-	<controls:MoqawalatiButton id="button1"
-		label="Add Window"
-		click="button1_clickHandler(event)"/>
+	<mx:MenuBar id="menuBar"
+		cornerRadius="10"
+		labelField="@label"
+		dataProvider="{menuList}"
+		showRoot="false"
+		itemClick="menuBar_itemClickHandler(event)"/>
 	
-	<mx:VRule height="35"/>
-	
-	<!--
-	<controls:BMButton label="Cascade" click="mdiCanvas.windowManager.cascade()"/>
-	
-	<controls:BMButton
-	label="Tile"
-	click="mdiCanvas.windowManager.tile(false, Number(tileGap.text))"/>
-	
-	<controls:BMButton
-	label="Tile + Fill Space"
-	click="mdiCanvas.windowManager.tile(true, Number(tileGap.text))"/>
-	-->
-	
-	<controls:MoqawalatiLabel text="Tile Gap"/>
-	<controls:MoqawalatiTextInput id="tileGap" text="10" width="30" textAlign="center"/>
-	<mx:VRule height="35"/>
-	<controls:MoqawalatiCheckBox id="confirmCloseCb" label="Confirm window close"/>
-	<mx:VRule height="35" />
-	
-	<!--
-	<mx:ComboBox id="effectsListCb" prompt="- Effects -" change="changeEffects()" />
-	<mx:ComboBox id="stylesListCb" prompt="- Styles -" change="changeStyle(event)" />
-	-->
 </mx:ApplicationControlBar>

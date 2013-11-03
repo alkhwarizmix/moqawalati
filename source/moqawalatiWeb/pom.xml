@@ -440,7 +440,7 @@
 				<artifactId>maven-jaxb2-plugin</artifactId>
 				<version>0.7.3</version>
 				<configuration>
-					<generatePackage>dz.alkhwarizmix.moqawalati</generatePackage>
+					<generatePackage>dz.alkhwarizmix.moqawalati.java</generatePackage>
 				</configuration>
 				<!-- <executions> <execution> <goals> <goal>generate</goal> </goals> 
 					</execution> </executions> -->

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu>
+	<menuitem label="File">
+		<menuitem label="User" value="User" />
+		<menuitem label="Client" value="Client" />
+	</menuitem>
+
+	<menuitem label="Contacts">
+		<menuitem label="Contact 1" value="" />
+		<menuitem label="Contact 2" value="" />
+	</menuitem>
+
+	<menuitem label="Options">
+		<menuitem label="Preferences" value="" />
+	</menuitem>
+</menu>

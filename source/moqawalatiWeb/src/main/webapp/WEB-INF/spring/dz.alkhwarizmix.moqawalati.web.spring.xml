@@ -50,7 +50,7 @@
 		</property>
 	</bean>
 	<bean id="moqawalatiInterceptor"
-		class="dz.alkhwarizmix.moqawalati.webServices.MoqawalatiInterceptor" />
+		class="dz.alkhwarizmix.moqawalati.java.webServices.MoqawalatiInterceptor" />
 
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
