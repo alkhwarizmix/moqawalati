@@ -6,11 +6,11 @@
 	</menuitem>
 
 	<menuitem label="Contacts">
-		<menuitem label="Contact 1" value="contact1" />
-		<menuitem label="Contact 2" value="contact2" />
+		<menuitem label="Contact 1" value="" />
+		<menuitem label="Contact 2" value="" />
 	</menuitem>
 
 	<menuitem label="Options">
-		<menuitem label="Preferences" value="Preferences" />
+		<menuitem label="Preferences" value="" />
 	</menuitem>
 </menu>
