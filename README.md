@@ -36,16 +36,13 @@ Setup
 * export PATH=$M2:$PATH
 * export CATALINA_HOME=~/Developer/tools/tomcat
 
-MVN Build
+Maven Build
 
 * cd ~/Developer/git/alkhwarizmix/frameworks/source/
 * mvn -f alkhwarizmix-common.pom.xml clean install
-
 * cd ~/Developer/git/alkhwarizmix/frameworks/source/
 * mvn -f install-PureMVC_AS3_MultiCore_Framework.pom.xml antrun:run install:install-file -DgroupId=org.puremvc -DartifactId=PureMVC_AS3_MultiCore_Framework -Dversion=1.0.5 -Dpackaging=swc -Dfile=target/download/PureMVC_AS3_MultiCore_1_0_5.swc
-
 * cd ~/Developer/git/alkhwarizmix/frameworks/source/alkhwarizmixFlexFramework
 * mvn clean install -Dflex.flashPlayer.command="/Users/faresbelhaouas/Developer/tools/Flash Player.app/Contents/MacOS/Flash Player"
-
 * cd ~/Developer/git/alkhwarizmix/moqawalati/source
 * mvn clean install -Dflex.flashPlayer.command="/Users/faresbelhaouas/Developer/tools/Flash Player.app/Contents/MacOS/Flash Player"
