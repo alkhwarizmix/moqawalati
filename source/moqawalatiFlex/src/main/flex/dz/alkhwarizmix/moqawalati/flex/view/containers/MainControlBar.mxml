@@ -39,6 +39,7 @@
 	<![CDATA[
 		import mx.events.FlexEvent;
 		import mx.events.MenuEvent;
+		import mx.events.PropertyChangeEvent;
 		
 		//--------------------------------------------------------------------------
 		//
@@ -58,9 +59,9 @@
 		/**
 		 * send the named event to parents until mediator eventualy
 		 */
-		protected function sendEvent(eventName:String):void
+		protected function sendEvent(eventName:String, data:Object):void
 		{
-			dispatchEvent(new Event(eventName, true));
+			dispatchEvent(new PropertyChangeEvent(eventName, true, false, null, data));
 		}
 		
 		//--------------------------------------------------------------------------
@@ -82,7 +83,7 @@
 		 */
 		private function menuBar_itemClickHandler(event:MenuEvent):void
 		{
-			sendEvent(OPEN_WINDOW);
+			sendEvent(OPEN_WINDOW, XML(event.item).@value[0].toString());
 		}
 		
 	]]>

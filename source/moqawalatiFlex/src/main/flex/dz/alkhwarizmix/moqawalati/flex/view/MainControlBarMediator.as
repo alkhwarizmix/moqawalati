@@ -14,6 +14,9 @@ package dz.alkhwarizmix.moqawalati.flex.view
 
 import flash.events.Event;
 
+import mx.binding.utils.ChangeWatcher;
+import mx.events.PropertyChangeEvent;
+
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
@@ -80,13 +83,13 @@ public class MainControlBarMediator extends MoqawalatiMediator
 	/**
 	 * @private
 	 */
-	private function mainControlBar_openWindowHandler(event:Event):void
+	private function mainControlBar_openWindowHandler(event:PropertyChangeEvent):void
 	{
 		log.debug("mainControlBar_openWindowHandler");
 		
 		sendNotification(MoqawalatiConstants.OPEN_WINDOW,
 			{
-				moduleName : "ClientModule"
+				moduleName : event.property
 			});
 	}
 	

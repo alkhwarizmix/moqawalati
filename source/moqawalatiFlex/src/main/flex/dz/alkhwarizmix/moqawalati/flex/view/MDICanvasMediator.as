@@ -151,7 +151,6 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		moduleLoader.percentHeight = 100;
 		win.addChild(moduleLoader);
 		moduleLoader.addEventListener(ModuleEvent.ERROR, moduleLoader_errorHandler);
-		notifBody.moduleName = "User";
 		moduleLoader.loadModule(getModuleAbsoluteURL(notifBody));
 	}
 	
@@ -172,7 +171,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		var moduleNameLowerCase:String = moduleName.toLowerCase();
 		var result:String = appConfigProxy.flashBuilderBuild
 			? StringUtil.substitute("dz/alkhwarizmix/moqawalati/flex/modules/{0}Module/{1}Module", moduleNameLowerCase, moduleName)
-			: StringUtil.substitute("moqawalatiFlex-1.0.0.1-{0}module", moduleName);
+			: StringUtil.substitute("moqawalatiFlex-1.0.0.1-{0}module", moduleNameLowerCase);
 		result += ".swf";
 		
 		log.debug("getModuleRelativePath: result={0}", result);
