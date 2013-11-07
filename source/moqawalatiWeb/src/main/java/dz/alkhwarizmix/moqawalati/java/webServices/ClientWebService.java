@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
@@ -35,7 +36,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 @Controller
-@RequestMapping("moqawalati/client")
+@RequestMapping("moqawalati/xml/client")
 public class ClientWebService extends AlKhwarizmixWebService {
 
 	// --------------------------------------------------------------------------
@@ -87,7 +88,7 @@ public class ClientWebService extends AlKhwarizmixWebService {
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping("/add")
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> addClient(
 			@RequestParam("client") String xmlValue) throws MoqawalatiException {
 		LOG.debug("addClient({})", xmlValue);
@@ -105,34 +106,12 @@ public class ClientWebService extends AlKhwarizmixWebService {
 	/**
 	 * get the client from database
 	 * 
-	 * @param xmlValue
-	 *            {@link String} partial client xml containing clientId
-	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
-	 */
-	@RequestMapping("/get")
-	public ResponseEntity<String> getClientByXml(
-			@RequestParam("client") String xmlValue) throws MoqawalatiException {
-		LOG.debug("getClientByXml({})", xmlValue);
-
-		try {
-			StringBuilder sBuilder = new StringBuilder(
-					clientService.getClientAsXML(xmlValue));
-			return successResponse(sBuilder);
-		} catch (MoqawalatiException e) {
-			return errorResponse(e);
-		}
-	}
-
-	/**
-	 * get the client from database
-	 * 
 	 * @param clientId
 	 *            {@link Long} clientId
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping("/{clientId}")
+	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getClientById(
 			@PathVariable("clientId") String clientId)
 			throws MoqawalatiException {
@@ -140,6 +119,7 @@ public class ClientWebService extends AlKhwarizmixWebService {
 
 		try {
 			Client clientToGet = new Client();
+			clientToGet.setClientId(clientId);
 			StringBuilder sBuilder = new StringBuilder(
 					clientService.getClientAsXML(clientToGet));
 			return successResponse(sBuilder);
@@ -156,8 +136,9 @@ public class ClientWebService extends AlKhwarizmixWebService {
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping("/update")
+	@RequestMapping(value = "/{clientId}", method = RequestMethod.POST)
 	public ResponseEntity<String> updateClient(
+			@PathVariable("clientId") String clientId,
 			@RequestParam("client") String xmlValue) throws MoqawalatiException {
 		LOG.debug("updateClient({})", xmlValue);
 
@@ -173,7 +154,7 @@ public class ClientWebService extends AlKhwarizmixWebService {
 
 	/**
 	 */
-	@RequestMapping("/list")
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<String> getClientList() {
 		StringBuilder result = new StringBuilder();
 
