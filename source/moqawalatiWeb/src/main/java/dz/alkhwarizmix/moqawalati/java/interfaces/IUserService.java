@@ -63,8 +63,8 @@ public interface IUserService extends IAlKhwarizmixService {
 	/**
 	 */
 	@Secured("ROLE_TELLER")
-	public String getUserListAsXML(DetachedCriteria criteria)
-			throws MoqawalatiException;
+	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
+			int maxResult) throws MoqawalatiException;
 
 	/**
 	 */

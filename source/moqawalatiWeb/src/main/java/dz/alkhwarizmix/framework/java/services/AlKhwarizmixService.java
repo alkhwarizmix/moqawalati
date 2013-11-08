@@ -109,10 +109,11 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<AlKhwarizmixDomainObject> getObjectList(
-			DetachedCriteria criteria) throws AlKhwarizmixException {
+			DetachedCriteria criteria, int firstResult, int maxResult)
+			throws AlKhwarizmixException {
 		getLogger().debug("getObjectList({})", criteria);
 
-		return getServiceDAO().getList(criteria);
+		return getServiceDAO().getList(criteria, firstResult, maxResult);
 	}
 
 	/**

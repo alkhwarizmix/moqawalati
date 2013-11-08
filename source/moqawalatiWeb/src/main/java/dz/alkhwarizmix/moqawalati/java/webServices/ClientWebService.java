@@ -155,11 +155,14 @@ public class ClientWebService extends AlKhwarizmixWebService {
 	/**
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<String> getClientList() {
+	public ResponseEntity<String> getClientList(
+			@RequestParam("firstResult") int firstResult,
+			@RequestParam("maxResult") int maxResult) {
 		StringBuilder result = new StringBuilder();
 
 		try {
-			result.append(clientService.getClientListAsXML(null));
+			result.append(clientService.getClientListAsXML(null, firstResult,
+					maxResult));
 
 			return successResponse(result);
 		} catch (MoqawalatiException e) {

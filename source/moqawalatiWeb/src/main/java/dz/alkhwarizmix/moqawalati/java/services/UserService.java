@@ -37,12 +37,11 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
+ * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @Service
 @Transactional(readOnly = true)
-public class UserService extends AlKhwarizmixService implements
-		IUserService {
+public class UserService extends AlKhwarizmixService implements IUserService {
 
 	// --------------------------------------------------------------------------
 	//
@@ -199,15 +198,16 @@ public class UserService extends AlKhwarizmixService implements
 	/**
 	 */
 	@SuppressWarnings("unchecked")
-	public List<User> getUserList(DetachedCriteria criteria)
-			throws MoqawalatiException {
+	public List<User> getUserList(DetachedCriteria criteria, int firstResult,
+			int maxResult) throws MoqawalatiException {
 		if (criteria == null) {
 			criteria = DetachedCriteria.forClass(User.class);
 			criteria.addOrder(Order.asc(User.USERID));
 		}
 
 		try {
-			List<User> result = (List<User>) (List<?>) getObjectList(criteria);
+			List<User> result = (List<User>) (List<?>) getObjectList(criteria,
+					firstResult, maxResult);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);
@@ -217,9 +217,10 @@ public class UserService extends AlKhwarizmixService implements
 
 	/**
 	 */
-	public String getUserListAsXML(DetachedCriteria criteria)
-			throws MoqawalatiException {
-		String result = userListToXML(getUserList(criteria));
+	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
+			int maxResult) throws MoqawalatiException {
+		String result = userListToXML(getUserList(criteria, firstResult,
+				maxResult));
 		return result;
 	}
 

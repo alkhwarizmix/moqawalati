@@ -102,10 +102,6 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		}
 	}
 
-	private Client getObjectAsClient(AlKhwarizmixDomainObject object) {
-		return (Client) object;
-	}
-
 	// --------------------------------------------------------------------------
 	//
 	// Methods
