@@ -38,6 +38,27 @@ Setup
 
 Maven Build
 
+* mkdir Developer
+* cd Developer
+* mkdir git
+* cd git
+* mkdir alkhwarizmix
+* cd alkhwarizmix
+
+* git clone https://github.com/alkhwarizmix/frameworks.git
+* git clone https://github.com/alkhwarizmix/moqawalati.git
+* cd frameworks/source/
+* mvn -f alkhwarizmix-common.pom.xml clean install
+* mvn -f install-PureMVC_AS3_MultiCore_Framework.pom.xml antrun:run install:install-file -DgroupId=org.puremvc -DartifactId=PureMVC_AS3_MultiCore_Framework -Dversion=1.0.5 -Dpackaging=swc -Dfile=target/download/PureMVC_AS3_MultiCore_1_0_5.swc
+* cd alkhwarizmixFlexFramework
+* mvn clean install -Dflex.flashPlayer.command="/Users/faresbelhaouas/Developer/tools/Flash Player.app/Contents/MacOS/Flash Player"
+* cd ../../../../alkhwarizmix/moqawalati/source
+* mvn clean install -Dflex.flashPlayer.command="/Users/faresbelhaouas/Developer/tools/Flash Player.app/Contents/MacOS/Flash Player"
+* cd moqawalatiWeb
+* mvn jetty:run-war
+* http://localhost:9787/moqawalati-webapp/index.html
+
+
 * cd ~/Developer/git/alkhwarizmix/frameworks/source/
 * mvn -f alkhwarizmix-common.pom.xml clean install
 * cd ~/Developer/git/alkhwarizmix/frameworks/source/

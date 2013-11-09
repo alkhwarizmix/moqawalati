@@ -92,6 +92,9 @@
 						<execution>
 							<id>generate-html-wrapper</id>
 							<phase>generate-resources</phase>
+							<configuration>
+								<htmlName>index</htmlName>
+							</configuration>
 							<goals>
 								<goal>wrapper</goal>
 							</goals>
