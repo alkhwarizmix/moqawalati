@@ -62,8 +62,8 @@ public interface IClientService extends IAlKhwarizmixService {
 	/**
 	 */
 	@Secured("ROLE_TELLER")
-	public String getClientListAsXML(DetachedCriteria criteria)
-			throws MoqawalatiException;
+	public String getClientListAsXML(DetachedCriteria criteria,
+			int firstResult, int maxResult) throws MoqawalatiException;
 
 	/**
 	 */

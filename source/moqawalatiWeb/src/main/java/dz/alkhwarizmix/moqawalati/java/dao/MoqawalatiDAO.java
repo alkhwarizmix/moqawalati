@@ -102,10 +102,6 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		}
 	}
 
-	private Client getObjectAsClient(AlKhwarizmixDomainObject object) {
-		return (Client) object;
-	}
-
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -118,10 +114,10 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		getLogger().debug("getClient()");
 
 		try {
-			String clientId = "";// client.getClientId();
+			String clientId = client.getClientId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(Client.class);
-			criteria.add(Restrictions.eq("Client.CLIENTID", clientId));
+			criteria.add(Restrictions.eq(Client.CLIENTID, clientId));
 			return (Client) criteria.uniqueResult();
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(

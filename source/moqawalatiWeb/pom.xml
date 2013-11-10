@@ -412,6 +412,7 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<encoding>UTF-8</encoding>
 					<argLine>-Xms768m -Xmx1024m</argLine>
 				</configuration>
 			</plugin>
@@ -501,10 +502,10 @@
 				<version>6.1.26</version>
 				<configuration>
 					<webApp>
-						${basedir}/target/${project.name}.war
+						${basedir}/target/${project.build.finalName}.war
 					</webApp>
 					<contextPath>
-						${project.name}-webapp
+						${project.build.finalName}-webapp
 					</contextPath>
 					<connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
@@ -528,24 +529,13 @@
 					</systemProperties>
 					<stopPort>9767</stopPort>
 					<stopKey>foo</stopKey>
-					<daemon>true</daemon>
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 				</configuration>
 				<executions>
-					<execution>
-						<id>start-jetty</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>run-war</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>stop-jetty</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
+					<!-- <execution> <id>start-jetty</id> <phase>pre-integration-test</phase> 
+						<goals> <goal>run</goal> </goals> <configuration> <daemon>true</daemon> </configuration> 
+						</execution> <execution> <id>stop-jetty</id> <phase>post-integration-test</phase> 
+						<goals> <goal>stop</goal> </goals> </execution> -->
 				</executions>
 			</plugin>
 		</plugins>

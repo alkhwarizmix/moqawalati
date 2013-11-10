@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
@@ -35,7 +36,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @Controller
-@RequestMapping("moqawalati/user")
+@RequestMapping("moqawalati/xml/user")
 public class UserWebService extends AlKhwarizmixWebService {
 
 	// --------------------------------------------------------------------------
@@ -87,7 +88,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping("/add")
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> addUser(@RequestParam("user") String xmlValue)
 			throws MoqawalatiException {
 		LOG.debug("addUser({})", xmlValue);
@@ -105,40 +106,19 @@ public class UserWebService extends AlKhwarizmixWebService {
 	/**
 	 * get the user from database
 	 * 
-	 * @param xmlValue
-	 *            {@link String} partial user xml containing userId
-	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
-	 */
-	@RequestMapping("/get")
-	public ResponseEntity<String> getUserByXml(
-			@RequestParam("user") String xmlValue) throws MoqawalatiException {
-		LOG.debug("getUserByXml({})", xmlValue);
-
-		try {
-			StringBuilder sBuilder = new StringBuilder(
-					userService.getUserAsXML(xmlValue));
-			return successResponse(sBuilder);
-		} catch (MoqawalatiException e) {
-			return errorResponse(e);
-		}
-	}
-
-	/**
-	 * get the user from database
-	 * 
 	 * @param userId
 	 *            {@link Long} userId
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping("/{userId}")
+	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getUserById(
 			@PathVariable("userId") String userId) throws MoqawalatiException {
 		LOG.debug("getUserById({})", userId);
 
 		try {
 			User userToGet = new User();
+			userToGet.setUserId(userId);
 			StringBuilder sBuilder = new StringBuilder(
 					userService.getUserAsXML(userToGet));
 			return successResponse(sBuilder);
@@ -155,8 +135,9 @@ public class UserWebService extends AlKhwarizmixWebService {
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping("/update")
+	@RequestMapping(value = "/{userId}", method = RequestMethod.POST)
 	public ResponseEntity<String> updateUser(
+			@PathVariable("userId") String userId,
 			@RequestParam("user") String xmlValue) throws MoqawalatiException {
 		LOG.debug("updateUser({})", xmlValue);
 
@@ -171,12 +152,15 @@ public class UserWebService extends AlKhwarizmixWebService {
 
 	/**
 	 */
-	@RequestMapping("/list")
-	public ResponseEntity<String> getUserList() {
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<String> getUserList(
+			@RequestParam("firstResult") int firstResult,
+			@RequestParam("maxResult") int maxResult) {
 		StringBuilder result = new StringBuilder();
 
 		try {
-			result.append(userService.getUserListAsXML(null));
+			result.append(userService.getUserListAsXML(null, firstResult,
+					maxResult));
 
 			return successResponse(result);
 		} catch (MoqawalatiException e) {

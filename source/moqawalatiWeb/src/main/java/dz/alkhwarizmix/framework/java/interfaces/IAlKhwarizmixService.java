@@ -19,18 +19,18 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
 
 /**
- *  <p>
- *  TODO: Javadoc
- *  </p>
+ * <p>
+ * TODO: Javadoc
+ * </p>
  * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ * @author فارس بلحواس (Fares Belhaouas)
+ * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public interface IAlKhwarizmixService
-{
+public interface IAlKhwarizmixService {
 	/**
 	 */
-	public void addObject(AlKhwarizmixDomainObject object) throws AlKhwarizmixException;
+	public void addObject(AlKhwarizmixDomainObject object)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -39,11 +39,13 @@ public interface IAlKhwarizmixService
 	/**
 	 * get the object
 	 */
-	public AlKhwarizmixDomainObject getObject(AlKhwarizmixDomainObject object) throws AlKhwarizmixException;
+	public AlKhwarizmixDomainObject getObject(AlKhwarizmixDomainObject object)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public String getObjectAsXML(AlKhwarizmixDomainObject object) throws AlKhwarizmixException;
+	public String getObjectAsXML(AlKhwarizmixDomainObject object)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -51,11 +53,14 @@ public interface IAlKhwarizmixService
 
 	/**
 	 */
-	public List<AlKhwarizmixDomainObject> getObjectList(DetachedCriteria criteria) throws AlKhwarizmixException;
+	public List<AlKhwarizmixDomainObject> getObjectList(
+			DetachedCriteria criteria, int firstResult, int maxResult)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject updateObject(AlKhwarizmixDomainObject object) throws AlKhwarizmixException;
+	public AlKhwarizmixDomainObject updateObject(AlKhwarizmixDomainObject object)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -67,10 +72,12 @@ public interface IAlKhwarizmixService
 
 	/**
 	 */
-	public String marshalObject(AlKhwarizmixDomainObject object) throws AlKhwarizmixException;
+	public String marshalObject(AlKhwarizmixDomainObject object)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject unmarshalObject(String xmlValue) throws AlKhwarizmixException;
+	public AlKhwarizmixDomainObject unmarshalObject(String xmlValue)
+			throws AlKhwarizmixException;
 
 } // Class

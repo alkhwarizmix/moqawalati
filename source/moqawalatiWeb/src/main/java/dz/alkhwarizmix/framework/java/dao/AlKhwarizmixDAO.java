@@ -11,17 +11,13 @@
 
 package dz.alkhwarizmix.framework.java.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.classic.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
@@ -60,12 +56,12 @@ public abstract class AlKhwarizmixDAO {
 		getLogger().trace("saveOrUpdate({})", object);
 
 		try {
-			getHibernateTemplate().saveOrUpdate(object);
+			getHibernateCurrentSession().saveOrUpdate(object);
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (DataAccessException e) {
 			// FBEL: TODO: CHECK THIS
-			getHibernateTemplate().clear();
+			getHibernateCurrentSession().clear();
 			throw new AlKhwarizmixDAOException(e);
 		}
 	}
@@ -77,7 +73,7 @@ public abstract class AlKhwarizmixDAO {
 		getLogger().trace("getDAOExceptionForConcurrencyFailure({})",
 				concurrencyFailureException);
 
-		getHibernateTemplate().clear();
+		getHibernateCurrentSession().clear();
 		AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
 				"Database error, " + "Concurrency problem",
 				concurrencyFailureException);
@@ -92,7 +88,7 @@ public abstract class AlKhwarizmixDAO {
 		getLogger().trace("getDAOExceptionForDataAccess({})",
 				dataAccessException);
 
-		getHibernateTemplate().clear();
+		getHibernateCurrentSession().clear();
 		return new AlKhwarizmixDAOException(dataAccessException);
 	}
 
@@ -101,7 +97,7 @@ public abstract class AlKhwarizmixDAO {
 	protected final AlKhwarizmixDAOException getDAOException(Exception exception) {
 		getLogger().trace("getDAOException({})", exception);
 
-		getHibernateTemplate().clear();
+		getHibernateCurrentSession().clear();
 		return new AlKhwarizmixDAOException(exception);
 	}
 
@@ -121,12 +117,13 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
-	public List getList(DetachedCriteria criteria)
-			throws AlKhwarizmixDAOException {
+	public List getList(DetachedCriteria criteria, int firstResult,
+			int maxResult) throws AlKhwarizmixDAOException {
 		getLogger().trace("getList({})", criteria);
 
 		try {
-			return getHibernateTemplate().findByCriteria(criteria);
+			return getHibernateTemplate().findByCriteria(criteria, firstResult,
+					maxResult);
 		} catch (DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
@@ -163,7 +160,7 @@ public abstract class AlKhwarizmixDAO {
 		getLogger().trace("merge({})", object);
 
 		try {
-			getHibernateTemplate().merge(object);
+			getHibernateCurrentSession().merge(object);
 		} catch (ConcurrencyFailureException e) {
 			AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
 					"Database error, Concurrency problem", e);
@@ -178,36 +175,21 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
-	public Object uniqueValue(final DetachedCriteria criteria)
+	public void delete(AlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
-		getLogger().trace("uniqueValue({})", criteria);
+		getLogger().trace("delete({})", object);
 
 		try {
-			return getHibernateTemplate().execute(
-					new HibernateCallback<Object>() {
-						@Override
-						public Object doInHibernate(Session session)
-								throws HibernateException, SQLException {
-							return criteria.getExecutableCriteria(session)
-									.uniqueResult();
-						}
-					});
-		} catch (Exception e) {
+			getHibernateCurrentSession().delete(object);
+		} catch (DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
 	}
 
 	/**
 	 */
-	public void delete(AlKhwarizmixDomainObject object)
-			throws AlKhwarizmixDAOException {
-		getLogger().trace("delete({})", object);
-
-		try {
-			getHibernateTemplate().delete(object);
-		} catch (DataAccessException e) {
-			throw new AlKhwarizmixDAOException(e);
-		}
+	protected Session getHibernateCurrentSession() {
+		return getHibernateTemplate().getSessionFactory().getCurrentSession();
 	}
 
 	// --------------------------------------------------------------------------

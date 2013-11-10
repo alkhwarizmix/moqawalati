@@ -199,15 +199,16 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Client> getClientList(DetachedCriteria criteria)
-			throws MoqawalatiException {
+	public List<Client> getClientList(DetachedCriteria criteria,
+			int firstResult, int maxResult) throws MoqawalatiException {
 		if (criteria == null) {
 			criteria = DetachedCriteria.forClass(Client.class);
 			criteria.addOrder(Order.asc(Client.CLIENTID));
 		}
 
 		try {
-			List<Client> result = (List<Client>) (List<?>) getObjectList(criteria);
+			List<Client> result = (List<Client>) (List<?>) getObjectList(
+					criteria, firstResult, maxResult);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);
@@ -217,9 +218,10 @@ public class ClientService extends AlKhwarizmixService implements
 
 	/**
 	 */
-	public String getClientListAsXML(DetachedCriteria criteria)
-			throws MoqawalatiException {
-		String result = clientListToXML(getClientList(criteria));
+	public String getClientListAsXML(DetachedCriteria criteria,
+			int firstResult, int maxResult) throws MoqawalatiException {
+		String result = clientListToXML(getClientList(criteria, firstResult,
+				maxResult));
 		return result;
 	}
 
