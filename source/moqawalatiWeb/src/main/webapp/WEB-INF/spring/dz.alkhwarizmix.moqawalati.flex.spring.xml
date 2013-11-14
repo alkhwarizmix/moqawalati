@@ -30,4 +30,6 @@
 		class="dz.alkhwarizmix.moqawalati.java.services.ClientService" />
 	<bean id="userBean"
 		class="dz.alkhwarizmix.moqawalati.java.services.UserService" />
+	<bean id="customizeBean"
+		class="dz.alkhwarizmix.framework.java.services.CustomizeService" />
 </beans>

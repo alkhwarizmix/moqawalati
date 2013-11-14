@@ -25,6 +25,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
@@ -91,7 +92,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		try {
 			// getObjectAsClient(object).setupAddress();
 			// getHibernateTemplate().saveOrUpdate(
-			//		getObjectAsClient(object).getAddress());
+			// getObjectAsClient(object).getAddress());
 			getHibernateTemplate().saveOrUpdate(object);
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
@@ -132,11 +133,30 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		getLogger().debug("getUser()");
 
 		try {
-			String userId = "";// user.getClientId();
+			String userId = user.getUserId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(User.class);
-			criteria.add(Restrictions.eq("User.USERID", userId));
+			criteria.add(Restrictions.eq(User.USERID, userId));
 			return (User) criteria.uniqueResult();
+		} catch (DataAccessException e) {
+			MoqawalatiException ex = new MoqawalatiException(
+					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
+			throw ex;
+		}
+	}
+
+	/**
+	 */
+	public CustomData getCustomData(CustomData customData)
+			throws MoqawalatiException {
+		getLogger().debug("getCustomData()");
+
+		try {
+			Long customDataId = customData.getCustomDataId();
+			Criteria criteria = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession().createCriteria(CustomData.class);
+			criteria.add(Restrictions.eq(CustomData.CUSTOMDATAID, customDataId));
+			return (CustomData) criteria.uniqueResult();
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
