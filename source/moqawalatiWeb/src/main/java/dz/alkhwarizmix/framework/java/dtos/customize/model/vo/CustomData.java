@@ -15,10 +15,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -50,7 +53,7 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 
 	private static final long serialVersionUID = 3943183332329388549L;
 
-	public static final String CUSTOMDATAID = ID;
+	public static final String CUSTOMDATAID = "customDataId";
 
 	// --------------------------------------------------------------------------
 	//
@@ -71,6 +74,10 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
+	@Column(name = "customDataId", unique = false, nullable = false, length = 63)
+	private String customDataId;
+
+	@Transient
 	private List<CustomDataPart> customDataParts = null;
 
 	// --------------------------------------------------------------------------
@@ -125,19 +132,20 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 	// customDataId
 	// ----------------------------------
 
-	public Long getCustomDataId() {
-		return getId();
+	@XmlAttribute(name = "id")
+	public String getCustomDataId() {
+		return customDataId;
 	}
 
-	public void setCustomDataId(Long value) {
-		setId(value);
+	public void setCustomDataId(String value) {
+		this.customDataId = value;
 	}
 
 	// ----------------------------------
 	// customDataValue
 	// ----------------------------------
 
-	@XmlElement(name = "CustomDataValue")
+	@XmlElement(name = "Value")
 	public String getCustomDataValue() {
 		String customDataValue = "";
 		for (CustomDataPart customDataPart : getCustomDataParts()) {
@@ -156,7 +164,7 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 				customDataPart = getCustomDataParts().get(i);
 			} else {
 				customDataPart = newCustomDataPart();
-				getCustomDataParts().add(customDataPart);
+				addCustomDataPart(customDataPart);
 			}
 			int endIndex = Math.min(startIndex + customDataPartValueMaxLen,
 					value.length());
@@ -169,6 +177,11 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 			customDataPart = getCustomDataParts().get(i);
 			customDataPart.setCustomDataPartValue("");
 		}
+	}
+
+	private void addCustomDataPart(CustomDataPart customDataPart) {
+		customDataPart.setCustomData(this);
+		getCustomDataParts().add(customDataPart);
 	}
 
 	// ----------------------------------

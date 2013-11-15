@@ -98,15 +98,15 @@ public class CustomizeService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String addCustomData(String customDataXml, String creatorId)
+	public String addCustomData(String customDataXml)
 			throws MoqawalatiException {
 		try {
 			CustomData newCustomData = (CustomData) unmarshalObject(customDataXml);
-			// newCustomData.setCreatorId(creatorId);
 			addCustomData(newCustomData);
 			String result = marshalObject(newCustomData);
 			return result;
 		} catch (AlKhwarizmixException e) {
+			getLogger().error("addCustomData: {}", e.getStackTrace());
 			MoqawalatiException ex = new MoqawalatiException(e);
 			throw ex;
 		}
@@ -181,7 +181,7 @@ public class CustomizeService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String updateCustomData(String customDataXml, String updaterId)
+	public String updateCustomData(String customDataXml)
 			throws MoqawalatiException {
 		LOG.debug("updateCustomData");
 		try {

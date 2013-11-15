@@ -76,7 +76,7 @@
           </collectionProp>
         </Arguments>
         <hashTree/>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Manage Clients" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Manage Clients" enabled="false">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>
@@ -456,7 +456,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="customData" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;CustomData id=&quot;C${RAN_CLIENT_ID}&quot;&gt;&lt;Name&gt;client-${RAN_CLIENT_ID}-1&lt;/Name&gt;&lt;/CustomData&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;CustomData id=&quot;Custom1${RAN_CUSTOMDATA_ID}&quot;&gt;&lt;Value&gt;Custom1-${RAN_CUSTOMDATA_ID}A0123456789B0123456789C0123456789D0123456789E0123456789F0123456789G0123456789H0123456789I0123456789J0123456789K0123456789L0123456789M&lt;/Value&gt;&lt;/CustomData&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">customData</stringProp>
@@ -796,7 +796,7 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Listing" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Listing" enabled="false">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>

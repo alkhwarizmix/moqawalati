@@ -26,6 +26,7 @@ import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
+import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomDataPart;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
@@ -90,16 +91,32 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		getLogger().trace("saveOrUpdate({})", object);
 
 		try {
-			// getObjectAsClient(object).setupAddress();
-			// getHibernateTemplate().saveOrUpdate(
-			// getObjectAsClient(object).getAddress());
-			getHibernateTemplate().saveOrUpdate(object);
+			if (object instanceof CustomData)
+				saveOrUpdateCustomData((CustomData) object);
+			else
+				getHibernateTemplate().saveOrUpdate(object);
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (DataAccessException e) {
 			throw getDAOExceptionForDataAccess(e);
 		} catch (Exception e) {
 			throw getDAOException(e);
+		}
+	}
+
+	// getObjectAsClient(object).setupAddress();
+	// getHibernateTemplate().saveOrUpdate(
+	// getObjectAsClient(object).getAddress());
+
+	/**
+	 */
+	private void saveOrUpdateCustomData(CustomData customData) {
+		getHibernateTemplate().saveOrUpdate(customData);
+		if (customData.getCustomDataParts().size() > 0) {
+			for (CustomDataPart customDataPart : customData
+					.getCustomDataParts()) {
+				getHibernateTemplate().saveOrUpdate(customDataPart);
+			}
 		}
 	}
 
@@ -152,7 +169,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		getLogger().debug("getCustomData()");
 
 		try {
-			Long customDataId = customData.getCustomDataId();
+			String customDataId = customData.getCustomDataId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(CustomData.class);
 			criteria.add(Restrictions.eq(CustomData.CUSTOMDATAID, customDataId));

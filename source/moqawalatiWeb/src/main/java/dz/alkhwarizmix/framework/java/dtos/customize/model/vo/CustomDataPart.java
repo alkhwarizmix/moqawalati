@@ -73,7 +73,7 @@ public class CustomDataPart extends AlKhwarizmixDomainObject implements
 	// --------------------------------------------------------------------------
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "customData")
 	private CustomData customData;
 
 	@Column(name = "customDataPartValue", nullable = false, length = 127)
@@ -105,6 +105,14 @@ public class CustomDataPart extends AlKhwarizmixDomainObject implements
 	// Getters & Setters
 	//
 	// --------------------------------------------------------------------------
+
+	// ----------------------------------
+	// customData
+	// ----------------------------------
+
+	public void setCustomData(CustomData value) {
+		this.customData = value;
+	}
 
 	// ----------------------------------
 	// customDataPartValue

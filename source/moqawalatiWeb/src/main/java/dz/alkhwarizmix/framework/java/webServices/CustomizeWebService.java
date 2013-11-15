@@ -94,8 +94,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 		LOG.debug("addCustomData({})", xmlValue);
 
 		try {
-			String result = customizeService.addCustomData(xmlValue,
-					getCurrentRequestRemoteAddress());
+			String result = customizeService.addCustomData(xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponse(sBuilder);
 		} catch (MoqawalatiException e) {
@@ -113,7 +112,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	 */
 	@RequestMapping(value = "/{customDataId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getCustomDataById(
-			@PathVariable("customDataId") Long customDataId)
+			@PathVariable("customDataId") String customDataId)
 			throws MoqawalatiException {
 		LOG.debug("getCustomDataById({})", customDataId);
 
@@ -145,8 +144,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 
 		try {
 			StringBuilder sBuilder = new StringBuilder(
-					customizeService.updateCustomData(xmlValue,
-							getCurrentRequestRemoteAddress()));
+					customizeService.updateCustomData(xmlValue));
 			return successResponse(sBuilder);
 		} catch (MoqawalatiException e) {
 			return errorResponse(e);

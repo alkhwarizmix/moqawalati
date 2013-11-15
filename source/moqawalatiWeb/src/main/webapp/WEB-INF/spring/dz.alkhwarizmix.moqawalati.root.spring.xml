@@ -47,8 +47,7 @@
 	<import resource="dz.alkhwarizmix.moqawalati.db.spring.xml" />
 	<import resource="dz.alkhwarizmix.moqawalati.web.spring.xml" />
 	<import resource="dz.alkhwarizmix.moqawalati.flex.spring.xml" />
-	<!-- <import resource="dz.alkhwarizmix.moqawalati.security.spring.xml" 
-		/> -->
+	<!-- <import resource="dz.alkhwarizmix.moqawalati.security.spring.xml" /> -->
 
 	<!-- <aop:config proxy-target-class="true"/> -->
 	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->
@@ -69,8 +68,7 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
 	<bean id="applicationVersion" class="java.lang.String">
-		<constructor-arg
-			value="${dz.alkhwarizmix.moqawalati.version.property}" />
+		<constructor-arg value="${dz.alkhwarizmix.moqawalati.version.property}" />
 	</bean>
 
 	<bean id="defaultResourceLoader" class="org.springframework.core.io.DefaultResourceLoader" />
@@ -80,6 +78,7 @@
 	<bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="packagesToScan">
 			<list>
+				<value>dz.alkhwarizmix.framework.java.dtos</value>
 				<value>dz.alkhwarizmix.moqawalati.java.dtos</value>
 			</list>
 		</property>

@@ -29,7 +29,7 @@ public interface ICustomizeService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String addCustomData(String customDataXml, String creatorId)
+	public String addCustomData(String customDataXml)
 			throws MoqawalatiException;
 
 	/**
@@ -54,7 +54,7 @@ public interface ICustomizeService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String updateCustomData(String customDataXml, String updaterId)
+	public String updateCustomData(String customDataXml)
 			throws MoqawalatiException;
 
 } // Class
