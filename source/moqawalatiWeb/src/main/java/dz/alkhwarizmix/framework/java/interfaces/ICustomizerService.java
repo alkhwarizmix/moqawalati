@@ -22,14 +22,14 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٩ محرم ١٤٣٥ (November 13, 2013)
  */
-public interface ICustomizeService extends IAlKhwarizmixService {
+public interface ICustomizerService extends IAlKhwarizmixService {
 	/**
 	 */
-	public void addCustomData(CustomData customData) throws MoqawalatiException;
+	public void setCustomData(CustomData customData) throws MoqawalatiException;
 
 	/**
 	 */
-	public String addCustomData(String customDataXml)
+	public String setCustomData(String customDataXml)
 			throws MoqawalatiException;
 
 	/**
@@ -45,16 +45,6 @@ public interface ICustomizeService extends IAlKhwarizmixService {
 	/**
 	 */
 	public String getCustomDataAsXML(String partialXml)
-			throws MoqawalatiException;
-
-	/**
-	 */
-	public CustomData updateCustomData(CustomData customData)
-			throws MoqawalatiException;
-
-	/**
-	 */
-	public String updateCustomData(String customDataXml)
 			throws MoqawalatiException;
 
 } // Class

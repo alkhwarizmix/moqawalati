@@ -21,7 +21,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 
 /**
  * <p>
@@ -51,7 +51,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
-	public void saveOrUpdate(AlKhwarizmixDomainObject object)
+	public void saveOrUpdate(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
 
@@ -103,8 +103,8 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject get(
-			Class<? extends AlKhwarizmixDomainObject> clazz, Long id)
+	public AlKhwarizmixDomainObjectAbstract get(
+			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("get({}, {})", clazz.getSimpleName(), id);
 
@@ -131,13 +131,13 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject load(
-			Class<? extends AlKhwarizmixDomainObject> clazz, Long id)
+	public AlKhwarizmixDomainObjectAbstract load(
+			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("load({}, {})", clazz.getSimpleName(), id);
 
 		try {
-			AlKhwarizmixDomainObject result = get(clazz, id);
+			AlKhwarizmixDomainObjectAbstract result = get(clazz, id);
 
 			if (result == null) {
 				AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
@@ -155,7 +155,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
-	public void merge(AlKhwarizmixDomainObject object)
+	public void merge(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("merge({})", object);
 
@@ -175,7 +175,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
-	public void delete(AlKhwarizmixDomainObject object)
+	public void delete(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("delete({})", object);
 

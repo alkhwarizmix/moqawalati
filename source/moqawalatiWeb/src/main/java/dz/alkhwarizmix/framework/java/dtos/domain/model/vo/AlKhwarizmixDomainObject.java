@@ -9,24 +9,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.customize.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.domain.model.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -39,14 +30,14 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٧ محرم ١٤٣٥ (November 11, 2013)
+ * @since ١٢ محرم ١٤٣٥ (November 16, 2013)
  */
 @Entity
-@Table(name = "TCustomDataPart")
-@XmlRootElement(name = "CustomDataPart")
+@Table(name = "TAlKhwarizmixDomainObject")
+@XmlRootElement(name = "AlKhwarizmixDomainObject")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
-		Serializable {
+public class AlKhwarizmixDomainObject extends AlKhwarizmixDomainObjectAbstract
+		implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -54,11 +45,8 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final long serialVersionUID = 8120336811515639394L;
+	private static final long serialVersionUID = 2895852789900643357L;
 
-	public static final String CUSTOMDATAPARTVALUE = "customDataPartValue";
-	public static final String CUSTOMDATA = "customData";
-	
 	// --------------------------------------------------------------------------
 	//
 	// Constructor
@@ -68,7 +56,7 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	/**
 	 * constructor
 	 */
-	public CustomDataPart() {
+	public AlKhwarizmixDomainObject() {
 		super();
 	}
 
@@ -78,13 +66,7 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	//
 	// --------------------------------------------------------------------------
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumn(name = "customData", nullable = false)
-	private CustomData customData;
-
-	@Column(name = "customDataPartValue", nullable = false, length = 127)
-	private String customDataPartValue;
+	// EMPTY
 
 	// --------------------------------------------------------------------------
 	//
@@ -95,12 +77,10 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		CustomDataPart sourceCustomDataPart = (CustomDataPart) sourceObject;
-		if ((sourceCustomDataPart != null)
-				&& (this.getId().equals(sourceCustomDataPart.getId()))) {
-			if (sourceCustomDataPart.customDataPartValue != null) {
-				this.customDataPartValue = sourceCustomDataPart.customDataPartValue;
-			}
+		AlKhwarizmixDomainObject domainObject = (AlKhwarizmixDomainObject) sourceObject;
+		if ((domainObject != null)
+				&& (this.getId().equals(domainObject.getId()))) {
+			// NOOP
 		} else {
 			throw new MoqawalatiException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
@@ -113,25 +93,6 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	//
 	// --------------------------------------------------------------------------
 
-	// ----------------------------------
-	// customData
-	// ----------------------------------
-
-	public void setCustomData(CustomData value) {
-		this.customData = value;
-	}
-
-	// ----------------------------------
-	// customDataPartValue
-	// ----------------------------------
-
-	@XmlElement(name = "CustomDataPartValue")
-	public String getCustomDataPartValue() {
-		return customDataPartValue;
-	}
-
-	public void setCustomDataPartValue(String value) {
-		this.customDataPartValue = value;
-	}
+	// EMPTY
 
 } // Class

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -15,19 +15,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
@@ -42,7 +50,7 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 @Table(name = "TCustomData")
 @XmlRootElement(name = "CustomData")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class CustomData extends AlKhwarizmixDomainObject implements
+public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 		Serializable {
 
 	// --------------------------------------------------------------------------
@@ -77,7 +85,12 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 	@Column(name = "customDataId", unique = false, nullable = false, length = 63)
 	private String customDataId;
 
-	@Transient
+	@ManyToOne
+	@JoinColumn(name = "customizer", nullable = false)
+	private AlKhwarizmixDomainObject customizer;
+
+	@OneToMany(mappedBy = "customData", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<CustomDataPart> customDataParts = null;
 
 	// --------------------------------------------------------------------------
@@ -88,13 +101,36 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 
 	/**
 	 */
+	@Override
+	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
+		if (getCustomizer() == null) {
+			setupFakeCustomizer();
+			result.add(getCustomizer());
+		}
+		result.add(this);
+		result.addAll(getCustomDataParts());
+		return result;
+	}
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
+		// NOOP
+	}
+
+	/**
+	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
 		CustomData sourceCustomData = (CustomData) sourceObject;
 		if ((sourceCustomData != null)
-				&& (this.getId().equals(sourceCustomData.getId()))) {
+				&& (this.getCustomDataId().equals(sourceCustomData
+						.getCustomDataId()))) {
 			if (sourceCustomData.customDataParts != null) {
 				this.setCustomDataValue(sourceCustomData.getCustomDataValue());
 			}
+			this.setCustomizer(sourceCustomData.getCustomizer());
 		} else {
 			throw new MoqawalatiException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
@@ -103,23 +139,8 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	// public void setupAddress() {
-	// createFakeAddress();
-	// }
-
-	/**
-	 */
-	// private void createFakeAddress() {
-	// CustomDataPart newAddress = new CustomDataPart();
-	// newAddress.setCreatorId(getCreatorId());
-	// newAddress.setAddressId(String.valueOf(Math.random()));
-	// newAddress.setStreet(new Date().toString());
-	// setAddress(newAddress);
-	// }
-
-	private CustomDataPart newCustomDataPart() {
-		CustomDataPart result = new CustomDataPart();
-		return result;
+	public void setupFakeCustomizer() {
+		setCustomizer(new AlKhwarizmixDomainObject());
 	}
 
 	// --------------------------------------------------------------------------
@@ -179,6 +200,11 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 		}
 	}
 
+	private CustomDataPart newCustomDataPart() {
+		CustomDataPart result = new CustomDataPart();
+		return result;
+	}
+
 	private void addCustomDataPart(CustomDataPart customDataPart) {
 		customDataPart.setCustomData(this);
 		getCustomDataParts().add(customDataPart);
@@ -188,10 +214,28 @@ public class CustomData extends AlKhwarizmixDomainObject implements
 	// customDataParts
 	// ----------------------------------
 
+	@XmlTransient
 	public List<CustomDataPart> getCustomDataParts() {
 		if (customDataParts == null)
 			customDataParts = new ArrayList<CustomDataPart>();
 		return customDataParts;
+	}
+
+	public void setCustomDataParts(List<CustomDataPart> value) {
+		customDataParts = value;
+	}
+
+	// ----------------------------------
+	// customizer
+	// ----------------------------------
+
+	@XmlTransient
+	public AlKhwarizmixDomainObject getCustomizer() {
+		return customizer;
+	}
+
+	public void setCustomizer(AlKhwarizmixDomainObject value) {
+		this.customizer = value;
 	}
 
 } // Class

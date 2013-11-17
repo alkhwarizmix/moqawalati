@@ -451,12 +451,12 @@
             <stringProp name="variableName">RAN_CUSTOMDATA_ID</stringProp>
           </RandomVariableConfig>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testCustomDataAddSuccess-C${RAN_CUSTOMDATA_ID}" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testCustomDataSetSuccess-C${RAN_CUSTOMDATA_ID} Add" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="customData" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;CustomData id=&quot;Custom1${RAN_CUSTOMDATA_ID}&quot;&gt;&lt;Value&gt;Custom1-${RAN_CUSTOMDATA_ID}A0123456789B0123456789C0123456789D0123456789E0123456789F0123456789G0123456789H0123456789I0123456789J0123456789K0123456789L0123456789M&lt;/Value&gt;&lt;/CustomData&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;CustomData id=&quot;Custom1${RAN_CUSTOMDATA_ID}&quot;&gt;&lt;Value&gt;Add Custom1-${RAN_CUSTOMDATA_ID}-A0123456789B0123456789C0123456789D0123456789E0123456789F0123456789G0123456789H0123456789I0123456789J0123456789K0123456789L0123456789M&lt;/Value&gt;&lt;/CustomData&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">customData</stringProp>
@@ -501,15 +501,57 @@
             </XPathAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testClientAddError-C${RAN_CLIENT_ID}" enabled="false">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testCustomDataGetExistingAfterAdd" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/customize/Custom1${RAN_CUSTOMDATA_ID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testCustomDataSetSuccess-C${RAN_CUSTOMDATA_ID} Update" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
-                <elementProp name="client" elementType="HTTPArgument">
+                <elementProp name="customData" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;Client id=&quot;C${RAN_CLIENT_ID}&quot;&gt;&lt;Name&gt;client-${RAN_CLIENT_ID}&lt;/Name&gt;&lt;address&gt;street-${RAN_CLIENT_ID}&lt;/address&gt;&lt;city&gt;Montreal&lt;/city&gt;&lt;/Client&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;CustomData id=&quot;Custom1${RAN_CUSTOMDATA_ID}&quot;&gt;&lt;Value&gt;Update Custom1-${RAN_CUSTOMDATA_ID}-A0123456789&lt;/Value&gt;&lt;/CustomData&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">client</stringProp>
+                  <stringProp name="Argument.name">customData</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
@@ -519,7 +561,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/client</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/customize</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -530,28 +572,28 @@
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http420" enabled="true">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
               <collectionProp name="Asserion.test_strings">
-                <stringProp name="51570">420</stringProp>
+                <stringProp name="49586">200</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-              <boolProp name="Assertion.assume_success">true</boolProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
               <intProp name="Assertion.test_type">2</intProp>
-              <stringProp name="TestPlan.comments">Assert un HTTP 420</stringProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
             </ResponseAssertion>
             <hashTree/>
-            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-ERROR" enabled="true">
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
               <boolProp name="XPath.negate">false</boolProp>
-              <stringProp name="XPath.xpath">response[@status=&quot;ERROR&quot;]</stringProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
               <boolProp name="XPath.validate">false</boolProp>
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est une erreur</stringProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testClientGetExistingSuccess" enabled="false">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testCustomDataGetExistingAfterUpdate" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -561,7 +603,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/client/C${RAN_CLIENT_ID}</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/customize/Custom1${RAN_CUSTOMDATA_ID}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

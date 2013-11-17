@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.interfaces.ICustomizeService;
+import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
@@ -36,7 +36,7 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  */
 @Controller
 @RequestMapping("alkhwarizmix/xml/customize")
-public class CustomizeWebService extends AlKhwarizmixWebService {
+public class CustomizerWebService extends AlKhwarizmixWebService {
 
 	// --------------------------------------------------------------------------
 	//
@@ -47,7 +47,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	/**
 	 * constructor
 	 */
-	public CustomizeWebService() {
+	public CustomizerWebService() {
 		super();
 	}
 
@@ -58,7 +58,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomizeWebService.class);
+			.getLogger(CustomizerWebService.class);
 
 	protected Logger getLogger() {
 		return LOG;
@@ -71,7 +71,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private ICustomizeService customizeService;
+	private ICustomizerService customizerService;
 
 	// --------------------------------------------------------------------------
 	//
@@ -88,13 +88,13 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	 * @throws MoqawalatiException
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> addCustomData(
+	public ResponseEntity<String> setCustomData(
 			@RequestParam("customData") String xmlValue)
 			throws MoqawalatiException {
 		LOG.debug("addCustomData({})", xmlValue);
 
 		try {
-			String result = customizeService.addCustomData(xmlValue);
+			String result = getCustomizerService().setCustomData(xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponse(sBuilder);
 		} catch (MoqawalatiException e) {
@@ -106,7 +106,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	 * get the customData from database
 	 * 
 	 * @param customDataId
-	 *            {@link Long} customDataId
+	 *            {@link String} customDataId
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
@@ -119,32 +119,8 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 		try {
 			CustomData customDataToGet = new CustomData();
 			customDataToGet.setCustomDataId(customDataId);
-			StringBuilder sBuilder = new StringBuilder(
-					customizeService.getCustomDataAsXML(customDataToGet));
-			return successResponse(sBuilder);
-		} catch (MoqawalatiException e) {
-			return errorResponse(e);
-		}
-	}
-
-	/**
-	 * update the customData in database
-	 * 
-	 * @param xmlValue
-	 *            {@link String} the customData as xml
-	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
-	 */
-	@RequestMapping(value = "/{customDataId}", method = RequestMethod.POST)
-	public ResponseEntity<String> updateCustomData(
-			@PathVariable("customDataId") String customDataId,
-			@RequestParam("customData") String xmlValue)
-			throws MoqawalatiException {
-		LOG.debug("updateCustomData({})", xmlValue);
-
-		try {
-			StringBuilder sBuilder = new StringBuilder(
-					customizeService.updateCustomData(xmlValue));
+			StringBuilder sBuilder = new StringBuilder(getCustomizerService()
+					.getCustomDataAsXML(customDataToGet));
 			return successResponse(sBuilder);
 		} catch (MoqawalatiException e) {
 			return errorResponse(e);
@@ -161,12 +137,12 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	// customizeService
 	// ----------------------------------
 
-	protected ICustomizeService getCustomizeService() {
-		return customizeService;
+	protected ICustomizerService getCustomizerService() {
+		return customizerService;
 	}
 
-	protected void setCustomizeService(ICustomizeService value) {
-		customizeService = value;
+	protected void setCustomizerService(ICustomizerService value) {
+		customizerService = value;
 	}
 
 	// ----------------------------------
@@ -174,7 +150,7 @@ public class CustomizeWebService extends AlKhwarizmixWebService {
 	// ----------------------------------
 
 	protected IAlKhwarizmixService getService() {
-		return customizeService;
+		return customizerService;
 	}
 
 } // Class

@@ -20,9 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.framework.java.interfaces.ICustomizeService;
+import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 
@@ -36,8 +36,8 @@ import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
  */
 @Service
 @Transactional(readOnly = true)
-public class CustomizeService extends AlKhwarizmixService implements
-		ICustomizeService {
+public class CustomizerService extends AlKhwarizmixService implements
+		ICustomizerService {
 
 	// --------------------------------------------------------------------------
 	//
@@ -48,7 +48,7 @@ public class CustomizeService extends AlKhwarizmixService implements
 	/**
 	 * constructor
 	 */
-	public CustomizeService() {
+	public CustomizerService() {
 		// NOOP
 	}
 
@@ -59,7 +59,7 @@ public class CustomizeService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomizeService.class);
+			.getLogger(CustomizerService.class);
 
 	protected Logger getLogger() {
 		return LOG;
@@ -86,9 +86,15 @@ public class CustomizeService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public void addCustomData(CustomData customData) throws MoqawalatiException {
+	public void setCustomData(CustomData customData) throws MoqawalatiException {
 		try {
-			addObject(customData);
+			CustomData customDataToSave = getCustomData(customData);
+			if (customDataToSave != null) {
+				customDataToSave.updateFrom(customData);
+			} else {
+				customDataToSave = customData;
+			}
+			addObject(customDataToSave);
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);
 			throw ex;
@@ -98,11 +104,11 @@ public class CustomizeService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String addCustomData(String customDataXml)
+	public String setCustomData(String customDataXml)
 			throws MoqawalatiException {
 		try {
 			CustomData newCustomData = (CustomData) unmarshalObject(customDataXml);
-			addCustomData(newCustomData);
+			setCustomData(newCustomData);
 			String result = marshalObject(newCustomData);
 			return result;
 		} catch (AlKhwarizmixException e) {
@@ -114,7 +120,8 @@ public class CustomizeService extends AlKhwarizmixService implements
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject getObject(AlKhwarizmixDomainObject object)
+	public AlKhwarizmixDomainObjectAbstract getObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		try {
 			CustomData result = getMoqawalatiDAO().getCustomData(
@@ -156,39 +163,6 @@ public class CustomizeService extends AlKhwarizmixService implements
 			throws MoqawalatiException {
 		try {
 			String result = getObjectAsXML(customDataXml);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
-		}
-	}
-
-	/**
-	 */
-	@Transactional(readOnly = false)
-	public CustomData updateCustomData(CustomData customData)
-			throws MoqawalatiException {
-		LOG.debug("updateCustomData");
-		try {
-			CustomData result = (CustomData) updateObject(customData);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
-		}
-	}
-
-	/**
-	 */
-	@Transactional(readOnly = false)
-	public String updateCustomData(String customDataXml)
-			throws MoqawalatiException {
-		LOG.debug("updateCustomData");
-		try {
-			CustomData newCustomData = (CustomData) unmarshalObject(customDataXml);
-			// newCustomData.setCreatorId(updaterId);
-			CustomData updatedCustomData = updateCustomData(newCustomData);
-			String result = marshalObject(updatedCustomData);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);

@@ -27,7 +27,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 
 /**
@@ -57,7 +57,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * add the object
 	 */
-	public void addObject(AlKhwarizmixDomainObject object)
+	public void addObject(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		try {
 			getServiceDAO().saveOrUpdate(object);
@@ -71,7 +71,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 */
 	public String addObject(String objectXml) throws AlKhwarizmixException {
 		try {
-			AlKhwarizmixDomainObject newObject = unmarshalObject(objectXml);
+			AlKhwarizmixDomainObjectAbstract newObject = unmarshalObject(objectXml);
 			addObject(newObject);
 			return marshalObject(newObject);
 		} catch (AlKhwarizmixException e) {
@@ -82,15 +82,15 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * get the object
 	 */
-	public abstract AlKhwarizmixDomainObject getObject(
-			AlKhwarizmixDomainObject object) throws AlKhwarizmixException;
+	public abstract AlKhwarizmixDomainObjectAbstract getObject(
+			AlKhwarizmixDomainObjectAbstract object) throws AlKhwarizmixException;
 
 	/**
 	 * TODO: Javadoc
 	 */
-	public String getObjectAsXML(AlKhwarizmixDomainObject object)
+	public String getObjectAsXML(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
-		AlKhwarizmixDomainObject foundObject = getObject(object);
+		AlKhwarizmixDomainObjectAbstract foundObject = getObject(object);
 		String result = (foundObject != null) ? marshalObject(foundObject) : "";
 		return result;
 	}
@@ -99,7 +99,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * TODO: Javadoc
 	 */
 	public String getObjectAsXML(String objectXml) throws AlKhwarizmixException {
-		AlKhwarizmixDomainObject newObject = (AlKhwarizmixDomainObject) unmarshalObject(objectXml);
+		AlKhwarizmixDomainObjectAbstract newObject = (AlKhwarizmixDomainObjectAbstract) unmarshalObject(objectXml);
 		String result = getObjectAsXML(newObject);
 		return result;
 	}
@@ -108,7 +108,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * TODO: Javadoc
 	 */
 	@SuppressWarnings("unchecked")
-	public List<AlKhwarizmixDomainObject> getObjectList(
+	public List<AlKhwarizmixDomainObjectAbstract> getObjectList(
 			DetachedCriteria criteria, int firstResult, int maxResult)
 			throws AlKhwarizmixException {
 		getLogger().debug("getObjectList({})", criteria);
@@ -119,10 +119,10 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * TODO: Javadoc
 	 */
-	public AlKhwarizmixDomainObject updateObject(AlKhwarizmixDomainObject object)
+	public AlKhwarizmixDomainObjectAbstract updateObject(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		try {
-			AlKhwarizmixDomainObject foundObject = getObject(object);
+			AlKhwarizmixDomainObjectAbstract foundObject = getObject(object);
 			if (foundObject != null) {
 				foundObject.updateFrom(object);
 				getServiceDAO().saveOrUpdate(foundObject);
@@ -140,20 +140,20 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * TODO: Javadoc
 	 */
 	public String updateObject(String objectXml) throws AlKhwarizmixException {
-		AlKhwarizmixDomainObject newObject = unmarshalObject(objectXml);
-		AlKhwarizmixDomainObject result = updateObject(newObject);
+		AlKhwarizmixDomainObjectAbstract newObject = unmarshalObject(objectXml);
+		AlKhwarizmixDomainObjectAbstract result = updateObject(newObject);
 		return marshalObject(result);
 	}
 
 	/**
 	 * TODO: Javadoc
 	 */
-	public String objectListToXML(List<AlKhwarizmixDomainObject> objectList) {
+	public String objectListToXML(List<AlKhwarizmixDomainObjectAbstract> objectList) {
 		getLogger().debug("objectListToXML()");
 
 		StringWriter stringWriter = new StringWriter();
 		XMLResult xmlResult = new XMLResult(stringWriter);
-		for (AlKhwarizmixDomainObject object : objectList) {
+		for (AlKhwarizmixDomainObjectAbstract object : objectList) {
 			getJaxb2Marshaller().marshal(object, xmlResult);
 		}
 		return stringWriter.toString();
@@ -162,7 +162,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * TODO: Javadoc
 	 */
-	public String marshalObject(AlKhwarizmixDomainObject object)
+	public String marshalObject(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		try {
 			StringWriter stringWriter = new StringWriter();
@@ -179,10 +179,10 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * TODO: Javadoc
 	 */
-	public AlKhwarizmixDomainObject unmarshalObject(String xmlValue)
+	public AlKhwarizmixDomainObjectAbstract unmarshalObject(String xmlValue)
 			throws AlKhwarizmixException {
 		try {
-			return (AlKhwarizmixDomainObject) getJaxb2Marshaller().unmarshal(
+			return (AlKhwarizmixDomainObjectAbstract) getJaxb2Marshaller().unmarshal(
 					new StreamSource(IOUtils.toInputStream(xmlValue)));
 		} catch (XmlMappingException e) {
 			AlKhwarizmixException ex = new AlKhwarizmixException(

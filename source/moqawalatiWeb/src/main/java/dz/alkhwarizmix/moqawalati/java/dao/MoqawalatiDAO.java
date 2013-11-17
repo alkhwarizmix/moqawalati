@@ -11,6 +11,8 @@
 
 package dz.alkhwarizmix.moqawalati.java.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -24,9 +26,10 @@ import org.springframework.stereotype.Repository;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomDataPart;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
@@ -86,37 +89,22 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public void saveOrUpdate(AlKhwarizmixDomainObject object)
+	public void saveOrUpdate(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
 
 		try {
-			if (object instanceof CustomData)
-				saveOrUpdateCustomData((CustomData) object);
-			else
-				getHibernateTemplate().saveOrUpdate(object);
+			for (AlKhwarizmixDomainObjectAbstract cursor : object
+					.getDaoObjectList()) {
+				object.beforeDaoSaveOrUpdate(cursor);
+				getHibernateTemplate().saveOrUpdate(cursor);
+			}
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (DataAccessException e) {
 			throw getDAOExceptionForDataAccess(e);
 		} catch (Exception e) {
 			throw getDAOException(e);
-		}
-	}
-
-	// getObjectAsClient(object).setupAddress();
-	// getHibernateTemplate().saveOrUpdate(
-	// getObjectAsClient(object).getAddress());
-
-	/**
-	 */
-	private void saveOrUpdateCustomData(CustomData customData) {
-		getHibernateTemplate().saveOrUpdate(customData);
-		if (customData.getCustomDataParts().size() > 0) {
-			for (CustomDataPart customDataPart : customData
-					.getCustomDataParts()) {
-				getHibernateTemplate().saveOrUpdate(customDataPart);
-			}
 		}
 	}
 
@@ -169,16 +157,46 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		getLogger().debug("getCustomData()");
 
 		try {
-			String customDataId = customData.getCustomDataId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(CustomData.class);
-			criteria.add(Restrictions.eq(CustomData.CUSTOMDATAID, customDataId));
-			return (CustomData) criteria.uniqueResult();
+			criteria.add(Restrictions.eq(CustomData.CUSTOMDATAID,
+					customData.getCustomDataId()));
+			customData = (CustomData) criteria.uniqueResult();
+
+			if (customData != null) {
+				customData.setCustomizer(getDomainObjectById(customData
+						.getCustomizer().getId()));
+				customData.setCustomDataParts(getCustomDataParts(customData));
+			}
+			return customData;
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
 		}
+	}
+
+	/**
+	 */
+	private List<CustomDataPart> getCustomDataParts(CustomData customData) {
+		Criteria criteria = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession().createCriteria(CustomDataPart.class);
+		criteria.createCriteria(CustomDataPart.CUSTOMDATA).add(
+				Restrictions.eq(CustomData.ID, customData.getId()));
+		List<CustomDataPart> customDataParts = criteria.list();
+		getLogger().trace("getCustomDataParts: customDataParts.size {}",
+				(customDataParts == null) ? null : customDataParts.size());
+		return customDataParts;
+	}
+
+	/**
+	 */
+	private AlKhwarizmixDomainObject getDomainObjectById(Long id) {
+		Criteria criteria = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession()
+				.createCriteria(AlKhwarizmixDomainObject.class);
+		criteria.add(Restrictions.eq(AlKhwarizmixDomainObject.ID, id));
+		return (AlKhwarizmixDomainObject) criteria.uniqueResult();
 	}
 
 	// --------------------------------------------------------------------------

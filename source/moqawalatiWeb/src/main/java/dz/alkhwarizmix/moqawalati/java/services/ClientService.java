@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
@@ -119,7 +119,7 @@ public class ClientService extends AlKhwarizmixService implements
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject getObject(AlKhwarizmixDomainObject object)
+	public AlKhwarizmixDomainObjectAbstract getObject(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		try {
 			Client result = getMoqawalatiDAO().getClient((Client) object);
@@ -230,7 +230,7 @@ public class ClientService extends AlKhwarizmixService implements
 	@SuppressWarnings("unchecked")
 	public String clientListToXML(List<Client> clientList) {
 		String result = "<Clients>";
-		result += objectListToXML((List<AlKhwarizmixDomainObject>) (List<?>) clientList);
+		result += objectListToXML((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
 		result += "</Clients>";
 
 		LOG.trace("clientListToXML(): returns {}", result);

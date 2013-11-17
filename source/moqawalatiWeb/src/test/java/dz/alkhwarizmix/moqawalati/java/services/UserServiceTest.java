@@ -21,7 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 
@@ -59,7 +59,7 @@ public class UserServiceTest {
 		utUserService.setMoqawalatiDAO(mockMoqawalatiDAO);
 		utUserService.addUser(new User());
 		verify(mockMoqawalatiDAO, times(1)).saveOrUpdate(
-				any(AlKhwarizmixDomainObject.class));
+				any(AlKhwarizmixDomainObjectAbstract.class));
 	}
 
 } // Class
