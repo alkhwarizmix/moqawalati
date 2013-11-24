@@ -12,16 +12,9 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
-import flash.net.registerClassAlias;
 import flash.utils.Dictionary;
 
-import mx.messaging.messages.RemotingMessage;
-
-import spark.skins.spark.DataGridSkin;
-import spark.skins.spark.ScrollerSkin;
-
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
@@ -58,16 +51,12 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 	{
 		var app:IMoqawalatiApplication = notif.getBody() as IMoqawalatiApplication;
 		
-		// REGISTER NEEDED CLASSES
-		registerNeededClasses();
-		
 		// REGISTER PROXIES FIRST
 		registerProxies(app);
 		
 		// THEN MEDIATORS
 		registerMediators(app);
 		
-		// SEND NOTIFICATIONS
 		sendNotifications();
 	}
 	
@@ -87,21 +76,6 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 			mainCanvas.mainControlBar));
 		facade.registerMediator(new MDICanvasMediator(
 			mainCanvas.mdiCanvas));
-	}
-	
-	/**
-	 * TODO: ASDOC Definition of registerNeededClasses
-	 */
-	private function registerNeededClasses():void
-	{
-		registerClassAlias("mx.messaging.messages.RemotingMessage",
-			RemotingMessage);
-		registerClassAlias("spark.skins.spark.DataGridSkin",
-			DataGridSkin);
-		registerClassAlias("spark.skins.spark.ScrollerSkin",
-			ScrollerSkin);
-		
-		new DTOsToInclude().registerNeededClasses();
 	}
 	
 	/**

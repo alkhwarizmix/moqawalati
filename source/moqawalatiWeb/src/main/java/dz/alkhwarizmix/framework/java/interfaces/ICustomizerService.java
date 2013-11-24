@@ -29,7 +29,7 @@ public interface ICustomizerService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String setCustomData(String customDataXml)
+	public String setCustomDataFromXML(String customDataXml)
 			throws MoqawalatiException;
 
 	/**

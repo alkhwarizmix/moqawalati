@@ -94,7 +94,8 @@ public class CustomizerWebService extends AlKhwarizmixWebService {
 		LOG.debug("addCustomData({})", xmlValue);
 
 		try {
-			String result = getCustomizerService().setCustomData(xmlValue);
+			String result = getCustomizerService().setCustomDataFromXML(
+					xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponse(sBuilder);
 		} catch (MoqawalatiException e) {

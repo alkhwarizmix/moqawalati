@@ -54,7 +54,7 @@ public class ClientService extends AlKhwarizmixService implements
 	 * constructor
 	 */
 	public ClientService() {
-		// NOOP
+		super();
 	}
 
 	// --------------------------------------------------------------------------
@@ -92,6 +92,8 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	public void addClient(Client client) throws MoqawalatiException {
+		getLogger().trace("addClient");
+
 		try {
 			addObject(client);
 		} catch (AlKhwarizmixException e) {
@@ -103,8 +105,10 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String addClient(String clientXml, String creatorId)
+	public String addClientFromXML(String clientXml, String creatorId)
 			throws MoqawalatiException {
+		getLogger().trace("addClientFromXML");
+
 		try {
 			Client newClient = (Client) unmarshalObject(clientXml);
 			newClient.setCreatorId(creatorId);
@@ -119,8 +123,11 @@ public class ClientService extends AlKhwarizmixService implements
 
 	/**
 	 */
-	public AlKhwarizmixDomainObjectAbstract getObject(AlKhwarizmixDomainObjectAbstract object)
+	public AlKhwarizmixDomainObjectAbstract getObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
+		getLogger().trace("getObject");
+
 		try {
 			Client result = getMoqawalatiDAO().getClient((Client) object);
 			return result;
@@ -132,6 +139,8 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	public Client getClient(Client client) throws MoqawalatiException {
+		getLogger().trace("getClient");
+
 		try {
 			return (Client) getObject(client);
 		} catch (AlKhwarizmixException e) {
@@ -143,6 +152,8 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	public String getClientAsXML(Client client) throws MoqawalatiException {
+		getLogger().trace("getClientAsXML 1");
+
 		try {
 			String result = getObjectAsXML(client);
 			return result;
@@ -155,6 +166,8 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	public String getClientAsXML(String clientXml) throws MoqawalatiException {
+		getLogger().trace("getClientAsXML 2");
+
 		try {
 			String result = getObjectAsXML(clientXml);
 			return result;
@@ -168,7 +181,8 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	public Client updateClient(Client client) throws MoqawalatiException {
-		LOG.debug("updateClient");
+		getLogger().trace("updateClient");
+
 		try {
 			Client result = (Client) updateObject(client);
 			return result;
@@ -181,9 +195,10 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String updateClient(String clientXml, String updaterId)
+	public String updateClientFromXML(String clientXml, String updaterId)
 			throws MoqawalatiException {
-		LOG.debug("updateClient");
+		getLogger().trace("updateClientFromXML");
+
 		try {
 			Client newClient = (Client) unmarshalObject(clientXml);
 			newClient.setCreatorId(updaterId);
@@ -201,6 +216,8 @@ public class ClientService extends AlKhwarizmixService implements
 	@SuppressWarnings("unchecked")
 	public List<Client> getClientList(DetachedCriteria criteria,
 			int firstResult, int maxResult) throws MoqawalatiException {
+		getLogger().trace("getClientList");
+
 		if (criteria == null) {
 			criteria = DetachedCriteria.forClass(Client.class);
 			criteria.addOrder(Order.asc(Client.CLIENTID));
@@ -220,6 +237,8 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	public String getClientListAsXML(DetachedCriteria criteria,
 			int firstResult, int maxResult) throws MoqawalatiException {
+		getLogger().trace("getClientListAsXML");
+
 		String result = clientListToXML(getClientList(criteria, firstResult,
 				maxResult));
 		return result;
@@ -229,11 +248,12 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	@SuppressWarnings("unchecked")
 	public String clientListToXML(List<Client> clientList) {
+
 		String result = "<Clients>";
 		result += objectListToXML((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
 		result += "</Clients>";
 
-		LOG.trace("clientListToXML(): returns {}", result);
+		getLogger().trace("clientListToXML(): returns {}", result);
 		return result;
 	}
 

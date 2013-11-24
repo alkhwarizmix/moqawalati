@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.view
 {
 
+import flash.events.Event;
 import flash.system.System;
 
 import mx.events.ModuleEvent;
@@ -19,6 +20,7 @@ import mx.utils.StringUtil;
 
 import spark.modules.ModuleLoader;
 
+import dz.alkhwarizmix.framework.flex.dtos.customize.model.vo.CustomDataVO;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
@@ -26,6 +28,7 @@ import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDICanvas;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDIWindow;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.TestAndDebugWindow;
 
 import flexlib.mdi.events.MDIWindowEvent;
 
@@ -65,6 +68,9 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	public function MDICanvasMediator(viewComponent:Object = null)
 	{
 		super(NAME, viewComponent);
+		
+		mdiCanvas.addEventListener("TestAndDebugWindow_send",
+			mdiCanvas_sendHandler);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -211,6 +217,26 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		win = null;
 		
 		System.gc();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function mdiCanvas_sendHandler(event:Event):void
+	{
+		log.debug("mdiCanvas_sendHandler");
+		
+		var testAndDebugWindow:TestAndDebugWindow = (event.target
+			as TestAndDebugWindow);
+		
+		var newCustomDataVO:CustomDataVO = new CustomDataVO(
+			"dz.alkhwarizmix.moqawalati.flex.view",
+			testAndDebugWindow.textArea.text);
+		
+		sendNotification(MoqawalatiConstants.SET_CUSTOMDATA,
+			{
+				operationParams : [newCustomDataVO]
+			});
 	}
 	
 } // class

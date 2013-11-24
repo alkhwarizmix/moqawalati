@@ -42,6 +42,19 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 
 	// --------------------------------------------------------------------------
 	//
+	// Constructor
+	//
+	// --------------------------------------------------------------------------
+
+	/**
+	 * constructor
+	 */
+	public AlKhwarizmixService() {
+		getLogger().trace("Constructor");
+	}
+
+	// --------------------------------------------------------------------------
+	//
 	// Logger
 	//
 	// --------------------------------------------------------------------------
@@ -83,7 +96,8 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * get the object
 	 */
 	public abstract AlKhwarizmixDomainObjectAbstract getObject(
-			AlKhwarizmixDomainObjectAbstract object) throws AlKhwarizmixException;
+			AlKhwarizmixDomainObjectAbstract object)
+			throws AlKhwarizmixException;
 
 	/**
 	 * TODO: Javadoc
@@ -119,7 +133,8 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * TODO: Javadoc
 	 */
-	public AlKhwarizmixDomainObjectAbstract updateObject(AlKhwarizmixDomainObjectAbstract object)
+	public AlKhwarizmixDomainObjectAbstract updateObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		try {
 			AlKhwarizmixDomainObjectAbstract foundObject = getObject(object);
@@ -148,7 +163,8 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * TODO: Javadoc
 	 */
-	public String objectListToXML(List<AlKhwarizmixDomainObjectAbstract> objectList) {
+	public String objectListToXML(
+			List<AlKhwarizmixDomainObjectAbstract> objectList) {
 		getLogger().debug("objectListToXML()");
 
 		StringWriter stringWriter = new StringWriter();
@@ -182,8 +198,9 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	public AlKhwarizmixDomainObjectAbstract unmarshalObject(String xmlValue)
 			throws AlKhwarizmixException {
 		try {
-			return (AlKhwarizmixDomainObjectAbstract) getJaxb2Marshaller().unmarshal(
-					new StreamSource(IOUtils.toInputStream(xmlValue)));
+			return (AlKhwarizmixDomainObjectAbstract) getJaxb2Marshaller()
+					.unmarshal(
+							new StreamSource(IOUtils.toInputStream(xmlValue)));
 		} catch (XmlMappingException e) {
 			AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_XML_PARSING, e);

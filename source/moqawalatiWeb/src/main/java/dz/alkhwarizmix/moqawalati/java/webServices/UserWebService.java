@@ -94,7 +94,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 		LOG.debug("addUser({})", xmlValue);
 
 		try {
-			String result = userService.addUser(xmlValue,
+			String result = userService.addUserFromXML(xmlValue,
 					getCurrentRequestRemoteAddress());
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponse(sBuilder);
@@ -142,8 +142,9 @@ public class UserWebService extends AlKhwarizmixWebService {
 		LOG.debug("updateUser({})", xmlValue);
 
 		try {
-			StringBuilder sBuilder = new StringBuilder(userService.updateUser(
-					xmlValue, getCurrentRequestRemoteAddress()));
+			StringBuilder sBuilder = new StringBuilder(
+					userService.updateUserFromXML(xmlValue,
+							getCurrentRequestRemoteAddress()));
 			return successResponse(sBuilder);
 		} catch (MoqawalatiException e) {
 			return errorResponse(e);

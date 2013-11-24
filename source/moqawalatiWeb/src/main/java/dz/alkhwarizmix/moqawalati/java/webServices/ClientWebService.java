@@ -94,7 +94,7 @@ public class ClientWebService extends AlKhwarizmixWebService {
 		LOG.debug("addClient({})", xmlValue);
 
 		try {
-			String result = clientService.addClient(xmlValue,
+			String result = clientService.addClientFromXML(xmlValue,
 					getCurrentRequestRemoteAddress());
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponse(sBuilder);
@@ -144,7 +144,7 @@ public class ClientWebService extends AlKhwarizmixWebService {
 
 		try {
 			StringBuilder sBuilder = new StringBuilder(
-					clientService.updateClient(xmlValue,
+					clientService.updateClientFromXML(xmlValue,
 							getCurrentRequestRemoteAddress()));
 			return successResponse(sBuilder);
 		} catch (MoqawalatiException e) {

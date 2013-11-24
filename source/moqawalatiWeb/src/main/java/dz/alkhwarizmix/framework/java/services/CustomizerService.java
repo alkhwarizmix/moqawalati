@@ -23,6 +23,7 @@ import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
+import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 
@@ -49,7 +50,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	 * constructor
 	 */
 	public CustomizerService() {
-		// NOOP
+		super();
 	}
 
 	// --------------------------------------------------------------------------
@@ -77,6 +78,9 @@ public class CustomizerService extends AlKhwarizmixService implements
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
 
+	@Autowired
+	private AlKhwarizmixSessionData sessionData;
+
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -87,12 +91,17 @@ public class CustomizerService extends AlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	public void setCustomData(CustomData customData) throws MoqawalatiException {
+		getLogger().trace("setCustomData");
+
 		try {
 			CustomData customDataToSave = getCustomData(customData);
+
 			if (customDataToSave != null) {
 				customDataToSave.updateFrom(customData);
 			} else {
 				customDataToSave = customData;
+				customDataToSave
+						.setCustomizer(getSessionData().getCustomizer());
 			}
 			addObject(customDataToSave);
 		} catch (AlKhwarizmixException e) {
@@ -104,8 +113,10 @@ public class CustomizerService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String setCustomData(String customDataXml)
+	public String setCustomDataFromXML(String customDataXml)
 			throws MoqawalatiException {
+		getLogger().trace("setCustomDataFromXML");
+
 		try {
 			CustomData newCustomData = (CustomData) unmarshalObject(customDataXml);
 			setCustomData(newCustomData);
@@ -123,9 +134,12 @@ public class CustomizerService extends AlKhwarizmixService implements
 	public AlKhwarizmixDomainObjectAbstract getObject(
 			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
+		getLogger().trace("getObject");
+
 		try {
-			CustomData result = getMoqawalatiDAO().getCustomData(
-					(CustomData) object);
+			CustomData customData = (CustomData) object;
+			customData.setCustomizer(getSessionData().getCustomizer());
+			CustomData result = getMoqawalatiDAO().getCustomData(customData);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw e;
@@ -136,6 +150,8 @@ public class CustomizerService extends AlKhwarizmixService implements
 	 */
 	public CustomData getCustomData(CustomData customData)
 			throws MoqawalatiException {
+		getLogger().trace("getCustomData");
+
 		try {
 			return (CustomData) getObject(customData);
 		} catch (AlKhwarizmixException e) {
@@ -148,6 +164,8 @@ public class CustomizerService extends AlKhwarizmixService implements
 	 */
 	public String getCustomDataAsXML(CustomData customData)
 			throws MoqawalatiException {
+		getLogger().trace("getCustomDataAsXML 1");
+
 		try {
 			String result = getObjectAsXML(customData);
 			return result;
@@ -161,6 +179,8 @@ public class CustomizerService extends AlKhwarizmixService implements
 	 */
 	public String getCustomDataAsXML(String customDataXml)
 			throws MoqawalatiException {
+		getLogger().trace("getCustomDataAsXML 2");
+
 		try {
 			String result = getObjectAsXML(customDataXml);
 			return result;
@@ -202,6 +222,18 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
+	}
+
+	// ----------------------------------
+	// sessionData
+	// ----------------------------------
+
+	protected AlKhwarizmixSessionData getSessionData() {
+		return sessionData;
+	}
+
+	protected void setSessionData(AlKhwarizmixSessionData value) {
+		sessionData = value;
 	}
 
 } // Class

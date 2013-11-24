@@ -42,5 +42,8 @@ public class MoqawalatiConstants
 	public static const CLOSE_WINDOW:String = "Moqawalati_close_window";
 	public static const OPEN_WINDOW:String = "Moqawalati_open_window";
 	
+	public static const GET_CUSTOMDATA:String = "Moqawalati_get_customdata";
+	public static const SET_CUSTOMDATA:String = "Moqawalati_set_customdata";
+	
 } // class
 } // package

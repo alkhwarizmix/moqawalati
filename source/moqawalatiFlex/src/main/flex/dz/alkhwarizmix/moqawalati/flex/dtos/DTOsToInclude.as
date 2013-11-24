@@ -12,8 +12,6 @@
 package dz.alkhwarizmix.moqawalati.flex.dtos
 {
 
-import flash.net.registerClassAlias;
-
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO;
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
 
@@ -32,10 +30,8 @@ public class DTOsToInclude
 	 */
 	public function registerNeededClasses():void
 	{
-		registerClassAlias("dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO",
-			ClientVO);
-		registerClassAlias("dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO",
-			UserVO);
+		var clientVO:ClientVO = new ClientVO();
+		var userVO:UserVO = new UserVO();
 	}
 	
 } // Class

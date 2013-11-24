@@ -35,7 +35,7 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String addClient(String clientXml, String creatorId)
+	public String addClientFromXML(String clientXml, String creatorId)
 			throws MoqawalatiException;
 
 	/**
@@ -56,7 +56,7 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String updateClient(String clientXml, String updaterId)
+	public String updateClientFromXML(String clientXml, String updaterId)
 			throws MoqawalatiException;
 
 	/**

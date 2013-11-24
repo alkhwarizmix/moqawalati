@@ -104,10 +104,7 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	@Override
 	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
 		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
-		if (getCustomizer() == null) {
-			setupFakeCustomizer();
-			result.add(getCustomizer());
-		}
+		result.add(getCustomizer());
 		result.add(this);
 		result.addAll(getCustomDataParts());
 		return result;
@@ -135,12 +132,6 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 			throw new MoqawalatiException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
 		}
-	}
-
-	/**
-	 */
-	public void setupFakeCustomizer() {
-		setCustomizer(new AlKhwarizmixDomainObject());
 	}
 
 	// --------------------------------------------------------------------------

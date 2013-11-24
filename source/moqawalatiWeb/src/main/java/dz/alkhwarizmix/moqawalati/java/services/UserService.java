@@ -53,7 +53,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 * constructor
 	 */
 	public UserService() {
-		// NOOP
+		super();
 	}
 
 	// --------------------------------------------------------------------------
@@ -91,6 +91,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	@Transactional(readOnly = false)
 	public void addUser(User user) throws MoqawalatiException {
+		getLogger().trace("addUser");
+
 		try {
 			addObject(user);
 		} catch (AlKhwarizmixException e) {
@@ -102,8 +104,10 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String addUser(String userXml, String creatorId)
+	public String addUserFromXML(String userXml, String creatorId)
 			throws MoqawalatiException {
+		getLogger().trace("addUserFromXML");
+
 		try {
 			User newUser = (User) unmarshalObject(userXml);
 			newUser.setCreatorId(creatorId);
@@ -118,8 +122,11 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	/**
 	 */
-	public AlKhwarizmixDomainObjectAbstract getObject(AlKhwarizmixDomainObjectAbstract object)
+	public AlKhwarizmixDomainObjectAbstract getObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
+		getLogger().trace("getObject");
+
 		try {
 			User result = getMoqawalatiDAO().getUser((User) object);
 			return result;
@@ -131,6 +138,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	public User getUser(User user) throws MoqawalatiException {
+		getLogger().trace("getUser");
+
 		try {
 			return (User) getObject(user);
 		} catch (AlKhwarizmixException e) {
@@ -142,6 +151,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	public String getUserAsXML(User user) throws MoqawalatiException {
+		getLogger().trace("getUserAsXML 1");
+
 		try {
 			String result = getObjectAsXML(user);
 			return result;
@@ -154,6 +165,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	public String getUserAsXML(String userXml) throws MoqawalatiException {
+		getLogger().trace("getUserAsXML 2");
+
 		try {
 			String result = getObjectAsXML(userXml);
 			return result;
@@ -167,7 +180,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	@Transactional(readOnly = false)
 	public User updateUser(User user) throws MoqawalatiException {
-		LOG.debug("updateUser");
+		getLogger().trace("updateUser");
+
 		try {
 			User result = (User) updateObject(user);
 			return result;
@@ -180,9 +194,10 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public String updateUser(String userXml, String updaterId)
+	public String updateUserFromXML(String userXml, String updaterId)
 			throws MoqawalatiException {
-		LOG.debug("updateUser");
+		getLogger().trace("updateUserFromXML");
+
 		try {
 			User newUser = (User) unmarshalObject(userXml);
 			newUser.setCreatorId(updaterId);
@@ -200,6 +215,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@SuppressWarnings("unchecked")
 	public List<User> getUserList(DetachedCriteria criteria, int firstResult,
 			int maxResult) throws MoqawalatiException {
+		getLogger().trace("getUserList");
+
 		if (criteria == null) {
 			criteria = DetachedCriteria.forClass(User.class);
 			criteria.addOrder(Order.asc(User.USERID));
@@ -219,6 +236,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
 			int maxResult) throws MoqawalatiException {
+		getLogger().trace("getUserListAsXML");
+
 		String result = userListToXML(getUserList(criteria, firstResult,
 				maxResult));
 		return result;
@@ -228,11 +247,12 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	@SuppressWarnings("unchecked")
 	public String userListToXML(List<User> userList) {
+
 		String result = "<Users>";
 		result += objectListToXML((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) userList);
 		result += "</Users>";
 
-		LOG.trace("userListToXML(): returns {}", result);
+		getLogger().trace("userListToXML(): returns {}", result);
 		return result;
 	}
 
