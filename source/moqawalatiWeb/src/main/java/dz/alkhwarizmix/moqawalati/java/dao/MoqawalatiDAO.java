@@ -30,7 +30,6 @@ import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomDataPart;
-import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
@@ -120,7 +119,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 	/**
 	 */
 	public Client getClient(Client client) throws MoqawalatiException {
-		getLogger().debug("getClient()");
+		getLogger().trace("getClient()");
 
 		try {
 			String clientId = client.getClientId();
@@ -138,7 +137,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 	/**
 	 */
 	public User getUser(User user) throws MoqawalatiException {
-		getLogger().debug("getUser()");
+		getLogger().trace("getUser()");
 
 		try {
 			String userId = user.getUserId();
@@ -157,7 +156,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 	 */
 	public CustomData getCustomData(CustomData customData)
 			throws MoqawalatiException {
-		getLogger().debug("getCustomData()");
+		getLogger().trace("getCustomData()");
 
 		try {
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
@@ -169,11 +168,9 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 			criteria.add(Restrictions.and(criter1, criter2));
 			customData = (CustomData) criteria.uniqueResult();
 
-			if (customData != null) {
-				// customData.setCustomizer(getDomainObjectById(customData
-				//		.getCustomizer().getId()));
+			if (customData != null)
 				customData.setCustomDataParts(getCustomDataParts(customData));
-			}
+
 			return customData;
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
@@ -185,24 +182,16 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 	/**
 	 */
 	private List<CustomDataPart> getCustomDataParts(CustomData customData) {
+
 		Criteria criteria = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(CustomDataPart.class);
 		criteria.createCriteria(CustomDataPart.CUSTOMDATA).add(
 				Restrictions.eq(CustomData.ID, customData.getId()));
 		List<CustomDataPart> customDataParts = criteria.list();
-		getLogger().trace("getCustomDataParts: customDataParts.size {}",
+
+		getLogger().debug("getCustomDataParts: customDataParts.size {}",
 				(customDataParts == null) ? null : customDataParts.size());
 		return customDataParts;
-	}
-
-	/**
-	 */
-	private AlKhwarizmixDomainObject getDomainObjectById(Long id) {
-		Criteria criteria = getHibernateTemplate().getSessionFactory()
-				.getCurrentSession()
-				.createCriteria(AlKhwarizmixDomainObject.class);
-		criteria.add(Restrictions.eq(AlKhwarizmixDomainObject.ID, id));
-		return (AlKhwarizmixDomainObject) criteria.uniqueResult();
 	}
 
 	// --------------------------------------------------------------------------

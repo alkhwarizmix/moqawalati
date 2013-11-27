@@ -97,13 +97,11 @@ public class CustomizerService extends AlKhwarizmixService implements
 		try {
 			CustomData customDataToSave = getCustomData(customData);
 
-			if (customDataToSave != null) {
+			if (customDataToSave != null)
 				customDataToSave.updateFrom(customData);
-			} else {
+			else
 				customDataToSave = customData;
-				customDataToSave
-						.setCustomizer(getSessionData().getCustomizer());
-			}
+
 			addObject(customDataToSave);
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);
@@ -139,10 +137,9 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 		try {
 			CustomData result = null;
-			AlKhwarizmixDomainObject x = getSessionData().getCustomizer();
-			if (x.getId() != null) {
-				CustomData customData = (CustomData) object;
-				customData.setCustomizer(getSessionData().getCustomizer());
+			CustomData customData = (CustomData) object;
+			customData.setCustomizer(getSessionCustomizer());
+			if (getSessionCustomizer().getId() != null) {
 				result = getMoqawalatiDAO().getCustomData(customData);
 			}
 			return result;
@@ -158,7 +155,6 @@ public class CustomizerService extends AlKhwarizmixService implements
 		getLogger().trace("getCustomData");
 
 		try {
-			customData.setCustomizer(getSessionData().getCustomizer());
 			return (CustomData) getObject(customData);
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);
@@ -194,6 +190,13 @@ public class CustomizerService extends AlKhwarizmixService implements
 			MoqawalatiException ex = new MoqawalatiException(e);
 			throw ex;
 		}
+	}
+
+	/**
+	 */
+	private AlKhwarizmixDomainObject getSessionCustomizer() {
+
+		return getSessionData().getCustomizer();
 	}
 
 	// --------------------------------------------------------------------------

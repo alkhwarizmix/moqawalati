@@ -89,7 +89,7 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	@Column(name = "customDataId", unique = false, nullable = false, length = 63)
 	private String customDataId;
 
-	@ManyToOne(targetEntity=AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "customizer", nullable = false)
 	private AlKhwarizmixDomainObject customizer;
@@ -108,7 +108,7 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	 */
 	@Override
 	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
-		
+
 		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
 		if (getCustomizer().getId() == null)
 			result.add(getCustomizer());
@@ -127,14 +127,12 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+
 		CustomData sourceCustomData = (CustomData) sourceObject;
 		if ((sourceCustomData != null)
 				&& (this.getCustomDataId().equals(sourceCustomData
 						.getCustomDataId()))) {
-			if (sourceCustomData.customDataParts != null) {
-				this.setCustomDataValue(sourceCustomData.getCustomDataValue());
-			}
-			this.setCustomizer(sourceCustomData.getCustomizer());
+			this.setCustomDataValue(sourceCustomData.getCustomDataValue());
 		} else {
 			throw new MoqawalatiException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
