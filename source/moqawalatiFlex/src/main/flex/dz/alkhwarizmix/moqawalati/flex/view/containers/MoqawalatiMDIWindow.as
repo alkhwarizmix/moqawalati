@@ -49,7 +49,7 @@ public class MoqawalatiMDIWindow extends AlKhwarizmixMDIWindow
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiMDIWindow);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 } // Class
 } // Package

@@ -18,6 +18,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -31,6 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -62,6 +65,7 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	private static final long serialVersionUID = 3943183332329388549L;
 
 	public static final String CUSTOMDATAID = "customDataId";
+	public static final String CUSTOMIZER = "customizer.id";
 
 	// --------------------------------------------------------------------------
 	//
@@ -85,7 +89,8 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	@Column(name = "customDataId", unique = false, nullable = false, length = 63)
 	private String customDataId;
 
-	@ManyToOne
+	@ManyToOne(targetEntity=AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "customizer", nullable = false)
 	private AlKhwarizmixDomainObject customizer;
 
@@ -103,8 +108,10 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	 */
 	@Override
 	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+		
 		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
-		result.add(getCustomizer());
+		if (getCustomizer().getId() == null)
+			result.add(getCustomizer());
 		result.add(this);
 		result.addAll(getCustomDataParts());
 		return result;

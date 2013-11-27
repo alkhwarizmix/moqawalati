@@ -156,6 +156,10 @@ public abstract class AlKhwarizmixDomainObjectAbstract implements Serializable {
 		return id;
 	}
 
+	public void setId(Long value) {
+		id = value;
+	}
+
 	// ----------------------------------
 	// version
 	// ----------------------------------

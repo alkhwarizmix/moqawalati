@@ -69,8 +69,10 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	{
 		super(NAME, viewComponent);
 		
-		mdiCanvas.addEventListener("TestAndDebugWindow_send",
-			mdiCanvas_sendHandler);
+		mdiCanvas.addEventListener("TestAndDebugWindow_getCustomData",
+			mdiCanvas_getCustomDataHandler);
+		mdiCanvas.addEventListener("TestAndDebugWindow_setCustomData",
+			mdiCanvas_setCustomDataHandler);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -82,7 +84,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MDICanvasMediator);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 	//--------------------------------------------------------------------------
 	//
@@ -111,7 +113,8 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	override public function listNotificationInterests():Array
 	{
 		return [
-			MoqawalatiConstants.OPEN_WINDOW
+			 MoqawalatiConstants.OPEN_WINDOW
+			,MoqawalatiConstants.CUSTOMDATA_PROXY_CHANGED
 		];
 	}
 	
@@ -124,12 +127,18 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		
 		switch (notif.getName())
 		{
+			case MoqawalatiConstants.CUSTOMDATA_PROXY_CHANGED:
+			{
+				handleCustomDataProxyChanged(notif.getBody());
+				break;
+			}
+			
 			case MoqawalatiConstants.OPEN_WINDOW:
 			{
 				handleOpenWindow(notif.getBody());
 				break;
 			}
-				
+			
 		} // switch
 	}
 	
@@ -140,11 +149,22 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	//--------------------------------------------------------------------------
 	
 	/**
+	 * TODO: ASDOC Definition of handleCustomDataProxyChanged
+	 */
+	public function handleCustomDataProxyChanged(notifBody:Object):void
+	{
+		logger.debug("handleCustomDataProxyChanged");
+		
+		var customDataVO:CustomDataVO = appCustomDataProxy.getData() as CustomDataVO;
+		testAndDebugWindow.textArea.text = customDataVO.customDataValue;
+	}
+	
+	/**
 	 * TODO: ASDOC Definition of handleOpenWindow
 	 */
 	public function handleOpenWindow(notifBody:Object):void
 	{
-		log.debug("handleOpenWindow");
+		logger.debug("handleOpenWindow");
 		
 		var win:MoqawalatiMDIWindow = new MoqawalatiMDIWindow();
 		win.width = 350;
@@ -180,7 +200,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 			: StringUtil.substitute("moqawalatiFlex-1.0.0.1-{0}module", moduleNameLowerCase);
 		result += ".swf";
 		
-		log.debug("getModuleRelativePath: result={0}", result);
+		logger.debug("getModuleRelativePath: result={0}", result);
 		return result;
 	}
 	
@@ -195,7 +215,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	 */
 	private function moduleLoader_errorHandler(event:ModuleEvent):void
 	{
-		log.error("moduleLoader_errorHandler: error={0}", event.errorText);
+		logger.error("moduleLoader_errorHandler: error={0}", event.errorText);
 	}
 	
 	/**
@@ -203,7 +223,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	 */
 	private function win_closeHandler(event:MDIWindowEvent):void
 	{
-		log.debug("win_closeHandler");
+		logger.debug("win_closeHandler");
 		
 		var win:MoqawalatiMDIWindow = event.window as MoqawalatiMDIWindow;
 		var moduleLoader:ModuleLoader = win.getChildAt(0) as ModuleLoader;
@@ -222,12 +242,30 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	/**
 	 * @private
 	 */
-	private function mdiCanvas_sendHandler(event:Event):void
+	private function mdiCanvas_getCustomDataHandler(event:Event):void
 	{
-		log.debug("mdiCanvas_sendHandler");
+		logger.debug("mdiCanvas_getCustomDataHandler");
 		
-		var testAndDebugWindow:TestAndDebugWindow = (event.target
-			as TestAndDebugWindow);
+		testAndDebugWindow = (event.target as TestAndDebugWindow);
+		
+		var newCustomDataVO:CustomDataVO = new CustomDataVO(
+			"dz.alkhwarizmix.moqawalati.flex.view");
+		
+		sendNotification(MoqawalatiConstants.GET_CUSTOMDATA,
+			{
+				operationParams : [newCustomDataVO]
+			});
+	}
+	private var testAndDebugWindow:TestAndDebugWindow = null;
+	
+	/**
+	 * @private
+	 */
+	private function mdiCanvas_setCustomDataHandler(event:Event):void
+	{
+		logger.debug("mdiCanvas_setCustomDataHandler");
+		
+		testAndDebugWindow = (event.target as TestAndDebugWindow);
 		
 		var newCustomDataVO:CustomDataVO = new CustomDataVO(
 			"dz.alkhwarizmix.moqawalati.flex.view",

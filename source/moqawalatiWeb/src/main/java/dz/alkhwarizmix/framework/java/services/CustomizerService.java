@@ -22,6 +22,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
@@ -137,9 +138,13 @@ public class CustomizerService extends AlKhwarizmixService implements
 		getLogger().trace("getObject");
 
 		try {
-			CustomData customData = (CustomData) object;
-			customData.setCustomizer(getSessionData().getCustomizer());
-			CustomData result = getMoqawalatiDAO().getCustomData(customData);
+			CustomData result = null;
+			AlKhwarizmixDomainObject x = getSessionData().getCustomizer();
+			if (x.getId() != null) {
+				CustomData customData = (CustomData) object;
+				customData.setCustomizer(getSessionData().getCustomizer());
+				result = getMoqawalatiDAO().getCustomData(customData);
+			}
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw e;
@@ -153,6 +158,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 		getLogger().trace("getCustomData");
 
 		try {
+			customData.setCustomizer(getSessionData().getCustomizer());
 			return (CustomData) getObject(customData);
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);

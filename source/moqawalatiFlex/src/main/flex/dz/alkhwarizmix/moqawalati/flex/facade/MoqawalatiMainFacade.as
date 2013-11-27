@@ -46,7 +46,7 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */
 	public function MoqawalatiMainFacade(key:String)
 	{
-		log.debug("MoqawalatiMainFacade");
+		logger.debug("MoqawalatiMainFacade");
 		super(key);
 		
 		registerNeededClasses();
@@ -120,7 +120,7 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */
 	private function registerCommands():void
 	{
-		log.debug("registerCommands");
+		logger.debug("registerCommands");
 		
 		registerCommand(MoqawalatiConstants.STARTUP,
 			MoqawalatiStartupCommand);

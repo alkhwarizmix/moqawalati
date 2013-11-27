@@ -56,7 +56,7 @@ public class MoqawalatiModule extends AlKhwarizmixModule
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiModule);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 } // class
 } // package

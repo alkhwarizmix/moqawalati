@@ -83,7 +83,7 @@ public class MainControlBarMediator extends MoqawalatiMediator
 	 */
 	private function mainControlBar_openWindowHandler(event:PropertyChangeEvent):void
 	{
-		log.debug("mainControlBar_openWindowHandler");
+		logger.debug("mainControlBar_openWindowHandler");
 		
 		if (!event.property)
 		{

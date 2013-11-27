@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.java.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +100,8 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
 			}
+			String s = "Success";
+			s = s + "";
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (DataAccessException e) {
@@ -159,13 +162,16 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO {
 		try {
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(CustomData.class);
-			criteria.add(Restrictions.eq(CustomData.CUSTOMDATAID,
-					customData.getCustomDataId()));
+			Criterion criter1 = Restrictions.eq(CustomData.CUSTOMDATAID,
+					customData.getCustomDataId());
+			Criterion criter2 = Restrictions.eq(CustomData.CUSTOMIZER,
+					customData.getCustomizer().getId());
+			criteria.add(Restrictions.and(criter1, criter2));
 			customData = (CustomData) criteria.uniqueResult();
 
 			if (customData != null) {
-				customData.setCustomizer(getDomainObjectById(customData
-						.getCustomizer().getId()));
+				// customData.setCustomizer(getDomainObjectById(customData
+				//		.getCustomizer().getId()));
 				customData.setCustomDataParts(getCustomDataParts(customData));
 			}
 			return customData;

@@ -45,5 +45,7 @@ public class MoqawalatiConstants
 	public static const GET_CUSTOMDATA:String = "Moqawalati_get_customdata";
 	public static const SET_CUSTOMDATA:String = "Moqawalati_set_customdata";
 	
+	public static const CUSTOMDATA_PROXY_CHANGED:String = "Moqawalati_customdata_roxy_changed";
+	
 } // class
 } // package

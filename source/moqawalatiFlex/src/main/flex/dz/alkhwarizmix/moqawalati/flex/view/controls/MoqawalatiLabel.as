@@ -49,7 +49,7 @@ public class MoqawalatiLabel extends AlKhwarizmixLabel
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiLabel);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 } // Class
 } // Package

@@ -49,7 +49,7 @@ public class MoqawalatiRemoteObject extends AlKhwarizmixRemoteObject
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiRemoteObject);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 } // class
 } // package

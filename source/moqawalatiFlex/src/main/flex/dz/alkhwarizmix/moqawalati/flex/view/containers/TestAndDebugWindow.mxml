@@ -39,9 +39,14 @@
 		//
 		//--------------------------------------------------------------------------
 		
-		private function send():void
+		private function btnGetCustomData_clickHandler(event:MouseEvent):void
 		{
-			sendEvent("TestAndDebugWindow_send");
+			sendEvent("TestAndDebugWindow_getCustomData");
+		}
+		
+		private function btnSetCustomData_clickHandler(event:MouseEvent):void
+		{
+			sendEvent("TestAndDebugWindow_setCustomData");
 		}
 		
 	]]>
@@ -49,6 +54,7 @@
 	
 	<mx:TextArea id="textArea" width="100%" height="100%"/>
 	<mx:ControlBar>
-		<controls:MoqawalatiButton label="Send" click="send()"/>
+		<controls:MoqawalatiButton id="btnGetCustomData" label="Get" click="btnGetCustomData_clickHandler(event)"/>
+		<controls:MoqawalatiButton id="btnSetCustomData" label="Set" click="btnSetCustomData_clickHandler(event)"/>
 	</mx:ControlBar>
 </containers:MoqawalatiMDIWindow>

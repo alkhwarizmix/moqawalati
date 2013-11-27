@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommand;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
 
 /**
  *  <p>
@@ -65,8 +65,8 @@ public class MoqawalatiSetCustomizedDataCommand extends MoqawalatiBlazeDSGetData
 	 */
 	override public function get proxyName():String
 	{
-		return null;
+		return MoqawalatiCustomDataProxy.NAME;
 	}
-	
+		
 } // class
 } // package

@@ -18,6 +18,7 @@ package dz.alkhwarizmix.moqawalati.flex.view
 	import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 	import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 	import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
+	import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
 	
 	import org.puremvc.as3.multicore.interfaces.IFacade;
 	import org.puremvc.as3.multicore.interfaces.INotification;
@@ -58,7 +59,7 @@ package dz.alkhwarizmix.moqawalati.flex.view
 		private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 			getLogger(MoqawalatiMediator);
 		
-		override protected function get log():IAlKhwarizmixLogger { return LOG; }
+		override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 		
 		//--------------------------------------------------------------------------
 		//
@@ -89,6 +90,16 @@ package dz.alkhwarizmix.moqawalati.flex.view
 		{
 			return appFacade.retrieveProxy(MoqawalatiConfigProxy.NAME)
 				as MoqawalatiConfigProxy;
+		}
+		
+		//----------------------------------
+		//  appCustomDataProxy
+		//----------------------------------
+		
+		public final function get appCustomDataProxy():MoqawalatiCustomDataProxy
+		{
+			return appFacade.retrieveProxy(MoqawalatiCustomDataProxy.NAME)
+				as MoqawalatiCustomDataProxy;
 		}
 		
 		//--------------------------------------------------------------------------
