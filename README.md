@@ -57,8 +57,8 @@ Maven Build Moqawalati WAR
 * mkdir DEVELOPER_HOME/git
 * mkdir DEVELOPER_HOME/git/alkhwarizmix
 * cd DEVELOPER_HOME/git/alkhwarizmix
-* git clone https://github.com/alkhwarizmix/frameworks.git -b fares
-* git clone https://github.com/alkhwarizmix/moqawalati.git -b fares
+* git clone https://github.com/alkhwarizmix/frameworks.git
+* git clone https://github.com/alkhwarizmix/moqawalati.git
 * cd frameworks/source/
 * mvn -f alkhwarizmix-common.pom.xml clean install
 * mvn -f install-PureMVC_AS3_MultiCore_Framework.pom.xml antrun:run install:install-file -DgroupId=org.puremvc -DartifactId=PureMVC_AS3_MultiCore_Framework -Dversion=1.0.5 -Dpackaging=swc -Dfile=target/download/PureMVC_AS3_MultiCore_1_0_5.swc
