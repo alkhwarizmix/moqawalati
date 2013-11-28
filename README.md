@@ -47,11 +47,6 @@ Setup your system and install the needed tools:
   - Command Line Mac OSX# DEVELOPER_HOME/tools/Flash Player.app/Contents/MacOS/Flash Player 
   - Command Line MS DOS# DEVELOPER_HOME/tools/flashplayer_11_sa.exe
 
-* Install PostgreSQL (http://www.postgresql.org/download/)
-* Create needed USER (moqawalati_user) and DATABASE (moqawalati_db)
-  - PostgreSQL Command# CREATE USER moqawalati_user WITH PASSWORD 'reverse';
-  - PostgreSQL Command# CREATE DATABASE moqawalati_db OWNER moqawalati_user ENCODING='UTF8';
-
 Maven Build Moqawalati WAR
 
 * mkdir DEVELOPER_HOME/git
