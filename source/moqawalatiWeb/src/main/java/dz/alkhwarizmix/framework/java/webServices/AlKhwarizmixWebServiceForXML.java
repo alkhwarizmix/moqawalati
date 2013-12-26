@@ -31,7 +31,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public abstract class AlKhwarizmixWebService {
+public abstract class AlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
@@ -63,7 +63,7 @@ public abstract class AlKhwarizmixWebService {
 	 * 
 	 * @return {@link HttpHeaders}
 	 */
-	public HttpHeaders getHttpHeaders() {
+	public HttpHeaders getHttpHeadersForXML() {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("Content-Type", "application/xml; charset=UTF-8");
 		responseHeaders.setPragma("no-cache");
@@ -75,19 +75,19 @@ public abstract class AlKhwarizmixWebService {
 
 	/**
 	 */
-	public void buildResponseError(StringBuilder sBuilder) {
-		buildResponseStatus(sBuilder, ResponseStatus.ERROR);
+	public void buildResponseErrorAsXML(StringBuilder sBuilder) {
+		buildResponseStatusAsXML(sBuilder, ResponseStatus.ERROR);
 	}
 
 	/**
 	 */
-	public void buildResponseSuccess(StringBuilder sBuilder) {
-		buildResponseStatus(sBuilder, ResponseStatus.SUCCESSFUL);
+	public void buildResponseSuccessAsXML(StringBuilder sBuilder) {
+		buildResponseStatusAsXML(sBuilder, ResponseStatus.SUCCESSFUL);
 	}
 
 	/**
 	 */
-	public void buildResponseStatus(StringBuilder builder,
+	public void buildResponseStatusAsXML(StringBuilder builder,
 			ResponseStatus response) {
 		StringBuilder responseHead = new StringBuilder(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
@@ -99,13 +99,14 @@ public abstract class AlKhwarizmixWebService {
 
 	/**
 	 */
-	public ResponseEntity<String> errorResponse(AlKhwarizmixErrorCode errorCode) {
+	public ResponseEntity<String> errorResponseForXML(
+			AlKhwarizmixErrorCode errorCode) {
 		StringBuilder sBuilder = new StringBuilder("<error code=\"").append(
 				errorCode.getId()).append("\"/>");
 
-		buildResponseError(sBuilder);
+		buildResponseErrorAsXML(sBuilder);
 
-		HttpHeaders responseHeaders = getHttpHeaders();
+		HttpHeaders responseHeaders = getHttpHeadersForXML();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
 				HttpStatus.METHOD_FAILURE);
@@ -113,16 +114,16 @@ public abstract class AlKhwarizmixWebService {
 
 	/**
 	 */
-	public ResponseEntity<String> errorResponse(AlKhwarizmixException ex) {
-		return errorResponse(ex.getErrorCode());
+	public ResponseEntity<String> errorResponseForXML(AlKhwarizmixException ex) {
+		return errorResponseForXML(ex.getErrorCode());
 	}
 
 	/**
 	 */
-	public ResponseEntity<String> successResponse(StringBuilder sBuilder) {
-		buildResponseSuccess(sBuilder);
+	public ResponseEntity<String> successResponseForXML(StringBuilder sBuilder) {
+		buildResponseSuccessAsXML(sBuilder);
 
-		HttpHeaders responseHeaders = getHttpHeaders();
+		HttpHeaders responseHeaders = getHttpHeadersForXML();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
 				HttpStatus.OK);

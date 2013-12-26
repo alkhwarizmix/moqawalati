@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.java.services;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,6 +61,14 @@ public class ClientServiceTest {
 		utClientService.addClient(new Client());
 		verify(mockMoqawalatiDAO, times(1)).saveOrUpdate(
 				any(AlKhwarizmixDomainObjectAbstract.class));
+	}
+
+	@Test
+	public void test02_getClientAsJSON() throws Exception {
+		Client client = new Client();
+		client.setName("Fares");
+		String s = utClientService.getClientAsJSON(client);
+		Assert.assertNotNull(s);
 	}
 
 } // Class

@@ -39,7 +39,8 @@ public interface IAlKhwarizmixService {
 	/**
 	 * get the object
 	 */
-	public AlKhwarizmixDomainObjectAbstract getObject(AlKhwarizmixDomainObjectAbstract object)
+	public AlKhwarizmixDomainObjectAbstract getObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
@@ -53,13 +54,19 @@ public interface IAlKhwarizmixService {
 
 	/**
 	 */
+	public String getObjectAsJSON(AlKhwarizmixDomainObjectAbstract object)
+			throws AlKhwarizmixException;
+
+	/**
+	 */
 	public List<AlKhwarizmixDomainObjectAbstract> getObjectList(
 			DetachedCriteria criteria, int firstResult, int maxResult)
 			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObjectAbstract updateObject(AlKhwarizmixDomainObjectAbstract object)
+	public AlKhwarizmixDomainObjectAbstract updateObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
@@ -68,16 +75,27 @@ public interface IAlKhwarizmixService {
 
 	/**
 	 */
-	public String objectListToXML(List<AlKhwarizmixDomainObjectAbstract> objectList);
+	public String objectListToJSON(
+			List<AlKhwarizmixDomainObjectAbstract> objectList);
 
 	/**
 	 */
-	public String marshalObject(AlKhwarizmixDomainObjectAbstract object)
+	public String objectListToXML(
+			List<AlKhwarizmixDomainObjectAbstract> objectList);
+
+	/**
+	 */
+	public String marshalObjectToXML(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObjectAbstract unmarshalObject(String xmlValue)
+	public AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
+			String xmlValue) throws AlKhwarizmixException;
+
+	/**
+	 */
+	public String marshalObjectToJSON(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 } // Class

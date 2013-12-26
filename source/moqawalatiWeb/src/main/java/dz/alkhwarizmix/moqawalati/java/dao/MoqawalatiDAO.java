@@ -33,6 +33,7 @@ import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomDataPart;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
  * <p>
@@ -43,7 +44,7 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 @Repository
-public class MoqawalatiDAO extends AlKhwarizmixDAO {
+public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 
 	// --------------------------------------------------------------------------
 	//

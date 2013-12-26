@@ -19,14 +19,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
  * <p>
@@ -74,7 +75,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private MoqawalatiDAO moqawalatiDAO;
+	private IMoqawalatiDAO moqawalatiDAO;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -91,7 +92,9 @@ public class CustomizerService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public void setCustomData(CustomData customData) throws MoqawalatiException {
+	@Override
+	public void setCustomData(CustomData customData)
+			throws MoqawalatiException {
 		getLogger().trace("setCustomData");
 
 		try {
@@ -112,14 +115,15 @@ public class CustomizerService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Transactional(readOnly = false)
+	@Override
 	public String setCustomDataFromXML(String customDataXml)
 			throws MoqawalatiException {
 		getLogger().trace("setCustomDataFromXML");
 
 		try {
-			CustomData newCustomData = (CustomData) unmarshalObject(customDataXml);
+			CustomData newCustomData = (CustomData) unmarshalObjectFromXML(customDataXml);
 			setCustomData(newCustomData);
-			String result = marshalObject(newCustomData);
+			String result = marshalObjectToXML(newCustomData);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			getLogger().error("addCustomData: {}", e.getStackTrace());
@@ -130,6 +134,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 	/**
 	 */
+	@Override
 	public AlKhwarizmixDomainObjectAbstract getObject(
 			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
@@ -150,6 +155,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 	/**
 	 */
+	@Override
 	public CustomData getCustomData(CustomData customData)
 			throws MoqawalatiException {
 		getLogger().trace("getCustomData");
@@ -164,6 +170,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 	/**
 	 */
+	@Override
 	public String getCustomDataAsXML(CustomData customData)
 			throws MoqawalatiException {
 		getLogger().trace("getCustomDataAsXML 1");
@@ -179,6 +186,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 	/**
 	 */
+	@Override
 	public String getCustomDataAsXML(String customDataXml)
 			throws MoqawalatiException {
 		getLogger().trace("getCustomDataAsXML 2");
@@ -209,7 +217,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	// moqawalatiDAO
 	// ----------------------------------
 
-	protected MoqawalatiDAO getMoqawalatiDAO() {
+	protected IMoqawalatiDAO getMoqawalatiDAO() {
 		return moqawalatiDAO;
 	}
 
@@ -217,7 +225,8 @@ public class CustomizerService extends AlKhwarizmixService implements
 		moqawalatiDAO = value;
 	}
 
-	protected AlKhwarizmixDAO getServiceDAO() {
+	@Override
+	protected IAlKhwarizmixDAO getServiceDAO() {
 		return moqawalatiDAO;
 	}
 

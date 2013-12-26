@@ -36,7 +36,7 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  */
 @Controller
 @RequestMapping("alkhwarizmix/xml/customize")
-public class CustomizerWebService extends AlKhwarizmixWebService {
+public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
@@ -47,7 +47,7 @@ public class CustomizerWebService extends AlKhwarizmixWebService {
 	/**
 	 * constructor
 	 */
-	public CustomizerWebService() {
+	public CustomizerWebServiceForXML() {
 		super();
 	}
 
@@ -58,7 +58,7 @@ public class CustomizerWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomizerWebService.class);
+			.getLogger(CustomizerWebServiceForXML.class);
 
 	protected Logger getLogger() {
 		return LOG;
@@ -97,9 +97,9 @@ public class CustomizerWebService extends AlKhwarizmixWebService {
 			String result = getCustomizerService().setCustomDataFromXML(
 					xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
-			return successResponse(sBuilder);
+			return successResponseForXML(sBuilder);
 		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return errorResponseForXML(e);
 		}
 	}
 
@@ -122,9 +122,9 @@ public class CustomizerWebService extends AlKhwarizmixWebService {
 			customDataToGet.setCustomDataId(customDataId);
 			StringBuilder sBuilder = new StringBuilder(getCustomizerService()
 					.getCustomDataAsXML(customDataToGet));
-			return successResponse(sBuilder);
+			return successResponseForXML(sBuilder);
 		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return errorResponseForXML(e);
 		}
 	}
 

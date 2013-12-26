@@ -38,9 +38,12 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.framework.version>3.1.2.RELEASE</spring.framework.version>
-		<spring.integrationframework.version>2.1.3.RELEASE</spring.integrationframework.version>
+		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
+		<org.springframework.security.version>3.1.2.RELEASE</org.springframework.security.version>
+		<org.springframework.integration.version>2.1.3.RELEASE</org.springframework.integration.version>
 		<com.adobe.blazeds.version>3.2.0.3978</com.adobe.blazeds.version>
+		<org.codehaus.jackson.version>1.9.10</org.codehaus.jackson.version>
+
 		<hibernate-core.version>3.5.6-Final</hibernate-core.version> <!-- 4.1.7.Final -->
 		<hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
 		<hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
@@ -86,58 +89,61 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
+		
+		<!-- org.springframework.security -->
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>${spring.framework.version}</version>
+			<version>${org.springframework.security.version}</version>
 		</dependency>
 
 		<!-- org.springframework.integration -->
@@ -145,17 +151,17 @@
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-event</artifactId>
-			<version>${spring.integrationframework.version}</version>
+			<version>${org.springframework.integration.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-core</artifactId>
-			<version>${spring.integrationframework.version}</version>
+			<version>${org.springframework.integration.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-jms</artifactId>
-			<version>${spring.integrationframework.version}</version>
+			<version>${org.springframework.integration.version}</version>
 		</dependency>
 
 		<!-- com.adobe.blazeds -->
@@ -184,6 +190,14 @@
 			<groupId>com.adobe.blazeds</groupId>
 			<artifactId>blazeds-opt</artifactId>
 			<version>${com.adobe.blazeds.version}</version>
+		</dependency>
+
+		<!-- Jackson JSON Mapper -->
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
 		</dependency>
 
 		<!-- org.hibernate -->

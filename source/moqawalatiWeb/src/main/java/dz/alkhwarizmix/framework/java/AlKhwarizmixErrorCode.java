@@ -27,7 +27,8 @@ public enum AlKhwarizmixErrorCode {
 			12, "Invalid Data", HttpStatus.INTERNAL_SERVER_ERROR), UPDATE_DATA_ERROR(
 			13, "Cannot update data", HttpStatus.INTERNAL_SERVER_ERROR),
 
-	ERROR_XML_PARSING(70, "Xml parsing error", HttpStatus.BAD_REQUEST);
+	ERROR_XML_PARSING(70, "Xml parsing error", HttpStatus.BAD_REQUEST),
+	ERROR_JSON_PARSING(80, "Json parsing error", HttpStatus.BAD_REQUEST);
 
 	private int id;
 	private String description;

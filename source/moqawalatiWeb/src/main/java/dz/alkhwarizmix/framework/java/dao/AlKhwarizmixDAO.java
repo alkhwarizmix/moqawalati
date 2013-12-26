@@ -22,6 +22,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
  * 
  * @see http://community.jboss.org/wiki/GenericDataAccessObjects
  */
-public abstract class AlKhwarizmixDAO {
+public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 
 	// --------------------------------------------------------------------------
 	//
@@ -103,6 +104,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
+	@Override
 	public AlKhwarizmixDomainObjectAbstract get(
 			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
 			throws AlKhwarizmixDAOException {
@@ -117,6 +119,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
+	@Override
 	public List getList(DetachedCriteria criteria, int firstResult,
 			int maxResult) throws AlKhwarizmixDAOException {
 		getLogger().trace("getList({})", criteria);
@@ -131,6 +134,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
+	@Override
 	public AlKhwarizmixDomainObjectAbstract load(
 			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
 			throws AlKhwarizmixDAOException {
@@ -155,6 +159,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
+	@Override
 	public void merge(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("merge({})", object);
@@ -175,6 +180,7 @@ public abstract class AlKhwarizmixDAO {
 
 	/**
 	 */
+	@Override
 	public void delete(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("delete({})", object);

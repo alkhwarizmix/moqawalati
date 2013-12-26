@@ -23,12 +23,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
 
 /**
@@ -76,7 +77,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private MoqawalatiDAO moqawalatiDAO;
+	private IMoqawalatiDAO moqawalatiDAO;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -109,10 +110,10 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 		getLogger().trace("addUserFromXML");
 
 		try {
-			User newUser = (User) unmarshalObject(userXml);
+			User newUser = (User) unmarshalObjectFromXML(userXml);
 			newUser.setCreatorId(creatorId);
 			addUser(newUser);
-			String result = marshalObject(newUser);
+			String result = marshalObjectToXML(newUser);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);
@@ -122,6 +123,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	/**
 	 */
+	@Override
 	public AlKhwarizmixDomainObjectAbstract getObject(
 			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
@@ -137,6 +139,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	/**
 	 */
+	@Override
 	public User getUser(User user) throws MoqawalatiException {
 		getLogger().trace("getUser");
 
@@ -150,6 +153,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	/**
 	 */
+	@Override
 	public String getUserAsXML(User user) throws MoqawalatiException {
 		getLogger().trace("getUserAsXML 1");
 
@@ -164,6 +168,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	/**
 	 */
+	@Override
 	public String getUserAsXML(String userXml) throws MoqawalatiException {
 		getLogger().trace("getUserAsXML 2");
 
@@ -199,10 +204,10 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 		getLogger().trace("updateUserFromXML");
 
 		try {
-			User newUser = (User) unmarshalObject(userXml);
+			User newUser = (User) unmarshalObjectFromXML(userXml);
 			newUser.setCreatorId(updaterId);
 			User updatedUser = updateUser(newUser);
-			String result = marshalObject(updatedUser);
+			String result = marshalObjectToXML(updatedUser);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			MoqawalatiException ex = new MoqawalatiException(e);
@@ -266,7 +271,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// moqawalatiDAO
 	// ----------------------------------
 
-	protected MoqawalatiDAO getMoqawalatiDAO() {
+	protected IMoqawalatiDAO getMoqawalatiDAO() {
 		return moqawalatiDAO;
 	}
 
@@ -274,7 +279,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 		moqawalatiDAO = value;
 	}
 
-	protected AlKhwarizmixDAO getServiceDAO() {
+	@Override
+	protected IAlKhwarizmixDAO getServiceDAO() {
 		return moqawalatiDAO;
 	}
 

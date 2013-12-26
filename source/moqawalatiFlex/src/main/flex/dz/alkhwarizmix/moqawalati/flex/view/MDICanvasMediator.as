@@ -113,7 +113,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	override public function listNotificationInterests():Array
 	{
 		return [
-			 MoqawalatiConstants.OPEN_WINDOW
+			MoqawalatiConstants.OPEN_WINDOW
 			,MoqawalatiConstants.CUSTOMDATA_PROXY_CHANGED
 		];
 	}
@@ -132,13 +132,13 @@ public class MDICanvasMediator extends MoqawalatiMediator
 				handleCustomDataProxyChanged(notif.getBody());
 				break;
 			}
-			
+				
 			case MoqawalatiConstants.OPEN_WINDOW:
 			{
 				handleOpenWindow(notif.getBody());
 				break;
 			}
-			
+				
 		} // switch
 	}
 	

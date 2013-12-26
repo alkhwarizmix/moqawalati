@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebService;
+import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebServiceForXML;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
@@ -37,7 +37,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
  */
 @Controller
 @RequestMapping("moqawalati/xml/user")
-public class UserWebService extends AlKhwarizmixWebService {
+public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
@@ -48,7 +48,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 	/**
 	 * constructor
 	 */
-	public UserWebService() {
+	public UserWebServiceForXML() {
 		super();
 	}
 
@@ -59,7 +59,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(UserWebService.class);
+			.getLogger(UserWebServiceForXML.class);
 
 	protected Logger getLogger() {
 		return LOG;
@@ -97,9 +97,9 @@ public class UserWebService extends AlKhwarizmixWebService {
 			String result = userService.addUserFromXML(xmlValue,
 					getCurrentRequestRemoteAddress());
 			StringBuilder sBuilder = new StringBuilder(result);
-			return successResponse(sBuilder);
+			return successResponseForXML(sBuilder);
 		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return errorResponseForXML(e);
 		}
 	}
 
@@ -121,9 +121,9 @@ public class UserWebService extends AlKhwarizmixWebService {
 			userToGet.setUserId(userId);
 			StringBuilder sBuilder = new StringBuilder(
 					userService.getUserAsXML(userToGet));
-			return successResponse(sBuilder);
+			return successResponseForXML(sBuilder);
 		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return errorResponseForXML(e);
 		}
 	}
 
@@ -145,9 +145,9 @@ public class UserWebService extends AlKhwarizmixWebService {
 			StringBuilder sBuilder = new StringBuilder(
 					userService.updateUserFromXML(xmlValue,
 							getCurrentRequestRemoteAddress()));
-			return successResponse(sBuilder);
+			return successResponseForXML(sBuilder);
 		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return errorResponseForXML(e);
 		}
 	}
 
@@ -163,9 +163,9 @@ public class UserWebService extends AlKhwarizmixWebService {
 			result.append(userService.getUserListAsXML(null, firstResult,
 					maxResult));
 
-			return successResponse(result);
+			return successResponseForXML(result);
 		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return errorResponseForXML(e);
 		}
 	}
 

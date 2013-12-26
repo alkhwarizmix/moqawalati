@@ -9,10 +9,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.interfaces;
+package dz.alkhwarizmix.moqawalati.java.interfaces;
 
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 
 /**
  * <p>
@@ -20,32 +23,20 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٩ محرم ١٤٣٥ (November 13, 2013)
+ * @since ٢٤ محرم ١٤٣٥ (November 28, 2013)
  */
-public interface ICustomizerService extends IAlKhwarizmixService {
+public interface IMoqawalatiDAO extends IAlKhwarizmixDAO {
+	/**
+	 */
+	public Client getClient(Client client) throws MoqawalatiException;
 
 	/**
 	 */
-	public void setCustomData(CustomData customData) throws MoqawalatiException;
-
-	/**
-	 */
-	public String setCustomDataFromXML(String customDataXml)
-			throws MoqawalatiException;
+	public User getUser(User user) throws MoqawalatiException;
 
 	/**
 	 */
 	public CustomData getCustomData(CustomData customData)
-			throws MoqawalatiException;
-
-	/**
-	 */
-	public String getCustomDataAsXML(CustomData customData)
-			throws MoqawalatiException;
-
-	/**
-	 */
-	public String getCustomDataAsXML(String partialXml)
 			throws MoqawalatiException;
 
 } // Class
