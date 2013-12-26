@@ -197,7 +197,7 @@ public class MDICanvasMediator extends MoqawalatiMediator
 		var moduleNameLowerCase:String = moduleName.toLowerCase();
 		var result:String = appConfigProxy.flashBuilderBuild
 			? StringUtil.substitute("dz/alkhwarizmix/moqawalati/flex/modules/{0}Module/{1}Module", moduleNameLowerCase, moduleName)
-			: StringUtil.substitute("moqawalatiFlex-1.0.0.1-{0}module", moduleNameLowerCase);
+			: StringUtil.substitute("moqawalatiFlex-{0}-{1}module", MoqawalatiConstants.APP_POM_VERSION, moduleNameLowerCase);
 		result += ".swf";
 		
 		logger.debug("getModuleRelativePath: result={0}", result);
