@@ -26,7 +26,6 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
@@ -93,8 +92,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public void setCustomData(CustomData customData)
-			throws MoqawalatiException {
+	public void setCustomData(CustomData customData) throws MoqawalatiException {
 		getLogger().trace("setCustomData");
 
 		try {
@@ -221,7 +219,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 		return moqawalatiDAO;
 	}
 
-	protected void setMoqawalatiDAO(MoqawalatiDAO value) {
+	protected void setMoqawalatiDAO(IMoqawalatiDAO value) {
 		moqawalatiDAO = value;
 	}
 

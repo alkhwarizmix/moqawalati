@@ -27,7 +27,6 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
@@ -323,7 +322,7 @@ public class ClientService extends AlKhwarizmixService implements
 		return moqawalatiDAO;
 	}
 
-	protected void setMoqawalatiDAO(MoqawalatiDAO value) {
+	protected void setMoqawalatiDAO(IMoqawalatiDAO value) {
 		moqawalatiDAO = value;
 	}
 

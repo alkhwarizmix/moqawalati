@@ -13,7 +13,6 @@ package dz.alkhwarizmix.moqawalati.java.dao;
 
 import junit.framework.Assert;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,7 @@ import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
  * <p>
@@ -37,7 +37,8 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 @RunWith(SpringJUnit4ClassRunner.class)
 // ApplicationContext will be loaded from
 // "classpath:/dz/alkhwarizmix/moqawalati/java/dao/MoqawalatiDAOTest-context.xml"
-@ContextConfiguration(value = "MoqawalatiDAOTest-context.xml")
+@ContextConfiguration
+// (value = "MoqawalatiDAOTest-context.xml")
 @Transactional
 public class MoqawalatiDAOTest {
 
@@ -50,7 +51,7 @@ public class MoqawalatiDAOTest {
 	private static final String CUSTOM_DATA_ID = "dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAOTest";
 
 	@Autowired
-	private MoqawalatiDAO utMoqawalatiDAO;
+	private IMoqawalatiDAO utMoqawalatiDAO;
 
 	// --------------------------------------------------------------------------
 	//
@@ -58,7 +59,6 @@ public class MoqawalatiDAOTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Ignore
 	@Test
 	public void test01_add_get_then_update_get_CustomData()
 			throws AlKhwarizmixDAOException, MoqawalatiException {
