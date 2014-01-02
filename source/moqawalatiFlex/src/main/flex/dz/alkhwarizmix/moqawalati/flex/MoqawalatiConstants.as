@@ -31,7 +31,7 @@ public class MoqawalatiConstants
 	/**
 	 * APPLICATION POM VERSION
 	 */
-	public static const APP_POM_VERSION:String = "1.0.1.2";
+	public static const APP_POM_VERSION:String = "1.0.2.3";
 	
 	/**
 	 * FACADE NAME
