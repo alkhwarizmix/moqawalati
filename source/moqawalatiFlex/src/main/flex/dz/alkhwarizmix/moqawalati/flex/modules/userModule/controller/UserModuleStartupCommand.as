@@ -90,7 +90,10 @@ public class UserModuleStartupCommand extends MoqawalatiSimpleCommand
 	private function sendNotifications():void
 	{
 		sendNotification(UserModuleConstants.STARTUP_COMPLETE);
-		sendNotification(UserModuleConstants.USER_GET_LIST);
+		sendNotification(UserModuleConstants.USER_GET_LIST,
+			{
+				operationParams : [null, 0, 50]
+			});
 	}
 	
 } // class

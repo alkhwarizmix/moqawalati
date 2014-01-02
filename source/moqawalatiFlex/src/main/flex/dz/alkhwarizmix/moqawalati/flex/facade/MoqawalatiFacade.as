@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.facade
 
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
 import dz.alkhwarizmix.framework.flex.facade.AlKhwarizmixFacade;
+import dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude;
 
 /**
  *  <p>

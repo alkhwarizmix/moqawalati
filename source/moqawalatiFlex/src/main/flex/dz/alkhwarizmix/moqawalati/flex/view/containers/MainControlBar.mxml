@@ -28,6 +28,7 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:flex="dz.alkhwarizmix.moqawalati.flex.*"
 	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
+	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
 	creationComplete="this_creationCompleteHandler(event)"
 	>
 	
@@ -95,5 +96,10 @@
 		dataProvider="{menuList}"
 		showRoot="false"
 		itemClick="menuBar_itemClickHandler(event)"/>
+	
+	<containers:MoqawalatiHBox width="100%" horizontalAlign="right">
+		<controls:MoqawalatiTextInput/>
+		<controls:MoqawalatiButton/>
+	</containers:MoqawalatiHBox>
 	
 </mx:ApplicationControlBar>

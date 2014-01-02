@@ -57,6 +57,7 @@
 		</property>
 		<property name="packagesToScan">
 			<list>
+				<value>dz.alkhwarizmix.framework.java.dtos</value>
 				<value>dz.alkhwarizmix.moqawalati.java.dtos</value>
 			</list>
 		</property>

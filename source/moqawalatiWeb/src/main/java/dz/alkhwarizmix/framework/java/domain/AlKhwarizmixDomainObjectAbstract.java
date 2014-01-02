@@ -12,7 +12,9 @@
 package dz.alkhwarizmix.framework.java.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -40,7 +42,7 @@ import dz.alkhwarizmix.framework.java.EntityInterceptor;
  */
 @MappedSuperclass
 @EntityListeners(EntityInterceptor.class)
-public abstract class AlKhwarizmixDomainObject implements Serializable {
+public abstract class AlKhwarizmixDomainObjectAbstract implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -64,7 +66,7 @@ public abstract class AlKhwarizmixDomainObject implements Serializable {
 	/**
 	 * constructor
 	 */
-	public AlKhwarizmixDomainObject() {
+	public AlKhwarizmixDomainObjectAbstract() {
 		created = new Date();
 	}
 
@@ -109,6 +111,20 @@ public abstract class AlKhwarizmixDomainObject implements Serializable {
 
 	/**
 	 */
+	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
+		result.add(this);
+		return result;
+	}
+
+	/**
+	 */
+	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
+		// NOOP
+	}
+
+	/**
+	 */
 	public String toString() {
 		return toStringBuilder(this).toString();
 	}
@@ -138,6 +154,10 @@ public abstract class AlKhwarizmixDomainObject implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long value) {
+		id = value;
 	}
 
 	// ----------------------------------

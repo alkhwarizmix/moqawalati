@@ -50,7 +50,6 @@ public class MoqawalatiConfigProxy extends MoqawalatiProxy
 	/**
 	 *  Constructor.
 	 *
-	 * @param proxyName TODO: ASDOC
 	 * @param data TODO: ASDOC
 	 */
 	public function MoqawalatiConfigProxy(data:Object=null)
@@ -67,7 +66,7 @@ public class MoqawalatiConfigProxy extends MoqawalatiProxy
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiConfigProxy);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 	//--------------------------------------------------------------------------
 	//

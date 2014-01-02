@@ -49,7 +49,7 @@ public class MoqawalatiProducer extends AlKhwarizmixProducer
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiProducer);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 } // class
 } // package

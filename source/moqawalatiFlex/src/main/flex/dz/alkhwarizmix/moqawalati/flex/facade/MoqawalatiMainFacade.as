@@ -12,8 +12,17 @@
 package dz.alkhwarizmix.moqawalati.flex.facade
 {
 
+import mx.messaging.messages.RemotingMessage;
+
+import spark.skins.spark.DataGridSkin;
+import spark.skins.spark.ScrollerSkin;
+
+import dz.alkhwarizmix.framework.flex.dtos.DTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
+import dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 
 /**
@@ -37,8 +46,23 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */
 	public function MoqawalatiMainFacade(key:String)
 	{
-		log.debug("MoqawalatiMainFacade");
+		logger.debug("MoqawalatiMainFacade");
 		super(key);
+		
+		registerNeededClasses();
+	}
+	
+	/**
+	 * TODO: ASDOC Definition of registerNeededClasses
+	 */
+	private function registerNeededClasses():void
+	{
+		var remotingMessage:RemotingMessage = new RemotingMessage();
+		var dataGridSkin:DataGridSkin = new DataGridSkin();
+		var scrollerSkin:ScrollerSkin = new ScrollerSkin();
+		
+		new dz.alkhwarizmix.framework.flex.dtos.DTOsToInclude().registerNeededClasses();
+		new dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude().registerNeededClasses();
 	}
 	
 	//--------------------------------------------------------------------------
@@ -96,10 +120,14 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */
 	private function registerCommands():void
 	{
-		log.debug("registerCommands");
+		logger.debug("registerCommands");
 		
 		registerCommand(MoqawalatiConstants.STARTUP,
 			MoqawalatiStartupCommand);
+		registerCommand(MoqawalatiConstants.GET_CUSTOMDATA,
+			MoqawalatiGetCustomizedDataCommand);
+		registerCommand(MoqawalatiConstants.SET_CUSTOMDATA,
+			MoqawalatiSetCustomizedDataCommand);
 	}
 	
 	/**

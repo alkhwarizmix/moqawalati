@@ -13,6 +13,7 @@
 dz.alkhwarizmix.moqawalati.name.property=${pom.name}
 dz.alkhwarizmix.moqawalati.version.property=${pom.version}d${BUILD_NUMBER}
 
+####
 #### jdbc connection properties
 #jdbc.driverClassName=com.mysql.jdbc.Driver
 #jdbc.connectionUrl=jdbc:mysql://belhaouas-mac.local:23306/prototypes_db?autoReconnect=true
@@ -21,10 +22,20 @@ dz.alkhwarizmix.moqawalati.version.property=${pom.version}d${BUILD_NUMBER}
 #jpa.dialect=org.hibernate.dialect.MySQLDialect
 #jpa.show_sql=true
 
+####
 #### jdbc connection properties, Use this setting for postgresql DB.
-jdbc.driverClassName=org.postgresql.Driver
-jdbc.connectionUrl=jdbc:postgresql://localhost/moqawalati_db?autoReconnect=true
-jdbc.dialect=org.hibernate.dialect.PostgreSQLDialect
+#jdbc.driverClassName=org.postgresql.Driver
+#jdbc.connectionUrl=jdbc:postgresql://localhost/moqawalati_db?autoReconnect=true
+#jdbc.dialect=org.hibernate.dialect.PostgreSQLDialect
 
-jdbc.username=moqawalati_user
-jdbc.password=reverse
+#jdbc.username=moqawalati_user
+#jdbc.password=reverse
+
+####
+#### jdbc connection properties, Use this setting for hsqldb DB.
+jdbc.driverClassName=org.hsqldb.jdbcDriver
+jdbc.connectionUrl=jdbc:hsqldb:mem:moqawalati_db
+# jdbc.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+jdbc.username=sa
+jdbc.password=

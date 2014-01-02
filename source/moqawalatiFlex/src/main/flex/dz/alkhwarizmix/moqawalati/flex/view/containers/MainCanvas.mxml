@@ -38,7 +38,7 @@
 			backgroundColor="#FFFFFF" backgroundAlpha="0"
 			width="100%" height="100%"
 			>
-			<containers:ChatWindow id="chatWindow"/>
+			<containers:TestAndDebugWindow id="testAndDebugWindow"/>
 		</containers:MoqawalatiMDICanvas>
 	</containers:MoqawalatiVBox>
 </containers:MoqawalatiCanvas>

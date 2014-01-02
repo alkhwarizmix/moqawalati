@@ -37,7 +37,7 @@ public class MoqawalatiWebGetDataCommand extends AlKhwarizmixWebGetDataCommand
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiWebGetDataCommand);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 } // class
 } // package

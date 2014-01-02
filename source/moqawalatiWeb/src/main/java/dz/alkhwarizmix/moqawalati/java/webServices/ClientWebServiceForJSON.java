@@ -20,12 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebService;
+import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebServiceForJSON;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
 
 /**
  * <p>
@@ -33,11 +34,11 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
+ * @since ٠٨ صفر ١٤٣٥ (December 10, 2013)
  */
 @Controller
-@RequestMapping("moqawalati/xml/user")
-public class UserWebService extends AlKhwarizmixWebService {
+@RequestMapping("moqawalati/json/client")
+public class ClientWebServiceForJSON extends AlKhwarizmixWebServiceForJSON {
 
 	// --------------------------------------------------------------------------
 	//
@@ -48,7 +49,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 	/**
 	 * constructor
 	 */
-	public UserWebService() {
+	public ClientWebServiceForJSON() {
 		super();
 	}
 
@@ -59,7 +60,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(UserWebService.class);
+			.getLogger(ClientWebServiceForJSON.class);
 
 	protected Logger getLogger() {
 		return LOG;
@@ -72,7 +73,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IUserService userService;
+	private IClientService clientService;
 
 	// --------------------------------------------------------------------------
 	//
@@ -81,90 +82,94 @@ public class UserWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	/**
-	 * add the user to database
+	 * add the client to database
 	 * 
-	 * @param xmlValue
-	 *            {@link String} the user as xml
+	 * @param jsonValue
+	 *            {@link String} the client as json
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> addUser(@RequestParam("user") String xmlValue)
+	public ResponseEntity<String> addClient(
+			@RequestParam("client") String jsonValue)
 			throws MoqawalatiException {
-		LOG.debug("addUser({})", xmlValue);
+		getLogger().trace("addClient({})", jsonValue);
 
 		try {
-			String result = userService.addUser(xmlValue,
+			String result = clientService.addClientFromXML(jsonValue,
 					getCurrentRequestRemoteAddress());
 			StringBuilder sBuilder = new StringBuilder(result);
-			return successResponse(sBuilder);
-		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return successResponseForJSON(sBuilder);
+		} catch (MoqawalatiException exception) {
+			return errorResponseAsJSON(exception);
 		}
 	}
 
 	/**
-	 * get the user from database
+	 * get the client from database
 	 * 
-	 * @param userId
-	 *            {@link Long} userId
+	 * @param clientId
+	 *            {@link Long} clientId
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<String> getUserById(
-			@PathVariable("userId") String userId) throws MoqawalatiException {
-		LOG.debug("getUserById({})", userId);
+	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
+	public ResponseEntity<String> getClientById(
+			@PathVariable("clientId") String clientId)
+			throws MoqawalatiException {
+		getLogger().trace("getClientById({})", clientId);
 
 		try {
-			User userToGet = new User();
-			userToGet.setUserId(userId);
+			Client clientToGet = new Client();
+			clientToGet.setClientId(clientId);
 			StringBuilder sBuilder = new StringBuilder(
-					userService.getUserAsXML(userToGet));
-			return successResponse(sBuilder);
-		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+					clientService.getClientAsJSON(clientToGet));
+			return successResponseForJSON(sBuilder);
+		} catch (MoqawalatiException exception) {
+			return errorResponseAsJSON(exception);
 		}
 	}
 
 	/**
-	 * update the user in database
+	 * update the client in database
 	 * 
 	 * @param xmlValue
-	 *            {@link String} the user as xml
+	 *            {@link String} the client as xml
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
-	@RequestMapping(value = "/{userId}", method = RequestMethod.POST)
-	public ResponseEntity<String> updateUser(
-			@PathVariable("userId") String userId,
-			@RequestParam("user") String xmlValue) throws MoqawalatiException {
-		LOG.debug("updateUser({})", xmlValue);
+	@RequestMapping(value = "/{clientId}", method = RequestMethod.POST)
+	public ResponseEntity<String> updateClient(
+			@PathVariable("clientId") String clientId,
+			@RequestParam("client") String xmlValue) throws MoqawalatiException {
+		getLogger().trace("updateClient({}, {})", clientId, xmlValue);
 
 		try {
-			StringBuilder sBuilder = new StringBuilder(userService.updateUser(
-					xmlValue, getCurrentRequestRemoteAddress()));
-			return successResponse(sBuilder);
-		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			StringBuilder sBuilder = new StringBuilder(
+					clientService.updateClientFromXML(xmlValue,
+							getCurrentRequestRemoteAddress()));
+			return successResponseForJSON(sBuilder);
+		} catch (MoqawalatiException exception) {
+			return errorResponseAsJSON(exception);
 		}
 	}
 
 	/**
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<String> getUserList(
+	public ResponseEntity<String> getClientList(
 			@RequestParam("firstResult") int firstResult,
 			@RequestParam("maxResult") int maxResult) {
-		StringBuilder result = new StringBuilder();
+		getLogger().trace("getClientList({}, {})", firstResult, maxResult);
 
+		StringBuilder result = new StringBuilder();
 		try {
-			result.append(userService.getUserListAsXML(null, firstResult,
+			result.append(clientService.getClientListAsJSON(null, firstResult,
 					maxResult));
 
-			return successResponse(result);
-		} catch (MoqawalatiException e) {
-			return errorResponse(e);
+			return successResponseForJSON(result);
+		} catch (MoqawalatiException exception) {
+			return errorResponseAsJSON(exception);
 		}
 	}
 
@@ -175,15 +180,15 @@ public class UserWebService extends AlKhwarizmixWebService {
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// userService
+	// clientService
 	// ----------------------------------
 
-	protected IUserService getUserService() {
-		return userService;
+	protected IClientService getClientService() {
+		return clientService;
 	}
 
-	protected void setUserService(IUserService value) {
-		userService = value;
+	protected void setClientService(IClientService value) {
+		clientService = value;
 	}
 
 	// ----------------------------------
@@ -191,7 +196,7 @@ public class UserWebService extends AlKhwarizmixWebService {
 	// ----------------------------------
 
 	protected IAlKhwarizmixService getService() {
-		return userService;
+		return clientService;
 	}
 
 } // Class

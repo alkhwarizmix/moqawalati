@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO:
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ١٨ محرم ١٤٣٥ (November 22, 2013)
+ */
+-->
+
 <service id="remoting-service" class="flex.messaging.services.RemotingService">
 
 	<adapters>
@@ -23,6 +45,13 @@
 		<properties>
 			<factory>spring</factory>
 			<source>userBean</source>
+		</properties>
+	</destination>
+
+	<destination id="customizerService">
+		<properties>
+			<factory>spring</factory>
+			<source>customizerBean</source>
 		</properties>
 	</destination>
 

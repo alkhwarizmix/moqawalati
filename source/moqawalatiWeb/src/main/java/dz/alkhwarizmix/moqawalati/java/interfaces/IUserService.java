@@ -36,7 +36,7 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String addUser(String userXml, String creatorId)
+	public String addUserFromXML(String userXml, String creatorId)
 			throws MoqawalatiException;
 
 	/**
@@ -57,7 +57,7 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String updateUser(String userXml, String updaterId)
+	public String updateUserFromXML(String userXml, String updaterId)
 			throws MoqawalatiException;
 
 	/**

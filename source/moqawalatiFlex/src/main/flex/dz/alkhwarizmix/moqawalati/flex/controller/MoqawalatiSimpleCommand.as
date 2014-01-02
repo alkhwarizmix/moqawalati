@@ -37,7 +37,7 @@ public class MoqawalatiSimpleCommand extends AlKhwarizmixSimpleCommand
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
 		getLogger(MoqawalatiSimpleCommand);
 	
-	override protected function get log():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 } // class
 } // package

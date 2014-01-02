@@ -85,6 +85,7 @@
 
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
+		<url-pattern>/alkhwarizmix/*</url-pattern>
 		<url-pattern>/moqawalati/*</url-pattern>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>

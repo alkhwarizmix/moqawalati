@@ -39,7 +39,7 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	 */
 	public function ClientModuleFacade(key:String)
 	{
-		log.debug("ClientModuleFacade");
+		logger.debug("ClientModuleFacade");
 		super(key);
 	}
 	
@@ -98,7 +98,7 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	 */  
 	public function startup(app:ClientModule):void
 	{
-		log.debug("startup");
+		logger.debug("startup");
 		
 		sendNotification(ClientModuleConstants.STARTUP, app);
 	}
@@ -108,7 +108,7 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	 */
 	private function registerCommands():void
 	{
-		log.debug("registerCommands");
+		logger.debug("registerCommands");
 		
 		registerCommand(ClientModuleConstants.STARTUP,
 			ClientModuleStartupCommand);

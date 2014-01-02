@@ -16,7 +16,7 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObject;
 public interface IAlKhwarizmixService {
 	/**
 	 */
-	public void addObject(AlKhwarizmixDomainObject object)
+	public void addObject(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
@@ -39,12 +39,13 @@ public interface IAlKhwarizmixService {
 	/**
 	 * get the object
 	 */
-	public AlKhwarizmixDomainObject getObject(AlKhwarizmixDomainObject object)
+	public AlKhwarizmixDomainObjectAbstract getObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public String getObjectAsXML(AlKhwarizmixDomainObject object)
+	public String getObjectAsXML(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
@@ -53,13 +54,19 @@ public interface IAlKhwarizmixService {
 
 	/**
 	 */
-	public List<AlKhwarizmixDomainObject> getObjectList(
+	public String getObjectAsJSON(AlKhwarizmixDomainObjectAbstract object)
+			throws AlKhwarizmixException;
+
+	/**
+	 */
+	public List<AlKhwarizmixDomainObjectAbstract> getObjectList(
 			DetachedCriteria criteria, int firstResult, int maxResult)
 			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject updateObject(AlKhwarizmixDomainObject object)
+	public AlKhwarizmixDomainObjectAbstract updateObject(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
@@ -68,16 +75,27 @@ public interface IAlKhwarizmixService {
 
 	/**
 	 */
-	public String objectListToXML(List<AlKhwarizmixDomainObject> objectList);
+	public String objectListToJSON(
+			List<AlKhwarizmixDomainObjectAbstract> objectList);
 
 	/**
 	 */
-	public String marshalObject(AlKhwarizmixDomainObject object)
+	public String objectListToXML(
+			List<AlKhwarizmixDomainObjectAbstract> objectList);
+
+	/**
+	 */
+	public String marshalObjectToXML(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObject unmarshalObject(String xmlValue)
+	public AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
+			String xmlValue) throws AlKhwarizmixException;
+
+	/**
+	 */
+	public String marshalObjectToJSON(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException;
 
 } // Class

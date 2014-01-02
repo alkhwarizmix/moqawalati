@@ -14,7 +14,6 @@ package dz.alkhwarizmix.moqawalati.java.interfaces;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
-import org.springframework.security.access.annotation.Secured;
 
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
@@ -35,7 +34,7 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String addClient(String clientXml, String creatorId)
+	public String addClientFromXML(String clientXml, String creatorId)
 			throws MoqawalatiException;
 
 	/**
@@ -52,18 +51,35 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
+	public String getClientAsJSON(Client client) throws MoqawalatiException;
+
+	/**
+	 */
 	public Client updateClient(Client client) throws MoqawalatiException;
 
 	/**
 	 */
-	public String updateClient(String clientXml, String updaterId)
+	public String updateClientFromXML(String clientXml, String updaterId)
 			throws MoqawalatiException;
 
 	/**
 	 */
-	@Secured("ROLE_TELLER")
+	public List<Client> getClientList(DetachedCriteria criteria,
+			int firstResult, int maxResult) throws MoqawalatiException;
+
+	/**
+	 */
+	public String getClientListAsJSON(DetachedCriteria criteria,
+			int firstResult, int maxResult) throws MoqawalatiException;
+
+	/**
+	 */
 	public String getClientListAsXML(DetachedCriteria criteria,
 			int firstResult, int maxResult) throws MoqawalatiException;
+
+	/**
+	 */
+	public String clientListToJSON(List<Client> clientList);
 
 	/**
 	 */
