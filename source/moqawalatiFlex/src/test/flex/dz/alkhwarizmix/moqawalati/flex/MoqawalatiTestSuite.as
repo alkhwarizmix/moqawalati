@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex
 
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxyTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBarTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBoxTestCase;
 
@@ -30,6 +31,7 @@ public class MoqawalatiTestSuite
 	// view
 	public var moqawalatiHBoxTestCase:MoqawalatiHBoxTestCase;
 	public var mainControlBarTestCase:MainControlBarTestCase;
+	public var moqawalatiDataListCanvasTestCase:MoqawalatiDataListCanvasTestCase;
 	
 } // class
 } // package
