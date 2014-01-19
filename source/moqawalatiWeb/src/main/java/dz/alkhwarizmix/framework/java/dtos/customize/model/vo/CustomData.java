@@ -121,7 +121,7 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	 */
 	@Override
 	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
-		// NOOP
+		// DO NOTHING
 	}
 
 	/**

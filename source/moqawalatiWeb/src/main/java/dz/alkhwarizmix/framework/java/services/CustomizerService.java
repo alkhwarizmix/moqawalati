@@ -147,7 +147,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 			}
 			return result;
 		} catch (AlKhwarizmixException e) {
-			throw e;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -159,11 +159,24 @@ public class CustomizerService extends AlKhwarizmixService implements
 		getLogger().trace("getCustomData");
 
 		try {
-			return (CustomData) getObject(customData);
+			CustomData result = (CustomData) getObject(customData);
+			/*if (result == null) {
+				result = new CustomData();
+				result.setCustomDataId(customData.getCustomDataId());
+				result.updateFrom(customData);
+				setDefaultCustomDataValue(result);
+			}*/
+			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
+	}
+
+	/**
+	 * @private
+	 */
+	private void setDefaultCustomDataValue(CustomData customData) {
+		customData.setCustomDataValue("Default");
 	}
 
 	/**
@@ -201,7 +214,6 @@ public class CustomizerService extends AlKhwarizmixService implements
 	/**
 	 */
 	private AlKhwarizmixDomainObject getSessionCustomizer() {
-
 		return getSessionData().getCustomizer();
 	}
 
