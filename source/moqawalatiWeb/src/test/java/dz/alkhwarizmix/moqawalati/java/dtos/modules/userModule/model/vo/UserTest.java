@@ -18,6 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+
 /**
  * <p>
  * TODO: Javadoc
@@ -49,6 +51,13 @@ public class UserTest {
 		String value = "UserTest";
 		utUser.setUserId(value);
 		assertEquals(value, utUser.getUserId());
+	}
+
+	@Test
+	public void test02_set_then_get_DomainObject() {
+		AlKhwarizmixDomainObject value = new AlKhwarizmixDomainObject();
+		utUser.setDomainObject(value);
+		assertEquals(value, utUser.getDomainObject());
 	}
 
 } // Class

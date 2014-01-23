@@ -22,9 +22,11 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
@@ -65,6 +67,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(UserService.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -81,6 +84,9 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
 
+	@Autowired
+	private AlKhwarizmixSessionData sessionData;
+
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -91,13 +97,12 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	@Transactional(readOnly = false)
 	public void addUser(User user) throws MoqawalatiException {
-		getLogger().trace("addUser");
+		getLogger().debug("addUser");
 
 		try {
 			addObject(user);
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -115,8 +120,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			String result = marshalObjectToXML(newUser);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -132,7 +136,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			User result = getMoqawalatiDAO().getUser((User) object);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			throw e;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -140,13 +144,28 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	@Override
 	public User getUser(User user) throws MoqawalatiException {
-		getLogger().trace("getUser");
+		getLogger().debug("getUser");
 
 		try {
-			return (User) getObject(user);
+			User result = internal_getUser(user);
+			if (result != null)
+				result.setDomainObject(null);
+			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
+		}
+	}
+
+	/**
+	 */
+	User internal_getUser(User user) throws MoqawalatiException {
+		getLogger().trace("internal_getUser");
+
+		try {
+			User result = (User) getObject(user);
+			return result;
+		} catch (AlKhwarizmixException e) {
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -160,8 +179,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			String result = getObjectAsXML(user);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -175,8 +193,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			String result = getObjectAsXML(userXml);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -184,14 +201,13 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	@Transactional(readOnly = false)
 	public User updateUser(User user) throws MoqawalatiException {
-		getLogger().trace("updateUser");
+		getLogger().debug("updateUser");
 
 		try {
 			User result = (User) updateObject(user);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -209,8 +225,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			String result = marshalObjectToXML(updatedUser);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -219,7 +234,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@SuppressWarnings("unchecked")
 	public List<User> getUserList(DetachedCriteria criteria, int firstResult,
 			int maxResult) throws MoqawalatiException {
-		getLogger().trace("getUserList");
+		getLogger().debug("getUserList");
 
 		if (criteria == null) {
 			criteria = DetachedCriteria.forClass(User.class);
@@ -231,8 +246,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 					firstResult, maxResult);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -258,6 +272,35 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 		getLogger().trace("userListToXML(): returns {}", result);
 		return result;
+	}
+
+	@Override
+	public User login(User user) throws MoqawalatiException {
+		getLogger().debug("login");
+
+		User loggedUser = internal_getUser(user);
+		if (loggedUser == null)
+			throw new MoqawalatiException(AlKhwarizmixErrorCode.ERROR_LOGIN);
+
+		getSessionData().setCustomizer(loggedUser.getDomainObject());
+
+		return loggedUser;
+	}
+
+	@Override
+	public String loginFromXML(String userXml, String loggerId)
+			throws MoqawalatiException {
+		getLogger().trace("loginFromXML");
+
+		try {
+			User userToLogin = (User) unmarshalObjectFromXML(userXml);
+			// newUser.setCreatorId(updaterId);
+			User loggedUser = login(userToLogin);
+			String result = marshalObjectToXML(loggedUser);
+			return result;
+		} catch (AlKhwarizmixException e) {
+			throw new MoqawalatiException(e);
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -287,12 +330,26 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// jaxb2Marshaller
 	// ----------------------------------
 
+	@Override
 	protected Jaxb2Marshaller getJaxb2Marshaller() {
 		return jaxb2Marshaller;
 	}
 
+	@Override
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
+	}
+
+	// ----------------------------------
+	// sessionData
+	// ----------------------------------
+
+	protected AlKhwarizmixSessionData getSessionData() {
+		return sessionData;
+	}
+
+	protected void setSessionData(AlKhwarizmixSessionData value) {
+		sessionData = value;
 	}
 
 } // Class

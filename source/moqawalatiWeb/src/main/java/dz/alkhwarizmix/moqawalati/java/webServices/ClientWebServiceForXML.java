@@ -61,6 +61,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ClientWebServiceForXML.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -91,7 +92,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> addClient(
 			@RequestParam("client") String xmlValue) throws MoqawalatiException {
-		LOG.debug("addClient({})", xmlValue);
+		getLogger().debug("addClient({})", xmlValue);
 
 		try {
 			String result = clientService.addClientFromXML(xmlValue,
@@ -103,12 +104,13 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 		}
 	}
 
-	/*@RequestMapping(method = RequestMethod.POST)
-	public Client addClient1(Client client) throws MoqawalatiException {
-		LOG.debug("addClient1({})", client);
-
-		return client;
-	}*/
+	/*
+	 * @RequestMapping(method = RequestMethod.POST) public Client
+	 * addClient1(Client client) throws MoqawalatiException {
+	 * getLogger().debug("addClient1({})", client);
+	 * 
+	 * return client; }
+	 */
 
 	/**
 	 * get the client from database
@@ -122,7 +124,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	public ResponseEntity<String> getClientById(
 			@PathVariable("clientId") String clientId)
 			throws MoqawalatiException {
-		LOG.debug("getClientById({})", clientId);
+		getLogger().debug("getClientById({})", clientId);
 
 		try {
 			Client clientToGet = new Client();
@@ -147,7 +149,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	public ResponseEntity<String> updateClient(
 			@PathVariable("clientId") String clientId,
 			@RequestParam("client") String xmlValue) throws MoqawalatiException {
-		LOG.debug("updateClient({})", xmlValue);
+		getLogger().debug("updateClient({})", xmlValue);
 
 		try {
 			StringBuilder sBuilder = new StringBuilder(
@@ -199,6 +201,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// service
 	// ----------------------------------
 
+	@Override
 	protected IAlKhwarizmixService getService() {
 		return clientService;
 	}

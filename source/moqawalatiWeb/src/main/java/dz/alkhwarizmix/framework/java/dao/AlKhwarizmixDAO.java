@@ -71,7 +71,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	 */
 	protected final AlKhwarizmixDAOException getDAOExceptionForConcurrencyFailure(
 			ConcurrencyFailureException concurrencyFailureException) {
-		getLogger().trace("getDAOExceptionForConcurrencyFailure({})",
+		getLogger().error("getDAOExceptionForConcurrencyFailure({})",
 				concurrencyFailureException);
 
 		getHibernateCurrentSession().clear();
@@ -86,7 +86,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	 */
 	protected final AlKhwarizmixDAOException getDAOExceptionForDataAccess(
 			DataAccessException dataAccessException) {
-		getLogger().trace("getDAOExceptionForDataAccess({})",
+		getLogger().error("getDAOExceptionForDataAccess({})",
 				dataAccessException);
 
 		getHibernateCurrentSession().clear();
@@ -96,7 +96,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	protected final AlKhwarizmixDAOException getDAOException(Exception exception) {
-		getLogger().trace("getDAOException({})", exception);
+		getLogger().error("getDAOException({})", exception);
 
 		getHibernateCurrentSession().clear();
 		return new AlKhwarizmixDAOException(exception);

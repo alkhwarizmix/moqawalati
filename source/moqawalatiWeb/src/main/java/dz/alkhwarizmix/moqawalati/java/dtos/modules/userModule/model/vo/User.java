@@ -13,8 +13,12 @@ package dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,8 +26,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
 
@@ -85,6 +94,11 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 	@Column(name = "name", nullable = false, length = 127)
 	private String name;
 
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "domainObject", nullable = false)
+	private AlKhwarizmixDomainObject domainObject;
+
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -113,11 +127,31 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 		}
 	}
 
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
+		if (domainObject == null)
+			domainObject = new AlKhwarizmixDomainObject();
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Getters & Setters
 	//
 	// --------------------------------------------------------------------------
+
+	// ----------------------------------
+	// domainObject
+	// ----------------------------------
+
+	public AlKhwarizmixDomainObject getDomainObject() {
+		return domainObject;
+	}
+
+	public void setDomainObject(AlKhwarizmixDomainObject value) {
+		this.domainObject = value;
+	}
 
 	// ----------------------------------
 	// userId

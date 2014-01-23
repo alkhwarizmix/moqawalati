@@ -63,6 +63,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	private static final Logger LOG = LoggerFactory
 			.getLogger(CustomizerService.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -160,12 +161,12 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 		try {
 			CustomData result = (CustomData) getObject(customData);
-			/*if (result == null) {
-				result = new CustomData();
-				result.setCustomDataId(customData.getCustomDataId());
-				result.updateFrom(customData);
-				setDefaultCustomDataValue(result);
-			}*/
+			/*
+			 * if (result == null) { result = new CustomData();
+			 * result.setCustomDataId(customData.getCustomDataId());
+			 * result.updateFrom(customData); setDefaultCustomDataValue(result);
+			 * }
+			 */
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -244,10 +245,12 @@ public class CustomizerService extends AlKhwarizmixService implements
 	// jaxb2Marshaller
 	// ----------------------------------
 
+	@Override
 	protected Jaxb2Marshaller getJaxb2Marshaller() {
 		return jaxb2Marshaller;
 	}
 
+	@Override
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}

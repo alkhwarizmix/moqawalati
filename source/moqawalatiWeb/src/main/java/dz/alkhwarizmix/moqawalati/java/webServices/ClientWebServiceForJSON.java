@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebServiceForJSON;
@@ -62,6 +61,7 @@ public class ClientWebServiceForJSON extends AlKhwarizmixWebServiceForJSON {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ClientWebServiceForJSON.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -195,6 +195,7 @@ public class ClientWebServiceForJSON extends AlKhwarizmixWebServiceForJSON {
 	// service
 	// ----------------------------------
 
+	@Override
 	protected IAlKhwarizmixService getService() {
 		return clientService;
 	}

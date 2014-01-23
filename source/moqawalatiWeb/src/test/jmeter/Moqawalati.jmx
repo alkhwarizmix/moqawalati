@@ -468,7 +468,7 @@
             <stringProp name="variableName">RAN_CUSTOMDATA_ID</stringProp>
           </RandomVariableConfig>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testCustomDataSetSuccess-C${RAN_CUSTOMDATA_ID} Add" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testCustomDataSetSuccess-CD${RAN_CUSTOMDATA_ID}" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="customData" elementType="HTTPArgument">
@@ -652,7 +652,393 @@
             </XPathAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testClientGetUnkownSuccess" enabled="false">
+        </hashTree>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Manage User Login" enabled="true">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </LoopController>
+        <hashTree>
+          <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random UserId" enabled="true">
+            <stringProp name="TestPlan.comments">Sert à générer des ID aléatoires aux users</stringProp>
+            <stringProp name="maximumValue">200000000</stringProp>
+            <stringProp name="minimumValue">100000000</stringProp>
+            <stringProp name="outputFormat"></stringProp>
+            <boolProp name="perThread">false</boolProp>
+            <stringProp name="randomSeed"></stringProp>
+            <stringProp name="variableName">RAN_USER_ID</stringProp>
+          </RandomVariableConfig>
+          <hashTree/>
+          <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random customDataId" enabled="true">
+            <stringProp name="TestPlan.comments">Sert à générer des ID aléatoires aux clients</stringProp>
+            <stringProp name="maximumValue">200000000</stringProp>
+            <stringProp name="minimumValue">100000000</stringProp>
+            <stringProp name="outputFormat"></stringProp>
+            <boolProp name="perThread">false</boolProp>
+            <stringProp name="randomSeed"></stringProp>
+            <stringProp name="variableName">RAN_CUSTOMDATA_ID</stringProp>
+          </RandomVariableConfig>
+          <hashTree/>
+          <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="Gestionnaire de cookies HTTP-ToKeepSession" enabled="true">
+            <collectionProp name="CookieManager.cookies"/>
+            <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+          </CookieManager>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser1AddSuccess-U${RAN_USER_ID}-1" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="user" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-1&lt;/Name&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">user</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/user</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="Gestionnaire de cookies HTTP" enabled="true">
+              <collectionProp name="CookieManager.cookies"/>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser1LoginSuccess-U${RAN_USER_ID}-1" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="user" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">user</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/user/login</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser1CustomDataSetSuccess-CD${RAN_CUSTOMDATA_ID}" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="customData" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">&lt;CustomData id=&quot;Custom${RAN_CUSTOMDATA_ID}&quot;&gt;&lt;Value&gt;Add Custom1-U${RAN_USER_ID}-1-A0123456789&lt;/Value&gt;&lt;/CustomData&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">customData</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/customize</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser2AddSuccess-U${RAN_USER_ID}-2" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="user" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-2&lt;/Name&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">user</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/user</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser2LoginSuccess-U${RAN_USER_ID}-2" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="user" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">user</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/user/login</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser2CustomDataSetSuccess-CD${RAN_CUSTOMDATA_ID}" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="customData" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">&lt;CustomData id=&quot;Custom${RAN_CUSTOMDATA_ID}&quot;&gt;&lt;Value&gt;Add Custom2-U${RAN_USER_ID}-2-A0123456789B0123456789&lt;/Value&gt;&lt;/CustomData&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">customData</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/customize</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser1LoginAgainSuccess-U${RAN_USER_ID}-1" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="user" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">user</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/user/login</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http200" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="TestPlan.comments">Assert un HTTP 200 OK</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-SUCCESSFUL" enabled="true">
+              <boolProp name="XPath.negate">false</boolProp>
+              <stringProp name="XPath.xpath">response[@status=&quot;SUCCESSFUL&quot;]</stringProp>
+              <boolProp name="XPath.validate">false</boolProp>
+              <boolProp name="XPath.whitespace">false</boolProp>
+              <boolProp name="XPath.tolerant">false</boolProp>
+              <boolProp name="XPath.namespace">false</boolProp>
+              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+            </XPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser1CustomDataGetExisting-CD${RAN_CUSTOMDATA_ID}" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -662,7 +1048,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/client/-1</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/customize/Custom${RAN_CUSTOMDATA_ID}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -694,15 +1080,15 @@
             </XPathAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testClientUpdateExistingSuccess" enabled="false">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser2LoginAgainSuccess-U${RAN_USER_ID}-2" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
-                <elementProp name="client" elementType="HTTPArgument">
+                <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;Client id=&quot;S${RAN_CLIENT_ID}&quot;&gt;&lt;Name&gt;client-${RAN_CLIENT_ID}-2&lt;/Name&gt;&lt;/Client&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2&quot;&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">client</stringProp>
+                  <stringProp name="Argument.name">user</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
@@ -712,7 +1098,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/client/S${RAN_CLIENT_ID}</stringProp>
+            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/user/login</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -743,28 +1129,10 @@
               <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
             </XPathAssertion>
             <hashTree/>
-            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-Name" enabled="true">
-              <boolProp name="XPath.negate">false</boolProp>
-              <stringProp name="XPath.xpath">response/Client/Name=&quot;client-${RAN_CLIENT_ID}-2&quot;</stringProp>
-              <boolProp name="XPath.validate">false</boolProp>
-              <boolProp name="XPath.whitespace">false</boolProp>
-              <boolProp name="XPath.tolerant">false</boolProp>
-              <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse contient le bon Client name</stringProp>
-            </XPathAssertion>
-            <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testClientUpdate-IP-Error" enabled="false">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testUser2CustomDataGetExisting-CD${RAN_CUSTOMDATA_ID}" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="client" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">${client-ip-error}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">client</stringProp>
-                </elementProp>
-              </collectionProp>
+              <collectionProp name="Arguments.arguments"/>
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
@@ -772,58 +1140,8 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/client/update</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.implementation">HttpClient3.1</stringProp>
-            <boolProp name="HTTPSampler.monitor">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http420" enabled="true">
-              <collectionProp name="Asserion.test_strings">
-                <stringProp name="51570">420</stringProp>
-              </collectionProp>
-              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-              <boolProp name="Assertion.assume_success">false</boolProp>
-              <intProp name="Assertion.test_type">2</intProp>
-              <stringProp name="TestPlan.comments">Assert un HTTP 500 INTERNAL ERROR</stringProp>
-            </ResponseAssertion>
-            <hashTree/>
-            <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-ERROR" enabled="true">
-              <boolProp name="XPath.negate">false</boolProp>
-              <stringProp name="XPath.xpath">response[@status=&quot;ERROR&quot;]</stringProp>
-              <boolProp name="XPath.validate">false</boolProp>
-              <boolProp name="XPath.whitespace">false</boolProp>
-              <boolProp name="XPath.tolerant">false</boolProp>
-              <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
-            </XPathAssertion>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testAddReservationSuccess-S${RAN_CLIENT_ID}" enabled="false">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="p1" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">param1</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">p1</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="HTTPSampler.protocol">http</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">${bm-xml-url-path}/client/addReservation</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/customize/Custom${RAN_CUSTOMDATA_ID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
             <boolProp name="HTTPSampler.use_keepalive">false</boolProp>

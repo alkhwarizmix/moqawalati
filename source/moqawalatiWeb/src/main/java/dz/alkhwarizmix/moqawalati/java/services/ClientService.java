@@ -66,6 +66,7 @@ public class ClientService extends AlKhwarizmixService implements
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ClientService.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -335,10 +336,12 @@ public class ClientService extends AlKhwarizmixService implements
 	// jaxb2Marshaller
 	// ----------------------------------
 
+	@Override
 	protected Jaxb2Marshaller getJaxb2Marshaller() {
 		return jaxb2Marshaller;
 	}
 
+	@Override
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}

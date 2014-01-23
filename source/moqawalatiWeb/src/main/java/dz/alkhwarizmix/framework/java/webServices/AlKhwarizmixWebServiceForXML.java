@@ -43,6 +43,14 @@ public abstract class AlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
+	// Properties
+	//
+	// --------------------------------------------------------------------------
+
+	private ServletRequestAttributes servletRequestAttributes;
+
+	// --------------------------------------------------------------------------
+	//
 	// Methods
 	//
 	// --------------------------------------------------------------------------
@@ -53,8 +61,9 @@ public abstract class AlKhwarizmixWebServiceForXML {
 	 * @return {@link String} the current request remote ip address
 	 */
 	public String getCurrentRequestRemoteAddress() {
-		String result = ((ServletRequestAttributes) RequestContextHolder
-				.currentRequestAttributes()).getRequest().getRemoteAddr();
+		String result = (getServletRequestAttributes() != null)
+				? getServletRequestAttributes().getRequest().getRemoteAddr()
+				: null;
 		return result;
 	}
 
@@ -139,5 +148,20 @@ public abstract class AlKhwarizmixWebServiceForXML {
 	 * get the service
 	 */
 	protected abstract IAlKhwarizmixService getService();
+
+	// ----------------------------------
+	// servletRequestAttributes
+	// ----------------------------------
+
+	public ServletRequestAttributes getServletRequestAttributes() {
+		return (servletRequestAttributes != null)
+				? servletRequestAttributes
+				: ((ServletRequestAttributes) RequestContextHolder
+						.currentRequestAttributes());
+	}
+
+	public void setServletRequestAttributes(ServletRequestAttributes value) {
+		servletRequestAttributes = value;
+	}
 
 } // Class
