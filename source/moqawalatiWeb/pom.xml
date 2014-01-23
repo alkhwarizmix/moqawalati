@@ -122,7 +122,7 @@
 			<artifactId>spring-oxm</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+
 		<!-- org.springframework.security -->
 
 		<dependency>
@@ -461,13 +461,29 @@
 					</execution> </executions> -->
 			</plugin>
 
-			<!-- <plugin> <groupId>org.apache.jmeter</groupId> <artifactId>maven-jmeter-plugin</artifactId> 
-				<version>1.0-FBEL1</version> <executions> <execution> <id>jmeter-tests</id> 
-				<phase>integration-test</phase> <goals> <goal>jmeter</goal> </goals> </execution> 
-				</executions> <configuration> <reportDir> ${project.build.directory}/jmeter-reports 
-				</reportDir> <jmeterUserProperties> <hostname>localhost</hostname> <port>9787</port> 
-				<contextPath>${project.name}-webapp</contextPath> </jmeterUserProperties> 
-				</configuration> </plugin> -->
+			<plugin>
+				<groupId>com.lazerycode.jmeter</groupId>
+				<artifactId>jmeter-maven-plugin</artifactId>
+				<version>1.9.0</version>
+				<executions>
+					<execution>
+						<id>jmeter-tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>jmeter</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<reportDir>${project.build.directory}/jmeter-reports</reportDir>
+					<propertiesUser>
+						<hostname>localhost</hostname>
+						<port>9787</port>
+						<contextPath>${project.build.finalName}-webapp</contextPath>
+					</propertiesUser>
+					<!-- <overrideRootLogLevel>debug</overrideRootLogLevel> <jmeterLogLevel>DEBUG</jmeterLogLevel> -->
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
@@ -480,9 +496,6 @@
 						<goals>
 							<goal>copy-flex-resources</goal>
 						</goals>
-						<!-- <configuration> -->
-						<!-- <useFinalName>true</useFinalName> -->
-						<!-- </configuration> -->
 					</execution>
 				</executions>
 			</plugin>
@@ -546,10 +559,23 @@
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 				</configuration>
 				<executions>
-					<!-- <execution> <id>start-jetty</id> <phase>pre-integration-test</phase> 
-						<goals> <goal>run</goal> </goals> <configuration> <daemon>true</daemon> </configuration> 
-						</execution> <execution> <id>stop-jetty</id> <phase>post-integration-test</phase> 
-						<goals> <goal>stop</goal> </goals> </execution> -->
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>
