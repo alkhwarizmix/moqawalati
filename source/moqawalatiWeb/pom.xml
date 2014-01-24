@@ -51,6 +51,11 @@
 
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<hsqldb.version>1.8.0.10</hsqldb.version>
+
+		<findbugs.version>2.5.3</findbugs.version>
+		<checkstyle.version>2.11</checkstyle.version>
+		<surefire.reportplugin.version>2.16</surefire.reportplugin.version>
+		<cobertura.version>2.6</cobertura.version>
 	</properties>
 
 	<dependencies>
@@ -578,8 +583,61 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>${cobertura.version}</version>
+				<configuration>
+					<formats>
+						<format>xml</format>
+					</formats>
+					<executions>
+						<execution>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+					</executions>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${surefire.reportplugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>${cobertura.version}</version>
+				<configuration>
+					<formats>
+						<format>xml</format>
+					</formats>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<!-- <profiles> <profile> <id>local</id> <activation> <activeByDefault>true</activeByDefault> 
 		</activation> <properties> <filter1>src/main/filters/local.properties</filter1> 
