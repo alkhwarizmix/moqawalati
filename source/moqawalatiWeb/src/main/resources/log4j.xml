@@ -26,8 +26,8 @@
 
 <log4j:configuration>
 
-	<appender name="reactorRollFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="${catalina.base}/logs/moqawalati.log" />
+	<appender name="moqawalatiRollFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="./logs/moqawalati.log" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
 		<param name="Append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -63,7 +63,7 @@
 
 	<root>
 		<priority value="info" />
-		<appender-ref ref="reactorRollFileAppender" />
+		<appender-ref ref="moqawalatiRollFileAppender" />
 
 		<!-- For debug purpose only - -> <appender-ref ref="consoleAppender"/> 
 			<!- - -->
