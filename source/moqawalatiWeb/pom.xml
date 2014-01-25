@@ -52,6 +52,7 @@
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<hsqldb.version>1.8.0.10</hsqldb.version>
 
+		<jmeter.version>1.8.1</jmeter.version>
 		<findbugs.version>2.5.3</findbugs.version>
 		<checkstyle.version>2.11</checkstyle.version>
 		<surefire.reportplugin.version>2.16</surefire.reportplugin.version>
@@ -469,7 +470,7 @@
 			<plugin>
 				<groupId>com.lazerycode.jmeter</groupId>
 				<artifactId>jmeter-maven-plugin</artifactId>
-				<version>1.9.0</version>
+				<version>${jmeter.version}</version>
 				<executions>
 					<execution>
 						<id>jmeter-tests</id>
