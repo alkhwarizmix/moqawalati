@@ -56,7 +56,7 @@
 		<findbugs.version>2.5.3</findbugs.version>
 		<checkstyle.version>2.11</checkstyle.version>
 		<surefire.reportplugin.version>2.16</surefire.reportplugin.version>
-		<cobertura.version>2.6</cobertura.version>
+		<cobertura.version>2.4</cobertura.version>
 	</properties>
 
 	<dependencies>
@@ -598,15 +598,29 @@
 					<formats>
 						<format>xml</format>
 					</formats>
-					<executions>
-						<execution>
-							<phase>package</phase>
-							<goals>
-								<goal>cobertura</goal>
-							</goals>
-						</execution>
-					</executions>
+					<instrumentation>
+						<includes>
+							<include>dz/alkhwarizmix/**/*.class</include>
+						</includes>
+					</instrumentation>
 				</configuration>
+				<executions>
+					<execution>
+						<id>clean</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>instrument</id>
+						<phase>site</phase>
+						<goals>
+							<goal>instrument</goal>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
