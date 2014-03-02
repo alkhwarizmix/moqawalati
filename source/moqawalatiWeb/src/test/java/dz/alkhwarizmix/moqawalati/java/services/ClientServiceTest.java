@@ -14,17 +14,27 @@ package dz.alkhwarizmix.moqawalati.java.services;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import javax.xml.transform.Source;
+
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
+import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**
  * <p>
@@ -49,6 +59,35 @@ public class ClientServiceTest {
 	@Mock
 	private MoqawalatiDAO mockMoqawalatiDAO;
 
+	@Mock
+	private Jaxb2Marshaller mockJaxb2Marshaller;
+
+	@Before
+	public void setUp() throws MoqawalatiException {
+		setupUtClientService();
+		setupMockJaxb2Marshaller();
+	}
+
+	private void setupUtClientService() {
+		utClientService.setMoqawalatiDAO(mockMoqawalatiDAO);
+		utClientService.setJaxb2Marshaller(mockJaxb2Marshaller);
+	}
+
+	private void setupMockJaxb2Marshaller() {
+		Mockito.when(mockJaxb2Marshaller.unmarshal(any(Source.class)))
+				.thenReturn(new User());
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Helpers
+	//
+	// --------------------------------------------------------------------------
+
+	private Jaxb2Marshaller getRealJaxb2Marshaller() {
+		return new HelperTestUtil().getRealJaxb2Marshaller();
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Tests
@@ -56,15 +95,51 @@ public class ClientServiceTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_addClient_calls_dao_saveOrUpdate() throws Exception {
-		utClientService.setMoqawalatiDAO(mockMoqawalatiDAO);
-		utClientService.addClient(new Client());
+	public void testA01_unmarshalObjectFromXML() throws AlKhwarizmixException {
+		String clientAsXML = "<Client id=\"1\"><Name>Client1</Name></Client>";
+		utClientService.setJaxb2Marshaller(getRealJaxb2Marshaller());
+		Client client = (Client) utClientService
+				.unmarshalObjectFromXML(clientAsXML); // TEST
+		Assert.assertEquals("1", client.getClientId());
+		Assert.assertEquals("Client1", client.getName());
+	}
+
+	@Test
+	public void testA02_marshalObjectToXML() throws AlKhwarizmixException {
+		utClientService.setJaxb2Marshaller(getRealJaxb2Marshaller());
+		String clientAsXML = utClientService.marshalObjectToXML(new Client(
+				"746")); // TEST
+		Assert.assertEquals("<Client id=\"746\"/>", clientAsXML);
+	}
+
+	@Test
+	public void testA03_addClient_calls_dao_saveOrUpdate()
+			throws AlKhwarizmixException {
+		utClientService.addClient(new Client()); // TEST
 		verify(mockMoqawalatiDAO, times(1)).saveOrUpdate(
 				any(AlKhwarizmixDomainObjectAbstract.class));
 	}
 
 	@Test
-	public void test02_getClientAsJSON() throws Exception {
+	public void testA04_getObject_should_call_dao_getUser()
+			throws AlKhwarizmixException {
+		utClientService.getObject(new Client()); // TEST
+		verify(mockMoqawalatiDAO, times(1)).getClient(any(Client.class));
+	}
+
+	@Test
+	public void testA05_getClient_should_not_return_id()
+			throws MoqawalatiException {
+		Client expectedClient = new Client();
+		expectedClient.setId(324L);
+		Mockito.when(mockMoqawalatiDAO.getClient(any(Client.class)))
+				.thenReturn(expectedClient);
+		Client foundClient = utClientService.getClient(new Client()); // TEST
+		Assert.assertNull(foundClient.getId());
+	}
+
+	@Test
+	public void testZ01_getClientAsJSON() throws Exception {
 		Client client = new Client();
 		client.setName("Fares");
 		String s = utClientService.getClientAsJSON(client);

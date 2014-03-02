@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -145,6 +146,7 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 	// domainObject
 	// ----------------------------------
 
+	// @XmlTransient
 	public AlKhwarizmixDomainObject getDomainObject() {
 		return domainObject;
 	}

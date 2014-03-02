@@ -37,21 +37,21 @@
 	<destination id="clientService">
 		<properties>
 			<factory>spring</factory>
-			<source>clientBean</source>
+			<source>beanClientWebServiceForBlazeDS</source>
 		</properties>
 	</destination>
 
 	<destination id="userService">
 		<properties>
 			<factory>spring</factory>
-			<source>userBean</source>
+			<source>beanUserWebServiceForBlazeDS</source>
 		</properties>
 	</destination>
 
 	<destination id="customizerService">
 		<properties>
 			<factory>spring</factory>
-			<source>customizerBean</source>
+			<source>beanCustomizerWebServiceForBlazeDS</source>
 		</properties>
 	</destination>
 

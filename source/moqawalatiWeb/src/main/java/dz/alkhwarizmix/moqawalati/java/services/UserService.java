@@ -148,8 +148,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 		try {
 			User result = internal_getUser(user);
-			if (result != null)
-				result.setDomainObject(null);
+			nullifyProtectedProperties(result);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -300,6 +299,16 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
+		}
+	}
+
+	@Override
+	protected void nullifyProtectedProperties(
+			AlKhwarizmixDomainObjectAbstract object) {
+		super.nullifyProtectedProperties(object);
+		User user = (User) object;
+		if (user != null) {
+			user.setDomainObject(null);
 		}
 	}
 

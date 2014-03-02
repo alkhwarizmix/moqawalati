@@ -28,13 +28,14 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public interface IClientService extends IAlKhwarizmixService {
+
 	/**
 	 */
 	public void addClient(Client client) throws MoqawalatiException;
 
 	/**
 	 */
-	public String addClientFromXML(String clientXml, String creatorId)
+	public String addClientFromXML(String clientAsXML, String creatorId)
 			throws MoqawalatiException;
 
 	/**
@@ -47,10 +48,6 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String getClientAsXML(String partialXml) throws MoqawalatiException;
-
-	/**
-	 */
 	public String getClientAsJSON(Client client) throws MoqawalatiException;
 
 	/**
@@ -59,7 +56,7 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String updateClientFromXML(String clientXml, String updaterId)
+	public String updateClientFromXML(String clientAsXML, String updaterId)
 			throws MoqawalatiException;
 
 	/**
@@ -76,13 +73,5 @@ public interface IClientService extends IAlKhwarizmixService {
 	 */
 	public String getClientListAsXML(DetachedCriteria criteria,
 			int firstResult, int maxResult) throws MoqawalatiException;
-
-	/**
-	 */
-	public String clientListToJSON(List<Client> clientList);
-
-	/**
-	 */
-	public String clientListToXML(List<Client> clientList);
 
 } // Class
