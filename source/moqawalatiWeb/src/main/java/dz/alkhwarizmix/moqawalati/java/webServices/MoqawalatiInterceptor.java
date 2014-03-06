@@ -29,8 +29,26 @@ import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixInterceptor;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public class MoqawalatiInterceptor extends AlKhwarizmixInterceptor {
+
+	// --------------------------------------------------------------------------
+	//
+	// Logger
+	//
+	// --------------------------------------------------------------------------
+
 	private static final Logger LOG = LoggerFactory
 			.getLogger(MoqawalatiInterceptor.class);
+
+	@Override
+	protected Logger getLogger() {
+		return LOG;
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Others
+	//
+	// --------------------------------------------------------------------------
 
 	/**
 	 */
@@ -53,19 +71,6 @@ public class MoqawalatiInterceptor extends AlKhwarizmixInterceptor {
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		super.afterCompletion(request, response, handler, ex);
-	}
-
-	// --------------------------------------------------------------------------
-	//
-	// Getters & Setters
-	//
-	// --------------------------------------------------------------------------
-
-	/**
-	 * get the LOG
-	 */
-	protected Logger getLogger() {
-		return LOG;
 	}
 
 } // Class

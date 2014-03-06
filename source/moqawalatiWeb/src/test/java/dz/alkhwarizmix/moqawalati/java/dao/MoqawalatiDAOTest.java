@@ -20,10 +20,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
+import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
@@ -55,13 +56,29 @@ public class MoqawalatiDAOTest {
 
 	// --------------------------------------------------------------------------
 	//
+	// Helpers
+	//
+	// --------------------------------------------------------------------------
+
+	private User newUser() {
+		User user = new User();
+		user.setUserId("userId");
+		user.setName("userName");
+		user.setCreatorId("creatorId");
+		return user;
+	}
+
+	// --------------------------------------------------------------------------
+	//
 	// Tests
 	//
 	// --------------------------------------------------------------------------
 
+	// ----- -----
+
 	@Test
 	public void test01_add_get_then_update_get_CustomData()
-			throws AlKhwarizmixDAOException, MoqawalatiException {
+			throws AlKhwarizmixException {
 
 		AlKhwarizmixDomainObject customizer = new AlKhwarizmixDomainObject();
 
@@ -77,7 +94,7 @@ public class MoqawalatiDAOTest {
 	}
 
 	private CustomData addCustomData(AlKhwarizmixDomainObject customizer,
-			String value) throws AlKhwarizmixDAOException {
+			String value) throws AlKhwarizmixException {
 
 		CustomData customDataToAdd = new CustomData();
 		customDataToAdd.setCustomizer(customizer);
@@ -98,11 +115,36 @@ public class MoqawalatiDAOTest {
 	}
 
 	private CustomData updateCustomData(CustomData customDataToUpdate,
-			String value) throws AlKhwarizmixDAOException {
+			String value) throws AlKhwarizmixException {
 
 		customDataToUpdate.setCustomDataValue(value);
 		utMoqawalatiDAO.saveOrUpdate(customDataToUpdate);
 		return customDataToUpdate;
 	}
+
+	// ----- -----
+
+	@Test
+	public void test02_add_get_then_update_get_User()
+			throws AlKhwarizmixException {
+
+		Assert.assertNull(utMoqawalatiDAO.getUser(newUser()));
+
+		utMoqawalatiDAO.saveOrUpdate(newUser());
+
+		User savedUser = utMoqawalatiDAO.getUser(newUser());
+		Assert.assertNotNull(savedUser);
+		Assert.assertEquals(newUser().getUserId(), savedUser.getUserId());
+		Assert.assertEquals(newUser().getName(), savedUser.getName());
+		Assert.assertNotNull(savedUser.getDomainObject());
+
+		savedUser.setName("updatedName");
+		utMoqawalatiDAO.saveOrUpdate(savedUser);
+
+		savedUser = utMoqawalatiDAO.getUser(newUser());
+		Assert.assertEquals("updatedName", savedUser.getName());
+	}
+
+	// ----- -----
 
 } // Class

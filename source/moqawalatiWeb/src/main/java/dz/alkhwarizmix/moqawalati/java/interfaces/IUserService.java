@@ -70,4 +70,13 @@ public interface IUserService extends IAlKhwarizmixService {
 	 */
 	public String userListToXML(List<User> userList);
 
+	/**
+	 */
+	public User login(User user) throws MoqawalatiException;
+
+	/**
+	 */
+	public String loginFromXML(String userXml, String loggerId)
+			throws MoqawalatiException;
+
 } // Class

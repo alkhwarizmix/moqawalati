@@ -66,6 +66,7 @@ public class ClientService extends AlKhwarizmixService implements
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ClientService.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -98,8 +99,7 @@ public class ClientService extends AlKhwarizmixService implements
 		try {
 			addObject(client);
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -107,19 +107,18 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String addClientFromXML(String clientXml, String creatorId)
+	public String addClientFromXML(String clientAsXML, String creatorId)
 			throws MoqawalatiException {
 		getLogger().trace("addClientFromXML");
 
 		try {
-			Client newClient = (Client) unmarshalObjectFromXML(clientXml);
+			Client newClient = (Client) unmarshalObjectFromXML(clientAsXML);
 			newClient.setCreatorId(creatorId);
 			addClient(newClient);
 			String result = marshalObjectToXML(newClient);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -133,9 +132,10 @@ public class ClientService extends AlKhwarizmixService implements
 
 		try {
 			Client result = getMoqawalatiDAO().getClient((Client) object);
+			nullifyProtectedProperties(result);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			throw e;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -146,10 +146,10 @@ public class ClientService extends AlKhwarizmixService implements
 		getLogger().trace("getClient");
 
 		try {
-			return (Client) getObject(client);
+			Client result = (Client) getObject(client);
+			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -163,23 +163,7 @@ public class ClientService extends AlKhwarizmixService implements
 			String result = getObjectAsXML(client);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
-		}
-	}
-
-	/**
-	 */
-	@Override
-	public String getClientAsXML(String clientXml) throws MoqawalatiException {
-		getLogger().trace("getClientAsXML 2");
-
-		try {
-			String result = getObjectAsXML(clientXml);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -193,8 +177,7 @@ public class ClientService extends AlKhwarizmixService implements
 			String result = getObjectAsJSON(client);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -209,8 +192,7 @@ public class ClientService extends AlKhwarizmixService implements
 			Client result = (Client) updateObject(client);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -218,19 +200,18 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String updateClientFromXML(String clientXml, String updaterId)
+	public String updateClientFromXML(String clientAsXML, String updaterId)
 			throws MoqawalatiException {
 		getLogger().trace("updateClientFromXML");
 
 		try {
-			Client newClient = (Client) unmarshalObjectFromXML(clientXml);
+			Client newClient = (Client) unmarshalObjectFromXML(clientAsXML);
 			newClient.setCreatorId(updaterId);
 			Client updatedClient = updateClient(newClient);
 			String result = marshalObjectToXML(updatedClient);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -252,8 +233,7 @@ public class ClientService extends AlKhwarizmixService implements
 					criteria, firstResult, maxResult);
 			return result;
 		} catch (AlKhwarizmixException e) {
-			MoqawalatiException ex = new MoqawalatiException(e);
-			throw ex;
+			throw new MoqawalatiException(e);
 		}
 	}
 
@@ -283,8 +263,7 @@ public class ClientService extends AlKhwarizmixService implements
 
 	/**
 	 */
-	@Override
-	public String clientListToJSON(List<Client> clientList) {
+	private String clientListToJSON(List<Client> clientList) {
 
 		String result = "{\"Clients\": {";
 		result += objectListToJSON((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
@@ -297,8 +276,7 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	@SuppressWarnings("unchecked")
-	@Override
-	public String clientListToXML(List<Client> clientList) {
+	private String clientListToXML(List<Client> clientList) {
 
 		String result = "<Clients>";
 		result += objectListToXML((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
@@ -335,10 +313,12 @@ public class ClientService extends AlKhwarizmixService implements
 	// jaxb2Marshaller
 	// ----------------------------------
 
+	@Override
 	protected Jaxb2Marshaller getJaxb2Marshaller() {
 		return jaxb2Marshaller;
 	}
 
+	@Override
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}

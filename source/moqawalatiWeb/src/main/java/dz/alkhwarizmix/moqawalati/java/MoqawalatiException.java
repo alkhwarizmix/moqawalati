@@ -15,89 +15,102 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
- *  <p>
- *  TODO: Javadoc
- *  </p>
+ * <p>
+ * TODO: Javadoc
+ * </p>
  * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ * @author فارس بلحواس (Fares Belhaouas)
+ * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public class MoqawalatiException extends AlKhwarizmixException
-{
+public class MoqawalatiException extends AlKhwarizmixException {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2987142306139512150L;
-	
-	/* ****** ***** ***** ***** ***** ***** ***** ***** ***** ***** ******/  /**
+
+	/**
 	 * constructor
-	 * @param message {@link String} the exception's description
+	 * 
+	 * @param message
+	 *            {@link String} the exception's description
 	 */
-	public MoqawalatiException(String message)
-	{
+	public MoqawalatiException(String message) {
 		super(message);
 	}
-	
-	/* ****** ***** ***** ***** ***** ***** ***** ***** ***** ***** ******/  /**
+
+	/**
 	 * constructor
-	 * @param message {@link String} the exception's description
-	 * @param nested {@link Exception} the exception's cause
+	 * 
+	 * @param message
+	 *            {@link String} the exception's description
+	 * @param nested
+	 *            {@link Exception} the exception's cause
 	 */
-	public MoqawalatiException(String message, Exception nested)
-	{
+	public MoqawalatiException(String message, Exception nested) {
 		super(message, nested);
 	}
-	
-	/* ****** ***** ***** ***** ***** ***** ***** ***** ***** ***** ******/  /**
+
+	/**
 	 * constructor
-	 * @param message {@link String} the exception's description
-	 * @param errorCode {@link AlKhwarizmixErrorCode} the code for the exception
-	 * @param nested {@link Throwable} the exception's cause
+	 * 
+	 * @param message
+	 *            {@link String} the exception's description
+	 * @param errorCode
+	 *            {@link AlKhwarizmixErrorCode} the code for the exception
+	 * @param nested
+	 *            {@link Throwable} the exception's cause
 	 */
-	public MoqawalatiException(String message, AlKhwarizmixErrorCode errorCode, Throwable nested)
-	{
+	public MoqawalatiException(String message, AlKhwarizmixErrorCode errorCode,
+			Throwable nested) {
 		super(message, errorCode, nested);
 	}
-	
-	/* ****** ***** ***** ***** ***** ***** ***** ***** ***** ***** ******/  /**
+
+	/**
 	 * constructor
-	 * @param message {@link String} the exception's description
-	 * @param errorCode {@link AlKhwarizmixErrorCode} the code for the exception
+	 * 
+	 * @param message
+	 *            {@link String} the exception's description
+	 * @param errorCode
+	 *            {@link AlKhwarizmixErrorCode} the code for the exception
 	 */
-	public MoqawalatiException(String message, AlKhwarizmixErrorCode errorCode)
-	{
+	public MoqawalatiException(String message, AlKhwarizmixErrorCode errorCode) {
 		super(message, errorCode);
 	}
-	
+
 	/**
 	 * constructor
-	 * @param errorCode {@link AlKhwarizmixErrorCode} the code for the exception
+	 * 
+	 * @param errorCode
+	 *            {@link AlKhwarizmixErrorCode} the code for the exception
 	 */
-	public MoqawalatiException(AlKhwarizmixErrorCode errorCode)
-	{
+	public MoqawalatiException(AlKhwarizmixErrorCode errorCode) {
 		super(errorCode);
 	}
-	
+
 	/**
 	 * constructor
-	 * @param errorCode {@link AlKhwarizmixErrorCode} the code for the exception
-	 * @param nested {@link Exception} the exception's cause
+	 * 
+	 * @param errorCode
+	 *            {@link AlKhwarizmixErrorCode} the code for the exception
+	 * @param nested
+	 *            {@link Exception} the exception's cause
 	 */
-	public MoqawalatiException(AlKhwarizmixErrorCode errorCode, Exception nested)
-	{
+	public MoqawalatiException(AlKhwarizmixErrorCode errorCode, Exception nested) {
 		super(errorCode, nested);
 	}
-	
-	/* ****** ***** ***** ***** ***** ***** ***** ***** ***** ***** ******/  /**
+
+	/**
 	 * constructor
-	 * @param nested {@link AlKhwarizmixException} the exception's cause
+	 * 
+	 * @param nested
+	 *            {@link AlKhwarizmixException} the exception's cause
 	 */
-	public MoqawalatiException(AlKhwarizmixException nested)
-	{
+	public MoqawalatiException(AlKhwarizmixException nested) {
 		super(nested.getMessage(), nested);
 		setErrorCode(nested.getErrorCode());
 		setValidationErrors(nested.getValidationErrors());
 		setRecoverable(nested.isRecoverable());
 	}
-	
+
 } // Class

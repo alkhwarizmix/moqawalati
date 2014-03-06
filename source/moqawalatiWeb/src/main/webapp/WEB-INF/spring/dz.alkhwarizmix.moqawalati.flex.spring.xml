@@ -26,10 +26,10 @@
 	"http://www.springframework.org/dtd/spring-beans.dtd"
 	>
 <beans>
-	<bean id="clientBean"
-		class="dz.alkhwarizmix.moqawalati.java.services.ClientService" />
-	<bean id="userBean"
+	<bean id="beanClientWebServiceForBlazeDS"
+		class="dz.alkhwarizmix.moqawalati.java.webServices.ClientWebServiceForBlazeDS" />
+	<bean id="beanUserWebServiceForBlazeDS"
 		class="dz.alkhwarizmix.moqawalati.java.services.UserService" />
-	<bean id="customizerBean"
+	<bean id="beanCustomizerWebServiceForBlazeDS"
 		class="dz.alkhwarizmix.framework.java.services.CustomizerService" />
 </beans>

@@ -60,6 +60,7 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(CustomizerWebServiceForXML.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -150,6 +151,7 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// service
 	// ----------------------------------
 
+	@Override
 	protected IAlKhwarizmixService getService() {
 		return customizerService;
 	}

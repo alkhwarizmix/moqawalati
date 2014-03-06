@@ -92,7 +92,7 @@ public class ClientModuleStartupCommand extends MoqawalatiSimpleCommand
 		sendNotification(ClientModuleConstants.STARTUP_COMPLETE);
 		sendNotification(ClientModuleConstants.CLIENT_GET_LIST,
 			{
-				operationParams : [null, 0, 50]
+				operationParams : [0, 50]
 			});
 	}
 	

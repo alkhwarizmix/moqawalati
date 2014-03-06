@@ -92,6 +92,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 		try {
 			AlKhwarizmixDomainObjectAbstract newObject = unmarshalObjectFromXML(objectXml);
 			addObject(newObject);
+			nullifyProtectedProperties(newObject);
 			return marshalObjectToXML(newObject);
 		} catch (AlKhwarizmixException e) {
 			throw e;
@@ -112,9 +113,12 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	@Override
 	public String getObjectAsXML(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
+		String result = "";
 		AlKhwarizmixDomainObjectAbstract foundObject = getObject(object);
-		String result = (foundObject != null) ? marshalObjectToXML(foundObject)
-				: "";
+		if (foundObject != null) {
+			nullifyProtectedProperties(foundObject);
+			result = marshalObjectToXML(foundObject);
+		}
 		return result;
 	}
 
@@ -135,7 +139,8 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	public String getObjectAsJSON(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		AlKhwarizmixDomainObjectAbstract foundObject = getObject(object);
-		String result = (foundObject != null) ? marshalObjectToJSON(foundObject)
+		String result = (foundObject != null)
+				? marshalObjectToJSON(foundObject)
 				: "";
 		return result;
 	}
@@ -221,35 +226,43 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * TODO: Javadoc
 	 */
 	@Override
-	public String marshalObjectToXML(AlKhwarizmixDomainObjectAbstract object)
+	public final String marshalObjectToXML(
+			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
 		try {
-			StringWriter stringWriter = new StringWriter();
-			StreamResult streamResult = new StreamResult(stringWriter);
-			getJaxb2Marshaller().marshal(object, streamResult);
-			return stringWriter.toString();
+			return internal_marshalObjectToXML(object);
 		} catch (XmlMappingException e) {
-			AlKhwarizmixException ex = new AlKhwarizmixException(
+			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_XML_PARSING, e);
-			throw ex;
 		}
+	}
+
+	protected String internal_marshalObjectToXML(
+			AlKhwarizmixDomainObjectAbstract object) {
+		StringWriter stringWriter = new StringWriter();
+		StreamResult streamResult = new StreamResult(stringWriter);
+		getJaxb2Marshaller().marshal(object, streamResult);
+		return stringWriter.toString();
 	}
 
 	/**
 	 * TODO: Javadoc
 	 */
 	@Override
-	public AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
+	public final AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException {
 		try {
-			return (AlKhwarizmixDomainObjectAbstract) getJaxb2Marshaller()
-					.unmarshal(
-							new StreamSource(IOUtils.toInputStream(xmlValue)));
+			return internal_unmarshalObjectFromXML(xmlValue);
 		} catch (XmlMappingException e) {
-			AlKhwarizmixException ex = new AlKhwarizmixException(
+			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_XML_PARSING, e);
-			throw ex;
 		}
+	}
+
+	protected AlKhwarizmixDomainObjectAbstract internal_unmarshalObjectFromXML(
+			String xmlValue) {
+		return (AlKhwarizmixDomainObjectAbstract) getJaxb2Marshaller()
+				.unmarshal(new StreamSource(IOUtils.toInputStream(xmlValue)));
 	}
 
 	/**
@@ -272,6 +285,15 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, exception);
 		}
+	}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	protected void nullifyProtectedProperties(
+			AlKhwarizmixDomainObjectAbstract object) {
+		if (object != null)
+			object.setId(null);
 	}
 
 	// --------------------------------------------------------------------------

@@ -68,6 +68,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(MoqawalatiDAO.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -191,7 +192,9 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		List<CustomDataPart> customDataParts = criteria.list();
 
 		getLogger().debug("getCustomDataParts: customDataParts.size {}",
-				(customDataParts == null) ? null : customDataParts.size());
+				(customDataParts == null)
+						? null
+						: customDataParts.size());
 		return customDataParts;
 	}
 
@@ -205,10 +208,12 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 	// hibernateTemplate
 	// ----------------------------------
 
+	@Override
 	protected HibernateTemplate getHibernateTemplate() {
 		return hibernateTemplate;
 	}
 
+	@Override
 	protected void setHibernateTemplate(HibernateTemplate value) {
 		hibernateTemplate = value;
 	}

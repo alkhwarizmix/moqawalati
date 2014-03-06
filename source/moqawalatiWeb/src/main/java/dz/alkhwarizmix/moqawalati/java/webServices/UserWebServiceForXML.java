@@ -61,6 +61,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(UserWebServiceForXML.class);
 
+	@Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -169,6 +170,23 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 		}
 	}
 
+	/**
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<String> login(@RequestParam("user") String xmlValue)
+			throws MoqawalatiException {
+		LOG.debug("login({})", xmlValue);
+
+		try {
+			StringBuilder sBuilder = new StringBuilder(
+					userService.loginFromXML(xmlValue,
+							getCurrentRequestRemoteAddress()));
+			return successResponseForXML(sBuilder);
+		} catch (MoqawalatiException e) {
+			return errorResponseForXML(e);
+		}
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Getters & Setters
@@ -191,6 +209,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// service
 	// ----------------------------------
 
+	@Override
 	protected IAlKhwarizmixService getService() {
 		return userService;
 	}

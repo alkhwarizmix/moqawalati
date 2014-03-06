@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.0.1.2</version>
+		<version>1.0.2.3</version>
 	</parent>
 
 	<artifactId>moqawalatiWeb</artifactId>
@@ -51,6 +51,12 @@
 
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<hsqldb.version>1.8.0.10</hsqldb.version>
+
+		<jmeter.version>1.8.1</jmeter.version>
+		<findbugs.version>2.5.3</findbugs.version>
+		<checkstyle.version>2.11</checkstyle.version>
+		<surefire.reportplugin.version>2.16</surefire.reportplugin.version>
+		<cobertura.version>2.6</cobertura.version>
 	</properties>
 
 	<dependencies>
@@ -122,7 +128,7 @@
 			<artifactId>spring-oxm</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+
 		<!-- org.springframework.security -->
 
 		<dependency>
@@ -461,13 +467,29 @@
 					</execution> </executions> -->
 			</plugin>
 
-			<!-- <plugin> <groupId>org.apache.jmeter</groupId> <artifactId>maven-jmeter-plugin</artifactId> 
-				<version>1.0-FBEL1</version> <executions> <execution> <id>jmeter-tests</id> 
-				<phase>integration-test</phase> <goals> <goal>jmeter</goal> </goals> </execution> 
-				</executions> <configuration> <reportDir> ${project.build.directory}/jmeter-reports 
-				</reportDir> <jmeterUserProperties> <hostname>localhost</hostname> <port>9787</port> 
-				<contextPath>${project.name}-webapp</contextPath> </jmeterUserProperties> 
-				</configuration> </plugin> -->
+			<plugin>
+				<groupId>com.lazerycode.jmeter</groupId>
+				<artifactId>jmeter-maven-plugin</artifactId>
+				<version>${jmeter.version}</version>
+				<executions>
+					<execution>
+						<id>jmeter-tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>jmeter</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<reportDir>${project.build.directory}/jmeter-reports</reportDir>
+					<propertiesUser>
+						<hostname>localhost</hostname>
+						<port>9787</port>
+						<contextPath>${project.build.finalName}-webapp</contextPath>
+					</propertiesUser>
+					<!-- <overrideRootLogLevel>debug</overrideRootLogLevel> <jmeterLogLevel>DEBUG</jmeterLogLevel> -->
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
@@ -480,9 +502,6 @@
 						<goals>
 							<goal>copy-flex-resources</goal>
 						</goals>
-						<!-- <configuration> -->
-						<!-- <useFinalName>true</useFinalName> -->
-						<!-- </configuration> -->
 					</execution>
 				</executions>
 			</plugin>
@@ -546,14 +565,80 @@
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 				</configuration>
 				<executions>
-					<!-- <execution> <id>start-jetty</id> <phase>pre-integration-test</phase> 
-						<goals> <goal>run</goal> </goals> <configuration> <daemon>true</daemon> </configuration> 
-						</execution> <execution> <id>stop-jetty</id> <phase>post-integration-test</phase> 
-						<goals> <goal>stop</goal> </goals> </execution> -->
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>${cobertura.version}</version>
+				<configuration>
+					<formats>
+						<format>xml</format>
+					</formats>
+					<executions>
+						<execution>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+					</executions>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${surefire.reportplugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>${cobertura.version}</version>
+				<configuration>
+					<formats>
+						<format>xml</format>
+					</formats>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<!-- <profiles> <profile> <id>local</id> <activation> <activeByDefault>true</activeByDefault> 
 		</activation> <properties> <filter1>src/main/filters/local.properties</filter1> 

@@ -4,3 +4,4 @@
 source/moqawalatiWeb/.classpath
 source/moqawalatiWeb/.project
 source/moqawalatiWeb/.settings/org.eclipse.wst.common.component
+**/logs/**
