@@ -57,6 +57,9 @@
 
 				<configuration>
 					<sourceFile>MoqawalatiFlex.mxml</sourceFile>
+					<optimize>true</optimize>
+					<debug>false</debug>
+					
 					<modules>
 						<module>
 							<sourceFile>dz/alkhwarizmix/moqawalati/flex/modules/clientModule/ClientModule.as</sourceFile>
