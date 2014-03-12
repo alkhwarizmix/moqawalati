@@ -12,10 +12,14 @@
 package dz.alkhwarizmix.moqawalati.flex.testutils
 {
 
+import mx.core.UIComponent;
+
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 
+import org.flexunit.asserts.assertFalse;
+import org.flexunit.asserts.assertTrue;
 import org.puremvc.as3.multicore.interfaces.IFacade;
 import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.facade.Facade;

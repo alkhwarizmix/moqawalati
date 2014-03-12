@@ -29,6 +29,7 @@
 	xmlns:flex="dz.alkhwarizmix.moqawalati.flex.*"
 	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
+	xmlns:login="dz.alkhwarizmix.moqawalati.flex.view.components.login.*"
 	creationComplete="this_creationCompleteHandler(event)"
 	>
 	
@@ -97,9 +98,5 @@
 		showRoot="false"
 		itemClick="menuBar_itemClickHandler(event)"/>
 	
-	<containers:MoqawalatiHBox width="100%" horizontalAlign="right">
-		<controls:MoqawalatiTextInput/>
-		<controls:MoqawalatiButton/>
-	</containers:MoqawalatiHBox>
-	
+	<login:LoginBox width="100%"/>
 </mx:ApplicationControlBar>

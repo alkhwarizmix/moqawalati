@@ -17,6 +17,7 @@ import flash.display.DisplayObject;
 import mx.core.UIComponent;
 import mx.events.FlexEvent;
 
+import org.flexunit.asserts.assertFalse;
 import org.flexunit.asserts.assertTrue;
 import org.flexunit.async.Async;
 import org.fluint.uiImpersonation.UIImpersonator;
@@ -87,6 +88,24 @@ public class MoqawalatiUITestCase extends MoqawalatiTestCase
 	protected final function forceRendering(renderer:UIComponent):void
 	{
 		renderer.validateNow();
+	}
+	
+	/**
+	 * @private
+	 */
+	protected final function assertVisible(component:UIComponent, componentName:String):void
+	{
+		assertTrue(componentName + " should be visible", component.visible);
+		assertTrue(componentName + " should be include in layout", component.includeInLayout);
+	}
+	
+	/**
+	 * @private
+	 */
+	protected final function assertHidden(component:UIComponent, componentName:String):void
+	{
+		assertFalse(componentName + " should not be visible", component.visible);
+		assertFalse(componentName + " should not be include in layout", component.includeInLayout);
 	}
 	
 } // class

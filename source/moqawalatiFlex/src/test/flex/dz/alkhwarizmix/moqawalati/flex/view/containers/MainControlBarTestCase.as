@@ -12,9 +12,13 @@
 package dz.alkhwarizmix.moqawalati.flex.view.containers
 {
 
+import flash.display.DisplayObject;
+
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiUITestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBox;
 
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
@@ -49,6 +53,11 @@ public class MainControlBarTestCase extends MoqawalatiUITestCase
 		return MainControlBar;
 	}
 	
+	private function get utMainControlBar():MainControlBar
+	{
+		return classInstanceUnderTest as MainControlBar;
+	}
+	
 	//--------------------------------------------------------------------------
 	//
 	//  TESTS
@@ -58,7 +67,18 @@ public class MainControlBarTestCase extends MoqawalatiUITestCase
 	[Test]
 	public function test01_constructor():void
 	{
-		assertNotNull(classInstanceUnderTest);
+		assertNotNull(utMainControlBar);
+	}
+	
+	[Test]
+	public function test02_should_contain_LoginBox():void
+	{
+		for each (var child:DisplayObject in utMainControlBar.getChildren())
+		{
+			if (child is LoginBox)
+				return;
+		}
+		assertTrue(false);
 	}
 	
 } // class
