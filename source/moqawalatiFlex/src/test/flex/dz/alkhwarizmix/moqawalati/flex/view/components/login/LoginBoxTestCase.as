@@ -96,28 +96,28 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 	public function test03_click_btnLogInOrOut_should_dispatch_LOGIN_event_if_not_loggedUser():void
 	{
 		utLoginBox.loggedUser = null;
-		var wasEventDispatched:Boolean = false;
+		var dispatchedEvent:LoginBoxEvent = null;
 		utLoginBox.addEventListener(LoginBoxEvent.LOGIN,
 			function (event:Event):void
 			{
-				wasEventDispatched = true;
+				dispatchedEvent = event as LoginBoxEvent;
 			});
 		utLoginBox.btnLogInOrOut.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-		assertTrue(wasEventDispatched);
+		assertTrue(dispatchedEvent is LoginBoxEvent);
 	}
 	
 	[Test]
 	public function test04_click_btnLogInOrOut_should_dispatch_LOGOUT_event_if_loggedUser():void
 	{
 		utLoginBox.loggedUser = userFaresBelhaouas;
-		var wasEventDispatched:Boolean = false;
+		var dispatchedEvent:LoginBoxEvent = null;
 		utLoginBox.addEventListener(LoginBoxEvent.LOGOUT,
 			function (event:Event):void
 			{
-				wasEventDispatched = true;
+				dispatchedEvent = event as LoginBoxEvent;
 			});
 		utLoginBox.btnLogInOrOut.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-		assertTrue(wasEventDispatched);
+		assertTrue(dispatchedEvent is LoginBoxEvent);
 	}
 	
 	[Test]

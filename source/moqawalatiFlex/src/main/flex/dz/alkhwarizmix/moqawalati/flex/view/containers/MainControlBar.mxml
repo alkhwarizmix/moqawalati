@@ -45,15 +45,6 @@
 		
 		//--------------------------------------------------------------------------
 		//
-		//  Constants
-		//
-		//--------------------------------------------------------------------------
-		
-		// EVENTS
-		public static const OPEN_WINDOW:String = "MainControlBar_open_window";
-		
-		//--------------------------------------------------------------------------
-		//
 		//  Methods
 		//
 		//--------------------------------------------------------------------------
@@ -85,7 +76,7 @@
 		 */
 		private function menuBar_itemClickHandler(event:MenuEvent):void
 		{
-			sendEvent(OPEN_WINDOW, XML(event.item).@value[0].toString());
+			sendEvent(MainControlBarEvent.OPEN_WINDOW, XML(event.item).@value[0].toString());
 		}
 		
 	]]>

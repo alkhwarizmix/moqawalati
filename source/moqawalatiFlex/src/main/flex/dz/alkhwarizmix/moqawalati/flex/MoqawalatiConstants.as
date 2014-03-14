@@ -52,5 +52,8 @@ public class MoqawalatiConstants
 	
 	public static const CUSTOMDATA_PROXY_CHANGED:String = "Moqawalati_customdata_roxy_changed";
 	
+	public static const LOGIN:String = "Moqawalati_login";
+	public static const LOGOUT:String = "Moqawalati_logout";
+	
 } // class
 } // package

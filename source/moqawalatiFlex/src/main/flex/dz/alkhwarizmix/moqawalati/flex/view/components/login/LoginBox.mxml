@@ -128,7 +128,8 @@
 		 */
 		private function btnLogInOrOut_clickHandler(event:MouseEvent):void
 		{
-			sendEvent(!isUserLogged ? LoginBoxEvent.LOGIN : LoginBoxEvent.LOGOUT);
+			sendEvent(!isUserLogged ? LoginBoxEvent.LOGIN : LoginBoxEvent.LOGOUT,
+				LoginBoxEvent);
 		}
 		
 	]]>
