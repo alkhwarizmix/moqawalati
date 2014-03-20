@@ -14,7 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.facade
 
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
 import dz.alkhwarizmix.framework.flex.facade.AlKhwarizmixFacade;
-import dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 
 /**
  *  <p>
@@ -52,7 +52,7 @@ public class MoqawalatiFacade extends AlKhwarizmixFacade
 	override public function registerCommand(
 		notificationName:String, commandClassRef:Class):void
 	{
-		if (true) // (commandClassRef is IBMCommand)
+		if (new commandClassRef() is IMoqawalatiCommand)
 			super.registerCommand(notificationName, commandClassRef);
 		else
 			throw new AlKhwarizmixTypeError;

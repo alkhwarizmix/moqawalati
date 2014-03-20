@@ -12,14 +12,10 @@
 package dz.alkhwarizmix.moqawalati.flex.testutils
 {
 
-import mx.core.UIComponent;
-
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 
-import org.flexunit.asserts.assertFalse;
-import org.flexunit.asserts.assertTrue;
 import org.puremvc.as3.multicore.interfaces.IFacade;
 import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.facade.Facade;
@@ -53,12 +49,20 @@ public class MoqawalatiTestCase
 	[Before]
 	public function setUp():void
 	{
-		classInstanceUnderTest = new classUnderTest();
+		if (classUnderTestConstructorArg1)
+			classInstanceUnderTest = new classUnderTest(classUnderTestConstructorArg1);
+		else
+			classInstanceUnderTest = new classUnderTest();
 	}
 	
 	protected function get classUnderTest():Class
 	{
 		throw new AlKhwarizmixMissingImplError();
+	}
+	
+	protected function get classUnderTestConstructorArg1():*
+	{
+		return null;
 	}
 	
 	[After]
@@ -95,6 +99,14 @@ public class MoqawalatiTestCase
 	protected final function removeMoqawalatiConfigProxy():void
 	{
 		moqawalatiMainFacade.removeProxy(MoqawalatiConfigProxy.NAME);
+	}
+	
+	/**
+	 * @private
+	 */
+	protected final function removeFacadeCore(key:String):void
+	{
+		Facade.removeCore(key);
 	}
 	
 	//--------------------------------------------------------------------------
