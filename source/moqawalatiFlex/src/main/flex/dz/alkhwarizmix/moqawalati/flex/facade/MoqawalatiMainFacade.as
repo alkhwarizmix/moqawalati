@@ -12,8 +12,6 @@
 package dz.alkhwarizmix.moqawalati.flex.facade
 {
 
-import flash.utils.Dictionary;
-
 import mx.messaging.messages.RemotingMessage;
 
 import spark.skins.spark.DataGridSkin;
@@ -27,9 +25,6 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCom
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
-
-import org.puremvc.as3.multicore.interfaces.IFacade;
-import org.puremvc.as3.multicore.patterns.facade.Facade;
 
 /**
  *  <p>
@@ -90,44 +85,6 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Properties
-	//
-	//--------------------------------------------------------------------------
-	
-	//----------------------------------
-	//  commandsToRegister
-	//----------------------------------
-	
-	private var _commandsToRegister:Dictionary = null;
-	private final function get commandsToRegister():Dictionary
-	{
-		if (!_commandsToRegister)
-		{
-			_commandsToRegister = new Dictionary(true);
-			
-			addCommandToRegister(MoqawalatiConstants.STARTUP,
-				MoqawalatiStartupCommand);
-			addCommandToRegister(MoqawalatiConstants.GET_CUSTOMDATA,
-				MoqawalatiGetCustomizedDataCommand);
-			addCommandToRegister(MoqawalatiConstants.SET_CUSTOMDATA,
-				MoqawalatiSetCustomizedDataCommand);
-			addCommandToRegister(MoqawalatiConstants.LOGIN,
-				MoqawalatiBlazeDSGetDataCommand);
-			addCommandToRegister(MoqawalatiConstants.LOGOUT,
-				MoqawalatiBlazeDSGetDataCommand);
-		}
-		
-		return _commandsToRegister;
-	}
-	
-	protected final function addCommandToRegister(
-		commandName:String, commandClass:Class):void
-	{
-		_commandsToRegister[commandName] = commandClass;
-	}
-	
-	//--------------------------------------------------------------------------
-	//
 	//  Overriden methods
 	//
 	//--------------------------------------------------------------------------
@@ -138,9 +95,20 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	override protected function initializeController():void 
 	{
 		super.initializeController();
-		
-		unregisterCommands();
-		registerCommands();
+	}
+	
+	override protected function initCommandsToRegister():void
+	{
+		addCommandToRegister(MoqawalatiConstants.STARTUP,
+			MoqawalatiStartupCommand);
+		addCommandToRegister(MoqawalatiConstants.GET_CUSTOMDATA,
+			MoqawalatiGetCustomizedDataCommand);
+		addCommandToRegister(MoqawalatiConstants.SET_CUSTOMDATA,
+			MoqawalatiSetCustomizedDataCommand);
+		addCommandToRegister(MoqawalatiConstants.LOGIN,
+			MoqawalatiBlazeDSGetDataCommand);
+		addCommandToRegister(MoqawalatiConstants.LOGOUT,
+			MoqawalatiBlazeDSGetDataCommand);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -157,30 +125,6 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	public function startup(app:IMoqawalatiApplication):void
 	{
 		sendNotification(MoqawalatiConstants.STARTUP, app);
-	}
-	
-	/**
-	 * registerCommands Method TO_ASDoc_DO:
-	 */
-	private function registerCommands():void
-	{
-		logger.debug("registerCommands");
-		
-		for (var key:String in commandsToRegister)
-		{
-			registerCommand(key, commandsToRegister[key]);
-		}
-	}
-	
-	/**
-	 * unregisterCommands Method TO_ASDoc_DO:
-	 */
-	private function unregisterCommands():void
-	{
-		for (var key:String in commandsToRegister)
-		{
-			removeCommand(key);
-		}
 	}
 	
 } // class
