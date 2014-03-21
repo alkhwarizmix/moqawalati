@@ -83,6 +83,7 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
 		assertEquals("login", moqawalatiLoginCommand.operationName);
 	}
 	
+	[Ignore("Test in progress")]
 	[Test]
 	public function test03_proxyName():void
 	{

@@ -83,7 +83,6 @@ public class MoqawalatiGetCustomizedDataCommandTestCase extends MoqawalatiTestCa
 		assertEquals("getCustomData", moqawalatiGetCustomizedDataCommand.operationName);
 	}
 	
-	[Ignore("Test in progress")]
 	[Test]
 	public function test03_proxyName():void
 	{
