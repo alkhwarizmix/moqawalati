@@ -13,6 +13,9 @@ package dz.alkhwarizmix.moqawalati.flex
 {
 
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediatorTestCase;
@@ -30,6 +33,9 @@ public class MoqawalatiTestSuite
 	
 	// controller
 	public var moqawalatiBlazeDSGetDataCommandTestCase:MoqawalatiBlazeDSGetDataCommandTestCase;
+	public var moqawalatiLoginCommandTestCase:MoqawalatiLoginCommandTestCase;
+	public var moqawalatiGetCustomizedDataCommandTestCase:MoqawalatiGetCustomizedDataCommandTestCase;
+	public var moqawalatiSetCustomizedDataCommandTestCase:MoqawalatiSetCustomizedDataCommandTestCase;
 	
 	// model
 	public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;

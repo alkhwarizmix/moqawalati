@@ -13,6 +13,11 @@ package dz.alkhwarizmix.moqawalati.flex.facade
 {
 
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 
 import org.flexunit.asserts.assertNotNull;
@@ -68,7 +73,10 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiTestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	// EMPTY
+	private function newCommandClassWithKey(key:String):*
+	{
+		return new (utMoqawalatiMainFacade.getCommandClassWithKey(key));
+	}
 	
 	//--------------------------------------------------------------------------
 	//
@@ -85,11 +93,11 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiTestCase
 	[Test]
 	public function test01_registeredCommands():void
 	{
-		assertTrue(utMoqawalatiMainFacade.hasCommand(MoqawalatiConstants.STARTUP));
-		assertTrue(utMoqawalatiMainFacade.hasCommand(MoqawalatiConstants.GET_CUSTOMDATA));
-		assertTrue(utMoqawalatiMainFacade.hasCommand(MoqawalatiConstants.SET_CUSTOMDATA));
-		assertTrue(utMoqawalatiMainFacade.hasCommand(MoqawalatiConstants.LOGIN));
-		assertTrue(utMoqawalatiMainFacade.hasCommand(MoqawalatiConstants.LOGOUT));
+		assertTrue(newCommandClassWithKey(MoqawalatiConstants.STARTUP) is MoqawalatiStartupCommand);
+		assertTrue(newCommandClassWithKey(MoqawalatiConstants.GET_CUSTOMDATA) is MoqawalatiGetCustomizedDataCommand);
+		assertTrue(newCommandClassWithKey(MoqawalatiConstants.SET_CUSTOMDATA) is MoqawalatiSetCustomizedDataCommand);
+		assertTrue(newCommandClassWithKey(MoqawalatiConstants.LOGIN) is MoqawalatiLoginCommand);
+		assertTrue(newCommandClassWithKey(MoqawalatiConstants.LOGOUT) is MoqawalatiBlazeDSGetDataCommand);
 	}
 	
 } // class
