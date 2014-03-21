@@ -16,6 +16,7 @@ import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 
+import org.flexunit.asserts.assertTrue;
 import org.puremvc.as3.multicore.interfaces.IFacade;
 import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.facade.Facade;
@@ -107,6 +108,31 @@ public class MoqawalatiTestCase
 	protected final function removeFacadeCore(key:String):void
 	{
 		Facade.removeCore(key);
+	}
+	
+	/**
+	 * @private
+	 * 
+	 * Example of use:
+	 *  classUnderTest = new MoqawalatiClass();
+	 *  assert_should_throwMissingImplError(
+	 *    function ():void
+	 *    {
+	 *      classUnderTest.function_should_throw_error();
+	 *    });
+	 */
+	protected  final function assert_should_throwMissingImplError(
+		functionThrowingException:Function):void
+	{
+		try
+		{
+			functionThrowingException();
+			assertTrue("Should throw exception before to be here", false);
+		}
+		catch (error:Error)
+		{
+			assertTrue(error is AlKhwarizmixMissingImplError);
+		}
 	}
 	
 	//--------------------------------------------------------------------------
