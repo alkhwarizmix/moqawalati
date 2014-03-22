@@ -35,6 +35,7 @@
 		import mx.logging.LogEventLevel;
 		
 		import dz.alkhwarizmix.moqawalati.flex.MoqawalatiTestSuite;
+		import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModuleTestSuite;
 		import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleTestSuite;
 		
 		import org.flexunit.internals.TextListener;
@@ -78,7 +79,8 @@
 			
 			flexUnitCore.run(
 				MoqawalatiTestSuite,
-				UserModuleTestSuite
+				UserModuleTestSuite,
+				ClientModuleTestSuite
 			);
 		}
 		
