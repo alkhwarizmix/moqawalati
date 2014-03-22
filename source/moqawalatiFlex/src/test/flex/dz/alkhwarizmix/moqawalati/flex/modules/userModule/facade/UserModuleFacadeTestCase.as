@@ -9,15 +9,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.facade
+package dz.alkhwarizmix.moqawalati.flex.modules.userModule.facade
 {
 
-import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommand;
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleConstants;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserGetListCommand;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserModuleStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 
 import org.flexunit.asserts.assertNotNull;
@@ -25,13 +22,13 @@ import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
- *  TODO: ASDOC
+ *  Test for UserModuleFacade
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ١٩ جمادى الأول ١٤٣٥ (March 19, 2014)
+ *  @since  ٢٢ جمادى الأول ١٤٣٥ (March 22, 2014)
  */
-public class MoqawalatiMainFacadeTestCase extends MoqawalatiTestCase
+public class UserModuleFacadeTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -54,17 +51,17 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiTestCase
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiMainFacade;
+		return UserModuleFacade;
 	}
 	
 	override protected function get classUnderTestConstructorArg1():*
 	{
-		return "MoqawalatiMainFacadeTestCase_FACADE";
+		return "UserModuleFacadeTestCase_FACADE";
 	}
 	
-	private function get utMoqawalatiMainFacade():MoqawalatiMainFacade
+	private function get utUserModuleFacade():UserModuleFacade
 	{
-		return classInstanceUnderTest as MoqawalatiMainFacade;
+		return classInstanceUnderTest as UserModuleFacade;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -76,22 +73,16 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiTestCase
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(utMoqawalatiMainFacade);
+		assertNotNull(utUserModuleFacade);
 	}
 	
 	[Test]
 	public function test01_registeredCommands():void
 	{
-		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.STARTUP) is MoqawalatiStartupCommand);
-		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.GET_CUSTOMDATA) is MoqawalatiGetCustomizedDataCommand);
-		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.SET_CUSTOMDATA) is MoqawalatiSetCustomizedDataCommand);
-		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.LOGIN) is MoqawalatiLoginCommand);
-		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.LOGOUT) is MoqawalatiBlazeDSGetDataCommand);
+		assertTrue(newFacadeCommandClassWithKey(utUserModuleFacade,
+			UserModuleConstants.STARTUP) is UserModuleStartupCommand);
+		assertTrue(newFacadeCommandClassWithKey(utUserModuleFacade,
+			UserModuleConstants.USER_GET_LIST) is UserGetListCommand);
 	}
 	
 } // class

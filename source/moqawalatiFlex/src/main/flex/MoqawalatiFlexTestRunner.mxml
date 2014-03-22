@@ -35,6 +35,7 @@
 		import mx.logging.LogEventLevel;
 		
 		import dz.alkhwarizmix.moqawalati.flex.MoqawalatiTestSuite;
+		import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleTestSuite;
 		
 		import org.flexunit.internals.TextListener;
 		import org.flexunit.internals.TraceListener;
@@ -75,7 +76,10 @@
 			flexUnitCore.addListener( new TraceListener() ); // - For AS3 Projects
 			flexUnitCore.addListener( TextListener.getDefaultTextListener( LogEventLevel.DEBUG ) ); // - For Flex Projects
 			
-			flexUnitCore.run(MoqawalatiTestSuite);
+			flexUnitCore.run(
+				MoqawalatiTestSuite,
+				UserModuleTestSuite
+			);
 		}
 		
 	]]>

@@ -13,6 +13,7 @@ package dz.alkhwarizmix.moqawalati.flex.testutils
 {
 
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
+import dz.alkhwarizmix.framework.flex.facade.AlKhwarizmixFacade;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 
@@ -124,6 +125,15 @@ public class MoqawalatiTestCase
 	protected final function removeFacadeCore(key:String):void
 	{
 		Facade.removeCore(key);
+	}
+	
+	/**
+	 * @private
+	 */
+	protected final function newFacadeCommandClassWithKey(
+		facade:AlKhwarizmixFacade, key:String):*
+	{
+		return new (facade.getCommandClassWithKey(key));
 	}
 	
 	/**

@@ -48,9 +48,9 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */
 	public function MoqawalatiMainFacade(key:String)
 	{
-		logger.debug("MoqawalatiMainFacade");
-		super(key);
+		logger.debug("New MoqawalatiMainFacade");
 		
+		super(key);
 		registerNeededClasses();
 	}
 	
@@ -91,13 +91,8 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	//--------------------------------------------------------------------------
 	
 	/**
-	 * Register Commands with the Controller 
+	 * initCommandsToRegister Method TO_ASDoc_DO:
 	 */
-	override protected function initializeController():void 
-	{
-		super.initializeController();
-	}
-	
 	override protected function initCommandsToRegister():void
 	{
 		addCommandToRegister(MoqawalatiConstants.STARTUP,
