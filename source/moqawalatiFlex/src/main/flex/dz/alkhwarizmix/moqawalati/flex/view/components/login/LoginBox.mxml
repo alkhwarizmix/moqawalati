@@ -138,6 +138,7 @@
 	<controls:MoqawalatiLabel id="label"/>
 	<controls:MoqawalatiTextInput id="text"/>
 	<controls:MoqawalatiButton id="btnLogInOrOut"
+		label="{resourceManager.getString('MoqawalatiFlex', 'dz.alkhwarizmix.LOGIN')}"
 		click="btnLogInOrOut_clickHandler(event)"/>
 	
 </containers:MoqawalatiHBox>

@@ -33,6 +33,10 @@
 	addedToStage="this_addedToStageHandler(event)"
 	>
 	
+	<fx:Metadata>
+		[ResourceBundle("MoqawalatiFlex")]
+	</fx:Metadata>
+	
 	<fx:Script>
 	<![CDATA[
 		import mx.events.FlexEvent;

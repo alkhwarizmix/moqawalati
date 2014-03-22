@@ -60,18 +60,6 @@
 	</properties>
 
 	<dependencies>
-		<!-- SWF BEGIN -->
-
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>moqawalatiFlex</artifactId>
-			<version>${project.version}</version>
-			<type>swf</type>
-			<classifier>clientmodule</classifier>
-		</dependency>
-
-		<!-- SWF END -->
-
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>

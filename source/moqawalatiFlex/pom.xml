@@ -139,13 +139,23 @@
 
 				<configuration>
 					<sourceFile>MoqawalatiFlex.mxml</sourceFile>
+					
 					<optimize>true</optimize>
 					<debug>false</debug>
+					<allowSourcePathOverlap>true</allowSourcePathOverlap>
 
 					<compilerWarnings>
 						<warnNoConstructor>false</warnNoConstructor>
 					</compilerWarnings>
-
+					
+					<!-- https://issues.sonatype.org/browse/FLEXMOJOS-317 -->
+					<localesSourcePath>${basedir}/src/main/resources/locale/{locale}</localesSourcePath>
+					<localesCompiled>
+						<locale>en_US</locale>
+						<locale>fr_FR</locale>
+					</localesCompiled>
+					<!-- <mergeResourceBundle>true</mergeResourceBundle> -->
+					
 					<policyFileUrls>
 						<!--- cross domain policy for each RSL entry -->
 						<url>http://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
