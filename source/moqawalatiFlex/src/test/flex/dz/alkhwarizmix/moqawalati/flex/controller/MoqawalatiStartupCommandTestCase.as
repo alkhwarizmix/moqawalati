@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -14,18 +14,17 @@ package dz.alkhwarizmix.moqawalati.flex.controller
 
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 
-import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
 
 /**
  *  <p>
- *  Test for MoqawalatiLoginCommand
+ *  Test for MoqawalatiStartupCommand
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٠ جمادى الأول ١٤٣٥ (March 20, 2014)
+ *  @since  ٢١ جمادى الأول ١٤٣٥ (March 21, 2014)
  */
-public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
+public class MoqawalatiStartupCommandTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -36,7 +35,7 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
 	[Before]
 	override public function setUp():void
 	{
-		registerMoqawalatiConfigProxy();
+		// registerMoqawalatiConfigProxy();
 		
 		super.setUp();
 	}
@@ -46,17 +45,17 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
 	{
 		super.tearDown();
 		
-		removeMoqawalatiConfigProxy();
+		// removeMoqawalatiConfigProxy();
 	}
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiLoginCommand;
+		return MoqawalatiStartupCommand;
 	}
 	
-	private function get moqawalatiLoginCommand():MoqawalatiLoginCommand
+	private function get moqawalatiStartupCommand():MoqawalatiStartupCommand
 	{
-		return classInstanceUnderTest as MoqawalatiLoginCommand;
+		return classInstanceUnderTest as MoqawalatiStartupCommand;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -68,25 +67,14 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(moqawalatiLoginCommand);
+		assertNotNull(moqawalatiStartupCommand);
 	}
 	
+	[Ignore("REDO IN TDD")]
 	[Test]
-	public function test01_destination():void
+	public function test01_REDO_TDD():void
 	{
-		assertEquals("userService", moqawalatiLoginCommand.destination);
-	}
-	
-	[Test]
-	public function test02_operationName():void
-	{
-		assertEquals("login", moqawalatiLoginCommand.operationName);
-	}
-	
-	[Test]
-	public function test03_proxyName():void
-	{
-		assertEquals("MoqawalatiLoginUserProxy", moqawalatiLoginCommand.proxyName);
+		assertNotNull(null);
 	}
 	
 } // class

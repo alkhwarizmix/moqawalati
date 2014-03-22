@@ -50,7 +50,8 @@ public class MoqawalatiConstants
 	public static const GET_CUSTOMDATA:String = "Moqawalati_get_customdata";
 	public static const SET_CUSTOMDATA:String = "Moqawalati_set_customdata";
 	
-	public static const CUSTOMDATA_PROXY_CHANGED:String = "Moqawalati_customdata_roxy_changed";
+	public static const CUSTOMDATA_PROXY_CHANGED:String = "Moqawalati_customdata_proxy_changed";
+	public static const LOGINUSER_PROXY_CHANGED:String = "Moqawalati_loginuser_proxy_changed";
 	
 	public static const LOGIN:String = "Moqawalati_login";
 	public static const LOGOUT:String = "Moqawalati_logout";

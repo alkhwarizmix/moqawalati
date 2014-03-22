@@ -88,8 +88,8 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 	[Test]
 	public function test02_default_show_inputText_and_hide_label():void
 	{
-		assertVisible(utLoginBox.text, "text");
-		assertHidden(utLoginBox.label, "label");
+		assertVisible(utLoginBox.textUserName, "text");
+		assertHidden(utLoginBox.labelUserName, "label");
 	}
 	
 	[Test]
@@ -124,23 +124,23 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 	public function test05_label_should_display_loggedUser_name_after_rendering():void
 	{
 		utLoginBox.loggedUser = userFaresBelhaouas;
-		assertEquals("label should be empty", "", utLoginBox.label.text);
+		assertEquals("label should be empty", "", utLoginBox.labelUserName.text);
 		forceRendering(utLoginBox);
-		assertEquals("label should have loggedUser name", userFaresBelhaouas.name, utLoginBox.label.text);
+		assertEquals("label should have loggedUser name", userFaresBelhaouas.name, utLoginBox.labelUserName.text);
 	}
 	
 	[Test]
 	public function test06_label_should_change_visibility_depending_on_loggedUser_after_rendering():void
 	{
 		utLoginBox.loggedUser = userFaresBelhaouas;
-		assertHidden(utLoginBox.label, "label");
+		assertHidden(utLoginBox.labelUserName, "label");
 		forceRendering(utLoginBox);
-		assertVisible(utLoginBox.label, "label");
+		assertVisible(utLoginBox.labelUserName, "label");
 		
 		utLoginBox.loggedUser = null;
-		assertVisible(utLoginBox.label, "label");
+		assertVisible(utLoginBox.labelUserName, "label");
 		forceRendering(utLoginBox);
-		assertHidden(utLoginBox.label, "label");
+		assertHidden(utLoginBox.labelUserName, "label");
 	}
 	
 } // class

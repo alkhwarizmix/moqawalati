@@ -102,10 +102,10 @@
 		 */
 		private function updateLabel():void
 		{
-			label.setVisible(isUserLogged);
-			label.includeInLayout = isUserLogged;
+			labelUserName.setVisible(isUserLogged);
+			labelUserName.includeInLayout = isUserLogged;
 			if (isUserLogged)
-				label.text = loggedUser.name;	
+				labelUserName.text = loggedUser.name;	
 		}
 		
 		/**
@@ -113,8 +113,8 @@
 		 */
 		private function updateText():void
 		{
-			text.setVisible(!isUserLogged);
-			text.includeInLayout = !isUserLogged;
+			textUserName.setVisible(!isUserLogged);
+			textUserName.includeInLayout = !isUserLogged;
 		}
 		
 		//--------------------------------------------------------------------------
@@ -135,8 +135,8 @@
 	]]>
 	</fx:Script>
 	
-	<controls:MoqawalatiLabel id="label"/>
-	<controls:MoqawalatiTextInput id="text"/>
+	<controls:MoqawalatiLabel id="labelUserName"/>
+	<controls:MoqawalatiTextInput id="textUserName"/>
 	<controls:MoqawalatiButton id="btnLogInOrOut"
 		label="{resourceManager.getString('MoqawalatiFlex', 'dz.alkhwarizmix.LOGIN')}"
 		click="btnLogInOrOut_clickHandler(event)"/>

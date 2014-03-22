@@ -14,10 +14,13 @@ package dz.alkhwarizmix.moqawalati.flex.view
 
 import dz.alkhwarizmix.framework.flex.utils.EventUtil;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiSimpleCommandMock;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBox;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxEvent;
 
+import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
 import org.flexunit.asserts.assertTrue;
 import org.puremvc.as3.multicore.interfaces.IFacade;
@@ -45,15 +48,14 @@ public class LoginBoxMediatorTestCase extends MoqawalatiTestCase
 	[Before]
 	override public function setUp():void
 	{
+		loginBox = new LoginBox();
+		
 		super.setUp();
 		
 		facade = Facade.getInstance("TEST_FACADE");
-		
-		loginBox = new LoginBox();
-		utLoginBoxMediator.setViewComponent(loginBox);
 		facade.registerMediator(utLoginBoxMediator);
 		
-		MockMoqawalatiSimpleCommand.init();
+		MoqawalatiSimpleCommandMock.init();
 	}
 	
 	[After]
@@ -69,6 +71,11 @@ public class LoginBoxMediatorTestCase extends MoqawalatiTestCase
 	override protected function get classUnderTest():Class
 	{
 		return LoginBoxMediator;
+	}
+	
+	override protected function get classUnderTestConstructorArg1():*
+	{
+		return loginBox;
 	}
 	
 	private function get utLoginBoxMediator():LoginBoxMediator
@@ -92,45 +99,25 @@ public class LoginBoxMediatorTestCase extends MoqawalatiTestCase
 	public function test02_dispatchEvent_LOGIN_should_sendNotification_LOGIN():void
 	{
 		facade.registerCommand(MoqawalatiConstants.LOGIN,
-			MockMoqawalatiSimpleCommand);
+			MoqawalatiSimpleCommandMock);
 		new EventUtil().sendEvent(loginBox, LoginBoxEvent.LOGIN, LoginBoxEvent);
-		assertTrue(MockMoqawalatiSimpleCommand.wasExecuteCalled);
+		assertTrue(MoqawalatiSimpleCommandMock.wasExecuteCalled);
+		assertNotNull(MoqawalatiSimpleCommandMock.notifBody);
+		assertNotNull(MoqawalatiSimpleCommandMock.notifBody.operationParams);
+		assertEquals(1, MoqawalatiSimpleCommandMock.notifBody.operationParams.length);
+		assertTrue(MoqawalatiSimpleCommandMock.notifBody.operationParams[0] is UserVO);
 	}
 	
 	[Test]
 	public function test03_dispatchEvent_LOGOUT_should_sendNotification_LOGOUT():void
 	{
 		facade.registerCommand(MoqawalatiConstants.LOGOUT,
-			MockMoqawalatiSimpleCommand);
+			MoqawalatiSimpleCommandMock);
 		new EventUtil().sendEvent(loginBox, LoginBoxEvent.LOGOUT, LoginBoxEvent);
-		assertTrue(MockMoqawalatiSimpleCommand.wasExecuteCalled);
+		assertTrue(MoqawalatiSimpleCommandMock.wasExecuteCalled);
+		assertNotNull(MoqawalatiSimpleCommandMock.notifBody);
+		assertNotNull(MoqawalatiSimpleCommandMock.notifBody.operationParams);
 	}
 	
 } // class
 } // package
-
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSimpleCommand;
-import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
-
-import org.puremvc.as3.multicore.interfaces.INotification;
-
-internal class MockMoqawalatiSimpleCommand extends MoqawalatiSimpleCommand
-	implements IMoqawalatiCommand
-{
-	private static var _wasExecuteCalled:Boolean = false;
-	
-	public static function get wasExecuteCalled():Boolean
-	{
-		return _wasExecuteCalled;
-	}
-	
-	public static function init():void
-	{
-		_wasExecuteCalled = false;
-	}
-	
-	override protected function execute_try(notif:INotification):void	
-	{
-		_wasExecuteCalled = true;
-	}
-}

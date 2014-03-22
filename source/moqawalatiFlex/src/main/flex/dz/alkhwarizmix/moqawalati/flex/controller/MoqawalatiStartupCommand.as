@@ -19,6 +19,7 @@ import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
+import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvas;
@@ -77,6 +78,8 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 			mainCanvas.mainControlBar));
 		facade.registerMediator(new MDICanvasMediator(
 			mainCanvas.mdiCanvas));
+		facade.registerMediator(new LoginBoxMediator(
+			mainCanvas.mainControlBar.loginBox));
 	}
 	
 	/**

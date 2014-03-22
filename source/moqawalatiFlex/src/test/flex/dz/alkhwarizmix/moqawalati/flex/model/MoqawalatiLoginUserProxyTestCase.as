@@ -9,23 +9,25 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.controller
+package dz.alkhwarizmix.moqawalati.flex.model
 {
 
+import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 
 import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
- *  Test for MoqawalatiLoginCommand
+ *  Test for MoqawalatiLoginUserProxy
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٠ جمادى الأول ١٤٣٥ (March 20, 2014)
+ *  @since  ٢١ جمادى الأول ١٤٣٥ (March 21, 2014)
  */
-public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
+public class MoqawalatiLoginUserProxyTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -36,28 +38,37 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
 	[Before]
 	override public function setUp():void
 	{
-		registerMoqawalatiConfigProxy();
-		
 		super.setUp();
+		
+		moqawalatiMainFacade.registerProxy(moqawalatiLoginUserProxy);
 	}
 	
 	[After]
 	override public function tearDown():void
 	{
-		super.tearDown();
+		moqawalatiMainFacade.removeProxy(
+			moqawalatiLoginUserProxy.getProxyName());
 		
-		removeMoqawalatiConfigProxy();
+		super.tearDown();
 	}
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiLoginCommand;
+		return MoqawalatiLoginUserProxy;
 	}
 	
-	private function get moqawalatiLoginCommand():MoqawalatiLoginCommand
+	private function get moqawalatiLoginUserProxy():MoqawalatiLoginUserProxy
 	{
-		return classInstanceUnderTest as MoqawalatiLoginCommand;
+		return classInstanceUnderTest as MoqawalatiLoginUserProxy;
 	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  HELPERS
+	//
+	//--------------------------------------------------------------------------
+	
+	// EMPTY
 	
 	//--------------------------------------------------------------------------
 	//
@@ -68,25 +79,27 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiTestCase
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(moqawalatiLoginCommand);
+		assertNotNull(moqawalatiLoginUserProxy);
 	}
 	
 	[Test]
-	public function test01_destination():void
+	public function test01_changedNoteName():void
 	{
-		assertEquals("userService", moqawalatiLoginCommand.destination);
+		assertEquals("Moqawalati_loginuser_proxy_changed",
+			moqawalatiLoginUserProxy.changedNoteName);
 	}
 	
 	[Test]
-	public function test02_operationName():void
+	public function test02_user_cannot_be_null():void
 	{
-		assertEquals("login", moqawalatiLoginCommand.operationName);
+		moqawalatiLoginUserProxy.setData(null);
+		assertTrue(moqawalatiLoginUserProxy.user is UserVO);
 	}
 	
 	[Test]
-	public function test03_proxyName():void
+	public function test03_getOneItem_should_return_UserVO():void
 	{
-		assertEquals("MoqawalatiLoginUserProxy", moqawalatiLoginCommand.proxyName);
+		assertTrue(moqawalatiLoginUserProxy.getOneItem() is UserVO);
 	}
 	
 } // class

@@ -13,6 +13,7 @@ package dz.alkhwarizmix.moqawalati.flex.view
 {
 
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.event.MoqawalatiEvent;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBox;
@@ -52,6 +53,8 @@ public class LoginBoxMediator extends MoqawalatiMediator
 	public function LoginBoxMediator(viewComponent:Object = null)
 	{
 		super(NAME, viewComponent);
+		
+		setViewComponent(viewComponent);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -113,9 +116,12 @@ public class LoginBoxMediator extends MoqawalatiMediator
 	{
 		logger.debug("loginBox_loginHandler");
 		
+		var userToLogin:UserVO = new UserVO();
+		userToLogin.name = loginBox.textUserName.text;
+		userToLogin.userId = loginBox.textUserName.text;
 		sendNotification(MoqawalatiConstants.LOGIN,
 			{
-				data : ""
+				operationParams : [userToLogin]
 			});
 	}
 	
@@ -128,7 +134,7 @@ public class LoginBoxMediator extends MoqawalatiMediator
 		
 		sendNotification(MoqawalatiConstants.LOGOUT,
 			{
-				data : ""
+				operationParams : [null]
 			});
 	}
 	

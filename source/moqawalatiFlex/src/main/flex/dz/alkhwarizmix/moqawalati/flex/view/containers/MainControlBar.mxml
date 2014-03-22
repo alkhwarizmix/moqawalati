@@ -89,5 +89,5 @@
 		showRoot="false"
 		itemClick="menuBar_itemClickHandler(event)"/>
 	
-	<login:LoginBox width="100%"/>
+	<login:LoginBox id="loginBox" width="100%"/>
 </mx:ApplicationControlBar>

@@ -16,8 +16,10 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataComman
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxyTestCase;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxTestCase;
@@ -36,9 +38,11 @@ public class MoqawalatiTestSuite
 	public var moqawalatiLoginCommandTestCase:MoqawalatiLoginCommandTestCase;
 	public var moqawalatiGetCustomizedDataCommandTestCase:MoqawalatiGetCustomizedDataCommandTestCase;
 	public var moqawalatiSetCustomizedDataCommandTestCase:MoqawalatiSetCustomizedDataCommandTestCase;
+	public var moqawalatiStartupCommandTestCase:MoqawalatiStartupCommandTestCase;
 	
 	// model
 	public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;
+	public var moqawalatiLoginUserProxyTestCase:MoqawalatiLoginUserProxyTestCase;
 	
 	// view
 	public var moqawalatiHBoxTestCase:MoqawalatiHBoxTestCase;

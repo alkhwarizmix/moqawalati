@@ -12,8 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
-import dz.alkhwarizmix.framework.flex.rpc.remoting.AlKhwarizmixRemoteObject;
-import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
 
 /**
  *  <p>
@@ -66,24 +65,7 @@ public class MoqawalatiLoginCommand extends MoqawalatiBlazeDSGetDataCommand
 	 */
 	override public function get proxyName():String
 	{
-		return MoqawalatiCustomDataProxy.NAME;
-	}
-	
-	
-	//--------------------------------------------------------------------------
-	//
-	//  Overriden methods
-	//
-	//--------------------------------------------------------------------------
-	
-	/**
-	 * @private
-	 */
-	override protected function newRemoteObject():AlKhwarizmixRemoteObject
-	{
-		var result:AlKhwarizmixRemoteObject = super.newRemoteObject();
-		result.showBusyCursor = false;
-		return result;
+		return MoqawalatiLoginUserProxy.NAME;
 	}
 	
 } // class

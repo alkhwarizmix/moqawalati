@@ -50,10 +50,21 @@ public class MoqawalatiTestCase
 	[Before]
 	public function setUp():void
 	{
-		if (classUnderTestConstructorArg1)
-			classInstanceUnderTest = new classUnderTest(classUnderTestConstructorArg1);
+		if (classUnderTestConstructorArg2)
+		{
+			classInstanceUnderTest = new classUnderTest(
+				classUnderTestConstructorArg1,
+				classUnderTestConstructorArg2);
+		}
+		else if (classUnderTestConstructorArg1)
+		{
+			classInstanceUnderTest = new classUnderTest(
+				classUnderTestConstructorArg1);
+		}
 		else
+		{
 			classInstanceUnderTest = new classUnderTest();
+		}
 	}
 	
 	protected function get classUnderTest():Class
@@ -62,6 +73,11 @@ public class MoqawalatiTestCase
 	}
 	
 	protected function get classUnderTestConstructorArg1():*
+	{
+		return null;
+	}
+	
+	protected function get classUnderTestConstructorArg2():*
 	{
 		return null;
 	}
