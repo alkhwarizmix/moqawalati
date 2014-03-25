@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
 import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
@@ -25,7 +25,7 @@ import org.flexunit.asserts.assertNotNull;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ٢٠ جمادى الأول ١٤٣٥ (March 20, 2014)
  */
-public class MoqawalatiGetCustomizedDataCommandTestCase extends MoqawalatiTestCase
+public class MoqawalatiGetCustomizedDataCommandTestCase extends MoqawalatiPureMVCTestCase
 {
 	//--------------------------------------------------------------------------
 	//

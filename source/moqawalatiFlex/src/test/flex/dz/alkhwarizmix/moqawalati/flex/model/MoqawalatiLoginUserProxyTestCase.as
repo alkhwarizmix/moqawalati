@@ -13,7 +13,7 @@ package dz.alkhwarizmix.moqawalati.flex.model
 {
 
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
 import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
@@ -27,7 +27,7 @@ import org.flexunit.asserts.assertTrue;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ٢١ جمادى الأول ١٤٣٥ (March 21, 2014)
  */
-public class MoqawalatiLoginUserProxyTestCase extends MoqawalatiTestCase
+public class MoqawalatiLoginUserProxyTestCase extends MoqawalatiPureMVCTestCase
 {
 	//--------------------------------------------------------------------------
 	//

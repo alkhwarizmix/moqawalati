@@ -15,7 +15,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.userModule.facade
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserGetListCommand;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserModuleStartupCommand;
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
 import org.flexunit.asserts.assertNotNull;
 import org.flexunit.asserts.assertTrue;
@@ -28,7 +28,7 @@ import org.flexunit.asserts.assertTrue;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ٢٢ جمادى الأول ١٤٣٥ (March 22, 2014)
  */
-public class UserModuleFacadeTestCase extends MoqawalatiTestCase
+public class UserModuleFacadeTestCase extends MoqawalatiPureMVCTestCase
 {
 	//--------------------------------------------------------------------------
 	//

@@ -16,8 +16,11 @@ import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.event.MoqawalatiEvent;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBox;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxEvent;
+
+import org.puremvc.as3.multicore.interfaces.INotification;
 
 /**
  *  <p>
@@ -71,11 +74,49 @@ public class LoginBoxMediator extends MoqawalatiMediator
 		return viewComponent as LoginBox;
 	}
 	
+	//----------------------------------
+	//  appLoginUserProxy
+	//----------------------------------
+	
+	public final function get appLoginUserProxy():MoqawalatiLoginUserProxy
+	{
+		return appFacade.retrieveProxy(MoqawalatiLoginUserProxy.NAME)
+			as MoqawalatiLoginUserProxy;
+	}
+	
 	//--------------------------------------------------------------------------
 	//
 	//  Overriden methods
 	//
 	//--------------------------------------------------------------------------
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function listNotificationInterests():Array
+	{
+		return [
+			MoqawalatiConstants.LOGINUSER_PROXY_CHANGED
+		];
+	}
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override protected function handleNotification_try(notif:INotification):void
+	{
+		super.handleNotification_try(notif);
+		
+		switch (notif.getName())
+		{
+			case MoqawalatiConstants.LOGINUSER_PROXY_CHANGED:
+			{
+				handleLoginUserProxyChanged(notif.getBody());
+				break;
+			}
+				
+		} // switch
+	}
 	
 	/**
 	 *  @inheritDoc
@@ -101,6 +142,22 @@ public class LoginBoxMediator extends MoqawalatiMediator
 	{
 		loginBox.removeEventListener(LoginBoxEvent.LOGIN, loginBox_loginHandler);
 		loginBox.removeEventListener(LoginBoxEvent.LOGOUT, loginBox_logoutHandler);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Methods
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * TODO: ASDOC Definition of handleLoginUserProxyChanged
+	 */
+	public function handleLoginUserProxyChanged(notifBody:Object):void
+	{
+		logger.debug("handleLoginUserProxyChanged");
+		
+		loginBox.loggedUser = appLoginUserProxy.user;
 	}
 	
 	//--------------------------------------------------------------------------

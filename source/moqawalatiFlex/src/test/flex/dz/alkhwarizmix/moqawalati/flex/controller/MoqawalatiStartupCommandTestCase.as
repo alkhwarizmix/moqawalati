@@ -12,9 +12,17 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediator;
+import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediator;
+import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediator;
 
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
@@ -24,7 +32,7 @@ import org.flexunit.asserts.assertNotNull;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ٢١ جمادى الأول ١٤٣٥ (March 21, 2014)
  */
-public class MoqawalatiStartupCommandTestCase extends MoqawalatiTestCase
+public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -32,20 +40,24 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiTestCase
 	//
 	//--------------------------------------------------------------------------
 	
+	private var app:IMoqawalatiApplication = null;
+	
 	[Before]
 	override public function setUp():void
 	{
-		// registerMoqawalatiConfigProxy();
-		
 		super.setUp();
+		
+		app = new MoqawalatiApplicationMock();		
+		testFacade.registerCommand("NOTE", MoqawalatiStartupCommand);
 	}
 	
 	[After]
 	override public function tearDown():void
 	{
-		super.tearDown();
+		testFacade.removeCommand("NOTE");
+		app = null;
 		
-		// removeMoqawalatiConfigProxy();
+		super.tearDown();
 	}
 	
 	override protected function get classUnderTest():Class
@@ -70,12 +82,45 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiTestCase
 		assertNotNull(moqawalatiStartupCommand);
 	}
 	
-	[Ignore("REDO IN TDD")]
 	[Test]
-	public function test01_REDO_TDD():void
+	public function test01_execute_should_register_needed_proxies():void
 	{
-		assertNotNull(null);
+		testFacade.sendNotification("NOTE", app);
+		assertTrue(testFacade.hasProxy(MoqawalatiConfigProxy.NAME));
+		assertTrue(testFacade.hasProxy(MoqawalatiCustomDataProxy.NAME));
+		assertTrue(testFacade.hasProxy(MoqawalatiLoginUserProxy.NAME));
+	}
+	
+	[Test]
+	public function test01_execute_should_register_needed_mediators():void
+	{
+		testFacade.sendNotification("NOTE", app);
+		assertTrue(testFacade.hasMediator(MainControlBarMediator.NAME));
+		assertTrue(testFacade.hasMediator(MDICanvasMediator.NAME));
+		assertTrue(testFacade.hasMediator(LoginBoxMediator.NAME));
 	}
 	
 } // class
 } // package
+
+//-----------------------------------------------------------------------------
+
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvas;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvas;
+
+internal class MoqawalatiApplicationMock
+	implements IMoqawalatiApplication
+{
+	public function get parameters():Object
+	{
+		return {};
+	}
+	
+	public function get mainCanvas():MoqawalatiCanvas
+	{
+		return new MainCanvas();
+	}
+}
+
+//-----------------------------------------------------------------------------

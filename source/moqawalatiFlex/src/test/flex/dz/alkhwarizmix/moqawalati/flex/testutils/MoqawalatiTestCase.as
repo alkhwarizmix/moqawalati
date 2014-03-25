@@ -13,14 +13,8 @@ package dz.alkhwarizmix.moqawalati.flex.testutils
 {
 
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
-import dz.alkhwarizmix.framework.flex.facade.AlKhwarizmixFacade;
-import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 
 import org.flexunit.asserts.assertTrue;
-import org.puremvc.as3.multicore.interfaces.IFacade;
-import org.puremvc.as3.multicore.interfaces.IProxy;
-import org.puremvc.as3.multicore.patterns.facade.Facade;
 
 /**
  *  <p>
@@ -97,47 +91,6 @@ public class MoqawalatiTestCase
 	
 	/**
 	 * @private
-	 */
-	protected final function get moqawalatiMainFacade():IFacade
-	{
-		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME);
-	}
-	
-	/**
-	 * @private
-	 */
-	protected final function registerMoqawalatiConfigProxy():IProxy
-	{
-		return registerProxy(MoqawalatiConfigProxy);
-	}
-	
-	/**
-	 * @private
-	 */
-	protected final function removeMoqawalatiConfigProxy():void
-	{
-		moqawalatiMainFacade.removeProxy(MoqawalatiConfigProxy.NAME);
-	}
-	
-	/**
-	 * @private
-	 */
-	protected final function removeFacadeCore(key:String):void
-	{
-		Facade.removeCore(key);
-	}
-	
-	/**
-	 * @private
-	 */
-	protected final function newFacadeCommandClassWithKey(
-		facade:AlKhwarizmixFacade, key:String):*
-	{
-		return new (facade.getCommandClassWithKey(key));
-	}
-	
-	/**
-	 * @private
 	 * 
 	 * Example of use:
 	 *  classUnderTest = new MoqawalatiClass();
@@ -159,22 +112,6 @@ public class MoqawalatiTestCase
 		{
 			assertTrue(error is AlKhwarizmixMissingImplError);
 		}
-	}
-	
-	//--------------------------------------------------------------------------
-	//
-	//  METHODS
-	//
-	//--------------------------------------------------------------------------
-	
-	/**
-	 * @private
-	 */
-	private function registerProxy(proxyClass:Class):IProxy
-	{
-		var result:IProxy = new proxyClass();
-		moqawalatiMainFacade.registerProxy(result);
-		return moqawalatiMainFacade.retrieveProxy(result.getProxyName());
 	}
 	
 } // class

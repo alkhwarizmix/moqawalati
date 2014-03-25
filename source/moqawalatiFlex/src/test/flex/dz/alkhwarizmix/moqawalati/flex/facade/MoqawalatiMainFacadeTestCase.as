@@ -18,7 +18,7 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCom
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
 import org.flexunit.asserts.assertNotNull;
 import org.flexunit.asserts.assertTrue;
@@ -31,7 +31,7 @@ import org.flexunit.asserts.assertTrue;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ١٩ جمادى الأول ١٤٣٥ (March 19, 2014)
  */
-public class MoqawalatiMainFacadeTestCase extends MoqawalatiTestCase
+public class MoqawalatiMainFacadeTestCase extends MoqawalatiPureMVCTestCase
 {
 	//--------------------------------------------------------------------------
 	//

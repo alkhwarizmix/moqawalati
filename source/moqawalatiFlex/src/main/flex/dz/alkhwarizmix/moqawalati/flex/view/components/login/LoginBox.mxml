@@ -29,6 +29,7 @@
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
 	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
 	horizontalAlign="right"
+	verticalAlign="middle"
 	>
 	
 	<fx:Script>
