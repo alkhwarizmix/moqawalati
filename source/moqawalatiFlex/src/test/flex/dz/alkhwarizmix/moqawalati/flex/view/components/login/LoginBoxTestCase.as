@@ -143,5 +143,22 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 		assertHidden(utLoginBox.labelUserName, "label");
 	}
 	
+	[Ignore("REDO TDD")]
+	[Test]
+	public function test07_updateButtonLabel():void
+	{
+		assertTrue("REDO WITH TDD", false);
+	}
+	
+	[Test]
+	public function test08_textUserName_should_empty_when_loggedUser_after_rendering():void
+	{
+		utLoginBox.textUserName.text = "default";
+		utLoginBox.loggedUser = userFaresBelhaouas;
+		assertEquals("default", utLoginBox.textUserName.text);
+		forceRendering(utLoginBox);
+		assertEquals("", utLoginBox.textUserName.text);
+	}
+	
 } // class
 } // package

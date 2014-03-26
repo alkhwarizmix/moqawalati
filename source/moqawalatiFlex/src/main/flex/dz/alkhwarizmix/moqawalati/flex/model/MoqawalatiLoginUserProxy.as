@@ -94,8 +94,6 @@ public class MoqawalatiLoginUserProxy extends MoqawalatiProxy
 	
 	public function get user():UserVO
 	{
-		if (!getData())
-			setData(getOneItem());
 		return (getData() as UserVO);
 	}
 	

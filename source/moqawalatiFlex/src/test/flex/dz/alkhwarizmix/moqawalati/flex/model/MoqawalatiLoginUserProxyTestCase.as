@@ -17,6 +17,7 @@ import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
 import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertNull;
 import org.flexunit.asserts.assertTrue;
 
 /**
@@ -90,10 +91,10 @@ public class MoqawalatiLoginUserProxyTestCase extends MoqawalatiPureMVCTestCase
 	}
 	
 	[Test]
-	public function test02_user_cannot_be_null():void
+	public function test02_user_can_be_null():void
 	{
 		moqawalatiLoginUserProxy.setData(null);
-		assertTrue(moqawalatiLoginUserProxy.user is UserVO);
+		assertNull(moqawalatiLoginUserProxy.user);
 	}
 	
 	[Test]

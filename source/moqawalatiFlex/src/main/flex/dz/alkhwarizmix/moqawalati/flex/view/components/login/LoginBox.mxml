@@ -13,13 +13,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 --><!---
 /**
- *  <p>
- *  TODO: ASDOC
- *  </p>
- * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ١١ جمادى الأول ١٤٣٥ (March 11, 2014)
- */
+*  <p>
+*  TODO: ASDOC
+*  </p>
+* 
+*  @author فارس بلحواس (Fares Belhaouas)
+*  @since  ١١ جمادى الأول ١٤٣٥ (March 11, 2014)
+*/
 -->
 
 <containers:MoqawalatiHBox
@@ -73,7 +73,18 @@
 			if (_loggedUser == value)
 				return;
 			_loggedUser = value;
-			invalidateDisplayList();
+			invalidateLoggedUser();
+		}
+		
+		private var invalidateLoggedUserFlag:Boolean = true;
+		private function invalidateLoggedUser():void
+		{
+			if (!invalidateLoggedUserFlag)
+			{
+				invalidateLoggedUserFlag = true;
+				invalidateProperties();
+				invalidateDisplayList();
+			}
 		}
 		
 		private function get isUserLogged():Boolean
@@ -90,32 +101,38 @@
 		/**
 		 * @inheritDoc
 		 */
-		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		override public function validateDisplayList():void
 		{
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			super.validateDisplayList();
 			
-			updateLabel();
-			updateText();
+			validateLoggedUser();
 		}
 		
 		/**
 		 * @private
 		 */
-		private function updateLabel():void
+		private function validateLoggedUser():void
 		{
-			labelUserName.setVisible(isUserLogged);
-			labelUserName.includeInLayout = isUserLogged;
-			if (isUserLogged)
-				labelUserName.text = loggedUser.name;	
-		}
-		
-		/**
-		 * @private
-		 */
-		private function updateText():void
-		{
-			textUserName.setVisible(!isUserLogged);
-			textUserName.includeInLayout = !isUserLogged;
+			if (invalidateLoggedUserFlag)
+			{
+				// labelUserName
+				labelUserName.setVisible(isUserLogged);
+				labelUserName.includeInLayout = isUserLogged;
+				if (isUserLogged)
+					labelUserName.text = loggedUser.name;	
+				
+				// textUserName
+				textUserName.setVisible(!isUserLogged);
+				textUserName.includeInLayout = !isUserLogged;
+				if (isUserLogged)
+					textUserName.text = "";
+				
+				// btnLogInOrOut
+				btnLogInOrOut.label = resourceManager.getString("MoqawalatiFlex",
+					"dz.alkhwarizmix." + (isUserLogged ? "LOGOUT" : "LOGIN"));
+				
+				invalidateLoggedUserFlag = false;
+			}
 		}
 		
 		//--------------------------------------------------------------------------
@@ -139,7 +156,6 @@
 	<controls:MoqawalatiLabel id="labelUserName"/>
 	<controls:MoqawalatiTextInput id="textUserName"/>
 	<controls:MoqawalatiButton id="btnLogInOrOut"
-		label="{resourceManager.getString('MoqawalatiFlex', 'dz.alkhwarizmix.LOGIN')}"
 		click="btnLogInOrOut_clickHandler(event)"/>
 	
 </containers:MoqawalatiHBox>

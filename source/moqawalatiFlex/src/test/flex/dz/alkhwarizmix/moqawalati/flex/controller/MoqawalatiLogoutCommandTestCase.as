@@ -19,13 +19,13 @@ import org.flexunit.asserts.assertNotNull;
 
 /**
  *  <p>
- *  Test for MoqawalatiLoginCommand
+ *  Test for MoqawalatiLogoutCommand
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٠ جمادى الأول ١٤٣٥ (March 20, 2014)
+ *  @since  ٢٥ جمادى الأول ١٤٣٥ (March 25, 2014)
  */
-public class MoqawalatiLoginCommandTestCase extends MoqawalatiPureMVCTestCase
+public class MoqawalatiLogoutCommandTestCase extends MoqawalatiPureMVCTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -47,12 +47,12 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiPureMVCTestCase
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiLoginCommand;
+		return MoqawalatiLogoutCommand;
 	}
 	
-	private function get moqawalatiLoginCommand():MoqawalatiLoginCommand
+	private function get moqawalatiLogoutCommand():MoqawalatiLogoutCommand
 	{
-		return classInstanceUnderTest as MoqawalatiLoginCommand;
+		return classInstanceUnderTest as MoqawalatiLogoutCommand;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -64,25 +64,25 @@ public class MoqawalatiLoginCommandTestCase extends MoqawalatiPureMVCTestCase
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(moqawalatiLoginCommand);
+		assertNotNull(moqawalatiLogoutCommand);
 	}
 	
 	[Test]
 	public function test01_destination():void
 	{
-		assertEquals("userService", moqawalatiLoginCommand.destination);
+		assertEquals("userService", moqawalatiLogoutCommand.destination);
 	}
 	
 	[Test]
 	public function test02_operationName():void
 	{
-		assertEquals("login", moqawalatiLoginCommand.operationName);
+		assertEquals("logout", moqawalatiLogoutCommand.operationName);
 	}
 	
 	[Test]
 	public function test03_proxyName():void
 	{
-		assertEquals("MoqawalatiLoginUserProxy", moqawalatiLoginCommand.proxyName);
+		assertEquals("MoqawalatiLoginUserProxy", moqawalatiLogoutCommand.proxyName);
 	}
 	
 } // class

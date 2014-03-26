@@ -30,6 +30,7 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
  */
 // extends UserDetailsService
 public interface IUserService extends IAlKhwarizmixService {
+
 	/**
 	 */
 	public void addUser(User user) throws MoqawalatiException;
@@ -78,5 +79,9 @@ public interface IUserService extends IAlKhwarizmixService {
 	 */
 	public String loginFromXML(String userXml, String loggerId)
 			throws MoqawalatiException;
+
+	/**
+	 */
+	public void logout(User user) throws MoqawalatiException;
 
 } // Class

@@ -153,7 +153,7 @@ public class LoginBoxMediator extends MoqawalatiMediator
 	/**
 	 * TODO: ASDOC Definition of handleLoginUserProxyChanged
 	 */
-	public function handleLoginUserProxyChanged(notifBody:Object):void
+	private function handleLoginUserProxyChanged(notifBody:Object):void
 	{
 		logger.debug("handleLoginUserProxyChanged");
 		
@@ -191,7 +191,7 @@ public class LoginBoxMediator extends MoqawalatiMediator
 		
 		sendNotification(MoqawalatiConstants.LOGOUT,
 			{
-				operationParams : [null]
+				operationParams : [loginBox.loggedUser]
 			});
 	}
 	

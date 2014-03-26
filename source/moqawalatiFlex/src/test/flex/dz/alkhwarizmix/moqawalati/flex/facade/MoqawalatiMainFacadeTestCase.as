@@ -13,9 +13,9 @@ package dz.alkhwarizmix.moqawalati.flex.facade
 {
 
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
@@ -91,7 +91,7 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiPureMVCTestCase
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
 			MoqawalatiConstants.LOGIN) is MoqawalatiLoginCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.LOGOUT) is MoqawalatiBlazeDSGetDataCommand);
+			MoqawalatiConstants.LOGOUT) is MoqawalatiLogoutCommand);
 	}
 	
 } // class

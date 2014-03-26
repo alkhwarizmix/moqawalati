@@ -42,6 +42,8 @@ public class MoqawalatiPureMVCTestCase extends MoqawalatiTestCase
 	override public function setUp():void
 	{
 		super.setUp();
+		
+		MoqawalatiSimpleCommandMock.init();
 	}
 	
 	[After]

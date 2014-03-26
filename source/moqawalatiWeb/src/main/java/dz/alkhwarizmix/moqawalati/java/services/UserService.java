@@ -303,6 +303,17 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	}
 
 	@Override
+	public void logout(User user) throws MoqawalatiException {
+		getLogger().debug("logout");
+
+		User loggedUser = internal_getUser(user);
+		if (loggedUser == null)
+			throw new MoqawalatiException(AlKhwarizmixErrorCode.ERROR_LOGIN);
+
+		getSessionData().resetCustomizer();
+	}
+
+	@Override
 	protected void nullifyProtectedProperties(
 			AlKhwarizmixDomainObjectAbstract object) {
 		super.nullifyProtectedProperties(object);

@@ -19,9 +19,9 @@ import spark.skins.spark.ScrollerSkin;
 
 import dz.alkhwarizmix.framework.flex.dtos.DTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude;
@@ -104,7 +104,7 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 		addCommandToRegister(MoqawalatiConstants.LOGIN,
 			MoqawalatiLoginCommand);
 		addCommandToRegister(MoqawalatiConstants.LOGOUT,
-			MoqawalatiBlazeDSGetDataCommand);
+			MoqawalatiLogoutCommand);
 	}
 	
 	//--------------------------------------------------------------------------

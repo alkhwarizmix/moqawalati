@@ -15,6 +15,7 @@ package dz.alkhwarizmix.moqawalati.flex.view
 import dz.alkhwarizmix.framework.flex.utils.EventUtil;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiSimpleCommandMock;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBox;
@@ -22,6 +23,7 @@ import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxEvent;
 
 import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertNull;
 import org.flexunit.asserts.assertTrue;
 
 /**
@@ -49,9 +51,9 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 		
 		super.setUp();
 		
-		testFacade.registerMediator(utLoginBoxMediator);
+		moqawalatiMainFacade.registerProxy(new MoqawalatiLoginUserProxy());
 		
-		MoqawalatiSimpleCommandMock.init();
+		testFacade.registerMediator(utLoginBoxMediator);
 	}
 	
 	[After]
@@ -59,6 +61,8 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 	{
 		utLoginBoxMediator.setViewComponent(null);
 		testFacade.removeMediator(utLoginBoxMediator.getMediatorName());
+		
+		moqawalatiMainFacade.removeProxy(MoqawalatiLoginUserProxy.NAME);
 		
 		super.tearDown();
 	}
@@ -76,6 +80,19 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 	private function get utLoginBoxMediator():LoginBoxMediator
 	{
 		return classInstanceUnderTest as LoginBoxMediator;
+	}
+	
+	private function get appLoginUserProxy():MoqawalatiLoginUserProxy
+	{
+		return moqawalatiMainFacade.retrieveProxy(MoqawalatiLoginUserProxy.NAME)
+			as MoqawalatiLoginUserProxy;
+	}
+	
+	private function newUserVO(userId:String):UserVO
+	{
+		var result:UserVO = new UserVO();
+		result.userId = userId;
+		return result;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -108,10 +125,13 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 	{
 		testFacade.registerCommand(MoqawalatiConstants.LOGOUT,
 			MoqawalatiSimpleCommandMock);
+		var user:UserVO = newUserVO("id2");
+		loginBox.loggedUser = user;
 		new EventUtil().sendEvent(loginBox, LoginBoxEvent.LOGOUT, LoginBoxEvent);
 		assertTrue(MoqawalatiSimpleCommandMock.wasExecuteCalled);
 		assertNotNull(MoqawalatiSimpleCommandMock.notifBody);
 		assertNotNull(MoqawalatiSimpleCommandMock.notifBody.operationParams);
+		assertEquals(user, MoqawalatiSimpleCommandMock.notifBody.operationParams[0]);
 	}
 	
 	[Test]
@@ -125,7 +145,26 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 	[Test]
 	public function test05_handleLoginUserProxyChanged():void
 	{
+		assertTrue("REDO WITH TDD", false);
+	}
+	
+	[Test]
+	public function test06_dispatchEvent_LOGOUT_should_not_set_loginUserProxy_data_to_null():void
+	{
+		var user:UserVO = newUserVO("id1");
+		appLoginUserProxy.setData(user);
 		
+		new EventUtil().sendEvent(loginBox, LoginBoxEvent.LOGOUT, LoginBoxEvent);
+		
+		assertEquals(user, appLoginUserProxy.user);
+	}
+	
+	[Test]
+	public function test07_set_loginUserProxy_data_to_null_should_set_loginBox_loggedUser():void
+	{
+		appLoginUserProxy.setData(newUserVO("id2"));
+		appLoginUserProxy.setData(null);
+		assertNull(loginBox.loggedUser);
 	}
 	
 } // class
