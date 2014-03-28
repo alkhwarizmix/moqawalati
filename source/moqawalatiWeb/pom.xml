@@ -421,7 +421,6 @@
 					<source>1.6</source>
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
-					<argLine>-Xms768m -Xmx1024m</argLine>
 				</configuration>
 			</plugin>
 
@@ -499,6 +498,7 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>copy-resources-flex-build</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -509,6 +509,24 @@
 							<resources>
 								<resource>
 									<directory>${basedir}/../moqawalatiFlex/target</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>copy-resources-flex-site-cobertura</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+
+						<configuration>
+							<outputDirectory>${project.build.directory}/site/cobertura</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/../moqawalatiFlex/target/site/cobertura</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
@@ -586,13 +604,6 @@
 					<formats>
 						<format>xml</format>
 					</formats>
-					<executions>
-						<execution>
-							<goals>
-								<goal>clean</goal>
-							</goals>
-						</execution>
-					</executions>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -619,18 +630,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<version>${cobertura.version}</version>
-				<configuration>
-					<formats>
-						<format>xml</format>
-					</formats>
-				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<!-- <profiles> <profile> <id>local</id> <activation> <activeByDefault>true</activeByDefault> 
-		</activation> <properties> <filter1>src/main/filters/local.properties</filter1> 
-		</properties> </profile> <profile> <id>blacks</id> <properties> <filter1>src/main/filters/blacks.properties</filter1> 
-		</properties> </profile> </profiles> -->
-
 </project>
