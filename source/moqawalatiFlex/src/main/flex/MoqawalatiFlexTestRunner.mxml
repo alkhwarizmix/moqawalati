@@ -13,13 +13,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 --><!---
 /**
- *  <p>
- *  TODO: ASDOC
- *  </p>
- * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ١٨ ذو الحجة ١٤٣٤ (October 23, 2013)
- */
+*  <p>
+*  TODO: ASDOC
+*  </p>
+* 
+*  @author فارس بلحواس (Fares Belhaouas)
+*  @since  ١٨ ذو الحجة ١٤٣٤ (October 23, 2013)
+*/
 -->
 
 <mx:Application xmlns:mx="library://ns.adobe.com/flex/mx"
@@ -35,6 +35,8 @@
 		import mx.logging.LogEventLevel;
 		
 		import dz.alkhwarizmix.moqawalati.flex.MoqawalatiTestSuite;
+		import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModuleTestSuite;
+		import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleTestSuite;
 		
 		import org.flexunit.internals.TextListener;
 		import org.flexunit.internals.TraceListener;
@@ -75,7 +77,11 @@
 			flexUnitCore.addListener( new TraceListener() ); // - For AS3 Projects
 			flexUnitCore.addListener( TextListener.getDefaultTextListener( LogEventLevel.DEBUG ) ); // - For Flex Projects
 			
-			flexUnitCore.run(MoqawalatiTestSuite);
+			flexUnitCore.run(
+				MoqawalatiTestSuite,
+				UserModuleTestSuite,
+				ClientModuleTestSuite
+			);
 		}
 		
 	]]>

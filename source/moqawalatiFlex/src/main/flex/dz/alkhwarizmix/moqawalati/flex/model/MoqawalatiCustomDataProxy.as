@@ -81,7 +81,7 @@ public class MoqawalatiCustomDataProxy extends MoqawalatiProxy
 	 */
 	override public function get changedNoteName():String
 	{
-		return MoqawalatiConstants.CUSTOMDATA_PROXY_CHANGED;;
+		return MoqawalatiConstants.CUSTOMDATA_PROXY_CHANGED;
 	}
 	
 	//--------------------------------------------------------------------------

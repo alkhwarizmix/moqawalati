@@ -20,6 +20,8 @@ import spark.skins.spark.ScrollerSkin;
 import dz.alkhwarizmix.framework.flex.dtos.DTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.dtos.DTOsToInclude;
@@ -46,9 +48,9 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */
 	public function MoqawalatiMainFacade(key:String)
 	{
-		logger.debug("MoqawalatiMainFacade");
-		super(key);
+		logger.debug("New MoqawalatiMainFacade");
 		
+		super(key);
 		registerNeededClasses();
 	}
 	
@@ -89,14 +91,20 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	//--------------------------------------------------------------------------
 	
 	/**
-	 * Register Commands with the Controller 
+	 * initCommandsToRegister Method TO_ASDoc_DO:
 	 */
-	override protected function initializeController():void 
+	override protected function initCommandsToRegister():void
 	{
-		super.initializeController();
-		
-		unregisterCommands();
-		registerCommands();
+		addCommandToRegister(MoqawalatiConstants.STARTUP,
+			MoqawalatiStartupCommand);
+		addCommandToRegister(MoqawalatiConstants.GET_CUSTOMDATA,
+			MoqawalatiGetCustomizedDataCommand);
+		addCommandToRegister(MoqawalatiConstants.SET_CUSTOMDATA,
+			MoqawalatiSetCustomizedDataCommand);
+		addCommandToRegister(MoqawalatiConstants.LOGIN,
+			MoqawalatiLoginCommand);
+		addCommandToRegister(MoqawalatiConstants.LOGOUT,
+			MoqawalatiLogoutCommand);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -113,29 +121,6 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	public function startup(app:IMoqawalatiApplication):void
 	{
 		sendNotification(MoqawalatiConstants.STARTUP, app);
-	}
-	
-	/**
-	 * registerCommands Method TO_ASDoc_DO:
-	 */
-	private function registerCommands():void
-	{
-		logger.debug("registerCommands");
-		
-		registerCommand(MoqawalatiConstants.STARTUP,
-			MoqawalatiStartupCommand);
-		registerCommand(MoqawalatiConstants.GET_CUSTOMDATA,
-			MoqawalatiGetCustomizedDataCommand);
-		registerCommand(MoqawalatiConstants.SET_CUSTOMDATA,
-			MoqawalatiSetCustomizedDataCommand);
-	}
-	
-	/**
-	 * unregisterCommands Method TO_ASDoc_DO:
-	 */
-	private function unregisterCommands():void
-	{
-		removeCommand(MoqawalatiConstants.STARTUP);
 	}
 	
 } // class

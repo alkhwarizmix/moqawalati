@@ -39,7 +39,8 @@ public class UserModuleFacade extends MoqawalatiFacade
 	 */
 	public function UserModuleFacade(key:String)
 	{
-		logger.debug("UserModuleFacade");
+		logger.debug("New UserModuleFacade");
+		
 		super(key);
 	}
 	
@@ -67,14 +68,14 @@ public class UserModuleFacade extends MoqawalatiFacade
 	//--------------------------------------------------------------------------
 	
 	/**
-	 * Register Commands with the Controller 
+	 * initCommandsToRegister Method TO_ASDoc_DO:
 	 */
-	override protected function initializeController():void 
+	override protected function initCommandsToRegister():void
 	{
-		super.initializeController();
-		
-		unregisterCommands();
-		registerCommands();
+		addCommandToRegister(UserModuleConstants.STARTUP,
+			UserModuleStartupCommand);
+		addCommandToRegister(UserModuleConstants.USER_GET_LIST,
+			UserGetListCommand);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -84,7 +85,7 @@ public class UserModuleFacade extends MoqawalatiFacade
 	//--------------------------------------------------------------------------
 	
 	/**
-	 * TODO: ASDOC Definition of propertyWithGetAndSet1
+	 * shutdown Method TO_ASDoc_DO:
 	 */
 	public function shutdown(app:UserModule):void
 	{
@@ -101,28 +102,6 @@ public class UserModuleFacade extends MoqawalatiFacade
 		logger.debug("startup");
 		
 		sendNotification(UserModuleConstants.STARTUP, app);
-	}
-	
-	/**
-	 * registerCommands Method TO_ASDoc_DO:
-	 */
-	private function registerCommands():void
-	{
-		logger.debug("registerCommands");
-		
-		registerCommand(UserModuleConstants.STARTUP,
-			UserModuleStartupCommand);
-		registerCommand(UserModuleConstants.USER_GET_LIST,
-			UserGetListCommand);
-	}
-	
-	/**
-	 * unregisterCommands Method TO_ASDoc_DO:
-	 */
-	private function unregisterCommands():void
-	{
-		removeCommand(UserModuleConstants.STARTUP);
-		removeCommand(UserModuleConstants.USER_GET_LIST);
 	}
 	
 } // class

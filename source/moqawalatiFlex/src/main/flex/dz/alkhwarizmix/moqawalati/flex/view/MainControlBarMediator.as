@@ -18,6 +18,7 @@ import mx.events.PropertyChangeEvent;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBarEvent;
 
 /**
  *  <p>
@@ -54,7 +55,7 @@ public class MainControlBarMediator extends MoqawalatiMediator
 	{
 		super(NAME, viewComponent);
 		
-		mainControlBar.addEventListener(MainControlBar.OPEN_WINDOW,
+		mainControlBar.addEventListener(MainControlBarEvent.OPEN_WINDOW,
 			mainControlBar_openWindowHandler);
 	}
 	

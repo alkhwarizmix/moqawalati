@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+*  <p>
+*  TODO: ASDOC
+*  </p>
+* 
+*  @author فارس بلحواس (Fares Belhaouas)
+*  @since  ١١ جمادى الأول ١٤٣٥ (March 11, 2014)
+*/
+-->
+
+<containers:MoqawalatiHBox
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
+	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
+	horizontalAlign="right"
+	verticalAlign="middle"
+	>
+	
+	<fx:Script>
+	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Constants
+		//
+		//--------------------------------------------------------------------------
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
+			getLogger(LoginBox);
+		
+		override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Properties
+		//
+		//--------------------------------------------------------------------------
+		
+		//----------------------------------
+		//  loggedUser
+		//----------------------------------
+		
+		private var _loggedUser:UserVO = null;
+		public function get loggedUser():UserVO { return _loggedUser; }
+		
+		public function set loggedUser(value:UserVO):void
+		{
+			if (_loggedUser == value)
+				return;
+			_loggedUser = value;
+			invalidateLoggedUser();
+		}
+		
+		private var invalidateLoggedUserFlag:Boolean = true;
+		private function invalidateLoggedUser():void
+		{
+			if (!invalidateLoggedUserFlag)
+			{
+				invalidateLoggedUserFlag = true;
+				invalidateProperties();
+				invalidateDisplayList();
+			}
+		}
+		
+		private function get isUserLogged():Boolean
+		{
+			return (loggedUser != null);
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Overriden methods
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function validateDisplayList():void
+		{
+			super.validateDisplayList();
+			
+			validateLoggedUser();
+		}
+		
+		/**
+		 * @private
+		 */
+		private function validateLoggedUser():void
+		{
+			if (invalidateLoggedUserFlag)
+			{
+				// labelUserName
+				labelUserName.setVisible(isUserLogged);
+				labelUserName.includeInLayout = isUserLogged;
+				if (isUserLogged)
+					labelUserName.text = loggedUser.name;	
+				
+				// textUserName
+				textUserName.setVisible(!isUserLogged);
+				textUserName.includeInLayout = !isUserLogged;
+				if (isUserLogged)
+					textUserName.text = "";
+				
+				// btnLogInOrOut
+				btnLogInOrOut.label = resourceManager.getString("MoqawalatiFlex",
+					"dz.alkhwarizmix." + (isUserLogged ? "LOGOUT" : "LOGIN"));
+				
+				invalidateLoggedUserFlag = false;
+			}
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Event handlers
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * @private
+		 */
+		private function btnLogInOrOut_clickHandler(event:MouseEvent):void
+		{
+			sendEvent(!isUserLogged ? LoginBoxEvent.LOGIN : LoginBoxEvent.LOGOUT,
+				LoginBoxEvent);
+		}
+		
+	]]>
+	</fx:Script>
+	
+	<controls:MoqawalatiLabel id="labelUserName"/>
+	<controls:MoqawalatiTextInput id="textUserName"/>
+	<controls:MoqawalatiButton id="btnLogInOrOut"
+		click="btnLogInOrOut_clickHandler(event)"/>
+	
+</containers:MoqawalatiHBox>

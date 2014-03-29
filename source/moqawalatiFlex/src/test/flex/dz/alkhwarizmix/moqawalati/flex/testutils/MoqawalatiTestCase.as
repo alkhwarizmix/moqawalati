@@ -13,12 +13,8 @@ package dz.alkhwarizmix.moqawalati.flex.testutils
 {
 
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
-import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 
-import org.puremvc.as3.multicore.interfaces.IFacade;
-import org.puremvc.as3.multicore.interfaces.IProxy;
-import org.puremvc.as3.multicore.patterns.facade.Facade;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
@@ -49,12 +45,36 @@ public class MoqawalatiTestCase
 	[Before]
 	public function setUp():void
 	{
-		classInstanceUnderTest = new classUnderTest();
+		if (classUnderTestConstructorArg2)
+		{
+			classInstanceUnderTest = new classUnderTest(
+				classUnderTestConstructorArg1,
+				classUnderTestConstructorArg2);
+		}
+		else if (classUnderTestConstructorArg1)
+		{
+			classInstanceUnderTest = new classUnderTest(
+				classUnderTestConstructorArg1);
+		}
+		else
+		{
+			classInstanceUnderTest = new classUnderTest();
+		}
 	}
 	
 	protected function get classUnderTest():Class
 	{
 		throw new AlKhwarizmixMissingImplError();
+	}
+	
+	protected function get classUnderTestConstructorArg1():*
+	{
+		return null;
+	}
+	
+	protected function get classUnderTestConstructorArg2():*
+	{
+		return null;
 	}
 	
 	[After]
@@ -71,42 +91,27 @@ public class MoqawalatiTestCase
 	
 	/**
 	 * @private
+	 * 
+	 * Example of use:
+	 *  classUnderTest = new MoqawalatiClass();
+	 *  assert_should_throwMissingImplError(
+	 *    function ():void
+	 *    {
+	 *      classUnderTest.function_should_throw_error();
+	 *    });
 	 */
-	protected final function get moqawalatiMainFacade():IFacade
+	protected  final function assert_should_throwMissingImplError(
+		functionThrowingException:Function):void
 	{
-		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME);
-	}
-	
-	/**
-	 * @private
-	 */
-	protected final function registerMoqawalatiConfigProxy():IProxy
-	{
-		return registerProxy(MoqawalatiConfigProxy);
-	}
-	
-	/**
-	 * @private
-	 */
-	protected final function removeMoqawalatiConfigProxy():void
-	{
-		moqawalatiMainFacade.removeProxy(MoqawalatiConfigProxy.NAME);
-	}
-	
-	//--------------------------------------------------------------------------
-	//
-	//  METHODS
-	//
-	//--------------------------------------------------------------------------
-	
-	/**
-	 * @private
-	 */
-	private function registerProxy(proxyClass:Class):IProxy
-	{
-		var result:IProxy = new proxyClass();
-		moqawalatiMainFacade.registerProxy(result);
-		return moqawalatiMainFacade.retrieveProxy(result.getProxyName());
+		try
+		{
+			functionThrowingException();
+			assertTrue("Should throw exception before to be here", false);
+		}
+		catch (error:Error)
+		{
+			assertTrue(error is AlKhwarizmixMissingImplError);
+		}
 	}
 	
 } // class

@@ -33,6 +33,8 @@
 	
 	<fx:Script>
 	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.utils.EventUtil;
+		
 		//--------------------------------------------------------------------------
 		//
 		//  Methods
@@ -41,12 +43,12 @@
 		
 		private function btnGetCustomData_clickHandler(event:MouseEvent):void
 		{
-			sendEvent("TestAndDebugWindow_getCustomData");
+			new EventUtil().sendEvent(this, "TestAndDebugWindow_getCustomData");
 		}
 		
 		private function btnSetCustomData_clickHandler(event:MouseEvent):void
 		{
-			sendEvent("TestAndDebugWindow_setCustomData");
+			new EventUtil().sendEvent(this, "TestAndDebugWindow_setCustomData");
 		}
 		
 	]]>

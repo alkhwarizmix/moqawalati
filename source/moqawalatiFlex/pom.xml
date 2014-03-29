@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.0.3.4</version>
+		<version>1.0.4.5</version>
 	</parent>
 
 	<artifactId>moqawalatiFlex</artifactId>
@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>dz.alkhwarizmix.framework</groupId>
 			<artifactId>AlkhwarizmixFlexFramework</artifactId>
-			<version>1.0.3.4</version>
+			<version>1.0.4.5</version>
 			<type>swc</type>
 			<scope>merged</scope>
 		</dependency>
@@ -139,12 +139,22 @@
 
 				<configuration>
 					<sourceFile>MoqawalatiFlex.mxml</sourceFile>
+
 					<optimize>true</optimize>
 					<debug>false</debug>
+					<allowSourcePathOverlap>true</allowSourcePathOverlap>
 
 					<compilerWarnings>
 						<warnNoConstructor>false</warnNoConstructor>
 					</compilerWarnings>
+
+					<!-- https://issues.sonatype.org/browse/FLEXMOJOS-317 -->
+					<localesSourcePath>${basedir}/src/main/resources/locale/{locale}</localesSourcePath>
+					<localesCompiled>
+						<locale>en_US</locale>
+						<locale>fr_FR</locale>
+					</localesCompiled>
+					<!-- <mergeResourceBundle>true</mergeResourceBundle> -->
 
 					<policyFileUrls>
 						<!--- cross domain policy for each RSL entry -->
@@ -182,6 +192,8 @@
 						<exclude>dz/alkhwarizmix/moqawalati/flex/testutils/*</exclude>
 					</excludeTestFiles>
 
+					<coverage>true</coverage>
+					<coverageOutputDirectory>target/site/cobertura/flex/</coverageOutputDirectory>
 					<coverageExclusions>
 						<coverageExclusion>**/MoqawalatiFlexTestRunner.mxml</coverageExclusion>
 					</coverageExclusions>
