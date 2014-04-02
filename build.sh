@@ -8,6 +8,7 @@ echo MAVEN_OPTS=$MAVEN_OPTS
 cd ../frameworks/source/
 mvn -f alkhwarizmix-common.pom.xml clean install
 mvn -f install-PureMVC_AS3_MultiCore_Framework.pom.xml antrun:run install:install-file -Djsse.enableSNIExtension=false -DgroupId=org.puremvc -DartifactId=PureMVC_AS3_MultiCore_Framework -Dversion=1.0.5 -Dpackaging=swc -Dfile=target/download/PureMVC_AS3_MultiCore_1_0_5.swc
+mvn -f install-as3crypto.pom.xml antrun:run install:install-file -Djsse.enableSNIExtension=false -DgroupId=com.hurlant.crypto -DartifactId=as3crypto -Dversion=1.3 -Dpackaging=swc -Dfile=target/download/as3crypto.swc
 
 cd alkhwarizmixFlexFramework
 mvn clean install -Dflex.flashPlayer.command="$FLASH_PLAYER_COMMAND"
