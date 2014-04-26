@@ -18,6 +18,7 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommandTestCase
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiWebGetDataCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.messaging.MoqawalatiConsumerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.messaging.MoqawalatiProducerTestCase;
@@ -51,6 +52,7 @@ public class MoqawalatiTestSuite
 	public var moqawalatiStartupCommandTestCase:MoqawalatiStartupCommandTestCase;
 	public var moqawalatiLoginCommandTestCase:MoqawalatiLoginCommandTestCase;
 	public var moqawalatiLogoutCommandTestCase:MoqawalatiLogoutCommandTestCase;
+	public var moqawalatiWebGetDataCommandTestCase:MoqawalatiWebGetDataCommandTestCase;
 	
 	// model
 	public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;

@@ -13,27 +13,20 @@ package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
-import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
-import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
-import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiApplicationMock;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
-import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediator;
-import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediator;
-import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediator;
 
 import org.flexunit.asserts.assertNotNull;
-import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
- *  Test for MoqawalatiStartupCommand
+ *  Test for MoqawalatiWebGetDataCommand
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢١ جمادى الأول ١٤٣٥ (March 21, 2014)
+ *  @since  ٢٦ جمادى الثانية ١٤٣٥ (April 26, 2014)
  */
-public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
+public class MoqawalatiWebGetDataCommandTestCase extends MoqawalatiPureMVCTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -49,7 +42,7 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
 		super.setUp();
 		
 		app = new MoqawalatiApplicationMock();
-		testFacade.registerCommand("NOTE", MoqawalatiStartupCommand);
+		testFacade.registerCommand("NOTE", MoqawalatiWebGetDataCommand);
 	}
 	
 	[After]
@@ -63,12 +56,12 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiStartupCommand;
+		return MoqawalatiWebGetDataCommand;
 	}
 	
-	private function get moqawalatiStartupCommand():MoqawalatiStartupCommand
+	private function get moqawalatiWebGetDataCommand():MoqawalatiWebGetDataCommand
 	{
-		return classInstanceUnderTest as MoqawalatiStartupCommand;
+		return classInstanceUnderTest as MoqawalatiWebGetDataCommand;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -80,25 +73,7 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(moqawalatiStartupCommand);
-	}
-	
-	[Test]
-	public function test01_execute_should_register_needed_proxies():void
-	{
-		testFacade.sendNotification("NOTE", app);
-		assertTrue(testFacade.hasProxy(MoqawalatiConfigProxy.NAME));
-		assertTrue(testFacade.hasProxy(MoqawalatiCustomDataProxy.NAME));
-		assertTrue(testFacade.hasProxy(MoqawalatiLoginUserProxy.NAME));
-	}
-	
-	[Test]
-	public function test01_execute_should_register_needed_mediators():void
-	{
-		testFacade.sendNotification("NOTE", app);
-		assertTrue(testFacade.hasMediator(MainControlBarMediator.NAME));
-		assertTrue(testFacade.hasMediator(MDICanvasMediator.NAME));
-		assertTrue(testFacade.hasMediator(LoginBoxMediator.NAME));
+		assertNotNull(moqawalatiWebGetDataCommand);
 	}
 	
 } // class

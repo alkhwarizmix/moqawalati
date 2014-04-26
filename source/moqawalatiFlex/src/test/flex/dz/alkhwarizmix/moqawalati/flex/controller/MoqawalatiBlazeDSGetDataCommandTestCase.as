@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.controller
 
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
+import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
 
 /**
@@ -68,6 +69,14 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 	public function test00_constructor():void
 	{
 		assertNotNull(moqawalatiBlazeDSGetDataCommand);
+	}
+	
+	[Test]
+	public function test01_amfURI():void
+	{
+		moqawalatiConfigProxy.appParameters.appURL = "http://dz.moqawalati.com/moqawalati.swf";
+		assertEquals("http://dz.moqawalati.com/messagebroker/amf",
+			moqawalatiBlazeDSGetDataCommand.amfURI);
 	}
 	
 } // class

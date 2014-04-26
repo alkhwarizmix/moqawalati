@@ -79,6 +79,12 @@ public class MoqawalatiPureMVCTestCase extends MoqawalatiTestCase
 		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME);
 	}
 	
+	protected final  function get moqawalatiConfigProxy():MoqawalatiConfigProxy
+	{
+		return moqawalatiMainFacade.retrieveProxy(MoqawalatiConfigProxy.NAME)
+			as MoqawalatiConfigProxy;
+	}
+	
 	/**
 	 * @private
 	 */
