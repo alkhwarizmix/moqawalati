@@ -26,6 +26,10 @@ import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvasT
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBarTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBoxTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiButtonTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiCheckBoxTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiLabelTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiTextInputTestCase;
 
 [Suite]
 [RunWith("org.flexunit.runners.Suite")]
@@ -52,6 +56,10 @@ public class MoqawalatiTestSuite
 	public var moqawalatiDataListCanvasTestCase:MoqawalatiDataListCanvasTestCase;
 	public var loginBoxTestCase:LoginBoxTestCase;
 	public var loginBoxMediatorTestCase:LoginBoxMediatorTestCase;
+	public var moqawalatiButtonTestCase:MoqawalatiButtonTestCase;
+	public var moqawalatiTextInputTestCase:MoqawalatiTextInputTestCase;
+	public var moqawalatiCheckBoxTestCase:MoqawalatiCheckBoxTestCase;
+	public var moqawalatiLabelTestCase:MoqawalatiLabelTestCase;
 	
 } // class
 } // package
