@@ -27,6 +27,7 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
+	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
 	implements="dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication"
 	minWidth="955" minHeight="600"
 	preinitialize="this_preinitializeHandler(event)"
@@ -48,6 +49,9 @@
 		import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 		import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacade;
 		import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvas;
+		import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBox;
+		
+		import flashx.textLayout.formats.Direction;
 		
 		//--------------------------------------------------------------------------
 		//
@@ -70,6 +74,11 @@
 		public function get mainCanvas():MoqawalatiCanvas
 		{
 			return mainCanvasInternal;
+		}
+		
+		public function get mainControlBar():MoqawalatiHBox
+		{
+			return mainControlBarInternal;
 		}
 		
 		//--------------------------------------------------------------------------
@@ -103,10 +112,33 @@
 				MoqawalatiConstants.FACADE_NAME).startup(this);
 		}
 		
+		/**
+		 * @private
+		 */
+		private function checkBox1_clickHandler(event:MouseEvent):void
+		{
+			var direction:String = checkBox1.selected
+				? Direction.RTL
+				: Direction.LTR;
+			setStyle("direction", direction);
+			setStyle("layoutDirection", direction);
+		}
+		
 	]]>
 	</fx:Script>
+	
+	<s:controlBarContent>
+		<fx:Array>
+			<containers:MainControlBar id="mainControlBarInternal"
+				width="100%"/>
+		</fx:Array>
+	</s:controlBarContent>
 	
 	<containers:MainCanvas id="mainCanvasInternal"
 		width="100%" height="100%"/>
 	
+	<controls:MoqawalatiCheckBox id="checkBox1"
+		bottom="1" horizontalCenter="0"
+		label="{resourceManager.getString('MoqawalatiFlex', 'dz.alkhwarizmix.ar_DZ')}"
+		click="checkBox1_clickHandler(event)"/>
 </s:Application>

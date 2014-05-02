@@ -22,7 +22,7 @@
  */
 -->
 
-<mx:ApplicationControlBar
+<containers:MoqawalatiHBox
 	xmlns:fx="http://ns.adobe.com/mxml/2009"
 	xmlns:mx="library://ns.adobe.com/flex/mx" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
@@ -30,6 +30,7 @@
 	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
 	xmlns:login="dz.alkhwarizmix.moqawalati.flex.view.components.login.*"
+	verticalAlign="middle"
 	creationComplete="this_creationCompleteHandler(event)"
 	>
 	
@@ -42,7 +43,7 @@
 		import mx.events.FlexEvent;
 		import mx.events.MenuEvent;
 		import mx.events.PropertyChangeEvent;
-		
+
 		//--------------------------------------------------------------------------
 		//
 		//  Methods
@@ -52,7 +53,7 @@
 		/**
 		 * send the named event to parents until mediator eventualy
 		 */
-		protected function sendEvent(eventName:String, data:Object):void
+		private function sendPropertyChangeEvent(eventName:String, data:Object):void
 		{
 			dispatchEvent(new PropertyChangeEvent(eventName, true, false, null, data));
 		}
@@ -76,7 +77,8 @@
 		 */
 		private function menuBar_itemClickHandler(event:MenuEvent):void
 		{
-			sendEvent(MainControlBarEvent.OPEN_WINDOW, XML(event.item).@value[0].toString());
+			sendPropertyChangeEvent(MainControlBarEvent.OPEN_WINDOW,
+				XML(event.item).@value[0].toString());
 		}
 		
 	]]>
@@ -90,4 +92,4 @@
 		itemClick="menuBar_itemClickHandler(event)"/>
 	
 	<login:LoginBox id="loginBox" width="100%"/>
-</mx:ApplicationControlBar>
+</containers:MoqawalatiHBox>

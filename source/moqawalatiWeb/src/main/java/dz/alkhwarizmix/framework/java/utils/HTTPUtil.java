@@ -42,15 +42,14 @@ import org.apache.http.util.EntityUtils;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
- *  <p>
- *  TODO: Javadoc
- *  </p>
+ * <p>
+ * TODO: Javadoc
+ * </p>
  * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ * @author فارس بلحواس (Fares Belhaouas)
+ * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public class HTTPUtil
-{
+public class HTTPUtil {
 	/**
 	 * Sends an HTTP GET request to a url
 	 * 
@@ -63,19 +62,14 @@ public class HTTPUtil
 	 *            question mark (?) to the request - DO NOT add it yourself
 	 * @return - The response from the end point
 	 */
-	public static String sendGetRequest(String endpoint,
-			String requestParameters)
-	{
+	public final String sendGetRequest(String endpoint, String requestParameters) {
 		String result = null;
-		if (endpoint.startsWith("http://"))
-		{
+		if (endpoint.startsWith("http://")) {
 			// Send a GET request to the servlet
-			try
-			{
+			try {
 				// Send data
 				String urlStr = endpoint;
-				if (requestParameters != null && requestParameters.length() > 0)
-				{
+				if (requestParameters != null && requestParameters.length() > 0) {
 					urlStr += "?" + requestParameters;
 				}
 				URL url = new URL(urlStr);
@@ -86,15 +80,12 @@ public class HTTPUtil
 						conn.getInputStream()));
 				StringBuffer sb = new StringBuffer();
 				String line;
-				while ((line = rd.readLine()) != null)
-				{
+				while ((line = rd.readLine()) != null) {
 					sb.append(line);
 				}
 				rd.close();
 				result = sb.toString();
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -108,20 +99,15 @@ public class HTTPUtil
 	 * 
 	 * @throws Exception
 	 */
-	public static void postData(Reader data, String endpoint, Writer output)
-			throws AlKhwarizmixException
-	{
+	public final void postData(Reader data, String endpoint, Writer output)
+			throws AlKhwarizmixException {
 		HttpURLConnection urlc = null;
-		try
-		{
+		try {
 			URL url = new URL(endpoint);
 			urlc = (HttpURLConnection) url.openConnection();
-			try
-			{
+			try {
 				urlc.setRequestMethod("POST");
-			}
-			catch (ProtocolException e)
-			{
+			} catch (ProtocolException e) {
 				throw new AlKhwarizmixException(
 						"Shouldn't happen: HttpURLConnection doesn't support POST??",
 						e);
@@ -135,78 +121,64 @@ public class HTTPUtil
 
 			OutputStream out = urlc.getOutputStream();
 
-			try
-			{
+			try {
 				Writer writer = new OutputStreamWriter(out, "UTF-8");
 				pipe(data, writer);
 				writer.close();
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				throw new AlKhwarizmixException(
 						"IOException while posting data", e);
-			}
-			finally
-			{
-				if (out != null) out.close();
+			} finally {
+				if (out != null)
+					out.close();
 			}
 
 			InputStream in = urlc.getInputStream();
-			try
-			{
+			try {
 				Reader reader = new InputStreamReader(in);
 				pipe(reader, output);
 				reader.close();
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				throw new AlKhwarizmixException(
 						"IOException while reading response", e);
-			}
-			finally
-			{
-				if (in != null) in.close();
+			} finally {
+				if (in != null)
+					in.close();
 			}
 
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new AlKhwarizmixException(
 					"Connection error (is server running at " + endpoint
 							+ " ?): " + e);
-		}
-		finally
-		{
-			if (urlc != null) urlc.disconnect();
+		} finally {
+			if (urlc != null)
+				urlc.disconnect();
 		}
 	}
 
 	/**
 	 * Pipes everything from the reader to the writer via a buffer
 	 */
-	private static void pipe(Reader reader, Writer writer) throws IOException
-	{
+	private void pipe(Reader reader, Writer writer) throws IOException {
 		char[] buf = new char[1024];
 		int read = 0;
-		while ((read = reader.read(buf)) >= 0)
-		{
+		while ((read = reader.read(buf)) >= 0) {
 			writer.write(buf, 0, read);
 		}
 		writer.flush();
 	}
 
-	public static void sendGetRequest(String url, HttpClient httpclient)
-			throws AlKhwarizmixException
-	{
+	/**
+	 */
+	public final void sendGetRequest(String url, HttpClient httpclient)
+			throws AlKhwarizmixException {
 		boolean disposeHttpclient = false;
-		if (httpclient == null)
-		{
+		if (httpclient == null) {
 			httpclient = new DefaultHttpClient();
 			disposeHttpclient = true;
 		}
 
-		try
-		{
+		try {
 			HttpGet httpget = new HttpGet(url);
 
 			HttpResponse response = httpclient.execute(httpget);
@@ -217,18 +189,13 @@ public class HTTPUtil
 
 			System.out.println("Initial set of cookies:");
 			DefaultHttpClient defaultHttpClient = (DefaultHttpClient) httpclient;
-			if (defaultHttpClient != null)
-			{
+			if (defaultHttpClient != null) {
 				List<Cookie> cookies = defaultHttpClient.getCookieStore()
 						.getCookies();
-				if (cookies.isEmpty())
-				{
+				if (cookies.isEmpty()) {
 					System.out.println("None");
-				}
-				else
-				{
-					for (int i = 0; i < cookies.size(); i++)
-					{
+				} else {
+					for (int i = 0; i < cookies.size(); i++) {
 						System.out.println("- " + cookies.get(i).toString());
 					}
 				}
@@ -240,13 +207,9 @@ public class HTTPUtil
 			System.out.println("----------------------------------------");
 			System.out.println(responseBody);
 			System.out.println("----------------------------------------");
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw new AlKhwarizmixException(e.getMessage());
-		}
-		finally
-		{
+		} finally {
 			// When HttpClient instance is no longer needed,
 			// shut down the connection manager to ensure
 			// immediate deallocation of all system resources
@@ -255,18 +218,17 @@ public class HTTPUtil
 		}
 	}
 
-	public static void sendPostRequest(String url, List<NameValuePair> nvps,
-			HttpClient httpclient) throws AlKhwarizmixException
-	{
+	/**
+	 */
+	public final void sendPostRequest(String url, List<NameValuePair> nvps,
+			HttpClient httpclient) throws AlKhwarizmixException {
 		boolean disposeHttpclient = false;
-		if (httpclient == null)
-		{
+		if (httpclient == null) {
 			httpclient = new DefaultHttpClient();
 			disposeHttpclient = true;
 		}
 
-		try
-		{
+		try {
 			HttpPost httpost = new HttpPost(url);
 
 			httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
@@ -281,26 +243,20 @@ public class HTTPUtil
 
 			System.out.println("Post logon cookies:");
 			DefaultHttpClient defaultHttpClient = (DefaultHttpClient) httpclient;
-			if (defaultHttpClient != null)
-			{
+			if (defaultHttpClient != null) {
 				List<Cookie> cookies = defaultHttpClient.getCookieStore()
 						.getCookies();
-				if (cookies.isEmpty())
-				{
+				if (cookies.isEmpty()) {
 					System.out.println("None");
-				}
-				else
-				{
-					for (int i = 0; i < cookies.size(); i++)
-					{
+				} else {
+					for (int i = 0; i < cookies.size(); i++) {
 						System.out.println("- " + cookies.get(i).toString());
 					}
 				}
 			}
 
 			// Create a response handler
-			if (response.getStatusLine().getStatusCode() == 200)
-			{
+			if (response.getStatusLine().getStatusCode() == 200) {
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String responseBody = httpclient.execute(httpost,
 						responseHandler);
@@ -308,13 +264,9 @@ public class HTTPUtil
 				System.out.println(responseBody);
 				System.out.println("----------------------------------------");
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw new AlKhwarizmixException(e.getMessage());
-		}
-		finally
-		{
+		} finally {
 			// When HttpClient instance is no longer needed,
 			// shut down the connection manager to ensure
 			// immediate deallocation of all system resources

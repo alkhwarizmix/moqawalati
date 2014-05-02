@@ -105,7 +105,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public AlKhwarizmixDomainObjectAbstract get(
+	public final AlKhwarizmixDomainObjectAbstract get(
 			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("get({}, {})", clazz.getSimpleName(), id);
@@ -120,7 +120,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public List getList(DetachedCriteria criteria, int firstResult,
+	public final List getList(DetachedCriteria criteria, int firstResult,
 			int maxResult) throws AlKhwarizmixDAOException {
 		getLogger().trace("getList({})", criteria);
 
@@ -135,7 +135,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public AlKhwarizmixDomainObjectAbstract load(
+	public final AlKhwarizmixDomainObjectAbstract load(
 			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("load({}, {})", clazz.getSimpleName(), id);
@@ -160,7 +160,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public void merge(AlKhwarizmixDomainObjectAbstract object)
+	public final void merge(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("merge({})", object);
 
@@ -181,7 +181,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public void delete(AlKhwarizmixDomainObjectAbstract object)
+	public final void delete(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("delete({})", object);
 
@@ -194,7 +194,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 
 	/**
 	 */
-	protected Session getHibernateCurrentSession() {
+	protected final Session getHibernateCurrentSession() {
 		return getHibernateTemplate().getSessionFactory().getCurrentSession();
 	}
 
