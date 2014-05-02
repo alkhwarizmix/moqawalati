@@ -24,6 +24,7 @@ import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvas;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
 
 import org.puremvc.as3.multicore.interfaces.INotification;
 
@@ -75,12 +76,13 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 	private function registerMediators(app:IMoqawalatiApplication):void
 	{
 		var mainCanvas:MainCanvas = app.mainCanvas as MainCanvas;
+		var mainControlBar:MainControlBar = app.mainControlBar as MainControlBar;
 		facade.registerMediator(new MainControlBarMediator(
-			mainCanvas.mainControlBar));
+			app.mainControlBar));
 		facade.registerMediator(new MDICanvasMediator(
 			mainCanvas.mdiCanvas));
 		facade.registerMediator(new LoginBoxMediator(
-			mainCanvas.mainControlBar.loginBox));
+			mainControlBar.loginBox));
 	}
 	
 	/**

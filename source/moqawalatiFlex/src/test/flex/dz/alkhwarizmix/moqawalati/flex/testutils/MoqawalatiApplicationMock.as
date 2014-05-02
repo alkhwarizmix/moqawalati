@@ -14,7 +14,9 @@ package dz.alkhwarizmix.moqawalati.flex.testutils
 
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvas;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvas;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBox;
 
 /**
  *  <p>
@@ -35,6 +37,11 @@ public class MoqawalatiApplicationMock
 	public function get mainCanvas():MoqawalatiCanvas
 	{
 		return new MainCanvas();
+	}
+	
+	public function get mainControlBar():MoqawalatiHBox
+	{
+		return new MainControlBar();
 	}
 	
 } // class

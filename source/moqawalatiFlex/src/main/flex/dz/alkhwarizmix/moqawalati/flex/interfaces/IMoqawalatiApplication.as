@@ -13,6 +13,7 @@ package dz.alkhwarizmix.moqawalati.flex.interfaces
 {
 
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvas;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBox;
 
 /**
  *  <p>
@@ -26,6 +27,7 @@ public interface IMoqawalatiApplication
 {
 	function get parameters():Object;
 	function get mainCanvas():MoqawalatiCanvas;
+	function get mainControlBar():MoqawalatiHBox;
 	
 } // Interface
 } // Package

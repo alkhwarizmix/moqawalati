@@ -12,7 +12,6 @@
 package dz.alkhwarizmix.moqawalati.flex.view.components.login
 {
 
-import flash.events.Event;
 import flash.events.MouseEvent;
 
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
@@ -96,28 +95,28 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 	public function test03_click_btnLogInOrOut_should_dispatch_LOGIN_event_if_not_loggedUser():void
 	{
 		utLoginBox.loggedUser = null;
-		var dispatchedEvent:LoginBoxEvent = null;
-		utLoginBox.addEventListener(LoginBoxEvent.LOGIN,
-			function (event:Event):void
+		assert_should_dispatchedEvent(utLoginBox,
+			LoginBoxEvent.LOGIN,
+			LoginBoxEvent,
+			function ():void
 			{
-				dispatchedEvent = event as LoginBoxEvent;
+				utLoginBox.btnLogInOrOut.dispatchEvent(
+					new MouseEvent(MouseEvent.CLICK));
 			});
-		utLoginBox.btnLogInOrOut.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-		assertTrue(dispatchedEvent is LoginBoxEvent);
 	}
 	
 	[Test]
 	public function test04_click_btnLogInOrOut_should_dispatch_LOGOUT_event_if_loggedUser():void
 	{
 		utLoginBox.loggedUser = userFaresBelhaouas;
-		var dispatchedEvent:LoginBoxEvent = null;
-		utLoginBox.addEventListener(LoginBoxEvent.LOGOUT,
-			function (event:Event):void
+		assert_should_dispatchedEvent(utLoginBox,
+			LoginBoxEvent.LOGOUT,
+			LoginBoxEvent,
+			function ():void
 			{
-				dispatchedEvent = event as LoginBoxEvent;
+				utLoginBox.btnLogInOrOut.dispatchEvent(
+					new MouseEvent(MouseEvent.CLICK));
 			});
-		utLoginBox.btnLogInOrOut.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-		assertTrue(dispatchedEvent is LoginBoxEvent);
 	}
 	
 	[Test]
