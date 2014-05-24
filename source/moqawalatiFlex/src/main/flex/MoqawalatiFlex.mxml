@@ -139,6 +139,6 @@
 	
 	<controls:MoqawalatiCheckBox id="checkBox1"
 		bottom="1" horizontalCenter="0"
-		label="{resourceManager.getString('MoqawalatiFlex', 'dz.alkhwarizmix.ar_DZ')}"
+		label="{checkBox1.localize('ar_DZ')}"
 		click="checkBox1_clickHandler(event)"/>
 </s:Application>

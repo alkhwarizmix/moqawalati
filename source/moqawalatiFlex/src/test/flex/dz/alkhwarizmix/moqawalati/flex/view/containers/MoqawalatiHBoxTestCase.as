@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.view.containers
 
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiUITestCase;
 
+import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
 
 /**
@@ -49,6 +50,11 @@ public class MoqawalatiHBoxTestCase extends MoqawalatiUITestCase
 		return MoqawalatiHBox;
 	}
 	
+	private function get moqawalatiHBox():MoqawalatiHBox
+	{
+		return classInstanceUnderTest as MoqawalatiHBox;
+	}
+	
 	//--------------------------------------------------------------------------
 	//
 	//  TESTS
@@ -58,7 +64,13 @@ public class MoqawalatiHBoxTestCase extends MoqawalatiUITestCase
 	[Test]
 	public function test01_constructor():void
 	{
-		assertNotNull(classInstanceUnderTest);
+		assertNotNull(moqawalatiHBox);
+	}
+	
+	[Test]
+	public function test02_resourceBundleName():void
+	{
+		// assertEquals("MoqawalatiFlex", moqawalatiHBox.resourceBundleName);
 	}
 	
 } // class

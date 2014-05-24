@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)    
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,10 +9,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.view.controls
+package dz.alkhwarizmix.moqawalati.flex.resources
 {
 
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiUITestCase;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 
 import org.flexunit.asserts.assertNotNull;
 
@@ -22,9 +22,9 @@ import org.flexunit.asserts.assertNotNull;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ جمادى الثانية ١٤٣٥ (April 25, 2014)
+ *  @since  ٠٧ رجب ١٤٣٥ (May 06, 2014)
  */
-public class MoqawalatiLabelTestCase extends MoqawalatiUITestCase
+public class MoqawalatiResourceManagerTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -32,26 +32,21 @@ public class MoqawalatiLabelTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before(async, ui)]
+	[Before]
 	override public function setUp():void
 	{
 		super.setUp();
 	}
 	
-	[After(ui)]
+	override protected function get classUnderTest():Class
+	{
+		return MoqawalatiResourceManager;
+	}
+	
+	[After]
 	override public function tearDown():void
 	{
 		super.tearDown();
-	}
-	
-	override protected function get classUnderTest():Class
-	{
-		return MoqawalatiLabel;
-	}
-	
-	private function get moqawalatiLabel():MoqawalatiLabel
-	{
-		return classInstanceUnderTest as MoqawalatiLabel;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -63,7 +58,7 @@ public class MoqawalatiLabelTestCase extends MoqawalatiUITestCase
 	[Test]
 	public function test01_constructor():void
 	{
-		assertNotNull(moqawalatiLabel);
+		assertNotNull(classInstanceUnderTest);
 	}
 	
 } // class

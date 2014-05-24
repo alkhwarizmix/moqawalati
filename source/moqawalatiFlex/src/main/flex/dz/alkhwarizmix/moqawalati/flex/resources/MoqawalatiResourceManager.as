@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.resources
 {
 
-import mx.resources.ResourceManager;
+import dz.alkhwarizmix.framework.flex.resources.AlKhwarizmixResourceManager;
 
 /**
  *  <p>
@@ -22,7 +22,7 @@ import mx.resources.ResourceManager;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ٢١ جمادى الأول ١٤٣٥ (March 21, 2014)
  */
-public class MoqawalatiResourceManager extends ResourceManager
+public class MoqawalatiResourceManager extends AlKhwarizmixResourceManager
 {
 	//--------------------------------------------------------------------------
 	//

@@ -51,5 +51,23 @@ public class MoqawalatiButton extends AlKhwarizmixButton
 	
 	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
+	//--------------------------------------------------------------------------
+	//
+	//  Overriden properties
+	//
+	//--------------------------------------------------------------------------
+	
+	//----------------------------------
+	//  resourceBundleName
+	//----------------------------------
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get resourceBundleName():String
+	{
+		return "MoqawalatiFlex";
+	}
+	
 } // Class
 } // Package

@@ -24,6 +24,7 @@ import dz.alkhwarizmix.moqawalati.flex.messaging.MoqawalatiConsumerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.messaging.MoqawalatiProducerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxyTestCase;
+import dz.alkhwarizmix.moqawalati.flex.resources.MoqawalatiResourceManagerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxTestCase;
@@ -57,6 +58,9 @@ public class MoqawalatiTestSuite
 	// model
 	public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;
 	public var moqawalatiLoginUserProxyTestCase:MoqawalatiLoginUserProxyTestCase;
+	
+	// resources
+	public var moqawalatiResourceManagerTestCase:MoqawalatiResourceManagerTestCase;
 	
 	// view
 	public var moqawalatiHBoxTestCase:MoqawalatiHBoxTestCase;

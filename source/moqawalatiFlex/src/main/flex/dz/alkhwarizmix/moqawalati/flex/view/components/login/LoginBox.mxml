@@ -128,8 +128,7 @@
 					textUserName.text = "";
 				
 				// btnLogInOrOut
-				btnLogInOrOut.label = resourceManager.getString("MoqawalatiFlex",
-					"dz.alkhwarizmix." + (isUserLogged ? "LOGOUT" : "LOGIN"));
+				// btnLogInOrOut.label = localize(isUserLogged ? "LOGOUT" : "LOGIN");
 				
 				invalidateLoggedUserFlag = false;
 			}
