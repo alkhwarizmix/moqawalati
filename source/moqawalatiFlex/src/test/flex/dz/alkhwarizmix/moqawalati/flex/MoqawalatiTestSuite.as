@@ -33,6 +33,7 @@ import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBoxTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiButtonTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiCheckBoxTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiLabelTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiMenuBarTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiTextInputTestCase;
 
 [Suite]
@@ -72,6 +73,7 @@ public class MoqawalatiTestSuite
 	public var moqawalatiTextInputTestCase:MoqawalatiTextInputTestCase;
 	public var moqawalatiCheckBoxTestCase:MoqawalatiCheckBoxTestCase;
 	public var moqawalatiLabelTestCase:MoqawalatiLabelTestCase;
+	public var moqawalatiMenuBarTestCase:MoqawalatiMenuBarTestCase;
 	
 } // class
 } // package

@@ -83,6 +83,25 @@
 		
 		//--------------------------------------------------------------------------
 		//
+		//  Methods
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * @private
+		 */
+		private function setupLocaleAdnDirection():void
+		{
+			var direction:String = checkBox1.selected
+				? Direction.RTL
+				: Direction.LTR;
+			resourceManager.localeChain = [checkBox1.selected ? "en_US" : "fr_FR"];
+			setStyle("direction", direction);
+			setStyle("layoutDirection", direction);
+		}
+		
+		//--------------------------------------------------------------------------
+		//
 		//  Event handlers
 		//
 		//--------------------------------------------------------------------------
@@ -110,6 +129,7 @@
 			parameters.appURL = this.stage.loaderInfo.url;
 			MoqawalatiMainFacade.getInstance(
 				MoqawalatiConstants.FACADE_NAME).startup(this);
+			setupLocaleAdnDirection();
 		}
 		
 		/**
@@ -117,11 +137,7 @@
 		 */
 		private function checkBox1_clickHandler(event:MouseEvent):void
 		{
-			var direction:String = checkBox1.selected
-				? Direction.RTL
-				: Direction.LTR;
-			setStyle("direction", direction);
-			setStyle("layoutDirection", direction);
+			setupLocaleAdnDirection();
 		}
 		
 	]]>
@@ -138,6 +154,7 @@
 		width="100%" height="100%"/>
 	
 	<controls:MoqawalatiCheckBox id="checkBox1"
+		selected="true"
 		bottom="1" horizontalCenter="0"
 		label="{checkBox1.localize('ar_DZ')}"
 		click="checkBox1_clickHandler(event)"/>

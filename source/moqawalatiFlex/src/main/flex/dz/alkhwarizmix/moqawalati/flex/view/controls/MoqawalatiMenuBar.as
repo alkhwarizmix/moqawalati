@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,17 +9,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.modules
+package dz.alkhwarizmix.moqawalati.flex.view.controls
 {
 
-import flash.net.registerClassAlias;
-
-import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-import dz.alkhwarizmix.framework.flex.modules.AlKhwarizmixModule;
-import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
-import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvas;
+import dz.alkhwarizmix.framework.flex.view.controls.AlKhwarizmixMenuBar;
 
 /**
  *  <p>
@@ -27,10 +22,9 @@ import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvas;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ *  @since  ٢٧ رجب ١٤٣٥ (May 26, 2014)
  */
-public class MoqawalatiModule extends AlKhwarizmixModule
-	implements IMoqawalatiModule
+public class MoqawalatiMenuBar extends AlKhwarizmixMenuBar
 {
 	//--------------------------------------------------------------------------
 	//
@@ -41,12 +35,9 @@ public class MoqawalatiModule extends AlKhwarizmixModule
 	/**
 	 *  Constructor.
 	 */
-	public function MoqawalatiModule()
+	public function MoqawalatiMenuBar()
 	{
 		super();
-		
-		registerClassAlias( "dz.alkhwarizmix.moqawalati.flex.modules." +
-			"MoqawalatiModule", MoqawalatiModule);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -56,25 +47,27 @@ public class MoqawalatiModule extends AlKhwarizmixModule
 	//--------------------------------------------------------------------------
 	
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiModule);
+		getLogger(MoqawalatiMenuBar);
 	
 	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Properties
+	//  Overriden properties
 	//
 	//--------------------------------------------------------------------------
 	
 	//----------------------------------
-	//  dataListCanvas
+	//  resourceBundleName
 	//----------------------------------
 	
-	public function get dataListCanvas():MoqawalatiDataListCanvas
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get resourceBundleName():String
 	{
-		throw new AlKhwarizmixMissingImplError();
-		return null;
+		return "MoqawalatiFlex";
 	}
 	
-} // class
-} // package
+} // Class
+} // Package

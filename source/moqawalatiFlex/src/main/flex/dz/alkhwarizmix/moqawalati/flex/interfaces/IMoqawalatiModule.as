@@ -13,6 +13,7 @@ package dz.alkhwarizmix.moqawalati.flex.interfaces
 {
 
 import dz.alkhwarizmix.framework.flex.interfaces.IAlKhwarizmixModule;
+import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvas;
 
 /**
  *  <p>
@@ -24,6 +25,7 @@ import dz.alkhwarizmix.framework.flex.interfaces.IAlKhwarizmixModule;
  */
 public interface IMoqawalatiModule extends IAlKhwarizmixModule
 {
+	function get dataListCanvas():MoqawalatiDataListCanvas;
 	
 } // Interface
 } // Package

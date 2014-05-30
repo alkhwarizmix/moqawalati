@@ -14,7 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller
 
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSimpleCommand;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
-import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModule;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.model.UserProxy;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.UserListMediator;
@@ -46,7 +46,7 @@ public class UserModuleStartupCommand extends MoqawalatiSimpleCommand
 	 */
 	override protected function execute_try(notif:INotification):void	
 	{
-		var app:UserModule = notif.getBody() as UserModule;
+		var app:IMoqawalatiModule = notif.getBody() as IMoqawalatiModule;
 		
 		// REGISTER PROXIES FIRST
 		registerProxies(app);
@@ -67,7 +67,7 @@ public class UserModuleStartupCommand extends MoqawalatiSimpleCommand
 	/**
 	 * TODO: ASDOC Definition of registerMediators
 	 */
-	private function registerMediators(app:UserModule):void
+	private function registerMediators(app:IMoqawalatiModule):void
 	{
 		facade.registerMediator(new UserListMediator(app.dataListCanvas));
 	}
@@ -75,7 +75,7 @@ public class UserModuleStartupCommand extends MoqawalatiSimpleCommand
 	/**
 	 * TODO: ASDOC Definition of registerProxies
 	 */
-	private function registerProxies(app:UserModule):void
+	private function registerProxies(app:IMoqawalatiModule):void
 	{
 		// ApplicationSpringContextProxy
 		// facade.registerProxy(new ApplicationSpringContextProxy(

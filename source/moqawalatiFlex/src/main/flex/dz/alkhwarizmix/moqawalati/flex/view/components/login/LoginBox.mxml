@@ -128,7 +128,7 @@
 					textUserName.text = "";
 				
 				// btnLogInOrOut
-				// btnLogInOrOut.label = localize(isUserLogged ? "LOGOUT" : "LOGIN");
+				btnLogInOrOut.labelResKey = isUserLogged ? "LOGOUT" : "LOGIN";
 				
 				invalidateLoggedUserFlag = false;
 			}

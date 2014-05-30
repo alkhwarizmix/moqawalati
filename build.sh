@@ -16,4 +16,6 @@ cd alkhwarizmixFlexFramework
 mvn clean install -Dflex.flashPlayer.command="$FLASH_PLAYER_COMMAND"
 
 cd ../../../../alkhwarizmix/moqawalati/source
-mvn clean cobertura:cobertura install -Dflex.flashPlayer.command="$FLASH_PLAYER_COMMAND"
+mvn clean cobertura:cobertura install -Dflex.flashPlayer.command="$FLASH_PLAYER_COMMAND" -rf :moqawalati
+mvn clean cobertura:cobertura install -Dflex.flashPlayer.command="$FLASH_PLAYER_COMMAND" -rf :moqawalatiFlex
+mvn clean cobertura:cobertura install -Dflex.flashPlayer.command="$FLASH_PLAYER_COMMAND" -rf :moqawalatiWeb
