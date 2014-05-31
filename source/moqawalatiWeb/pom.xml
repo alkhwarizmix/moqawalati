@@ -617,9 +617,9 @@
 						<format>xml</format>
 					</formats>
 					<instrumentation>
-						<ignores>
-							<ignore>flex.samples.factories</ignore>
-						</ignores>
+						<excludes>
+							<exclude>**/flex/samples/factories/**</exclude>
+						</excludes>
 					</instrumentation>
 				</configuration>
 			</plugin>
