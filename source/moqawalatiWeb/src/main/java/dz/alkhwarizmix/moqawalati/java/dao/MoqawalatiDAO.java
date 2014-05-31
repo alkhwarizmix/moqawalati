@@ -29,7 +29,8 @@ import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomDataPart;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedData;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedDataPart;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
@@ -171,7 +172,8 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 			customData = (CustomData) criteria.uniqueResult();
 
 			if (customData != null)
-				customData.setCustomDataParts(getCustomDataParts(customData));
+				customData.setExtendedData(getExtendedData(customData
+						.getExtendedData()));
 
 			return customData;
 		} catch (DataAccessException e) {
@@ -183,19 +185,49 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 
 	/**
 	 */
-	private List<CustomDataPart> getCustomDataParts(CustomData customData) {
+	private ExtendedData getExtendedData(ExtendedData extendedData)
+			throws MoqawalatiException {
+		getLogger().trace("getExtendedData()");
+
+		if (extendedData == null)
+			return null;
+
+		try {
+			Criteria criteria = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession().createCriteria(ExtendedData.class);
+			Criterion criter1 = Restrictions.eq(ExtendedData.ID,
+					extendedData.getId());
+			criteria.add(criter1);
+			extendedData = (ExtendedData) criteria.uniqueResult();
+
+			if (extendedData != null)
+				extendedData
+						.setExtendedDataParts(getExtendedDataParts(extendedData));
+
+			return extendedData;
+		} catch (DataAccessException e) {
+			MoqawalatiException ex = new MoqawalatiException(
+					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
+			throw ex;
+		}
+	}
+
+	/**
+	 */
+	private List<ExtendedDataPart> getExtendedDataParts(
+			ExtendedData extendedData) {
 
 		Criteria criteria = getHibernateTemplate().getSessionFactory()
-				.getCurrentSession().createCriteria(CustomDataPart.class);
-		criteria.createCriteria(CustomDataPart.CUSTOMDATA).add(
-				Restrictions.eq(CustomData.ID, customData.getId()));
-		List<CustomDataPart> customDataParts = criteria.list();
+				.getCurrentSession().createCriteria(ExtendedDataPart.class);
+		criteria.createCriteria(ExtendedDataPart.EXTENDEDDATA).add(
+				Restrictions.eq(ExtendedData.ID, extendedData.getId()));
+		List<ExtendedDataPart> extendedDataParts = criteria.list();
 
-		getLogger().debug("getCustomDataParts: customDataParts.size {}",
-				(customDataParts == null)
+		getLogger().debug("getExtendedDataParts: extendedDataParts.size {}",
+				(extendedDataParts == null)
 						? null
-						: customDataParts.size());
-		return customDataParts;
+						: extendedDataParts.size());
+		return extendedDataParts;
 	}
 
 	// --------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2104 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.customize.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
 
 import java.io.Serializable;
 
@@ -39,14 +39,14 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٧ محرم ١٤٣٥ (November 11, 2013)
+ * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
  */
 @Entity
-@Table(name = "TCustomDataPart")
-@XmlRootElement(name = "CustomDataPart")
+@Table(name = "TExtendedDataPart")
+@XmlRootElement(name = "ExtendedDataPart")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
-		Serializable {
+public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
+		implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -54,11 +54,11 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final long serialVersionUID = 8120336811515639394L;
+	private static final long serialVersionUID = 5790230324866753986L;
 
-	public static final String CUSTOMDATAPARTVALUE = "customDataPartValue";
-	public static final String CUSTOMDATA = "customData";
-	
+	public static final String EXTENDEDDATAPARTVALUE = "extendedDataPartValue";
+	public static final String EXTENDEDDATA = "extendedData";
+
 	// --------------------------------------------------------------------------
 	//
 	// Constructor
@@ -68,7 +68,7 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	/**
 	 * constructor
 	 */
-	public CustomDataPart() {
+	public ExtendedDataPart() {
 		super();
 	}
 
@@ -78,13 +78,13 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	//
 	// --------------------------------------------------------------------------
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumn(name = "customData", nullable = false)
-	private CustomData customData;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "extendedData", nullable = false)
+	private ExtendedData extendedData;
 
-	@Column(name = "customDataPartValue", nullable = false, length = 127)
-	private String customDataPartValue;
+	@Column(name = "extendedDataPartValue", nullable = false, length = 127)
+	private String extendedDataPartValue;
 
 	// --------------------------------------------------------------------------
 	//
@@ -95,11 +95,11 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		CustomDataPart sourceCustomDataPart = (CustomDataPart) sourceObject;
-		if ((sourceCustomDataPart != null)
-				&& (this.getId().equals(sourceCustomDataPart.getId()))) {
-			if (sourceCustomDataPart.customDataPartValue != null) {
-				this.customDataPartValue = sourceCustomDataPart.customDataPartValue;
+		ExtendedDataPart sourceExtendedDataPart = (ExtendedDataPart) sourceObject;
+		if ((sourceExtendedDataPart != null)
+				&& (this.getId().equals(sourceExtendedDataPart.getId()))) {
+			if (sourceExtendedDataPart.extendedDataPartValue != null) {
+				this.extendedDataPartValue = sourceExtendedDataPart.extendedDataPartValue;
 			}
 		} else {
 			throw new MoqawalatiException(
@@ -114,24 +114,24 @@ public class CustomDataPart extends AlKhwarizmixDomainObjectAbstract implements
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// customData
+	// extendedData
 	// ----------------------------------
 
-	public void setCustomData(CustomData value) {
-		this.customData = value;
+	public void setExtendedData(ExtendedData value) {
+		this.extendedData = value;
 	}
 
 	// ----------------------------------
-	// customDataPartValue
+	// extendedDataPartValue
 	// ----------------------------------
 
-	@XmlElement(name = "CustomDataPartValue")
-	public String getCustomDataPartValue() {
-		return customDataPartValue;
+	@XmlElement(name = "ExtendedDataPartValue")
+	public String getExtendedDataPartValue() {
+		return extendedDataPartValue;
 	}
 
-	public void setCustomDataPartValue(String value) {
-		this.customDataPartValue = value;
+	public void setExtendedDataPartValue(String value) {
+		this.extendedDataPartValue = value;
 	}
 
 } // Class

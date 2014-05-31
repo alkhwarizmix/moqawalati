@@ -67,7 +67,8 @@ public class CustomDataTest {
 		String value = "";
 		utCustomData.setCustomDataValue(value);
 		assertEquals(value, utCustomData.getCustomDataValue());
-		assertEquals(0, utCustomData.getCustomDataParts().size());
+		assertEquals(0, utCustomData.getExtendedData().getExtendedDataParts()
+				.size());
 	}
 
 	@Test
@@ -75,7 +76,8 @@ public class CustomDataTest {
 		String value = "A";
 		utCustomData.setCustomDataValue(value);
 		assertEquals(value, utCustomData.getCustomDataValue());
-		assertEquals(1, utCustomData.getCustomDataParts().size());
+		assertEquals(1, utCustomData.getExtendedData().getExtendedDataParts()
+				.size());
 	}
 
 	@Test
@@ -83,7 +85,8 @@ public class CustomDataTest {
 		String value = getStringWithLen(126);
 		utCustomData.setCustomDataValue(value);
 		assertEquals(value, utCustomData.getCustomDataValue());
-		assertEquals(1, utCustomData.getCustomDataParts().size());
+		assertEquals(1, utCustomData.getExtendedData().getExtendedDataParts()
+				.size());
 	}
 
 	@Test
@@ -91,7 +94,8 @@ public class CustomDataTest {
 		String value = getStringWithLen(127);
 		utCustomData.setCustomDataValue(value);
 		assertEquals(value, utCustomData.getCustomDataValue());
-		assertEquals(1, utCustomData.getCustomDataParts().size());
+		assertEquals(1, utCustomData.getExtendedData().getExtendedDataParts()
+				.size());
 	}
 
 	@Test
@@ -99,7 +103,8 @@ public class CustomDataTest {
 		String value = getStringWithLen(128);
 		utCustomData.setCustomDataValue(value);
 		assertEquals(value, utCustomData.getCustomDataValue());
-		assertEquals(2, utCustomData.getCustomDataParts().size());
+		assertEquals(2, utCustomData.getExtendedData().getExtendedDataParts()
+				.size());
 	}
 
 	@Test
@@ -107,12 +112,14 @@ public class CustomDataTest {
 		String value = getStringWithLen(128);
 		utCustomData.setCustomDataValue(value);
 		assertEquals(value, utCustomData.getCustomDataValue());
-		assertEquals(2, utCustomData.getCustomDataParts().size());
+		assertEquals(2, utCustomData.getExtendedData().getExtendedDataParts()
+				.size());
 
 		value = getStringWithLen(126);
 		utCustomData.setCustomDataValue(value);
 		assertEquals(value, utCustomData.getCustomDataValue());
-		assertEquals(2, utCustomData.getCustomDataParts().size());
+		assertEquals(2, utCustomData.getExtendedData().getExtendedDataParts()
+				.size());
 	}
 
 } // Class
