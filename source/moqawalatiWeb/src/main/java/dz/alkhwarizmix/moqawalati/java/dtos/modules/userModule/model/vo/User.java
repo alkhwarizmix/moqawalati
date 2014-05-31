@@ -146,7 +146,7 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 	// domainObject
 	// ----------------------------------
 
-	// @XmlTransient
+	@XmlTransient
 	public AlKhwarizmixDomainObject getDomainObject() {
 		return domainObject;
 	}

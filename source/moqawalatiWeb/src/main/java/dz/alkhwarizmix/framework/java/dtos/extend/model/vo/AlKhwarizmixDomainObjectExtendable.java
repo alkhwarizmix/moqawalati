@@ -36,7 +36,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
  * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
  */
 @MappedSuperclass
-public abstract class AlKhwarizmixExtendableDomainObject extends
+public abstract class AlKhwarizmixDomainObjectExtendable extends
 		AlKhwarizmixDomainObjectAbstract implements Serializable {
 
 	// --------------------------------------------------------------------------
@@ -56,7 +56,7 @@ public abstract class AlKhwarizmixExtendableDomainObject extends
 	/**
 	 * constructor
 	 */
-	public AlKhwarizmixExtendableDomainObject() {
+	public AlKhwarizmixDomainObjectExtendable() {
 		super();
 	}
 
