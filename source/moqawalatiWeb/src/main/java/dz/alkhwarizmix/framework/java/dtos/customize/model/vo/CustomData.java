@@ -12,7 +12,6 @@
 package dz.alkhwarizmix.framework.java.dtos.customize.model.vo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,7 +20,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -37,7 +35,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedData;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixExtendableDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
@@ -52,7 +50,7 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 @Table(name = "TCustomData")
 @XmlRootElement(name = "CustomData")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
+public class CustomData extends AlKhwarizmixExtendableDomainObject implements
 		Serializable {
 
 	// --------------------------------------------------------------------------
@@ -93,11 +91,6 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	@JoinColumn(name = "customizer", nullable = false)
 	private AlKhwarizmixDomainObject customizer;
 
-	@OneToOne(targetEntity = ExtendedData.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "extendedData", nullable = true)
-	private ExtendedData extendedData;
-
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -109,12 +102,10 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	@Override
 	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
 
-		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
+		List<AlKhwarizmixDomainObjectAbstract> result = super
+				.getDaoObjectList();
 		if (getCustomizer().getId() == null)
-			result.add(getCustomizer());
-		result.add(this);
-		if (extendedData != null)
-			result.addAll(extendedData.getDaoObjectList());
+			result.add(0, getCustomizer());
 		return result;
 	}
 
@@ -122,7 +113,7 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 	 */
 	@Override
 	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
-		// DO NOTHING
+		super.beforeDaoSaveOrUpdate(object);
 	}
 
 	/**
@@ -165,16 +156,11 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 
 	@XmlElement(name = "Value")
 	public String getCustomDataValue() {
-		String customDataValue = "";
-		if (extendedData != null)
-			customDataValue = extendedData.getExtendedDataValue();
-		return customDataValue;
+		return getExtendedDataValue();
 	}
 
 	public void setCustomDataValue(String value) {
-		if (extendedData == null)
-			extendedData = new ExtendedData();
-		extendedData.setExtendedDataValue(value);
+		setExtendedDataValue(value);
 	}
 
 	// ----------------------------------
@@ -188,19 +174,6 @@ public class CustomData extends AlKhwarizmixDomainObjectAbstract implements
 
 	public void setCustomizer(AlKhwarizmixDomainObject value) {
 		this.customizer = value;
-	}
-
-	// ----------------------------------
-	// extendedData
-	// ----------------------------------
-
-	@XmlTransient
-	public ExtendedData getExtendedData() {
-		return extendedData;
-	}
-
-	public void setExtendedData(ExtendedData value) {
-		this.extendedData = value;
 	}
 
 } // Class
