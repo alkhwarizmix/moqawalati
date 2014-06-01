@@ -31,6 +31,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 
@@ -165,6 +166,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	public AlKhwarizmixDomainObjectAbstract updateObject(
 			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
+
 		try {
 			AlKhwarizmixDomainObjectAbstract foundObject = getObject(object);
 			if (foundObject != null) {
@@ -239,6 +241,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 
 	protected String internal_marshalObjectToXML(
 			AlKhwarizmixDomainObjectAbstract object) {
+
 		StringWriter stringWriter = new StringWriter();
 		StreamResult streamResult = new StreamResult(stringWriter);
 		getJaxb2Marshaller().marshal(object, streamResult);
@@ -251,6 +254,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	@Override
 	public final AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException {
+
 		try {
 			return internal_unmarshalObjectFromXML(xmlValue);
 		} catch (XmlMappingException e) {
@@ -294,6 +298,36 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 			AlKhwarizmixDomainObjectAbstract object) {
 		if (object != null)
 			object.setId(null);
+	}
+
+	/**
+	 * TODO: Javadoc
+	 * 
+	 * @throws AlKhwarizmixException
+	 */
+	protected final void updateObjectFromExtendedDataXML(
+			AlKhwarizmixDomainObjectExtendable object)
+			throws AlKhwarizmixException {
+
+		if (object != null) {
+			String extendedData = object.getExtendedDataValue();
+			if (extendedData.length() > 0)
+				object.updateFrom(unmarshalObjectFromXML(extendedData));
+		}
+	}
+
+	/**
+	 * TODO: Javadoc
+	 * 
+	 * @throws AlKhwarizmixException
+	 */
+	protected final void setupObjectExtendedDataXMLValue(
+			AlKhwarizmixDomainObjectExtendable object)
+			throws AlKhwarizmixException {
+
+		if (object != null) {
+			object.setExtendedDataValue(marshalObjectToXML(object));
+		}
 	}
 
 	// --------------------------------------------------------------------------

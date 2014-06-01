@@ -13,9 +13,6 @@ package dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -35,8 +32,6 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٦ ذو الحجة ١٤٣٤ (October 10, 2013)
  */
-@Entity
-@Table(name = "TAddress")
 @XmlRootElement(name = "Address")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Address extends MoqawalatiDomainObject implements Serializable {
@@ -79,10 +74,8 @@ public class Address extends MoqawalatiDomainObject implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "addressId", unique = true, nullable = false, length = 63)
 	private String addressId;
 
-	@Column(name = "street", nullable = false, length = 127)
 	private String street;
 
 	// --------------------------------------------------------------------------

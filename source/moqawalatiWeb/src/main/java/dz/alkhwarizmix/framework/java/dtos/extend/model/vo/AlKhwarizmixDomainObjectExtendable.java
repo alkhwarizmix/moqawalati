@@ -83,9 +83,9 @@ public abstract class AlKhwarizmixDomainObjectExtendable extends
 	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
 
 		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
-		result.add(this);
 		if (extendedData != null)
 			result.addAll(extendedData.getDaoObjectList());
+		result.add(this);
 		return result;
 	}
 

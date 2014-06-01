@@ -100,6 +100,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 		getLogger().debug("addUser");
 
 		try {
+			setupObjectExtendedDataXMLValue(user);
 			addObject(user);
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -134,6 +135,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 		try {
 			User result = getMoqawalatiDAO().getUser((User) object);
+			updateObjectFromExtendedDataXML(result);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -203,6 +205,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 		getLogger().debug("updateUser");
 
 		try {
+			setupObjectExtendedDataXMLValue(user);
 			User result = (User) updateObject(user);
 			return result;
 		} catch (AlKhwarizmixException e) {

@@ -97,6 +97,7 @@ public class ClientService extends AlKhwarizmixService implements
 		getLogger().trace("addClient");
 
 		try {
+			setupObjectExtendedDataXMLValue(client);
 			addObject(client);
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -132,6 +133,7 @@ public class ClientService extends AlKhwarizmixService implements
 
 		try {
 			Client result = getMoqawalatiDAO().getClient((Client) object);
+			updateObjectFromExtendedDataXML(result);
 			nullifyProtectedProperties(result);
 			return result;
 		} catch (AlKhwarizmixException e) {
@@ -189,6 +191,7 @@ public class ClientService extends AlKhwarizmixService implements
 		getLogger().trace("updateClient");
 
 		try {
+			setupObjectExtendedDataXMLValue(client);
 			Client result = (Client) updateObject(client);
 			return result;
 		} catch (AlKhwarizmixException e) {

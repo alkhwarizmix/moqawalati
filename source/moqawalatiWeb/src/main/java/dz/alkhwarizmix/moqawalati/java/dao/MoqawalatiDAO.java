@@ -102,8 +102,6 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
 			}
-			String s = "Success";
-			s = s + "";
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (DataAccessException e) {
@@ -125,6 +123,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		getLogger().trace("getClient()");
 
 		try {
+			// getHibernateTemplate().clear();
 			String clientId = client.getClientId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(Client.class);
@@ -143,6 +142,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		getLogger().trace("getUser()");
 
 		try {
+			getHibernateTemplate().clear();
 			String userId = user.getUserId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(User.class);

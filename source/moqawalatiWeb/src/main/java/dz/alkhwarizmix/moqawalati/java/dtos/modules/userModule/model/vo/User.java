@@ -20,6 +20,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -92,7 +93,7 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 	@Column(name = "userId", unique = true, nullable = false, length = 63)
 	private String userId;
 
-	@Column(name = "name", nullable = false, length = 127)
+	@Transient
 	private String name;
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -117,8 +118,7 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
 		User sourceUser = (User) sourceObject;
 		if ((sourceUser != null)
-				&& (this.getUserId().equals(sourceUser.getUserId()))
-				&& (this.getCreatorId().equals(sourceUser.getCreatorId()))) {
+				&& (this.getUserId().equals(sourceUser.getUserId()))) {
 			if (sourceUser.name != null) {
 				this.name = sourceUser.name;
 			}

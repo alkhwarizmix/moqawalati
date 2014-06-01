@@ -19,7 +19,7 @@ import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlTransient;
 
 import dz.alkhwarizmix.framework.java.EntityInterceptor;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
 
 /**
  * <p>
@@ -31,8 +31,8 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
  */
 @MappedSuperclass
 @EntityListeners(EntityInterceptor.class)
-public abstract class MoqawalatiDomainObject extends AlKhwarizmixDomainObjectAbstract
-		implements Serializable {
+public abstract class MoqawalatiDomainObject extends
+		AlKhwarizmixDomainObjectExtendable implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//

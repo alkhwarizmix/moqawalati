@@ -16,9 +16,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -85,11 +84,10 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	@Column(name = "clientId", unique = true, nullable = false, length = 63)
 	private String clientId;
 
-	@Column(name = "name", nullable = false, length = 127)
+	@Transient
 	private String name;
 
-	@ManyToOne
-	@JoinColumn(name = "address")
+	@Transient
 	private Address address;
 
 	// --------------------------------------------------------------------------
@@ -110,8 +108,7 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
 		Client sourceClient = (Client) sourceObject;
 		if ((sourceClient != null)
-				&& (this.getClientId().equals(sourceClient.getClientId()))
-				&& (this.getCreatorId().equals(sourceClient.getCreatorId()))) {
+				&& (this.getClientId().equals(sourceClient.getClientId()))) {
 			if (sourceClient.name != null) {
 				this.name = sourceClient.name;
 			}
