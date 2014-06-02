@@ -135,14 +135,15 @@ public class MoqawalatiDAOTest {
 		User savedUser = utMoqawalatiDAO.getUser(newUser());
 		Assert.assertNotNull(savedUser);
 		Assert.assertEquals(newUser().getUserId(), savedUser.getUserId());
-		Assert.assertEquals(newUser().getName(), savedUser.getName());
+		Assert.assertEquals(newUser().getExtendedDataValue(),
+				savedUser.getExtendedDataValue());
 		Assert.assertNotNull(savedUser.getDomainObject());
 
-		savedUser.setName("updatedName");
+		savedUser.setExtendedDataValue("updatedName");
 		utMoqawalatiDAO.saveOrUpdate(savedUser);
 
 		savedUser = utMoqawalatiDAO.getUser(newUser());
-		Assert.assertEquals("updatedName", savedUser.getName());
+		Assert.assertEquals("updatedName", savedUser.getExtendedDataValue());
 	}
 
 	// ----- -----

@@ -102,6 +102,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
 			}
+			getHibernateTemplate().flush();
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (DataAccessException e) {
@@ -123,12 +124,17 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		getLogger().trace("getClient()");
 
 		try {
-			// getHibernateTemplate().clear();
+			getHibernateTemplate().clear();
 			String clientId = client.getClientId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(Client.class);
 			criteria.add(Restrictions.eq(Client.CLIENTID, clientId));
-			return (Client) criteria.uniqueResult();
+			client = (Client) criteria.uniqueResult();
+
+			if (client != null)
+				client.setExtendedData(getExtendedData(client.getExtendedData()));
+
+			return client;
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
@@ -147,7 +153,12 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(User.class);
 			criteria.add(Restrictions.eq(User.USERID, userId));
-			return (User) criteria.uniqueResult();
+			user = (User) criteria.uniqueResult();
+
+			if (user != null)
+				user.setExtendedData(getExtendedData(user.getExtendedData()));
+
+			return user;
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
@@ -162,6 +173,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		getLogger().trace("getCustomData()");
 
 		try {
+			getHibernateTemplate().clear();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(CustomData.class);
 			Criterion criter1 = Restrictions.eq(CustomData.CUSTOMDATAID,
@@ -171,9 +183,10 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 			criteria.add(Restrictions.and(criter1, criter2));
 			customData = (CustomData) criteria.uniqueResult();
 
-			if (customData != null)
+			if (customData != null) {
 				customData.setExtendedData(getExtendedData(customData
 						.getExtendedData()));
+			}
 
 			return customData;
 		} catch (DataAccessException e) {
@@ -200,9 +213,10 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 			criteria.add(criter1);
 			extendedData = (ExtendedData) criteria.uniqueResult();
 
-			if (extendedData != null)
+			if (extendedData != null) {
 				extendedData
 						.setExtendedDataParts(getExtendedDataParts(extendedData));
+			}
 
 			return extendedData;
 		} catch (DataAccessException e) {
