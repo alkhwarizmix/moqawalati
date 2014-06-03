@@ -102,7 +102,6 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
 			}
-			getHibernateTemplate().flush();
 		} catch (ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (DataAccessException e) {
@@ -124,7 +123,6 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		getLogger().trace("getClient()");
 
 		try {
-			getHibernateTemplate().clear();
 			String clientId = client.getClientId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(Client.class);
@@ -148,7 +146,6 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		getLogger().trace("getUser()");
 
 		try {
-			getHibernateTemplate().clear();
 			String userId = user.getUserId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(User.class);
@@ -173,7 +170,6 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 		getLogger().trace("getCustomData()");
 
 		try {
-			getHibernateTemplate().clear();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(CustomData.class);
 			Criterion criter1 = Restrictions.eq(CustomData.CUSTOMDATAID,

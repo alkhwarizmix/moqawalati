@@ -125,7 +125,7 @@ public class MoqawalatiDAOTest {
 	// ----- -----
 
 	@Test
-	public void test02_add_get_then_update_get_User()
+	public void test02_A_add_get_then_update_get_User()
 			throws AlKhwarizmixException {
 
 		Assert.assertNull(utMoqawalatiDAO.getUser(newUser()));
@@ -147,5 +147,31 @@ public class MoqawalatiDAOTest {
 	}
 
 	// ----- -----
+
+	@Test
+	public void test02_B_add_get_then_update_get_User_using_clear_and_flush()
+			throws AlKhwarizmixException {
+
+		Assert.assertNull(utMoqawalatiDAO.getUser(newUser()));
+
+		utMoqawalatiDAO.saveOrUpdate(newUser());
+		utMoqawalatiDAO.flush();
+
+		User savedUser = utMoqawalatiDAO.getUser(newUser());
+		utMoqawalatiDAO.clear();
+		Assert.assertNotNull(savedUser);
+		Assert.assertEquals(newUser().getUserId(), savedUser.getUserId());
+		Assert.assertEquals(newUser().getExtendedDataValue(),
+				savedUser.getExtendedDataValue());
+		Assert.assertNotNull(savedUser.getDomainObject());
+
+		savedUser.setExtendedDataValue("updatedName");
+		utMoqawalatiDAO.saveOrUpdate(savedUser);
+		utMoqawalatiDAO.flush();
+
+		savedUser = utMoqawalatiDAO.getUser(newUser());
+		utMoqawalatiDAO.clear();
+		Assert.assertEquals("updatedName", savedUser.getExtendedDataValue());
+	}
 
 } // Class

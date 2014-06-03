@@ -58,4 +58,12 @@ public interface IAlKhwarizmixDAO {
 	public void delete(AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixDAOException;
 
+	/**
+	 */
+	public void clear() throws AlKhwarizmixDAOException;
+
+	/**
+	 */
+	public void flush() throws AlKhwarizmixDAOException;
+
 } // Class

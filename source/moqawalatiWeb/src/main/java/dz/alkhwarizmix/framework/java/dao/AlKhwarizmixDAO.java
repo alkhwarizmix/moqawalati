@@ -194,6 +194,22 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 
 	/**
 	 */
+	@Override
+	public final void clear() throws AlKhwarizmixDAOException {
+		getLogger().trace("clear()");
+		getHibernateTemplate().clear();
+	}
+
+	/**
+	 */
+	@Override
+	public final void flush() throws AlKhwarizmixDAOException {
+		getLogger().trace("flush()");
+		getHibernateTemplate().flush();
+	}
+
+	/**
+	 */
 	protected final Session getHibernateCurrentSession() {
 		return getHibernateTemplate().getSessionFactory().getCurrentSession();
 	}
