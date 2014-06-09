@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -25,7 +25,7 @@ import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAOForXMLMarshalling;
 
 /**
  * <p>
@@ -33,15 +33,12 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢١ محرم ١٤٣٥ (November 25, 2013)
+ * @since ١٠ شعبان ١٤٣٥ (June 08, 2014)
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-// ApplicationContext will be loaded from
-// "classpath:/dz/alkhwarizmix/moqawalati/java/dao/MoqawalatiDAOTest-context.xml"
 @ContextConfiguration
-// (value = "MoqawalatiDAOTest-context.xml")
 @Transactional
-public class MoqawalatiDAOTest {
+public class MoqawalatiDAOForXMLMarshallingTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -49,10 +46,10 @@ public class MoqawalatiDAOTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final String CUSTOM_DATA_ID = "dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAOTest";
+	private static final String CUSTOM_DATA_ID = "dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAOForXMLMarshallingTest";
 
 	@Autowired
-	private IMoqawalatiDAO utMoqawalatiDAO;
+	private IMoqawalatiDAOForXMLMarshalling utMoqawalatiDAOForXMLMarshalling;
 
 	// --------------------------------------------------------------------------
 	//
@@ -100,7 +97,7 @@ public class MoqawalatiDAOTest {
 		customDataToAdd.setCustomizer(customizer);
 		customDataToAdd.setCustomDataId(CUSTOM_DATA_ID);
 		customDataToAdd.setCustomDataValue(value);
-		utMoqawalatiDAO.saveOrUpdate(customDataToAdd);
+		utMoqawalatiDAOForXMLMarshalling.saveOrUpdate(customDataToAdd);
 		return customDataToAdd;
 	}
 
@@ -110,7 +107,8 @@ public class MoqawalatiDAOTest {
 		CustomData customDataToGet = new CustomData();
 		customDataToGet.setCustomizer(customizer);
 		customDataToGet.setCustomDataId(CUSTOM_DATA_ID);
-		customDataToGet = utMoqawalatiDAO.getCustomData(customDataToGet);
+		customDataToGet = utMoqawalatiDAOForXMLMarshalling
+				.getCustomData(customDataToGet);
 		return customDataToGet;
 	}
 
@@ -118,7 +116,7 @@ public class MoqawalatiDAOTest {
 			String value) throws AlKhwarizmixException {
 
 		customDataToUpdate.setCustomDataValue(value);
-		utMoqawalatiDAO.saveOrUpdate(customDataToUpdate);
+		utMoqawalatiDAOForXMLMarshalling.saveOrUpdate(customDataToUpdate);
 		return customDataToUpdate;
 	}
 
@@ -128,11 +126,11 @@ public class MoqawalatiDAOTest {
 	public void test02_A_add_get_then_update_get_User()
 			throws AlKhwarizmixException {
 
-		Assert.assertNull(utMoqawalatiDAO.getUser(newUser()));
+		Assert.assertNull(utMoqawalatiDAOForXMLMarshalling.getUser(newUser()));
 
-		utMoqawalatiDAO.saveOrUpdate(newUser());
+		utMoqawalatiDAOForXMLMarshalling.saveOrUpdate(newUser());
 
-		User savedUser = utMoqawalatiDAO.getUser(newUser());
+		User savedUser = utMoqawalatiDAOForXMLMarshalling.getUser(newUser());
 		Assert.assertNotNull(savedUser);
 		Assert.assertEquals(newUser().getUserId(), savedUser.getUserId());
 		Assert.assertEquals(newUser().getExtendedDataValue(),
@@ -140,9 +138,9 @@ public class MoqawalatiDAOTest {
 		Assert.assertNotNull(savedUser.getDomainObject());
 
 		savedUser.setExtendedDataValue("updatedName");
-		utMoqawalatiDAO.saveOrUpdate(savedUser);
+		utMoqawalatiDAOForXMLMarshalling.saveOrUpdate(savedUser);
 
-		savedUser = utMoqawalatiDAO.getUser(newUser());
+		savedUser = utMoqawalatiDAOForXMLMarshalling.getUser(newUser());
 		Assert.assertEquals("updatedName", savedUser.getExtendedDataValue());
 	}
 
@@ -152,13 +150,13 @@ public class MoqawalatiDAOTest {
 	public void test02_B_add_get_then_update_get_User_using_clear_and_flush()
 			throws AlKhwarizmixException {
 
-		Assert.assertNull(utMoqawalatiDAO.getUser(newUser()));
+		Assert.assertNull(utMoqawalatiDAOForXMLMarshalling.getUser(newUser()));
 
-		utMoqawalatiDAO.saveOrUpdate(newUser());
-		utMoqawalatiDAO.flush();
+		utMoqawalatiDAOForXMLMarshalling.saveOrUpdate(newUser());
+		utMoqawalatiDAOForXMLMarshalling.flush();
 
-		User savedUser = utMoqawalatiDAO.getUser(newUser());
-		utMoqawalatiDAO.clear();
+		User savedUser = utMoqawalatiDAOForXMLMarshalling.getUser(newUser());
+		utMoqawalatiDAOForXMLMarshalling.clear();
 		Assert.assertNotNull(savedUser);
 		Assert.assertEquals(newUser().getUserId(), savedUser.getUserId());
 		Assert.assertEquals(newUser().getExtendedDataValue(),
@@ -166,11 +164,11 @@ public class MoqawalatiDAOTest {
 		Assert.assertNotNull(savedUser.getDomainObject());
 
 		savedUser.setExtendedDataValue("updatedName");
-		utMoqawalatiDAO.saveOrUpdate(savedUser);
-		utMoqawalatiDAO.flush();
+		utMoqawalatiDAOForXMLMarshalling.saveOrUpdate(savedUser);
+		utMoqawalatiDAOForXMLMarshalling.flush();
 
-		savedUser = utMoqawalatiDAO.getUser(newUser());
-		utMoqawalatiDAO.clear();
+		savedUser = utMoqawalatiDAOForXMLMarshalling.getUser(newUser());
+		utMoqawalatiDAOForXMLMarshalling.clear();
 		Assert.assertEquals("updatedName", savedUser.getExtendedDataValue());
 	}
 

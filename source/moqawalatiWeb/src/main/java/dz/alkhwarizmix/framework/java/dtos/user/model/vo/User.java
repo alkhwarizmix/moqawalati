@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.user.model.vo;
 
 import java.io.Serializable;
 

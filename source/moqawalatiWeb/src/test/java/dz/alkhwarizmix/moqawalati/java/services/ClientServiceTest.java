@@ -30,10 +30,10 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**

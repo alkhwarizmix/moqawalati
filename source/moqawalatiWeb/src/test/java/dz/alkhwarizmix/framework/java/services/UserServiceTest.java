@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.services;
+package dz.alkhwarizmix.framework.java.services;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -34,10 +34,10 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**

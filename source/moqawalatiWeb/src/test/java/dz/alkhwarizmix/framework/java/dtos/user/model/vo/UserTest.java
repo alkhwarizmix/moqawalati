@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.user.model.vo;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 
 /**
  * <p>

@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.webServices;
+package dz.alkhwarizmix.framework.java.webServices;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -26,6 +26,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import dz.alkhwarizmix.framework.java.webServices.UserWebServiceForXML;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
 

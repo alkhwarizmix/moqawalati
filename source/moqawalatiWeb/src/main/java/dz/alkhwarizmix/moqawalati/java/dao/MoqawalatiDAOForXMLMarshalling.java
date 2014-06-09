@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -22,11 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
+import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOForXMLMarshalling;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedData;
@@ -34,7 +35,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedDataPart;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAOForXMLMarshalling;
 
 /**
  * <p>
@@ -42,10 +43,12 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ * @since ٠٧ شعبان ١٤٣٥ (June 05, 2014)
  */
 @Repository
-public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
+public class MoqawalatiDAOForXMLMarshalling extends
+		AlKhwarizmixDAOForXMLMarshalling implements
+		IMoqawalatiDAOForXMLMarshalling {
 
 	// --------------------------------------------------------------------------
 	//
@@ -56,7 +59,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 	/**
 	 * constructor
 	 */
-	public MoqawalatiDAO() {
+	public MoqawalatiDAOForXMLMarshalling() {
 		// NOOP
 	}
 
@@ -67,7 +70,7 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(MoqawalatiDAO.class);
+			.getLogger(MoqawalatiDAOForXMLMarshalling.class);
 
 	@Override
 	protected Logger getLogger() {
@@ -82,6 +85,9 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
+
+	@Autowired
+	private Jaxb2Marshaller jaxb2Marshaller;
 
 	// --------------------------------------------------------------------------
 	//
@@ -258,6 +264,20 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 	@Override
 	protected void setHibernateTemplate(HibernateTemplate value) {
 		hibernateTemplate = value;
+	}
+
+	// ----------------------------------
+	// jaxb2Marshaller
+	// ----------------------------------
+
+	@Override
+	protected Jaxb2Marshaller getJaxb2Marshaller() {
+		return jaxb2Marshaller;
+	}
+
+	@Override
+	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
+		jaxb2Marshaller = value;
 	}
 
 } // Class

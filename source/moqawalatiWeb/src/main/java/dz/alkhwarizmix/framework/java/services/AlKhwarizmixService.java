@@ -15,17 +15,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.dom4j.io.XMLResult;
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
-import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
@@ -34,6 +28,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.utils.XMLUtil;
 
 /**
  * <p>
@@ -198,13 +193,13 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	@Override
 	public String objectListToJSON(
 			List<AlKhwarizmixDomainObjectAbstract> objectList) {
-		getLogger().trace("objectListToXML()");
+		getLogger().trace("objectListToJSON()");
 
 		StringWriter stringWriter = new StringWriter();
-		XMLResult xmlResult = new XMLResult(stringWriter);
-		for (AlKhwarizmixDomainObjectAbstract object : objectList) {
-			getJaxb2Marshaller().marshal(object, xmlResult);
-		}
+		// XMLResult xmlResult = new XMLResult(stringWriter);
+		// for (AlKhwarizmixDomainObjectAbstract object : objectList) {
+		// getJaxb2Marshaller().marshal(object, xmlResult);
+		// }
 		return stringWriter.toString();
 	}
 
@@ -216,12 +211,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 			List<AlKhwarizmixDomainObjectAbstract> objectList) {
 		getLogger().trace("objectListToXML()");
 
-		StringWriter stringWriter = new StringWriter();
-		XMLResult xmlResult = new XMLResult(stringWriter);
-		for (AlKhwarizmixDomainObjectAbstract object : objectList) {
-			getJaxb2Marshaller().marshal(object, xmlResult);
-		}
-		return stringWriter.toString();
+		return new XMLUtil(getJaxb2Marshaller()).objectListToXML(objectList);
 	}
 
 	/**
@@ -231,21 +221,9 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	public final String marshalObjectToXML(
 			AlKhwarizmixDomainObjectAbstract object)
 			throws AlKhwarizmixException {
-		try {
-			return internal_marshalObjectToXML(object);
-		} catch (XmlMappingException e) {
-			throw new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.ERROR_XML_PARSING, e);
-		}
-	}
+		getLogger().trace("marshalObjectToXML()");
 
-	protected String internal_marshalObjectToXML(
-			AlKhwarizmixDomainObjectAbstract object) {
-
-		StringWriter stringWriter = new StringWriter();
-		StreamResult streamResult = new StreamResult(stringWriter);
-		getJaxb2Marshaller().marshal(object, streamResult);
-		return stringWriter.toString();
+		return new XMLUtil(getJaxb2Marshaller()).marshalObjectToXML(object);
 	}
 
 	/**
@@ -254,19 +232,10 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	@Override
 	public final AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException {
+		getLogger().trace("unmarshalObjectFromXML()");
 
-		try {
-			return internal_unmarshalObjectFromXML(xmlValue);
-		} catch (XmlMappingException e) {
-			throw new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.ERROR_XML_PARSING, e);
-		}
-	}
-
-	protected AlKhwarizmixDomainObjectAbstract internal_unmarshalObjectFromXML(
-			String xmlValue) {
-		return (AlKhwarizmixDomainObjectAbstract) getJaxb2Marshaller()
-				.unmarshal(new StreamSource(IOUtils.toInputStream(xmlValue)));
+		return new XMLUtil(getJaxb2Marshaller())
+				.unmarshalObjectFromXML(xmlValue);
 	}
 
 	/**
@@ -340,6 +309,10 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * get the serviceDAO
 	 */
 	protected abstract IAlKhwarizmixDAO getServiceDAO();
+
+	// ----------------------------------
+	// jaxb2Marshaller
+	// ----------------------------------
 
 	/**
 	 * get the jaxb2Marshaller

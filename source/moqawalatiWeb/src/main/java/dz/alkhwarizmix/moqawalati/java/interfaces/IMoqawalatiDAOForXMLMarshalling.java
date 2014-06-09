@@ -11,11 +11,7 @@
 
 package dz.alkhwarizmix.moqawalati.java.interfaces;
 
-import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAOForXMLMarshalling;
 
 /**
  * <p>
@@ -23,20 +19,9 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٤ محرم ١٤٣٥ (November 28, 2013)
+ * @since ٠٧ شعبان ١٤٣٥ (June 05, 2014)
  */
-public interface IMoqawalatiDAO extends IAlKhwarizmixDAO {
-	/**
-	 */
-	public Client getClient(Client client) throws MoqawalatiException;
-
-	/**
-	 */
-	public User getUser(User user) throws MoqawalatiException;
-
-	/**
-	 */
-	public CustomData getCustomData(CustomData customData)
-			throws MoqawalatiException;
+public interface IMoqawalatiDAOForXMLMarshalling extends IMoqawalatiDAO,
+		IAlKhwarizmixDAOForXMLMarshalling {
 
 } // Class

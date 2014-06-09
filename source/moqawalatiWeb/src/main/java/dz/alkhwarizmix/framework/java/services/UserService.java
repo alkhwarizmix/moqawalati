@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.services;
+package dz.alkhwarizmix.framework.java.services;
 
 import java.util.List;
 
@@ -25,11 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
-import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
 

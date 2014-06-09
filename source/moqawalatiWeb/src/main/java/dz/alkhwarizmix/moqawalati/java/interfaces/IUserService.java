@@ -16,9 +16,9 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.security.access.annotation.Secured;
 
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 
 /**
  * <p>

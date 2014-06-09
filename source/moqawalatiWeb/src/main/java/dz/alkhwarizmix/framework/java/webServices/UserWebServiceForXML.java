@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.webServices;
+package dz.alkhwarizmix.framework.java.webServices;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebServiceForXML;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
 
 /**
@@ -36,7 +35,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @Controller
-@RequestMapping("moqawalati/xml/user")
+@RequestMapping("alkhwarizmix/xml/user")
 public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
