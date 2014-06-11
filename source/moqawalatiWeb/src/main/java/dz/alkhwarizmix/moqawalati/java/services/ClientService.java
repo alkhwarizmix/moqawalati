@@ -28,8 +28,8 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
  * <p>
@@ -78,7 +78,7 @@ public class ClientService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IMoqawalatiDAO moqawalatiDAO;
+	private IClientDAO clientDAO;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -132,7 +132,7 @@ public class ClientService extends AlKhwarizmixService implements
 		getLogger().trace("getObject");
 
 		try {
-			Client result = getMoqawalatiDAO().getClient((Client) object);
+			Client result = getClientDAO().getClient((Client) object);
 			updateObjectFromExtendedDataXML(result);
 			nullifyProtectedProperties(result);
 			return result;
@@ -296,20 +296,20 @@ public class ClientService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// moqawalatiDAO
+	// clientDAO
 	// ----------------------------------
 
-	protected IMoqawalatiDAO getMoqawalatiDAO() {
-		return moqawalatiDAO;
+	final IClientDAO getClientDAO() {
+		return clientDAO;
 	}
 
-	protected void setMoqawalatiDAO(IMoqawalatiDAO value) {
-		moqawalatiDAO = value;
+	final void setClientDAO(IClientDAO value) {
+		clientDAO = value;
 	}
 
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
-		return moqawalatiDAO;
+		return clientDAO;
 	}
 
 	// ----------------------------------

@@ -26,7 +26,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
+import dz.alkhwarizmix.moqawalati.java.interfaces.ICustomDataDAO;
 
 /**
  * <p>
@@ -75,7 +75,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IMoqawalatiDAO moqawalatiDAO;
+	private ICustomDataDAO customDataDAO;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -144,7 +144,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 			CustomData customData = (CustomData) object;
 			customData.setCustomizer(getSessionCustomizer());
 			if (getSessionCustomizer().getId() != null) {
-				result = getMoqawalatiDAO().getCustomData(customData);
+				result = getCustomDataDAO().getCustomData(customData);
 			}
 			return result;
 		} catch (AlKhwarizmixException e) {
@@ -225,20 +225,20 @@ public class CustomizerService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// moqawalatiDAO
+	// customDataDAO
 	// ----------------------------------
 
-	protected IMoqawalatiDAO getMoqawalatiDAO() {
-		return moqawalatiDAO;
+	final ICustomDataDAO getCustomDataDAO() {
+		return customDataDAO;
 	}
 
-	protected void setMoqawalatiDAO(IMoqawalatiDAO value) {
-		moqawalatiDAO = value;
+	final void setCustomDataDAO(ICustomDataDAO value) {
+		customDataDAO = value;
 	}
 
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
-		return moqawalatiDAO;
+		return customDataDAO;
 	}
 
 	// ----------------------------------
@@ -259,11 +259,11 @@ public class CustomizerService extends AlKhwarizmixService implements
 	// sessionData
 	// ----------------------------------
 
-	protected AlKhwarizmixSessionData getSessionData() {
+	final AlKhwarizmixSessionData getSessionData() {
 		return sessionData;
 	}
 
-	protected void setSessionData(AlKhwarizmixSessionData value) {
+	final void setSessionData(AlKhwarizmixSessionData value) {
 		sessionData = value;
 	}
 

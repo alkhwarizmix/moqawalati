@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -11,7 +11,8 @@
 
 package dz.alkhwarizmix.moqawalati.java.interfaces;
 
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
  * <p>
@@ -19,8 +20,12 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٤ محرم ١٤٣٥ (November 28, 2013)
+ * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
-public interface IMoqawalatiDAO extends IAlKhwarizmixDAO {
+public interface IUserDAO extends IMoqawalatiDAOForXMLMarshalling {
+
+	/**
+	 */
+	public User getUser(User user) throws MoqawalatiException;
 
 } // Class

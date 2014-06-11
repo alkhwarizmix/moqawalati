@@ -29,7 +29,7 @@ import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
 
 /**
@@ -78,7 +78,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IMoqawalatiDAO moqawalatiDAO;
+	private IUserDAO userDAO;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -332,20 +332,20 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// moqawalatiDAO
+	// userDAO
 	// ----------------------------------
 
-	protected IMoqawalatiDAO getMoqawalatiDAO() {
-		return moqawalatiDAO;
+	final IUserDAO getMoqawalatiDAO() {
+		return userDAO;
 	}
 
-	protected void setMoqawalatiDAO(IMoqawalatiDAO value) {
-		moqawalatiDAO = value;
+	final void setUserDAO(IUserDAO value) {
+		userDAO = value;
 	}
 
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
-		return moqawalatiDAO;
+		return userDAO;
 	}
 
 	// ----------------------------------
@@ -366,11 +366,11 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// sessionData
 	// ----------------------------------
 
-	protected AlKhwarizmixSessionData getSessionData() {
+	final AlKhwarizmixSessionData getSessionData() {
 		return sessionData;
 	}
 
-	protected void setSessionData(AlKhwarizmixSessionData value) {
+	final void setSessionData(AlKhwarizmixSessionData value) {
 		sessionData = value;
 	}
 

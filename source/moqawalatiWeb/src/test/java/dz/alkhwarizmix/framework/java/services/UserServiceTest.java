@@ -1,11 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////
-//بسم الله الرحمن الرحيم
+//  بسم الله الرحمن الرحيم
 //
-//حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
-//كافة الحقوق محفوظة (All Rights Reserved)
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
 //
-//NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
-//in accordance with the terms of the license agreement accompanying it.
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +37,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**
@@ -64,7 +64,7 @@ public class UserServiceTest {
 	private UserService mockUserService;
 
 	@Mock
-	private MoqawalatiDAO mockMoqawalatiDAO;
+	private IUserDAO mockUserDAO;
 
 	@Mock
 	private Jaxb2Marshaller mockJaxb2Marshaller;
@@ -80,7 +80,7 @@ public class UserServiceTest {
 	}
 
 	private void setupUtUserService() {
-		utUserService.setMoqawalatiDAO(mockMoqawalatiDAO);
+		utUserService.setUserDAO(mockUserDAO);
 		utUserService.setSessionData(spySessionData);
 		utUserService.setJaxb2Marshaller(mockJaxb2Marshaller);
 	}
@@ -92,7 +92,7 @@ public class UserServiceTest {
 
 	private void setupMockUserService() {
 		when(mockUserService.getLogger()).thenCallRealMethod();
-		when(mockUserService.getSessionData()).thenReturn(spySessionData);
+		mockUserService.setSessionData(spySessionData);
 	}
 
 	// --------------------------------------------------------------------------
@@ -131,7 +131,7 @@ public class UserServiceTest {
 	public void testA03_addUser_calls_dao_saveOrUpdate()
 			throws AlKhwarizmixException {
 		utUserService.addUser(new User()); // TEST
-		verify(mockMoqawalatiDAO, times(1)).saveOrUpdate(
+		verify(mockUserDAO, times(1)).saveOrUpdate(
 				any(AlKhwarizmixDomainObjectAbstract.class));
 	}
 
@@ -139,7 +139,7 @@ public class UserServiceTest {
 	public void testA04_getObject_should_call_dao_getUser()
 			throws AlKhwarizmixException {
 		utUserService.getObject(new User()); // TEST
-		verify(mockMoqawalatiDAO, times(1)).getUser(any(User.class));
+		verify(mockUserDAO, times(1)).getUser(any(User.class));
 	}
 
 	@Test
@@ -147,8 +147,7 @@ public class UserServiceTest {
 			throws MoqawalatiException {
 		User expectedUser = new User();
 		expectedUser.setId(324L);
-		when(mockMoqawalatiDAO.getUser(any(User.class))).thenReturn(
-				expectedUser);
+		when(mockUserDAO.getUser(any(User.class))).thenReturn(expectedUser);
 		User foundUser = utUserService.getUser(new User()); // TEST
 		Assert.assertNull(foundUser.getId());
 	}
@@ -158,8 +157,7 @@ public class UserServiceTest {
 			throws MoqawalatiException {
 		User expectedUser = new User();
 		expectedUser.setDomainObject(new AlKhwarizmixDomainObject());
-		when(mockMoqawalatiDAO.getUser(any(User.class))).thenReturn(
-				expectedUser);
+		when(mockUserDAO.getUser(any(User.class))).thenReturn(expectedUser);
 		User foundUser = utUserService.getUser(new User()); // TEST
 		Assert.assertNull(foundUser.getDomainObject());
 	}
@@ -167,7 +165,7 @@ public class UserServiceTest {
 	@Test
 	public void testC01_loginFromXML_should_call_unmarshal_marshal()
 			throws MoqawalatiException {
-		when(mockMoqawalatiDAO.getUser(any(User.class))).thenReturn(new User());
+		when(mockUserDAO.getUser(any(User.class))).thenReturn(new User());
 		utUserService.loginFromXML("", ""); // TEST
 		verify(mockJaxb2Marshaller, times(1)).unmarshal(any(Source.class));
 		verify(mockJaxb2Marshaller, times(1)).marshal(any(Object.class),
@@ -203,8 +201,7 @@ public class UserServiceTest {
 			throws MoqawalatiException {
 		User userToLogin = new User();
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
-		when(mockMoqawalatiDAO.getUser(any(User.class)))
-				.thenReturn(userToLogin);
+		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
 		utUserService.login(userToLogin); // TEST
 		Assert.assertEquals(userToLogin.getDomainObject(),
 				spySessionData.getCustomizer());
@@ -215,8 +212,7 @@ public class UserServiceTest {
 			throws MoqawalatiException {
 		User userToLogin = new User();
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
-		when(mockMoqawalatiDAO.getUser(any(User.class)))
-				.thenReturn(userToLogin);
+		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
 		utUserService.logout(userToLogin); // TEST
 		verify(spySessionData, times(1)).resetCustomizer();
 	}

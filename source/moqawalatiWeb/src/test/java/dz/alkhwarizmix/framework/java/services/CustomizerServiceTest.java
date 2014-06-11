@@ -24,7 +24,7 @@ import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
+import dz.alkhwarizmix.moqawalati.java.interfaces.ICustomDataDAO;
 
 /**
  * <p>
@@ -53,7 +53,7 @@ public class CustomizerServiceTest {
 	AlKhwarizmixDomainObject mockCustomizer;
 
 	@Mock
-	IMoqawalatiDAO mockMoqawalatiDAO;
+	ICustomDataDAO mockCustomDataDAO;
 
 	// --------------------------------------------------------------------------
 	//
@@ -75,7 +75,7 @@ public class CustomizerServiceTest {
 
 		setUpMocks();
 		Mockito.when(
-				mockMoqawalatiDAO.getCustomData(Mockito.any(CustomData.class)))
+				mockCustomDataDAO.getCustomData(Mockito.any(CustomData.class)))
 				.thenReturn(null);
 
 		CustomData customData = new CustomData();
@@ -88,7 +88,7 @@ public class CustomizerServiceTest {
 		Mockito.when(mockSessionData.getCustomizer())
 				.thenReturn(mockCustomizer);
 		utCustomizerService.setSessionData(mockSessionData);
-		utCustomizerService.setMoqawalatiDAO(mockMoqawalatiDAO);
+		utCustomizerService.setCustomDataDAO(mockCustomDataDAO);
 	}
 
 	// -----
