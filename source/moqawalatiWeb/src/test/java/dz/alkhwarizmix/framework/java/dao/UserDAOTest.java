@@ -53,9 +53,7 @@ public class UserDAOTest {
 	// --------------------------------------------------------------------------
 
 	private User newUser() {
-		User user = new User();
-		user.setUserId("userId");
-		user.setName("userName");
+		User user = new User("userId", "userName");
 		// user.setCreatorId("creatorId");
 		return user;
 	}
@@ -99,9 +97,9 @@ public class UserDAOTest {
 
 		utUserDAO.saveOrUpdate(newUser());
 		utUserDAO.flush();
+		utUserDAO.clear();
 
 		User savedUser = utUserDAO.getUser(newUser());
-		utUserDAO.clear();
 		Assert.assertNotNull(savedUser);
 		Assert.assertEquals(newUser().getUserId(), savedUser.getUserId());
 		Assert.assertEquals(newUser().getName(), savedUser.getName());
@@ -110,18 +108,21 @@ public class UserDAOTest {
 		savedUser.setName("updatedName");
 		utUserDAO.saveOrUpdate(savedUser);
 		utUserDAO.flush();
+		utUserDAO.clear();
 
 		savedUser = utUserDAO.getUser(newUser());
-		utUserDAO.clear();
 		Assert.assertEquals("updatedName", savedUser.getName());
 	}
 
 	// ----- -----
 
 	@Test
-	public void test02_default_user_was_created()
-			throws AlKhwarizmixException {
-		
+	public void test02_default_user_was_created() throws AlKhwarizmixException {
+
+		User userToFind = new User("fares.belhaouas");
+		User defaultUser = utUserDAO.getUser(userToFind);
+		Assert.assertNotNull(defaultUser);
+		Assert.assertEquals("فارس بلحواس", defaultUser.getName());
 	}
 
 } // Class

@@ -11,6 +11,8 @@
 
 package dz.alkhwarizmix.framework.java.dao;
 
+import javax.annotation.PostConstruct;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -46,14 +48,23 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	 */
 	public UserDAO() {
 		super();
-		
-		createDefaultUser();
 	}
 
-	private void createDefaultUser() {
-		
+	@PostConstruct
+	private void createDefaultUsers() {
+		User defaultUser = new User("fares.belhaouas", "فارس بلحواس");
+
+		try {
+			saveOrUpdate(defaultUser);
+			getLogger().info("createDefaultUser: Created default user <{0}>",
+					defaultUser.getName());
+		} catch (AlKhwarizmixDAOException e) {
+			getLogger().warn(
+					"createDefaultUser: default user <{0}> already existing",
+					defaultUser.getName());
+		}
 	}
-	
+
 	// --------------------------------------------------------------------------
 	//
 	// Logger

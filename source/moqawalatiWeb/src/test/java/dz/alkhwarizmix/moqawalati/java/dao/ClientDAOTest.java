@@ -98,9 +98,9 @@ public class ClientDAOTest {
 
 		utClientDAO.saveOrUpdate(newClient());
 		utClientDAO.flush();
+		utClientDAO.clear();
 
 		Client savedClient = utClientDAO.getClient(newClient());
-		utClientDAO.clear();
 		Assert.assertNotNull(savedClient);
 		Assert.assertEquals(newClient().getClientId(),
 				savedClient.getClientId());
@@ -110,10 +110,22 @@ public class ClientDAOTest {
 		savedClient.setName("updatedName");
 		utClientDAO.saveOrUpdate(savedClient);
 		utClientDAO.flush();
+		utClientDAO.clear();
 
 		savedClient = utClientDAO.getClient(newClient());
-		utClientDAO.clear();
 		Assert.assertEquals("updatedName", savedClient.getName());
+	}
+
+	// ----- -----
+
+	@Test
+	public void test02_default_client_was_created()
+			throws AlKhwarizmixException {
+
+		Client clientToFind = new Client("fares.belhaouas");
+		Client clientUser = utClientDAO.getClient(clientToFind);
+		Assert.assertNotNull(clientUser);
+		Assert.assertEquals("فارس بلحواس", clientUser.getName());
 	}
 
 } // Class

@@ -11,6 +11,8 @@
 
 package dz.alkhwarizmix.moqawalati.java.dao;
 
+import javax.annotation.PostConstruct;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
@@ -47,6 +51,21 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 	 */
 	public ClientDAO() {
 		super();
+	}
+
+	@PostConstruct
+	private void createDefaultClients() {
+		Client defaultUser = new Client("fares.belhaouas", "فارس بلحواس");
+
+		try {
+			saveOrUpdate(defaultUser);
+			getLogger().info("createDefaultClients: Created default user <{0}>",
+					defaultUser.getName());
+		} catch (AlKhwarizmixDAOException e) {
+			getLogger().warn(
+					"createDefaultClients: default user <{0}> already existing",
+					defaultUser.getName());
+		}
 	}
 
 	// --------------------------------------------------------------------------

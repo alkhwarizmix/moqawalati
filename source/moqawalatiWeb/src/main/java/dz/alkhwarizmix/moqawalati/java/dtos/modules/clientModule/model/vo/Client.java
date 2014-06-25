@@ -75,6 +75,15 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 		setClientId(theClientId);
 	}
 
+	/**
+	 * constructor
+	 */
+	public Client(String theClientId, String theName) {
+		super();
+		setClientId(theClientId);
+		setName(theName);
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Properties
@@ -84,7 +93,7 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	@Column(name = "clientId", unique = true, nullable = false, length = 63)
 	private String clientId;
 
-	@Transient
+	@Column(name = "name", nullable = false, length = 127)
 	private String name;
 
 	@Transient

@@ -20,7 +20,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -84,6 +83,15 @@ public class User extends AlKhwarizmixDomainObjectExtendable implements
 		setUserId(theUserId);
 	}
 
+	/**
+	 * constructor
+	 */
+	public User(String theUserId, String theName) {
+		super();
+		setUserId(theUserId);
+		setName(theName);
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Properties
@@ -93,7 +101,7 @@ public class User extends AlKhwarizmixDomainObjectExtendable implements
 	@Column(name = "userId", unique = true, nullable = false, length = 63)
 	private String userId;
 
-	@Transient
+	@Column(name = "name", nullable = false, length = 127)
 	private String name;
 
 	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
