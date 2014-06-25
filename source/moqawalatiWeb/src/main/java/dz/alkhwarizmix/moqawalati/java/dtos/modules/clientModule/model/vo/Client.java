@@ -128,7 +128,7 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	 */
 	private void createFakeAddress() {
 		Address newAddress = new Address();
-		newAddress.setCreatorId(getCreatorId());
+		// newAddress.setCreatorId(getCreatorId());
 		newAddress.setAddressId(String.valueOf(Math.random()));
 		newAddress.setStreet(new Date().toString());
 		setAddress(newAddress);

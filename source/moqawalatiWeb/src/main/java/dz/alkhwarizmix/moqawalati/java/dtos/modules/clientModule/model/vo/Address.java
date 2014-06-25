@@ -96,8 +96,8 @@ public class Address extends MoqawalatiDomainObject implements Serializable {
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
 		Address sourceAddress = (Address) sourceObject;
 		if ((sourceAddress != null)
-				&& (this.getAddressId().equals(sourceAddress.getAddressId()))
-				&& (this.getCreatorId().equals(sourceAddress.getCreatorId()))) {
+		// && (this.getCreatorId().equals(sourceAddress.getCreatorId()))
+				&& (this.getAddressId().equals(sourceAddress.getAddressId()))) {
 			if (sourceAddress.street != null) {
 				this.street = sourceAddress.street;
 			}

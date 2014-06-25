@@ -56,7 +56,7 @@ public class ClientDAOTest {
 		Client client = new Client();
 		client.setClientId("clientId");
 		client.setName("userName");
-		client.setCreatorId("creatorId");
+		// client.setCreatorId("creatorId");
 		return client;
 	}
 

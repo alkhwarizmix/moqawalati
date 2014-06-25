@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
  * <p>
@@ -86,12 +86,12 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 * @param xmlValue
 	 *            {@link String} the customData as xml
 	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
+	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> setCustomData(
 			@RequestParam("customData") String xmlValue)
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		LOG.debug("addCustomData({})", xmlValue);
 
 		try {
@@ -99,7 +99,7 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 					xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
-		} catch (MoqawalatiException e) {
+		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -110,12 +110,12 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 * @param customDataId
 	 *            {@link String} customDataId
 	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
+	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(value = "/{customDataId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getCustomDataById(
 			@PathVariable("customDataId") String customDataId)
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		LOG.debug("getCustomDataById({})", customDataId);
 
 		try {
@@ -124,7 +124,7 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 			StringBuilder sBuilder = new StringBuilder(getCustomizerService()
 					.getCustomDataAsXML(customDataToGet));
 			return successResponseForXML(sBuilder);
-		} catch (MoqawalatiException e) {
+		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}
 	}

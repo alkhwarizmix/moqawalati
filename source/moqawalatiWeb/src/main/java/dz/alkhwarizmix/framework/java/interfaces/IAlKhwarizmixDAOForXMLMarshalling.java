@@ -34,4 +34,4 @@ public interface IAlKhwarizmixDAOForXMLMarshalling extends IAlKhwarizmixDAO {
 	public AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException;
 
-} // Class
+} // Interface

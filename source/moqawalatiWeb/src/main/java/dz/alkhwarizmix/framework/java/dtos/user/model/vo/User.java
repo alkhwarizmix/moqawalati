@@ -35,8 +35,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
 
 /**
  * <p>
@@ -50,7 +49,8 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
 @Table(name = "TUser")
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class User extends MoqawalatiDomainObject implements Serializable {
+public class User extends AlKhwarizmixDomainObjectExtendable implements
+		Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -96,6 +96,11 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 	@Transient
 	private String name;
 
+	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "theGroup", nullable = true)
+	private Group group;
+
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "domainObject", nullable = false)
@@ -123,7 +128,7 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 				this.name = sourceUser.name;
 			}
 		} else {
-			throw new MoqawalatiException(
+			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
 		}
 	}
@@ -158,7 +163,7 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 	// ----------------------------------
 	// userId
 	// ----------------------------------
-
+	//
 	@XmlAttribute(name = "id")
 	public String getUserId() {
 		return userId;
@@ -179,6 +184,19 @@ public class User extends MoqawalatiDomainObject implements Serializable {
 
 	public void setName(String value) {
 		this.name = value;
+	}
+
+	// ----------------------------------
+	// extendedData
+	// ----------------------------------
+
+	@XmlElement(name = "Group")
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group value) {
+		this.group = value;
 	}
 
 } // Class

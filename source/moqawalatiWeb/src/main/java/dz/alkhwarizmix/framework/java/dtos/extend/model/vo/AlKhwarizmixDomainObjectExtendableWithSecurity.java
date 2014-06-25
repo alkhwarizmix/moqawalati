@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2104 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -12,22 +12,20 @@
 package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
+import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.Group;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 
 /**
  * <p>
@@ -35,12 +33,11 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
+ * @since ١٦ شعبان ١٤٣٥ (June 14, 2014)
  */
-@Entity
-@Table(name = "TExtendedDataPart")
-public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
-		implements Serializable {
+@MappedSuperclass
+public abstract class AlKhwarizmixDomainObjectExtendableWithSecurity extends
+		AlKhwarizmixDomainObjectExtendable implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -48,10 +45,7 @@ public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
 	//
 	// --------------------------------------------------------------------------
 
-	private static final long serialVersionUID = 5790230324866753986L;
-
-	public static final String EXTENDEDDATAPARTVALUE = "extendedDataPartValue";
-	public static final String EXTENDEDDATA = "extendedData";
+	private static final long serialVersionUID = 5808134939227056239L;
 
 	// --------------------------------------------------------------------------
 	//
@@ -62,7 +56,7 @@ public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
 	/**
 	 * constructor
 	 */
-	public ExtendedDataPart() {
+	public AlKhwarizmixDomainObjectExtendableWithSecurity() {
 		super();
 	}
 
@@ -72,13 +66,15 @@ public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "extendedData", nullable = false)
-	private ExtendedData extendedData;
+	@JoinColumn(name = "owner", nullable = true)
+	private User owner;
 
-	@Column(name = "extendedDataPartValue", nullable = false, length = 127)
-	private String extendedDataPartValue;
+	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "theGroup", nullable = true)
+	private Group group;
 
 	// --------------------------------------------------------------------------
 	//
@@ -88,17 +84,12 @@ public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		ExtendedDataPart sourceExtendedDataPart = (ExtendedDataPart) sourceObject;
-		if ((sourceExtendedDataPart != null)
-				&& (this.getId().equals(sourceExtendedDataPart.getId()))) {
-			if (sourceExtendedDataPart.extendedDataPartValue != null) {
-				this.extendedDataPartValue = sourceExtendedDataPart.extendedDataPartValue;
-			}
-		} else {
-			throw new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
+	@Override
+	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+
+		List<AlKhwarizmixDomainObjectAbstract> result = super
+				.getDaoObjectList();
+		return result;
 	}
 
 	// --------------------------------------------------------------------------
@@ -108,24 +99,27 @@ public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// extendedData
+	// user
 	// ----------------------------------
 
-	public void setExtendedData(ExtendedData value) {
-		this.extendedData = value;
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User value) {
+		this.owner = value;
 	}
 
 	// ----------------------------------
-	// extendedDataPartValue
+	// group
 	// ----------------------------------
 
-	@XmlElement(name = "ExtendedDataPartValue")
-	public String getExtendedDataPartValue() {
-		return extendedDataPartValue;
+	public Group getGroup() {
+		return group;
 	}
 
-	public void setExtendedDataPartValue(String value) {
-		this.extendedDataPartValue = value;
+	public void setGroup(Group value) {
+		this.group = value;
 	}
 
 } // Class

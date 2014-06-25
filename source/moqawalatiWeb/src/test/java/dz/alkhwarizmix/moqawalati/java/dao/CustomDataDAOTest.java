@@ -23,8 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.ICustomDataDAO;
+import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
 
 /**
  * <p>
@@ -87,13 +86,12 @@ public class CustomDataDAOTest {
 	}
 
 	private CustomData getCustomData(AlKhwarizmixDomainObject customizer)
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 
 		CustomData customDataToGet = new CustomData();
 		customDataToGet.setCustomizer(customizer);
 		customDataToGet.setCustomDataId(CUSTOM_DATA_ID);
-		customDataToGet = utCustomDataDAO
-				.getCustomData(customDataToGet);
+		customDataToGet = utCustomDataDAO.getCustomData(customDataToGet);
 		return customDataToGet;
 	}
 

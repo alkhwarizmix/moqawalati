@@ -85,19 +85,11 @@ public abstract class AlKhwarizmixDomainObjectAbstract implements Serializable {
 	@Column(nullable = false)
 	private Integer version;
 
-	// This type of time binding stores only seconds, not millis.
-	// This does not give enough precision.
-	// TODO: Find a binding that can store millis.
-	// Still true??
 	@Column(name = "created", nullable = false, updatable = false)
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 
-	// This type of time binding stores only seconds, not millis.
-	// This does not give enough precision.
-	// TODO: Find a binding that can store millis.
-	// Still true??
 	@Column(name = "modified", nullable = false)
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)

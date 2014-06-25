@@ -19,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
@@ -69,6 +70,7 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 
 	/**
 	 */
+	@Override
 	public Client getClient(Client client) throws MoqawalatiException {
 		getLogger().trace("getClient()");
 
@@ -87,6 +89,8 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
+		} catch (AlKhwarizmixException e) {
+			throw new MoqawalatiException(e);
 		}
 	}
 

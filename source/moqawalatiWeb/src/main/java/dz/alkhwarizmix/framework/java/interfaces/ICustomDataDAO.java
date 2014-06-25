@@ -9,10 +9,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.interfaces;
+package dz.alkhwarizmix.framework.java.interfaces;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
  * <p>
@@ -22,11 +22,11 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
-public interface ICustomDataDAO extends IMoqawalatiDAOForXMLMarshalling {
+public interface ICustomDataDAO extends IAlKhwarizmixDAOForXMLMarshalling {
 
 	/**
 	 */
 	public CustomData getCustomData(CustomData customData)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
-} // Class
+} // Interface

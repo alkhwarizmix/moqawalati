@@ -13,13 +13,11 @@ package dz.alkhwarizmix.moqawalati.java.model.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import javax.xml.bind.annotation.XmlTransient;
 
 import dz.alkhwarizmix.framework.java.EntityInterceptor;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendableWithSecurity;
 
 /**
  * <p>
@@ -32,7 +30,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObj
 @MappedSuperclass
 @EntityListeners(EntityInterceptor.class)
 public abstract class MoqawalatiDomainObject extends
-		AlKhwarizmixDomainObjectExtendable implements Serializable {
+		AlKhwarizmixDomainObjectExtendableWithSecurity implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -41,8 +39,6 @@ public abstract class MoqawalatiDomainObject extends
 	// --------------------------------------------------------------------------
 
 	private static final long serialVersionUID = -5201499942396846288L;
-
-	public static final String CREATORID = "creatorId";
 
 	// --------------------------------------------------------------------------
 	//
@@ -63,8 +59,7 @@ public abstract class MoqawalatiDomainObject extends
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "creatorId", nullable = false, updatable = false, length = 63)
-	private String creatorId;
+	// EMPTY
 
 	// --------------------------------------------------------------------------
 	//
@@ -72,17 +67,6 @@ public abstract class MoqawalatiDomainObject extends
 	//
 	// --------------------------------------------------------------------------
 
-	// ----------------------------------
-	// creatorId
-	// ----------------------------------
-
-	@XmlTransient
-	public String getCreatorId() {
-		return creatorId;
-	}
-
-	public void setCreatorId(String value) {
-		creatorId = value;
-	}
+	// EMPTY
 
 } // Class

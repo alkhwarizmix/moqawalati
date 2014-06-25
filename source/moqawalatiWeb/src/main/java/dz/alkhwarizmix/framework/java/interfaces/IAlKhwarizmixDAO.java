@@ -66,4 +66,4 @@ public interface IAlKhwarizmixDAO {
 	 */
 	public void flush() throws AlKhwarizmixDAOException;
 
-} // Class
+} // Interface

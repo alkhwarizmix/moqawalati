@@ -9,10 +9,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.interfaces;
+package dz.alkhwarizmix.framework.java.interfaces;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
  * <p>
@@ -22,10 +22,10 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
-public interface IUserDAO extends IMoqawalatiDAOForXMLMarshalling {
+public interface IUserDAO extends IAlKhwarizmixDAOForXMLMarshalling {
 
 	/**
 	 */
-	public User getUser(User user) throws MoqawalatiException;
+	public User getUser(User user) throws AlKhwarizmixException;
 
-} // Class
+} // Interface

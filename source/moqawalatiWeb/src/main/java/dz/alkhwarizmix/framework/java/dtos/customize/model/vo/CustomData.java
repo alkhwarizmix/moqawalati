@@ -35,8 +35,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendableWithSecurity;
 
 /**
  * <p>
@@ -50,8 +49,8 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 @Table(name = "TCustomData")
 @XmlRootElement(name = "CustomData")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class CustomData extends AlKhwarizmixDomainObjectExtendable implements
-		Serializable {
+public class CustomData extends AlKhwarizmixDomainObjectExtendableWithSecurity
+		implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -126,7 +125,7 @@ public class CustomData extends AlKhwarizmixDomainObjectExtendable implements
 						.getCustomDataId()))) {
 			this.setCustomDataValue(sourceCustomData.getCustomDataValue());
 		} else {
-			throw new MoqawalatiException(
+			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
 		}
 	}

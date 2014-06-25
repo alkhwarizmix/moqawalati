@@ -35,9 +35,8 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**
@@ -73,7 +72,7 @@ public class UserServiceTest {
 	private AlKhwarizmixSessionData spySessionData;
 
 	@Before
-	public void setUp() throws MoqawalatiException {
+	public void setUp() throws AlKhwarizmixException {
 		setupUtUserService();
 		setupMockJaxb2Marshaller();
 		setupMockUserService();
@@ -144,7 +143,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testA05_getUser_should_not_return_id()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		User expectedUser = new User();
 		expectedUser.setId(324L);
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(expectedUser);
@@ -154,7 +153,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testB01_getUser_should_not_return_domainObject()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		User expectedUser = new User();
 		expectedUser.setDomainObject(new AlKhwarizmixDomainObject());
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(expectedUser);
@@ -164,7 +163,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testC01_loginFromXML_should_call_unmarshal_marshal()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(new User());
 		utUserService.loginFromXML("", ""); // TEST
 		verify(mockJaxb2Marshaller, times(1)).unmarshal(any(Source.class));
@@ -174,7 +173,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testC02_login_should_return_internal_getUser_not_null_result()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		User userToFind = new User("user124");
 		User existingUser = new User("user124");
 		when(mockUserService.internal_getUser(any(User.class))).thenReturn(
@@ -186,9 +185,9 @@ public class UserServiceTest {
 				Mockito.eq(userToFind));
 	}
 
-	@Test(expected = MoqawalatiException.class)
+	@Test(expected = AlKhwarizmixException.class)
 	public void testC03_login_should_throw_exception_when_internal_getUser_return_null()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		User userToFind = new User("user124");
 		when(mockUserService.internal_getUser(Mockito.eq(userToFind)))
 				.thenReturn(null);
@@ -198,7 +197,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testC04_login_should_set_session_customizer()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		User userToLogin = new User();
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
@@ -209,7 +208,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testD01_logout_should_reset_customizer()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		User userToLogin = new User();
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);

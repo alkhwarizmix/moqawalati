@@ -114,7 +114,7 @@ public class ClientService extends AlKhwarizmixService implements
 
 		try {
 			Client newClient = (Client) unmarshalObjectFromXML(clientAsXML);
-			newClient.setCreatorId(creatorId);
+			// newClient.setCreatorId(creatorId);
 			addClient(newClient);
 			String result = marshalObjectToXML(newClient);
 			return result;
@@ -209,7 +209,7 @@ public class ClientService extends AlKhwarizmixService implements
 
 		try {
 			Client newClient = (Client) unmarshalObjectFromXML(clientAsXML);
-			newClient.setCreatorId(updaterId);
+			// newClient.setCreatorId(updaterId);
 			Client updatedClient = updateClient(newClient);
 			String result = marshalObjectToXML(updatedClient);
 			return result;

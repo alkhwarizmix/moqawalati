@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.dao;
+package dz.alkhwarizmix.framework.java.dao;
 
 import junit.framework.Assert;
 
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IUserDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 
 /**
  * <p>
@@ -56,7 +56,7 @@ public class UserDAOTest {
 		User user = new User();
 		user.setUserId("userId");
 		user.setName("userName");
-		user.setCreatorId("creatorId");
+		// user.setCreatorId("creatorId");
 		return user;
 	}
 
@@ -114,6 +114,14 @@ public class UserDAOTest {
 		savedUser = utUserDAO.getUser(newUser());
 		utUserDAO.clear();
 		Assert.assertEquals("updatedName", savedUser.getName());
+	}
+
+	// ----- -----
+
+	@Test
+	public void test02_default_user_was_created()
+			throws AlKhwarizmixException {
+		
 	}
 
 } // Class

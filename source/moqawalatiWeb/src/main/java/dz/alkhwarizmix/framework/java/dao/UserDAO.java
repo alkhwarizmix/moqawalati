@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.dao;
+package dz.alkhwarizmix.framework.java.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -19,9 +19,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IUserDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 
 /**
  * <p>
@@ -32,7 +32,8 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IUserDAO;
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
 @Repository
-public class UserDAO extends MoqawalatiDAOForXMLMarshalling implements IUserDAO {
+public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
+		IUserDAO {
 
 	// --------------------------------------------------------------------------
 	//
@@ -45,8 +46,14 @@ public class UserDAO extends MoqawalatiDAOForXMLMarshalling implements IUserDAO 
 	 */
 	public UserDAO() {
 		super();
+		
+		createDefaultUser();
 	}
 
+	private void createDefaultUser() {
+		
+	}
+	
 	// --------------------------------------------------------------------------
 	//
 	// Logger
@@ -68,7 +75,8 @@ public class UserDAO extends MoqawalatiDAOForXMLMarshalling implements IUserDAO 
 
 	/**
 	 */
-	public User getUser(User user) throws MoqawalatiException {
+	@Override
+	public User getUser(User user) throws AlKhwarizmixException {
 		getLogger().trace("getUser()");
 
 		try {
@@ -83,7 +91,7 @@ public class UserDAO extends MoqawalatiDAOForXMLMarshalling implements IUserDAO 
 
 			return user;
 		} catch (DataAccessException e) {
-			MoqawalatiException ex = new MoqawalatiException(
+			AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
 		}

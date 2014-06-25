@@ -26,9 +26,8 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import dz.alkhwarizmix.framework.java.webServices.UserWebServiceForXML;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.interfaces.IUserService;
 
 /**
  * <p>
@@ -72,7 +71,7 @@ public class UserWebServiceForXMLTest {
 				.setServletRequestAttributes(mockServletRequestAttributes);
 	}
 
-	private void setupMockUserService() throws MoqawalatiException {
+	private void setupMockUserService() throws AlKhwarizmixException {
 		Mockito.when(
 				mockUserService.loginFromXML(any(String.class),
 						any(String.class))).thenReturn("");

@@ -20,9 +20,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOForXMLMarshalling;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.ICustomDataDAO;
+import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.ICustomDataDAO;
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
 @Repository
-public class CustomDataDAO extends MoqawalatiDAOForXMLMarshalling implements
+public class CustomDataDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 		ICustomDataDAO {
 
 	// --------------------------------------------------------------------------
@@ -71,8 +72,9 @@ public class CustomDataDAO extends MoqawalatiDAOForXMLMarshalling implements
 
 	/**
 	 */
+	@Override
 	public CustomData getCustomData(CustomData customData)
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		getLogger().trace("getCustomData()");
 
 		try {
@@ -92,7 +94,7 @@ public class CustomDataDAO extends MoqawalatiDAOForXMLMarshalling implements
 
 			return customData;
 		} catch (DataAccessException e) {
-			MoqawalatiException ex = new MoqawalatiException(
+			AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
 		}

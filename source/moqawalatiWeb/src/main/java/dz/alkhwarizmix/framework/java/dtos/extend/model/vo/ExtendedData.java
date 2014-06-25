@@ -26,7 +26,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
  * <p>
@@ -105,7 +104,7 @@ public class ExtendedData extends AlKhwarizmixDomainObjectAbstract implements
 				&& (this.getId().equals(sourceExtendedData.getId()))) {
 			this.setExtendedDataValue(sourceExtendedData.getExtendedDataValue());
 		} else {
-			throw new MoqawalatiException(
+			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
 		}
 	}

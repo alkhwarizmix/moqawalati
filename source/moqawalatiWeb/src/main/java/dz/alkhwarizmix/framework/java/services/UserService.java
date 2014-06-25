@@ -27,10 +27,9 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IUserService;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IUserDAO;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IUserService;
 
 /**
  * <p>
@@ -95,33 +94,27 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public void addUser(User user) throws MoqawalatiException {
+	@Override
+	public void addUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("addUser");
 
-		try {
-			setupObjectExtendedDataXMLValue(user);
-			addObject(user);
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		setupObjectExtendedDataXMLValue(user);
+		addObject(user);
 	}
 
 	/**
 	 */
 	@Transactional(readOnly = false)
+	@Override
 	public String addUserFromXML(String userXml, String creatorId)
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		getLogger().trace("addUserFromXML");
 
-		try {
-			User newUser = (User) unmarshalObjectFromXML(userXml);
-			newUser.setCreatorId(creatorId);
-			addUser(newUser);
-			String result = marshalObjectToXML(newUser);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		User newUser = (User) unmarshalObjectFromXML(userXml);
+		// newUser.setCreatorId(creatorId);
+		addUser(newUser);
+		String result = marshalObjectToXML(newUser);
+		return result;
 	}
 
 	/**
@@ -132,109 +125,83 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 
-		try {
-			User result = getMoqawalatiDAO().getUser((User) object);
-			updateObjectFromExtendedDataXML(result);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		User result = getMoqawalatiDAO().getUser((User) object);
+		updateObjectFromExtendedDataXML(result);
+		return result;
 	}
 
 	/**
 	 */
 	@Override
-	public User getUser(User user) throws MoqawalatiException {
+	public User getUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("getUser");
 
-		try {
-			User result = internal_getUser(user);
-			nullifyProtectedProperties(result);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		User result = internal_getUser(user);
+		nullifyProtectedProperties(result);
+		return result;
 	}
 
 	/**
 	 */
-	User internal_getUser(User user) throws MoqawalatiException {
+	User internal_getUser(User user) throws AlKhwarizmixException {
 		getLogger().trace("internal_getUser");
 
-		try {
-			User result = (User) getObject(user);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		User result = (User) getObject(user);
+		return result;
 	}
 
 	/**
 	 */
 	@Override
-	public String getUserAsXML(User user) throws MoqawalatiException {
+	public String getUserAsXML(User user) throws AlKhwarizmixException {
 		getLogger().trace("getUserAsXML 1");
 
-		try {
-			String result = getObjectAsXML(user);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		String result = getObjectAsXML(user);
+		return result;
 	}
 
 	/**
 	 */
 	@Override
-	public String getUserAsXML(String userXml) throws MoqawalatiException {
+	public String getUserAsXML(String userXml) throws AlKhwarizmixException {
 		getLogger().trace("getUserAsXML 2");
 
-		try {
-			String result = getObjectAsXML(userXml);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		String result = getObjectAsXML(userXml);
+		return result;
 	}
 
 	/**
 	 */
 	@Transactional(readOnly = false)
-	public User updateUser(User user) throws MoqawalatiException {
+	@Override
+	public User updateUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("updateUser");
 
-		try {
-			setupObjectExtendedDataXMLValue(user);
-			User result = (User) updateObject(user);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		setupObjectExtendedDataXMLValue(user);
+		User result = (User) updateObject(user);
+		return result;
 	}
 
 	/**
 	 */
 	@Transactional(readOnly = false)
+	@Override
 	public String updateUserFromXML(String userXml, String updaterId)
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		getLogger().trace("updateUserFromXML");
 
-		try {
-			User newUser = (User) unmarshalObjectFromXML(userXml);
-			newUser.setCreatorId(updaterId);
-			User updatedUser = updateUser(newUser);
-			String result = marshalObjectToXML(updatedUser);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		User newUser = (User) unmarshalObjectFromXML(userXml);
+		// newUser.setCreatorId(updaterId);
+		User updatedUser = updateUser(newUser);
+		String result = marshalObjectToXML(updatedUser);
+		return result;
 	}
 
 	/**
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> getUserList(DetachedCriteria criteria, int firstResult,
-			int maxResult) throws MoqawalatiException {
+			int maxResult) throws AlKhwarizmixException {
 		getLogger().debug("getUserList");
 
 		if (criteria == null) {
@@ -242,19 +209,16 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 			criteria.addOrder(Order.asc(User.USERID));
 		}
 
-		try {
-			List<User> result = (List<User>) (List<?>) getObjectList(criteria,
-					firstResult, maxResult);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		List<User> result = (List<User>) (List<?>) getObjectList(criteria,
+				firstResult, maxResult);
+		return result;
 	}
 
 	/**
 	 */
+	@Override
 	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
-			int maxResult) throws MoqawalatiException {
+			int maxResult) throws AlKhwarizmixException {
 		getLogger().trace("getUserListAsXML");
 
 		String result = userListToXML(getUserList(criteria, firstResult,
@@ -265,6 +229,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public String userListToXML(List<User> userList) {
 
 		String result = "<Users>";
@@ -276,12 +241,12 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	}
 
 	@Override
-	public User login(User user) throws MoqawalatiException {
+	public User login(User user) throws AlKhwarizmixException {
 		getLogger().debug("login");
 
 		User loggedUser = internal_getUser(user);
 		if (loggedUser == null)
-			throw new MoqawalatiException(AlKhwarizmixErrorCode.ERROR_LOGIN);
+			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
 
 		getSessionData().setCustomizer(loggedUser.getDomainObject());
 
@@ -290,27 +255,23 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	@Override
 	public String loginFromXML(String userXml, String loggerId)
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 		getLogger().trace("loginFromXML");
 
-		try {
-			User userToLogin = (User) unmarshalObjectFromXML(userXml);
-			// newUser.setCreatorId(updaterId);
-			User loggedUser = login(userToLogin);
-			String result = marshalObjectToXML(loggedUser);
-			return result;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
-		}
+		User userToLogin = (User) unmarshalObjectFromXML(userXml);
+		// newUser.setCreatorId(updaterId);
+		User loggedUser = login(userToLogin);
+		String result = marshalObjectToXML(loggedUser);
+		return result;
 	}
 
 	@Override
-	public void logout(User user) throws MoqawalatiException {
+	public void logout(User user) throws AlKhwarizmixException {
 		getLogger().debug("logout");
 
 		User loggedUser = internal_getUser(user);
 		if (loggedUser == null)
-			throw new MoqawalatiException(AlKhwarizmixErrorCode.ERROR_LOGIN);
+			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
 
 		getSessionData().resetCustomizer();
 	}

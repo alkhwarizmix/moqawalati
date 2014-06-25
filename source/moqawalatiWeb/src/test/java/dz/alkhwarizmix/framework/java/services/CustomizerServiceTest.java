@@ -20,11 +20,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.interfaces.ICustomDataDAO;
 
 /**
  * <p>
@@ -71,7 +71,7 @@ public class CustomizerServiceTest {
 	@Test
 	@Ignore("Not Ready")
 	public void test02_getCustomData_should_return_default_if_not_found()
-			throws MoqawalatiException {
+			throws AlKhwarizmixException {
 
 		setUpMocks();
 		Mockito.when(
@@ -84,7 +84,7 @@ public class CustomizerServiceTest {
 		Assert.assertEquals("Default", result.getCustomDataValue());
 	}
 
-	private void setUpMocks() throws MoqawalatiException {
+	private void setUpMocks() throws AlKhwarizmixException {
 		Mockito.when(mockSessionData.getCustomizer())
 				.thenReturn(mockCustomizer);
 		utCustomizerService.setSessionData(mockSessionData);

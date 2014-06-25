@@ -9,16 +9,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.interfaces;
+package dz.alkhwarizmix.framework.java.interfaces;
 
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.security.access.annotation.Secured;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
  * <p>
@@ -28,44 +27,43 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-// extends UserDetailsService
 public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public void addUser(User user) throws MoqawalatiException;
+	public void addUser(User user) throws AlKhwarizmixException;
 
 	/**
 	 */
 	public String addUserFromXML(String userXml, String creatorId)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public User getUser(User user) throws MoqawalatiException;
+	public User getUser(User user) throws AlKhwarizmixException;
 
 	/**
 	 */
-	public String getUserAsXML(User user) throws MoqawalatiException;
+	public String getUserAsXML(User user) throws AlKhwarizmixException;
 
 	/**
 	 */
-	public String getUserAsXML(String partialXml) throws MoqawalatiException;
+	public String getUserAsXML(String partialXml) throws AlKhwarizmixException;
 
 	/**
 	 */
-	public User updateUser(User user) throws MoqawalatiException;
+	public User updateUser(User user) throws AlKhwarizmixException;
 
 	/**
 	 */
 	public String updateUserFromXML(String userXml, String updaterId)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
 	/**
 	 */
 	@Secured("ROLE_TELLER")
 	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
-			int maxResult) throws MoqawalatiException;
+			int maxResult) throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -73,15 +71,15 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public User login(User user) throws MoqawalatiException;
+	public User login(User user) throws AlKhwarizmixException;
 
 	/**
 	 */
 	public String loginFromXML(String userXml, String loggerId)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public void logout(User user) throws MoqawalatiException;
+	public void logout(User user) throws AlKhwarizmixException;
 
-} // Class
+} // Interface

@@ -38,5 +38,5 @@
 
 	<import resource="CommonDAOTest-context.xml" />
 
-	<bean id="utUserDAO" class="dz.alkhwarizmix.moqawalati.java.dao.UserDAO" />
+	<bean id="utUserDAO" class="dz.alkhwarizmix.framework.java.dao.UserDAO" />
 </beans>
