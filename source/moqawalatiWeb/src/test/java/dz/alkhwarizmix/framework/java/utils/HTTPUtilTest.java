@@ -35,7 +35,7 @@ public class HTTPUtilTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private HTTPUtilTest utHTTPUtilTest;
+	private HTTPUtil utHTTPUtil;
 
 	// --------------------------------------------------------------------------
 	//
@@ -53,8 +53,8 @@ public class HTTPUtilTest {
 
 	@Test
 	public void test00_constructor1() throws AlKhwarizmixException {
-		utHTTPUtilTest = new HTTPUtilTest();
-		Assert.assertNotNull(utHTTPUtilTest);
+		utHTTPUtil = new HTTPUtil();
+		Assert.assertNotNull(utHTTPUtil);
 	}
 
 } // Class
