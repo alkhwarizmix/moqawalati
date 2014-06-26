@@ -37,9 +37,9 @@ import org.apache.commons.codec.binary.Hex;
  */
 public class CryptoUtil {
 
-	Cipher cipher = null;
-	SecretKeySpec secretKeySpec = null;
-	IvParameterSpec ivParameterSpec = null;
+	private Cipher cipher = null;
+	private SecretKeySpec secretKeySpec = null;
+	private IvParameterSpec ivParameterSpec = null;
 
 	// --------------------------------------------------------------------------
 	//
@@ -163,7 +163,7 @@ public class CryptoUtil {
 	/**
 	 * stringToHex
 	 */
-	public String stringToHex(String arg) {
+	String stringToHex(String arg) {
 
 		String result = null;
 
@@ -180,7 +180,7 @@ public class CryptoUtil {
 	/**
 	 * hexToString
 	 */
-	public String hexToString(String arg) {
+	String hexToString(String arg) {
 
 		String result = null;
 		byte[] bytes = null;
@@ -197,7 +197,7 @@ public class CryptoUtil {
 		return result;
 	}
 
-	public byte[] hex2Byte(String str) {
+	private byte[] hex2Byte(String str) {
 		byte[] bytes = new byte[str.length() / 2];
 		for (int i = 0; i < bytes.length; i++) {
 			bytes[i] = (byte) Integer.parseInt(str.substring(2 * i, 2 * i + 2),
@@ -207,7 +207,7 @@ public class CryptoUtil {
 	}
 
 	// Convert Byte Arrary to Hex String
-	public String byte2hex(byte[] b) {
+	private String byte2hex(byte[] b) {
 
 		// String Buffer can be used instead
 
