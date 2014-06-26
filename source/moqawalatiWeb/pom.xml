@@ -618,8 +618,9 @@
 					</formats>
 					<instrumentation>
 						<excludes>
-							<exclude>**/flex/samples/factories/**</exclude>
 							<exclude>**/dz/alkhwarizmix/framework/java/utils/CryptoUtil.java</exclude>
+							<exclude>**/dz/alkhwarizmix/moqawalati/java/interfaces/**</exclude>
+							<exclude>**/flex/samples/factories/**</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>
