@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
 //
-//  Fares Belhaouas
-//  Copyright 2011 Fares Belhaouas
-//  All Rights Reserved.
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
@@ -22,11 +22,14 @@ import org.springframework.validation.Errors;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public class AlKhwarizmixException extends Exception {
+
 	private static final long serialVersionUID = 3434782654593101683L;
 
 	// private Order order;
 	private AlKhwarizmixErrorCode errorCode;
+
 	private Errors validationErrors;
+
 	private boolean recoverable;
 
 	/**

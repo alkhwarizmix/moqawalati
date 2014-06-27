@@ -25,11 +25,14 @@ import org.springframework.http.HttpStatus;
 public enum AlKhwarizmixErrorCode {
 
 	ERROR_DATABASE(10500, "Database error", HttpStatus.INTERNAL_SERVER_ERROR),
-	INVALID_DATA(20500, "Invalid Data", HttpStatus.INTERNAL_SERVER_ERROR),
-	UPDATE_DATA_ERROR(30500, "Cannot update data", HttpStatus.INTERNAL_SERVER_ERROR),
 
-	ERROR_XML_PARSING(10400, "Xml parsing error", HttpStatus.BAD_REQUEST),
-	ERROR_JSON_PARSING(20400, "Json parsing error", HttpStatus.BAD_REQUEST),
+	INVALID_DATA(20500, "Invalid Data", HttpStatus.INTERNAL_SERVER_ERROR),
+
+	UPDATE_DATA_ERROR(30500, "Cannot update data",
+			HttpStatus.INTERNAL_SERVER_ERROR),
+
+	ERROR_XML_PARSING(10400, "Xml parsing error", HttpStatus.BAD_REQUEST), ERROR_JSON_PARSING(
+			20400, "Json parsing error", HttpStatus.BAD_REQUEST),
 
 	ERROR_LOGIN(10406, "Login error", HttpStatus.NOT_ACCEPTABLE);
 
