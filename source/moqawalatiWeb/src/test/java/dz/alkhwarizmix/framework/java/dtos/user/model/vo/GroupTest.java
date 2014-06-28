@@ -14,6 +14,9 @@ package dz.alkhwarizmix.framework.java.dtos.user.model.vo;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
@@ -25,6 +28,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
+@RunWith(MockitoJUnitRunner.class)
 public class GroupTest {
 
 	// --------------------------------------------------------------------------
@@ -33,7 +37,8 @@ public class GroupTest {
 	//
 	// --------------------------------------------------------------------------
 
-	// EMPTY
+	@InjectMocks
+	private Group utGroup;
 
 	// --------------------------------------------------------------------------
 	//
@@ -49,9 +54,14 @@ public class GroupTest {
 	//
 	// --------------------------------------------------------------------------
 
+	@Test
+	public void test00_constructor() throws AlKhwarizmixException {
+		Assert.assertNotNull(utGroup);
+	}
+
 	@Ignore("TODO: TDD")
 	@Test
-	public void test00() throws AlKhwarizmixException {
+	public void test01() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 
