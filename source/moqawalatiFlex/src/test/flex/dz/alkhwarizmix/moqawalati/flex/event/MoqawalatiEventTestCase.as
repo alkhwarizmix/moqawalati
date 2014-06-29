@@ -84,4 +84,3 @@ public class MoqawalatiEventTestCase extends MoqawalatiTestCase
 	
 } // class
 } // package
-
