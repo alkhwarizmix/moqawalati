@@ -17,6 +17,7 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCom
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSimpleCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiWebGetDataCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.event.MoqawalatiEventTestCase;
@@ -41,6 +42,7 @@ import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBoxTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDICanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDIWindowTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiVBoxTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.TestAndDebugWindowTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiButtonTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiCheckBoxTestCase;
@@ -68,6 +70,7 @@ public class MoqawalatiTestSuite
 	public var moqawalatiLoginCommandTestCase:MoqawalatiLoginCommandTestCase;
 	public var moqawalatiLogoutCommandTestCase:MoqawalatiLogoutCommandTestCase;
 	public var moqawalatiWebGetDataCommandTestCase:MoqawalatiWebGetDataCommandTestCase;
+	public var moqawalatiSimpleCommandTestCase:MoqawalatiSimpleCommandTestCase;
 	
 	// event
 	public var moqawalatiEventTestCase:MoqawalatiEventTestCase;
@@ -104,6 +107,7 @@ public class MoqawalatiTestSuite
 	public var mainControlBarEventTestCase:MainControlBarEventTestCase;
 	public var moqawalatiMDIWindowTestCase:MoqawalatiMDIWindowTestCase;
 	public var moqawalatiCanvasTestCase:MoqawalatiCanvasTestCase;
+	public var moqawalatiVBoxTestCase:MoqawalatiVBoxTestCase;
 	
 } // class
 } // package

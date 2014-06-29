@@ -34,16 +34,14 @@ public class MDICanvasMediatorTestCase extends MoqawalatiTestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
-		super.setUp();
+		// NOOP
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
-		super.tearDown();
+		// NOOP
 	}
 	
 	override protected function get classUnderTest():Class

@@ -12,7 +12,11 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.userModule
 {
 
+import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVOTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserGetListCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.facade.UserModuleFacadeTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.model.UserProxyTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.UserListMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.components.UserListCanvasTestCase;
 
 /**
@@ -31,13 +35,14 @@ public class UserModuleTestSuite
 	public var userModuleFacadeTestCase:UserModuleFacadeTestCase;
 	
 	// controller
-	// public var moqawalatiBlazeDSGetDataCommandTestCase:MoqawalatiBlazeDSGetDataCommandTestCase;
+	public var userGetListCommandTestCase:UserGetListCommandTestCase;
 	
 	// model
-	// public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;
+	public var userVOTestCase:UserVOTestCase;
+	public var userProxyTestCase:UserProxyTestCase;
 	
 	// view
-	// public var moqawalatiHBoxTestCase:MoqawalatiHBoxTestCase;
+	public var userListMediatorTestCase:UserListMediatorTestCase;
 	
 	// view.components
 	public var userListCanvasTestCase:UserListCanvasTestCase;

@@ -44,11 +44,13 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 	
 	private var loginBox:LoginBox;
 	
-	[Before]
-	override public function setUp():void
+	override protected function doBeforeSetUp():void
 	{
 		loginBox = new LoginBox();
-		
+	}
+	
+	override protected function setUp():void
+	{
 		super.setUp();
 		
 		moqawalatiMainFacade.registerProxy(new MoqawalatiLoginUserProxy());
@@ -56,8 +58,7 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 		testFacade.registerMediator(utLoginBoxMediator);
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
 		utLoginBoxMediator.setViewComponent(null);
 		testFacade.removeMediator(utLoginBoxMediator.getMediatorName());

@@ -43,8 +43,7 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
 	
 	private var app:IMoqawalatiApplication = null;
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
 		super.setUp();
 		
@@ -52,8 +51,7 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
 		testFacade.registerCommand("NOTE", MoqawalatiStartupCommand);
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
 		testFacade.removeCommand("NOTE");
 		app = null;

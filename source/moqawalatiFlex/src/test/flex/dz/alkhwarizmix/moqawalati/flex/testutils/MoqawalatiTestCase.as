@@ -45,9 +45,11 @@ public class MoqawalatiTestCase
 	
 	protected var classInstanceUnderTest:* = null;
 	
-	[Before]
-	public function setUp():void
+	[Before(order=1)]
+	public final function setUp_final():void
 	{
+		doBeforeSetUp();
+		
 		if (classUnderTestConstructorArg2)
 		{
 			classInstanceUnderTest = new classUnderTest(
@@ -63,6 +65,18 @@ public class MoqawalatiTestCase
 		{
 			classInstanceUnderTest = new classUnderTest();
 		}
+		
+		setUp();
+	}
+	
+	protected function doBeforeSetUp():void
+	{
+		// NOOP
+	}
+	
+	protected function setUp():void
+	{
+		throw new AlKhwarizmixMissingImplError();
 	}
 	
 	protected function get classUnderTest():Class
@@ -80,10 +94,17 @@ public class MoqawalatiTestCase
 		return null;
 	}
 	
-	[After]
-	public function tearDown():void
+	[After(order=999)]
+	public final function tearDown_final():void
 	{
+		tearDown();
+		
 		classInstanceUnderTest = null;
+	}
+	
+	protected function tearDown():void
+	{
+		throw new AlKhwarizmixMissingImplError();
 	}
 	
 	//--------------------------------------------------------------------------

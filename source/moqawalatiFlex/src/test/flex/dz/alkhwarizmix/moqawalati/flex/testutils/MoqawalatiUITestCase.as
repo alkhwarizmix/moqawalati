@@ -45,11 +45,9 @@ public class MoqawalatiUITestCase extends MoqawalatiTestCase
 		return classInstanceUnderTest as DisplayObject;
 	}
 	
-	[Before(async, ui)]
-	override public final function setUp():void
+	[Before(async, ui, order=2)]
+	public final function setUpAyncUI_final():void
 	{
-		super.setUp();
-		
 		if (displayObjectUnderTest)
 		{
 			Async.proceedOnEvent(this, displayObjectUnderTest,
@@ -61,27 +59,35 @@ public class MoqawalatiUITestCase extends MoqawalatiTestCase
 			assertTrue("Could not instanciate displayObjectUnderTest", false);
 		}
 		
-		doAfterAsyncUISetUp();
+		setUpAyncUI();
 	}
 	
-	protected function doAfterAsyncUISetUp():void
+	protected function setUpAyncUI():void
 	{
 		throw new AlKhwarizmixMissingImplError();
 	}
 	
-	[After(ui)]
-	override public final function tearDown():void
+	override protected final function setUp():void
 	{
-		doBeforeUITearDown();
+		// NO throw new AlKhwarizmixMissingImplError();
+	}
+	
+	[After(ui, order=998)]
+	public final function tearDownUI_final():void
+	{
+		tearDownUI();
 		
 		UIImpersonator.removeChild(displayObjectUnderTest);
-		
-		super.tearDown();
 	}
 	
-	protected function doBeforeUITearDown():void
+	protected function tearDownUI():void
 	{
 		throw new AlKhwarizmixMissingImplError();
+	}
+	
+	override protected final function tearDown():void
+	{
+		// NO throw new AlKhwarizmixMissingImplError();
 	}
 	
 	//--------------------------------------------------------------------------

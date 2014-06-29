@@ -36,20 +36,16 @@ public class MoqawalatiConfigProxyTestCase extends MoqawalatiTestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
-		super.setUp();
-		
 		var configDico:Dictionary = new Dictionary();
 		configDico["appParameters"] = getAppParameters();
 		moqawalatiConfigProxy.setData(configDico);
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
-		super.tearDown();
+		moqawalatiConfigProxy.setData(null);
 	}
 	
 	override protected function get classUnderTest():Class

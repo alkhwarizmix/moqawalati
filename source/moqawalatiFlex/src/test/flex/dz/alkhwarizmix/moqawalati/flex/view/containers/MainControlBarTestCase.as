@@ -39,12 +39,12 @@ public class MainControlBarTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	override protected function doAfterAsyncUISetUp():void
+	override protected function setUpAyncUI():void
 	{
 		// NOOP
 	}
 	
-	override protected function doBeforeUITearDown():void
+	override protected function tearDownUI():void
 	{
 		// NOOP
 	}

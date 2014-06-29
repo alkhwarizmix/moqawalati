@@ -33,20 +33,18 @@ public class MoqawalatiSimpleCommandTestCase extends MoqawalatiPureMVCTestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
-		registerMoqawalatiConfigProxy();
-		
 		super.setUp();
+		
+		registerMoqawalatiConfigProxy();
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
-		super.tearDown();
-		
 		removeMoqawalatiConfigProxy();
+		
+		super.tearDown();
 	}
 	
 	override protected function get classUnderTest():Class
