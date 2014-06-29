@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO: ASDOC
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ */
+-->
+
+<s:Application
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
+	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
+	implements="dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication"
+	minWidth="955" minHeight="600"
+	preinitialize="this_preinitializeHandler(event)"
+	addedToStage="this_addedToStageHandler(event)"
+	>
+	
+	<fx:Metadata>
+		[ResourceBundle("MoqawalatiFlex")]
+	</fx:Metadata>
+	
+	<fx:Script>
+	<![CDATA[
+		import mx.events.FlexEvent;
+		import mx.logging.LogEventLevel;
+		import mx.logging.targets.TraceTarget;
+		
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+		import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacade;
+		import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvas;
+		import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBox;
+		
+		import flashx.textLayout.formats.Direction;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Class constants
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * The Logger
+		 */
+		private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
+			getLogger(MoqawalatiFlex);
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Properties
+		//
+		//--------------------------------------------------------------------------
+		
+		public function get mainCanvas():MoqawalatiCanvas
+		{
+			return mainCanvasInternal;
+		}
+		
+		public function get mainControlBar():MoqawalatiHBox
+		{
+			return mainControlBarInternal;
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Methods
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * @private
+		 */
+		private function setupLocaleAdnDirection():void
+		{
+			var direction:String = checkBox1.selected
+				? Direction.RTL
+				: Direction.LTR;
+			resourceManager.localeChain = [checkBox1.selected ? "en_US" : "fr_FR"];
+			setStyle("direction", direction);
+			setStyle("layoutDirection", direction);
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Event handlers
+		//
+		//--------------------------------------------------------------------------
+		
+		/**
+		 * @private
+		 */
+		private function this_preinitializeHandler(event:FlexEvent):void
+		{
+			var newTarget:TraceTarget = new TraceTarget();
+			AlKhwarizmixLog.addTarget(newTarget);
+			newTarget.level = LogEventLevel.ALL;
+			AlKhwarizmixLog.isLogLevelAll = true;
+			
+			LOG.debug("this_preinitializeHandler");
+		}
+		
+		/**
+		 * @private
+		 */
+		private function this_addedToStageHandler(event:Event):void
+		{
+			LOG.debug("this_addedToStageHandler");
+			
+			parameters.appURL = this.stage.loaderInfo.url;
+			MoqawalatiMainFacade.getInstance(
+				MoqawalatiConstants.FACADE_NAME).startup(this);
+			setupLocaleAdnDirection();
+		}
+		
+		/**
+		 * @private
+		 */
+		private function checkBox1_clickHandler(event:MouseEvent):void
+		{
+			setupLocaleAdnDirection();
+		}
+		
+	]]>
+	</fx:Script>
+	
+	<s:controlBarContent>
+		<fx:Array>
+			<containers:MainControlBar id="mainControlBarInternal"
+				width="100%"/>
+		</fx:Array>
+	</s:controlBarContent>
+	
+	<containers:MainCanvas id="mainCanvasInternal"
+		width="100%" height="100%"/>
+	
+	<controls:MoqawalatiCheckBox id="checkBox1"
+		selected="true"
+		bottom="1" horizontalCenter="0"
+		label="{checkBox1.localize('ar_DZ')}"
+		click="checkBox1_clickHandler(event)"/>
+</s:Application>

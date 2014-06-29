@@ -13,6 +13,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.clientModule
 {
 
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.facade.ClientModuleFacadeTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.view.components.ClientListCanvasTestCase;
 
 /**
  *  <p>
@@ -36,7 +37,9 @@ public class ClientModuleTestSuite
 	// public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;
 	
 	// view
-	// public var moqawalatiHBoxTestCase:MoqawalatiHBoxTestCase;
+	
+	// view.components
+	public var clientListCanvasTestCase:ClientListCanvasTestCase;
 	
 } // class
 } // package

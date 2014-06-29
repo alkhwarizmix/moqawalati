@@ -32,16 +32,14 @@ public class MoqawalatiMenuBarTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before(async, ui)]
-	override public function setUp():void
+	override protected function doAfterAsyncUISetUp():void
 	{
-		super.setUp();
+		// NOOP
 	}
 	
-	[After(ui)]
-	override public function tearDown():void
+	override protected function doBeforeUITearDown():void
 	{
-		super.tearDown();
+		// NOOP
 	}
 	
 	override protected function get classUnderTest():Class

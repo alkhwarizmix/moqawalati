@@ -19,17 +19,29 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommandTestCas
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiWebGetDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.event.MoqawalatiEventTestCase;
+import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.messaging.MoqawalatiConsumerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.messaging.MoqawalatiProducerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxyTestCase;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.resources.MoqawalatiResourceManagerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediatorTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediatorTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvasTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxEventTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvasTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBarEventTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBarTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiHBoxTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDICanvasTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MoqawalatiMDIWindowTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.TestAndDebugWindowTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiButtonTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiCheckBoxTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiLabelTestCase;
@@ -42,6 +54,7 @@ public class MoqawalatiTestSuite
 {
 	// facade
 	public var moqawalatiMainFacadeTestCase:MoqawalatiMainFacadeTestCase;
+	public var moqawalatiFacadeTestCase:MoqawalatiFacadeTestCase;
 	
 	// messaging
 	public var moqawalatiConsumerTestCase:MoqawalatiConsumerTestCase;
@@ -56,9 +69,14 @@ public class MoqawalatiTestSuite
 	public var moqawalatiLogoutCommandTestCase:MoqawalatiLogoutCommandTestCase;
 	public var moqawalatiWebGetDataCommandTestCase:MoqawalatiWebGetDataCommandTestCase;
 	
+	// event
+	public var moqawalatiEventTestCase:MoqawalatiEventTestCase;
+	
 	// model
 	public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;
 	public var moqawalatiLoginUserProxyTestCase:MoqawalatiLoginUserProxyTestCase;
+	public var moqawalatiMDICanvasTestCase:MoqawalatiMDICanvasTestCase;
+	public var moqawalatiProxyTestCase:MoqawalatiProxyTestCase;
 	
 	// resources
 	public var moqawalatiResourceManagerTestCase:MoqawalatiResourceManagerTestCase;
@@ -74,6 +92,18 @@ public class MoqawalatiTestSuite
 	public var moqawalatiCheckBoxTestCase:MoqawalatiCheckBoxTestCase;
 	public var moqawalatiLabelTestCase:MoqawalatiLabelTestCase;
 	public var moqawalatiMenuBarTestCase:MoqawalatiMenuBarTestCase;
+	public var mdiCanvasMediatorTestCase:MDICanvasMediatorTestCase;
+	public var mainControlBarMediatorTestCase:MainControlBarMediatorTestCase;
+	
+	// view.components
+	public var loginBoxEventTestCase:LoginBoxEventTestCase;
+	
+	// view.containers
+	public var testAndDebugWindowTestCase:TestAndDebugWindowTestCase;
+	public var mainCanvasTestCase:MainCanvasTestCase;
+	public var mainControlBarEventTestCase:MainControlBarEventTestCase;
+	public var moqawalatiMDIWindowTestCase:MoqawalatiMDIWindowTestCase;
+	public var moqawalatiCanvasTestCase:MoqawalatiCanvasTestCase;
 	
 } // class
 } // package

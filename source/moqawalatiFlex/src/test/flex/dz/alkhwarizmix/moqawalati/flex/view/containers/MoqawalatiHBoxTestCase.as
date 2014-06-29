@@ -14,7 +14,6 @@ package dz.alkhwarizmix.moqawalati.flex.view.containers
 
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiUITestCase;
 
-import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
 
 /**
@@ -33,16 +32,14 @@ public class MoqawalatiHBoxTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before(async, ui)]
-	override public function setUp():void
+	override protected function doAfterAsyncUISetUp():void
 	{
-		super.setUp();
+		// NOOP
 	}
 	
-	[After(ui)]
-	override public function tearDown():void
+	override protected function doBeforeUITearDown():void
 	{
-		super.tearDown();
+		// NOOP
 	}
 	
 	override protected function get classUnderTest():Class

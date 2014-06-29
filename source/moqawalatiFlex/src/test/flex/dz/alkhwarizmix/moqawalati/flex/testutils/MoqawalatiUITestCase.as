@@ -17,6 +17,8 @@ import flash.display.DisplayObject;
 import mx.core.UIComponent;
 import mx.events.FlexEvent;
 
+import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
+
 import org.flexunit.asserts.assertFalse;
 import org.flexunit.asserts.assertTrue;
 import org.flexunit.async.Async;
@@ -44,7 +46,7 @@ public class MoqawalatiUITestCase extends MoqawalatiTestCase
 	}
 	
 	[Before(async, ui)]
-	override public function setUp():void
+	override public final function setUp():void
 	{
 		super.setUp();
 		
@@ -58,14 +60,28 @@ public class MoqawalatiUITestCase extends MoqawalatiTestCase
 		{
 			assertTrue("Could not instanciate displayObjectUnderTest", false);
 		}
+		
+		doAfterAsyncUISetUp();
+	}
+	
+	protected function doAfterAsyncUISetUp():void
+	{
+		throw new AlKhwarizmixMissingImplError();
 	}
 	
 	[After(ui)]
-	override public function tearDown():void
+	override public final function tearDown():void
 	{
+		doBeforeUITearDown();
+		
 		UIImpersonator.removeChild(displayObjectUnderTest);
 		
 		super.tearDown();
+	}
+	
+	protected function doBeforeUITearDown():void
+	{
+		throw new AlKhwarizmixMissingImplError();
 	}
 	
 	//--------------------------------------------------------------------------
