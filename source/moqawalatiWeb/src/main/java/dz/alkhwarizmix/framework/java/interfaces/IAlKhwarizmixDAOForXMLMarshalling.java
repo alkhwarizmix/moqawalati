@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.framework.java.interfaces;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -26,12 +26,12 @@ public interface IAlKhwarizmixDAOForXMLMarshalling extends IAlKhwarizmixDAO {
 
 	/**
 	 */
-	public String marshalObjectToXML(AlKhwarizmixDomainObjectAbstract object)
+	public String marshalObjectToXML(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
+	public AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException;
 
 } // Interface

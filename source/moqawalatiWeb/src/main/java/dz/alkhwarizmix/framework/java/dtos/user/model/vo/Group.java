@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
 
 /**
@@ -118,7 +118,7 @@ public class Group extends AlKhwarizmixDomainObjectExtendable implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 

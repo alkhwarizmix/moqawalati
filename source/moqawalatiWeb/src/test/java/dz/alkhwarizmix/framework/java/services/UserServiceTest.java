@@ -32,7 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
@@ -131,7 +131,7 @@ public class UserServiceTest {
 			throws AlKhwarizmixException {
 		utUserService.addUser(new User()); // TEST
 		verify(mockUserDAO, times(1)).saveOrUpdate(
-				any(AlKhwarizmixDomainObjectAbstract.class));
+				any(AbstractAlKhwarizmixDomainObject.class));
 	}
 
 	@Test

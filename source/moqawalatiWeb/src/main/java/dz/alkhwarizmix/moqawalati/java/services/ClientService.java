@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
@@ -126,8 +126,8 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Override
-	public AlKhwarizmixDomainObjectAbstract getObject(
-			AlKhwarizmixDomainObjectAbstract object)
+	public AbstractAlKhwarizmixDomainObject getObject(
+			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 
@@ -222,18 +222,18 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Client> getClientList(DetachedCriteria criteria,
+	public List<Client> getClientList(DetachedCriteria criteriaToUse,
 			int firstResult, int maxResult) throws MoqawalatiException {
 		getLogger().trace("getClientList");
 
-		if (criteria == null) {
-			criteria = DetachedCriteria.forClass(Client.class);
-			criteria.addOrder(Order.asc(Client.CLIENTID));
+		if (criteriaToUse == null) {
+			criteriaToUse = DetachedCriteria.forClass(Client.class);
+			criteriaToUse.addOrder(Order.asc(Client.CLIENTID));
 		}
 
 		try {
 			List<Client> result = (List<Client>) (List<?>) getObjectList(
-					criteria, firstResult, maxResult);
+					criteriaToUse, firstResult, maxResult);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -269,7 +269,7 @@ public class ClientService extends AlKhwarizmixService implements
 	private String clientListToJSON(List<Client> clientList) {
 
 		String result = "{\"Clients\": {";
-		result += objectListToJSON((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
+		result += objectListToJSON((List<AbstractAlKhwarizmixDomainObject>) (List<?>) clientList);
 		result += "}}";
 
 		getLogger().trace("clientListToXML(): returns {}", result);
@@ -282,7 +282,7 @@ public class ClientService extends AlKhwarizmixService implements
 	private String clientListToXML(List<Client> clientList) {
 
 		String result = "<Clients>";
-		result += objectListToXML((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
+		result += objectListToXML((List<AbstractAlKhwarizmixDomainObject>) (List<?>) clientList);
 		result += "</Clients>";
 
 		getLogger().trace("clientListToXML(): returns {}", result);

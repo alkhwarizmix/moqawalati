@@ -95,6 +95,7 @@ public class CryptoUtil {
 	 */
 	public final String encryptString(String stringToEncrypt) {
 
+		String result = null;
 		byte[] dataToEncrypt = null;
 		byte[] encrypted = null;
 
@@ -103,6 +104,7 @@ public class CryptoUtil {
 		try {
 			cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
 			encrypted = cipher.doFinal(dataToEncrypt);
+			result = byte2hex(encrypted);
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (IllegalBlockSizeException e) {
@@ -113,7 +115,6 @@ public class CryptoUtil {
 			e.printStackTrace();
 		}
 
-		String result = byte2hex(encrypted);
 		return result;
 	}
 
@@ -122,6 +123,7 @@ public class CryptoUtil {
 	 */
 	public final String decryptString(String hexStringToDecrypt) {
 
+		String result = null;
 		byte[] dataToDecrypt = null;
 		byte[] decrypted = null;
 
@@ -130,6 +132,7 @@ public class CryptoUtil {
 		try {
 			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
 			decrypted = cipher.doFinal(dataToDecrypt);
+			result = hexToString(byte2hex(decrypted));
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (IllegalBlockSizeException e) {
@@ -140,7 +143,6 @@ public class CryptoUtil {
 			e.printStackTrace();
 		}
 
-		String result = hexToString(byte2hex(decrypted));
 		return result;
 	}
 

@@ -23,7 +23,6 @@ import org.springframework.stereotype.Repository;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
@@ -59,12 +58,13 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 
 		try {
 			saveOrUpdate(defaultUser);
-			getLogger().info("createDefaultClients: Created default user <{0}>",
+			getLogger().info(
+					"createDefaultClients: Created default user <{0}>",
 					defaultUser.getName());
 		} catch (AlKhwarizmixDAOException e) {
-			getLogger().warn(
-					"createDefaultClients: default user <{0}> already existing",
-					defaultUser.getName());
+			getLogger()
+					.warn("createDefaultClients: default user <{0}> already existing",
+							defaultUser.getName());
 		}
 	}
 
@@ -90,20 +90,21 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 	/**
 	 */
 	@Override
-	public Client getClient(Client client) throws MoqawalatiException {
+	public Client getClient(Client clientToGet) throws MoqawalatiException {
 		getLogger().trace("getClient()");
 
 		try {
-			String clientId = client.getClientId();
+			String clientId = clientToGet.getClientId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(Client.class);
 			criteria.add(Restrictions.eq(Client.CLIENTID, clientId));
-			client = (Client) criteria.uniqueResult();
+			clientToGet = (Client) criteria.uniqueResult();
 
-			if (client != null)
-				client.setExtendedData(getExtendedData(client.getExtendedData()));
+			if (clientToGet != null)
+				clientToGet.setExtendedData(getExtendedData(clientToGet
+						.getExtendedData()));
 
-			return client;
+			return clientToGet;
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);

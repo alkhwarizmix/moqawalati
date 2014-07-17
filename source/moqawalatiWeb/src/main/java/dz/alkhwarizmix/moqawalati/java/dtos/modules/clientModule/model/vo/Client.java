@@ -26,8 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
+import dz.alkhwarizmix.moqawalati.java.model.vo.AbstractMoqawalatiDomainObject;
 
 /**
  * <p>
@@ -41,7 +42,8 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
 @Table(name = "TClient")
 @XmlRootElement(name = "Client")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Client extends MoqawalatiDomainObject implements Serializable {
+public class Client extends AbstractMoqawalatiDomainObject implements
+		Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -104,6 +106,12 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
+	}
 
 	/**
 	 */

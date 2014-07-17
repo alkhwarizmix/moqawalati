@@ -33,7 +33,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendableWithSecurity;
 
@@ -99,9 +99,9 @@ public class CustomData extends AlKhwarizmixDomainObjectExtendableWithSecurity
 	/**
 	 */
 	@Override
-	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
 
-		List<AlKhwarizmixDomainObjectAbstract> result = super
+		List<AbstractAlKhwarizmixDomainObject> result = super
 				.getDaoObjectList();
 		if (getCustomizer().getId() == null)
 			result.add(0, getCustomizer());
@@ -111,8 +111,8 @@ public class CustomData extends AlKhwarizmixDomainObjectExtendableWithSecurity
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
-		super.beforeDaoSaveOrUpdate(object);
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
 	}
 
 	/**

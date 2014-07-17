@@ -87,20 +87,21 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	/**
 	 */
 	@Override
-	public User getUser(User user) throws AlKhwarizmixException {
+	public User getUser(User userToGet) throws AlKhwarizmixException {
 		getLogger().trace("getUser()");
 
 		try {
-			String userId = user.getUserId();
+			String userId = userToGet.getUserId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(User.class);
 			criteria.add(Restrictions.eq(User.USERID, userId));
-			user = (User) criteria.uniqueResult();
+			userToGet = (User) criteria.uniqueResult();
 
-			if (user != null)
-				user.setExtendedData(getExtendedData(user.getExtendedData()));
+			if (userToGet != null)
+				userToGet.setExtendedData(getExtendedData(userToGet
+						.getExtendedData()));
 
-			return user;
+			return userToGet;
 		} catch (DataAccessException e) {
 			AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);

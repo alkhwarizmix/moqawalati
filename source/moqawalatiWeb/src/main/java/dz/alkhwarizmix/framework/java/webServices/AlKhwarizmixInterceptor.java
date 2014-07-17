@@ -49,9 +49,9 @@ public abstract class AlKhwarizmixInterceptor extends HandlerInterceptorAdapter 
 			HttpServletResponse response, Object handler) throws Exception {
 		getLogger().trace("Before handling the request");
 
-		String host = request.getRemoteHost();
-		String address = request.getRemoteAddr();
-		String pathInfo = request.getPathInfo();
+		final String host = request.getRemoteHost();
+		final String address = request.getRemoteAddr();
+		final String pathInfo = request.getPathInfo();
 		getLogger().info("HOST {} IS CALLING {}",
 				host + "(IP:" + address + ")", pathInfo);
 

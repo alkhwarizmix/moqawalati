@@ -24,7 +24,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedData;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedDataPart;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAOForXMLMarshalling;
@@ -62,12 +62,12 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	/**
 	 */
 	@Override
-	public void saveOrUpdate(AlKhwarizmixDomainObjectAbstract object)
+	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
 
 		try {
-			for (AlKhwarizmixDomainObjectAbstract cursor : object
+			for (AbstractAlKhwarizmixDomainObject cursor : object
 					.getDaoObjectList()) {
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
@@ -92,7 +92,7 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	 */
 	@Override
 	public final String marshalObjectToXML(
-			AlKhwarizmixDomainObjectAbstract object)
+			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("marshalObjectToXML()");
 
@@ -103,7 +103,7 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	 * TODO: Javadoc
 	 */
 	@Override
-	public final AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
+	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException {
 		getLogger().trace("unmarshalObjectFromXML()");
 
@@ -113,27 +113,27 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 
 	/**
 	 */
-	protected final ExtendedData getExtendedData(ExtendedData extendedData)
+	protected final ExtendedData getExtendedData(ExtendedData extendedDataToGet)
 			throws AlKhwarizmixException {
 		getLogger().trace("getExtendedData()");
 
-		if (extendedData == null)
+		if (extendedDataToGet == null)
 			return null;
 
 		try {
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(ExtendedData.class);
 			Criterion criter1 = Restrictions.eq(ExtendedData.ID,
-					extendedData.getId());
+					extendedDataToGet.getId());
 			criteria.add(criter1);
-			extendedData = (ExtendedData) criteria.uniqueResult();
+			extendedDataToGet = (ExtendedData) criteria.uniqueResult();
 
-			if (extendedData != null) {
-				extendedData
-						.setExtendedDataParts(getExtendedDataParts(extendedData));
+			if (extendedDataToGet != null) {
+				extendedDataToGet
+						.setExtendedDataParts(getExtendedDataParts(extendedDataToGet));
 			}
 
-			return extendedData;
+			return extendedDataToGet;
 		} catch (DataAccessException e) {
 			AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);

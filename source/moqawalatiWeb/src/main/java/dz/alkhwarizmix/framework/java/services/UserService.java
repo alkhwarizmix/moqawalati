@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
@@ -120,8 +120,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	@Override
-	public AlKhwarizmixDomainObjectAbstract getObject(
-			AlKhwarizmixDomainObjectAbstract object)
+	public AbstractAlKhwarizmixDomainObject getObject(
+			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 
@@ -200,16 +200,16 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	/**
 	 */
 	@SuppressWarnings("unchecked")
-	public List<User> getUserList(DetachedCriteria criteria, int firstResult,
-			int maxResult) throws AlKhwarizmixException {
+	public List<User> getUserList(DetachedCriteria criteriaToUse,
+			int firstResult, int maxResult) throws AlKhwarizmixException {
 		getLogger().debug("getUserList");
 
-		if (criteria == null) {
-			criteria = DetachedCriteria.forClass(User.class);
-			criteria.addOrder(Order.asc(User.USERID));
+		if (criteriaToUse == null) {
+			criteriaToUse = DetachedCriteria.forClass(User.class);
+			criteriaToUse.addOrder(Order.asc(User.USERID));
 		}
 
-		List<User> result = (List<User>) (List<?>) getObjectList(criteria,
+		List<User> result = (List<User>) (List<?>) getObjectList(criteriaToUse,
 				firstResult, maxResult);
 		return result;
 	}
@@ -233,7 +233,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	public String userListToXML(List<User> userList) {
 
 		String result = "<Users>";
-		result += objectListToXML((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) userList);
+		result += objectListToXML((List<AbstractAlKhwarizmixDomainObject>) (List<?>) userList);
 		result += "</Users>";
 
 		getLogger().trace("userListToXML(): returns {}", result);
@@ -278,7 +278,7 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	@Override
 	protected void nullifyProtectedProperties(
-			AlKhwarizmixDomainObjectAbstract object) {
+			AbstractAlKhwarizmixDomainObject object) {
 		super.nullifyProtectedProperties(object);
 		User user = (User) object;
 		if (user != null) {

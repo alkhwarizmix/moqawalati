@@ -24,7 +24,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -67,12 +67,12 @@ public class XMLUtil {
 	 * TODO: Javadoc
 	 */
 	public String objectListToXML(
-			List<AlKhwarizmixDomainObjectAbstract> objectList) {
+			List<AbstractAlKhwarizmixDomainObject> objectList) {
 		// getLogger().trace("objectListToXML()");
 
 		StringWriter stringWriter = new StringWriter();
 		XMLResult xmlResult = new XMLResult(stringWriter);
-		for (AlKhwarizmixDomainObjectAbstract object : objectList) {
+		for (AbstractAlKhwarizmixDomainObject object : objectList) {
 			jaxb2Marshaller.marshal(object, xmlResult);
 		}
 		return stringWriter.toString();
@@ -82,7 +82,7 @@ public class XMLUtil {
 	 * TODO: Javadoc
 	 */
 	public final String marshalObjectToXML(
-			AlKhwarizmixDomainObjectAbstract object)
+			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		try {
 			return internal_marshalObjectToXML(object);
@@ -93,7 +93,7 @@ public class XMLUtil {
 	}
 
 	protected String internal_marshalObjectToXML(
-			AlKhwarizmixDomainObjectAbstract object) {
+			AbstractAlKhwarizmixDomainObject object) {
 
 		StringWriter stringWriter = new StringWriter();
 		StreamResult streamResult = new StreamResult(stringWriter);
@@ -104,7 +104,7 @@ public class XMLUtil {
 	/**
 	 * TODO: Javadoc
 	 */
-	public final AlKhwarizmixDomainObjectAbstract unmarshalObjectFromXML(
+	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException {
 
 		try {
@@ -115,9 +115,9 @@ public class XMLUtil {
 		}
 	}
 
-	protected AlKhwarizmixDomainObjectAbstract internal_unmarshalObjectFromXML(
+	protected AbstractAlKhwarizmixDomainObject internal_unmarshalObjectFromXML(
 			String xmlValue) {
-		return (AlKhwarizmixDomainObjectAbstract) jaxb2Marshaller
+		return (AbstractAlKhwarizmixDomainObject) jaxb2Marshaller
 				.unmarshal(new StreamSource(IOUtils.toInputStream(xmlValue)));
 	}
 }

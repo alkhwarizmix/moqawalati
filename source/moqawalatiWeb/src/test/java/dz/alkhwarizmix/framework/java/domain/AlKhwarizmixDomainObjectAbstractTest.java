@@ -38,7 +38,7 @@ public class AlKhwarizmixDomainObjectAbstractTest {
 	// --------------------------------------------------------------------------
 
 	@Mock
-	private AlKhwarizmixDomainObjectAbstract utAlKhwarizmixDomainObjectAbstract;
+	private AbstractAlKhwarizmixDomainObject utAlKhwarizmixDomainObjectAbstract;
 
 	// --------------------------------------------------------------------------
 	//

@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedData;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedDataPart;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
@@ -89,12 +89,12 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 	/**
 	 */
 	@Override
-	public void saveOrUpdate(AlKhwarizmixDomainObjectAbstract object)
+	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
 
 		try {
-			for (AlKhwarizmixDomainObjectAbstract cursor : object
+			for (AbstractAlKhwarizmixDomainObject cursor : object
 					.getDaoObjectList()) {
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
@@ -116,27 +116,27 @@ public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
 
 	/**
 	 */
-	private ExtendedData getExtendedData(ExtendedData extendedData)
+	private ExtendedData getExtendedData(ExtendedData extendedDataToGet)
 			throws MoqawalatiException {
 		getLogger().trace("getExtendedData()");
 
-		if (extendedData == null)
+		if (extendedDataToGet == null)
 			return null;
 
 		try {
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(ExtendedData.class);
 			Criterion criter1 = Restrictions.eq(ExtendedData.ID,
-					extendedData.getId());
+					extendedDataToGet.getId());
 			criteria.add(criter1);
-			extendedData = (ExtendedData) criteria.uniqueResult();
+			extendedDataToGet = (ExtendedData) criteria.uniqueResult();
 
-			if (extendedData != null) {
-				extendedData
-						.setExtendedDataParts(getExtendedDataParts(extendedData));
+			if (extendedDataToGet != null) {
+				extendedDataToGet
+						.setExtendedDataParts(getExtendedDataParts(extendedDataToGet));
 			}
 
-			return extendedData;
+			return extendedDataToGet;
 		} catch (DataAccessException e) {
 			MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);

@@ -29,7 +29,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
@@ -117,7 +117,7 @@ public class ClientServiceTest {
 			throws AlKhwarizmixException {
 		utClientService.addClient(new Client()); // TEST
 		verify(mockClientDAO, times(1)).saveOrUpdate(
-				any(AlKhwarizmixDomainObjectAbstract.class));
+				any(AbstractAlKhwarizmixDomainObject.class));
 	}
 
 	@Test

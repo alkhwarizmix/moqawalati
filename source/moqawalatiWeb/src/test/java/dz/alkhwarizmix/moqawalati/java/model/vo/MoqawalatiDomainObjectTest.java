@@ -38,7 +38,7 @@ public class MoqawalatiDomainObjectTest {
 	// --------------------------------------------------------------------------
 
 	@Mock
-	private MoqawalatiDomainObject utMoqawalatiDomainObject;
+	private AbstractMoqawalatiDomainObject utMoqawalatiDomainObject;
 
 	// --------------------------------------------------------------------------
 	//

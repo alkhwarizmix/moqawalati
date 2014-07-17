@@ -42,7 +42,7 @@ import dz.alkhwarizmix.framework.java.EntityInterceptor;
  */
 @MappedSuperclass
 @EntityListeners(EntityInterceptor.class)
-public abstract class AlKhwarizmixDomainObjectAbstract implements Serializable {
+public abstract class AbstractAlKhwarizmixDomainObject implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -56,19 +56,6 @@ public abstract class AlKhwarizmixDomainObjectAbstract implements Serializable {
 	public static final String CREATED = "created";
 	public static final String VERSION = "version";
 	public static final String MODIFIED = "modified";
-
-	// --------------------------------------------------------------------------
-	//
-	// Constructor
-	//
-	// --------------------------------------------------------------------------
-
-	/**
-	 * constructor
-	 */
-	public AlKhwarizmixDomainObjectAbstract() {
-		created = new Date();
-	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -97,23 +84,35 @@ public abstract class AlKhwarizmixDomainObjectAbstract implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
+	// Constructor
+	//
+	// --------------------------------------------------------------------------
+
+	/**
+	 * constructor
+	 */
+	public AbstractAlKhwarizmixDomainObject() {
+		created = new Date();
+	}
+
+	// --------------------------------------------------------------------------
+	//
 	// Methods
 	//
 	// --------------------------------------------------------------------------
 
 	/**
 	 */
-	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
-		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
+	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
+		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		result.add(this);
 		return result;
 	}
 
 	/**
 	 */
-	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
-		// NOOP
-	}
+	public abstract void beforeDaoSaveOrUpdate(
+			AbstractAlKhwarizmixDomainObject object);
 
 	/**
 	 */

@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -35,7 +35,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
 @Table(name = "TAlKhwarizmixDomainObject")
 @XmlRootElement(name = "AlKhwarizmixDomainObject")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class AlKhwarizmixDomainObject extends AlKhwarizmixDomainObjectAbstract
+public class AlKhwarizmixDomainObject extends AbstractAlKhwarizmixDomainObject
 		implements Serializable {
 
 	// --------------------------------------------------------------------------
@@ -74,6 +74,13 @@ public class AlKhwarizmixDomainObject extends AlKhwarizmixDomainObjectAbstract
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
+	}
 
 	/**
 	 */

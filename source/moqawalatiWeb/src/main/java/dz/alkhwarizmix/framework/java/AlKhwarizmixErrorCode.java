@@ -48,9 +48,9 @@ public enum AlKhwarizmixErrorCode {
 	 * @param description
 	 *            {@link String} the error default description
 	 */
-	private AlKhwarizmixErrorCode(int id, String description,
-			HttpStatus httpStatus) {
-		this.id = id;
+	private AlKhwarizmixErrorCode(final int theId, final String description,
+			final HttpStatus httpStatus) {
+		this.id = theId;
 		this.description = description;
 		this.httpStatus = httpStatus;
 	}

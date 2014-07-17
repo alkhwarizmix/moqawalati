@@ -73,7 +73,7 @@ public class CustomDataDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	/**
 	 */
 	@Override
-	public CustomData getCustomData(CustomData customData)
+	public CustomData getCustomData(CustomData customDataToGet)
 			throws AlKhwarizmixException {
 		getLogger().trace("getCustomData()");
 
@@ -81,18 +81,18 @@ public class CustomDataDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(CustomData.class);
 			Criterion criter1 = Restrictions.eq(CustomData.CUSTOMDATAID,
-					customData.getCustomDataId());
+					customDataToGet.getCustomDataId());
 			Criterion criter2 = Restrictions.eq(CustomData.CUSTOMIZER,
-					customData.getCustomizer().getId());
+					customDataToGet.getCustomizer().getId());
 			criteria.add(Restrictions.and(criter1, criter2));
-			customData = (CustomData) criteria.uniqueResult();
+			customDataToGet = (CustomData) criteria.uniqueResult();
 
-			if (customData != null) {
-				customData.setExtendedData(getExtendedData(customData
+			if (customDataToGet != null) {
+				customDataToGet.setExtendedData(getExtendedData(customDataToGet
 						.getExtendedData()));
 			}
 
-			return customData;
+			return customDataToGet;
 		} catch (DataAccessException e) {
 			AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);

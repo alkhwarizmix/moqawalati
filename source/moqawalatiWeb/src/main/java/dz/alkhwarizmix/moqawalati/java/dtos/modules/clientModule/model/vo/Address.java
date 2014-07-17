@@ -21,8 +21,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
+import dz.alkhwarizmix.moqawalati.java.model.vo.AbstractMoqawalatiDomainObject;
 
 /**
  * <p>
@@ -34,7 +35,7 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
  */
 @XmlRootElement(name = "Address")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Address extends MoqawalatiDomainObject implements Serializable {
+public class Address extends AbstractMoqawalatiDomainObject implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -83,6 +84,13 @@ public class Address extends MoqawalatiDomainObject implements Serializable {
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
+	}
 
 	/**
 	 */

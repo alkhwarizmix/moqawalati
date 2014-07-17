@@ -23,7 +23,7 @@ import javax.persistence.MappedSuperclass;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.Group;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 
@@ -85,9 +85,9 @@ public abstract class AlKhwarizmixDomainObjectExtendableWithSecurity extends
 	/**
 	 */
 	@Override
-	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
 
-		List<AlKhwarizmixDomainObjectAbstract> result = super
+		List<AbstractAlKhwarizmixDomainObject> result = super
 				.getDaoObjectList();
 		return result;
 	}

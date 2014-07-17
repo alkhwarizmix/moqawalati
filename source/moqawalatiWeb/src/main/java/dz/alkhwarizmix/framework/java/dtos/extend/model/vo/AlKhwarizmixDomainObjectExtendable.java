@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -37,7 +37,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
  */
 @MappedSuperclass
 public abstract class AlKhwarizmixDomainObjectExtendable extends
-		AlKhwarizmixDomainObjectAbstract implements Serializable {
+		AbstractAlKhwarizmixDomainObject implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -80,9 +80,9 @@ public abstract class AlKhwarizmixDomainObjectExtendable extends
 	/**
 	 */
 	@Override
-	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
 
-		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
+		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		if (extendedData != null)
 			result.addAll(extendedData.getDaoObjectList());
 		result.add(this);

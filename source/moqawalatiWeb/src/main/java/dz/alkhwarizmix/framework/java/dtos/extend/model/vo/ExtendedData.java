@@ -25,7 +25,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -37,7 +37,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
  */
 @Entity
 @Table(name = "TExtendedData")
-public class ExtendedData extends AlKhwarizmixDomainObjectAbstract implements
+public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 		Serializable {
 
 	// --------------------------------------------------------------------------
@@ -80,9 +80,9 @@ public class ExtendedData extends AlKhwarizmixDomainObjectAbstract implements
 	/**
 	 */
 	@Override
-	public List<AlKhwarizmixDomainObjectAbstract> getDaoObjectList() {
+	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
 
-		List<AlKhwarizmixDomainObjectAbstract> result = new ArrayList<AlKhwarizmixDomainObjectAbstract>();
+		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		result.add(this);
 		result.addAll(getExtendedDataParts());
 		return result;
@@ -91,7 +91,7 @@ public class ExtendedData extends AlKhwarizmixDomainObjectAbstract implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AlKhwarizmixDomainObjectAbstract object) {
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
 		// DO NOTHING
 	}
 

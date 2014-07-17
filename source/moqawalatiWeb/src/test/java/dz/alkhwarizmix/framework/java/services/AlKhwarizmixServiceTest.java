@@ -24,7 +24,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -47,7 +47,7 @@ public class AlKhwarizmixServiceTest {
 	AlKhwarizmixService mockAlKhwarizmixService;
 
 	@Mock
-	AlKhwarizmixDomainObjectAbstract mockAlKhwarizmixDomainObjectAbstract;
+	AbstractAlKhwarizmixDomainObject mockAlKhwarizmixDomainObjectAbstract;
 
 	// --------------------------------------------------------------------------
 	//
@@ -60,7 +60,7 @@ public class AlKhwarizmixServiceTest {
 		Mockito.doCallRealMethod()
 				.when(mockAlKhwarizmixService)
 				.nullifyProtectedProperties(
-						any(AlKhwarizmixDomainObjectAbstract.class));
+						any(AbstractAlKhwarizmixDomainObject.class));
 		mockAlKhwarizmixService
 				.nullifyProtectedProperties(mockAlKhwarizmixDomainObjectAbstract); // TEST
 		verify(mockAlKhwarizmixDomainObjectAbstract, times(1)).setId(null);
@@ -72,7 +72,7 @@ public class AlKhwarizmixServiceTest {
 			throws AlKhwarizmixException {
 		when(
 				mockAlKhwarizmixService
-						.getObjectAsXML(any(AlKhwarizmixDomainObjectAbstract.class)))
+						.getObjectAsXML(any(AbstractAlKhwarizmixDomainObject.class)))
 				.thenCallRealMethod();
 		when(
 				mockAlKhwarizmixService
@@ -89,7 +89,7 @@ public class AlKhwarizmixServiceTest {
 		Mockito.doCallRealMethod()
 				.when(mockAlKhwarizmixService)
 				.nullifyProtectedProperties(
-						any(AlKhwarizmixDomainObjectAbstract.class));
+						any(AbstractAlKhwarizmixDomainObject.class));
 		mockAlKhwarizmixService.nullifyProtectedProperties(null); // TEST
 	}
 

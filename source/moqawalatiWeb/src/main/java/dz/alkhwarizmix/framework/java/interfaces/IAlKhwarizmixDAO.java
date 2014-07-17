@@ -16,7 +16,7 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 
 import dz.alkhwarizmix.framework.java.dao.AlKhwarizmixDAOException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -30,13 +30,13 @@ public interface IAlKhwarizmixDAO {
 
 	/**
 	 */
-	public void saveOrUpdate(AlKhwarizmixDomainObjectAbstract object)
+	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException;
 
 	/**
 	 */
-	public AlKhwarizmixDomainObjectAbstract get(
-			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
+	public AbstractAlKhwarizmixDomainObject get(
+			Class<? extends AbstractAlKhwarizmixDomainObject> clazz, Long id)
 			throws AlKhwarizmixDAOException;
 
 	/**
@@ -44,18 +44,18 @@ public interface IAlKhwarizmixDAO {
 	public List getList(DetachedCriteria criteria, int firstResult,
 			int maxResult) throws AlKhwarizmixDAOException;
 
-	public AlKhwarizmixDomainObjectAbstract load(
-			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
+	public AbstractAlKhwarizmixDomainObject load(
+			Class<? extends AbstractAlKhwarizmixDomainObject> clazz, Long id)
 			throws AlKhwarizmixDAOException;
 
 	/**
 	 */
-	public void merge(AlKhwarizmixDomainObjectAbstract object)
+	public void merge(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException;
 
 	/**
 	 */
-	public void delete(AlKhwarizmixDomainObjectAbstract object)
+	public void delete(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException;
 
 	/**

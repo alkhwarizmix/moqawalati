@@ -27,7 +27,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -39,7 +39,7 @@ import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
  */
 @Entity
 @Table(name = "TExtendedDataPart")
-public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
+public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 		implements Serializable {
 
 	// --------------------------------------------------------------------------
@@ -85,6 +85,12 @@ public class ExtendedDataPart extends AlKhwarizmixDomainObjectAbstract
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
+	}
 
 	/**
 	 */
