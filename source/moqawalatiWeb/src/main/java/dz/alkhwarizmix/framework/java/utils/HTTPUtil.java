@@ -38,6 +38,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
@@ -50,6 +52,25 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public class HTTPUtil {
+
+	// --------------------------------------------------------------------------
+	//
+	// Logger
+	//
+	// --------------------------------------------------------------------------
+
+	private static final Logger LOG = LoggerFactory.getLogger(HTTPUtil.class);
+
+	Logger getLogger() {
+		return LOG;
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Methods
+	//
+	// --------------------------------------------------------------------------
+
 	/**
 	 * Sends an HTTP GET request to a url
 	 * 
@@ -62,7 +83,9 @@ public class HTTPUtil {
 	 *            question mark (?) to the request - DO NOT add it yourself
 	 * @return - The response from the end point
 	 */
-	public final String sendGetRequest(String endpoint, String requestParameters) {
+	protected final String sendGetRequest(String endpoint,
+			String requestParameters) {
+
 		String result = null;
 		if (endpoint.startsWith("http://")) {
 			// Send a GET request to the servlet
@@ -99,8 +122,9 @@ public class HTTPUtil {
 	 * 
 	 * @throws Exception
 	 */
-	public final void postData(Reader data, String endpoint, Writer output)
+	protected final void postData(Reader data, String endpoint, Writer output)
 			throws AlKhwarizmixException {
+
 		HttpURLConnection urlc = null;
 		try {
 			URL url = new URL(endpoint);
@@ -170,8 +194,9 @@ public class HTTPUtil {
 
 	/**
 	 */
-	public final void sendGetRequest(String url, HttpClient httpclient)
+	protected final void sendGetRequest(String url, HttpClient httpclient)
 			throws AlKhwarizmixException {
+
 		boolean disposeHttpclient = false;
 		if (httpclient == null) {
 			httpclient = new DefaultHttpClient();
@@ -184,19 +209,19 @@ public class HTTPUtil {
 			HttpResponse response = httpclient.execute(httpget);
 			HttpEntity entity = response.getEntity();
 
-			System.out.println("Login form get: " + response.getStatusLine());
+			getLogger().trace("Login form get: " + response.getStatusLine());
 			EntityUtils.consume(entity);
 
-			System.out.println("Initial set of cookies:");
+			getLogger().trace("Initial set of cookies:");
 			DefaultHttpClient defaultHttpClient = (DefaultHttpClient) httpclient;
 			if (defaultHttpClient != null) {
 				List<Cookie> cookies = defaultHttpClient.getCookieStore()
 						.getCookies();
 				if (cookies.isEmpty()) {
-					System.out.println("None");
+					getLogger().trace("None");
 				} else {
 					for (int i = 0; i < cookies.size(); i++) {
-						System.out.println("- " + cookies.get(i).toString());
+						getLogger().trace("- " + cookies.get(i).toString());
 					}
 				}
 			}
@@ -204,9 +229,9 @@ public class HTTPUtil {
 			// Create a response handler
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String responseBody = httpclient.execute(httpget, responseHandler);
-			System.out.println("----------------------------------------");
-			System.out.println(responseBody);
-			System.out.println("----------------------------------------");
+			getLogger().trace("----------------------------------------");
+			getLogger().trace(responseBody);
+			getLogger().trace("----------------------------------------");
 		} catch (Exception e) {
 			throw new AlKhwarizmixException(e.getMessage());
 		} finally {
@@ -220,8 +245,9 @@ public class HTTPUtil {
 
 	/**
 	 */
-	public final void sendPostRequest(String url, List<NameValuePair> nvps,
+	protected final void sendPostRequest(String url, List<NameValuePair> nvps,
 			HttpClient httpclient) throws AlKhwarizmixException {
+
 		boolean disposeHttpclient = false;
 		if (httpclient == null) {
 			httpclient = new DefaultHttpClient();
@@ -236,21 +262,22 @@ public class HTTPUtil {
 			HttpResponse response = httpclient.execute(httpost);
 			HttpEntity entity = response.getEntity();
 
-			System.out.println("Header Local: " + response.getHeaders("Local"));
+			getLogger()
+					.trace("Header Local: {0}", response.getHeaders("Local"));
 
-			System.out.println("Login form get: " + response.getStatusLine());
+			getLogger().trace("Login form get: " + response.getStatusLine());
 			EntityUtils.consume(entity);
 
-			System.out.println("Post logon cookies:");
+			getLogger().trace("Post logon cookies:");
 			DefaultHttpClient defaultHttpClient = (DefaultHttpClient) httpclient;
 			if (defaultHttpClient != null) {
 				List<Cookie> cookies = defaultHttpClient.getCookieStore()
 						.getCookies();
 				if (cookies.isEmpty()) {
-					System.out.println("None");
+					getLogger().trace("None");
 				} else {
 					for (int i = 0; i < cookies.size(); i++) {
-						System.out.println("- " + cookies.get(i).toString());
+						getLogger().trace("- " + cookies.get(i).toString());
 					}
 				}
 			}
@@ -260,9 +287,9 @@ public class HTTPUtil {
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String responseBody = httpclient.execute(httpost,
 						responseHandler);
-				System.out.println("----------------------------------------");
-				System.out.println(responseBody);
-				System.out.println("----------------------------------------");
+				getLogger().trace("----------------------------------------");
+				getLogger().trace(responseBody);
+				getLogger().trace("----------------------------------------");
 			}
 		} catch (Exception e) {
 			throw new AlKhwarizmixException(e.getMessage());

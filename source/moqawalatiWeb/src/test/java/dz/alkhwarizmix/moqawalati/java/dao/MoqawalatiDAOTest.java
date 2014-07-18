@@ -21,10 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
@@ -41,6 +37,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 @ContextConfiguration
 // (value = "MoqawalatiDAOTest-context.xml")
 @Transactional
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class MoqawalatiDAOTest {
 
 	// --------------------------------------------------------------------------
@@ -49,24 +46,8 @@ public class MoqawalatiDAOTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final String CUSTOM_DATA_ID = "dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAOTest";
-
 	@Autowired
 	private IMoqawalatiDAO utMoqawalatiDAO;
-
-	// --------------------------------------------------------------------------
-	//
-	// Helpers
-	//
-	// --------------------------------------------------------------------------
-
-	private User newUser() {
-		User user = new User();
-		user.setUserId("userId");
-		user.setName("userName");
-		user.setCreatorId("creatorId");
-		return user;
-	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -74,77 +55,9 @@ public class MoqawalatiDAOTest {
 	//
 	// --------------------------------------------------------------------------
 
-	// ----- -----
-
 	@Test
-	public void test01_add_get_then_update_get_CustomData()
-			throws AlKhwarizmixException {
-
-		AlKhwarizmixDomainObject customizer = new AlKhwarizmixDomainObject();
-
-		addCustomData(customizer, "123456789A_ADD");
-		CustomData customDataToGet = getCustomData(customizer);
-		Assert.assertEquals("123456789A_ADD",
-				customDataToGet.getCustomDataValue());
-
-		updateCustomData(customDataToGet, "123456789A_UPDATE");
-		customDataToGet = getCustomData(customizer);
-		Assert.assertEquals("123456789A_UPDATE",
-				customDataToGet.getCustomDataValue());
+	public void test00_constructor() throws AlKhwarizmixException {
+		Assert.assertNotNull(utMoqawalatiDAO);
 	}
-
-	private CustomData addCustomData(AlKhwarizmixDomainObject customizer,
-			String value) throws AlKhwarizmixException {
-
-		CustomData customDataToAdd = new CustomData();
-		customDataToAdd.setCustomizer(customizer);
-		customDataToAdd.setCustomDataId(CUSTOM_DATA_ID);
-		customDataToAdd.setCustomDataValue(value);
-		utMoqawalatiDAO.saveOrUpdate(customDataToAdd);
-		return customDataToAdd;
-	}
-
-	private CustomData getCustomData(AlKhwarizmixDomainObject customizer)
-			throws MoqawalatiException {
-
-		CustomData customDataToGet = new CustomData();
-		customDataToGet.setCustomizer(customizer);
-		customDataToGet.setCustomDataId(CUSTOM_DATA_ID);
-		customDataToGet = utMoqawalatiDAO.getCustomData(customDataToGet);
-		return customDataToGet;
-	}
-
-	private CustomData updateCustomData(CustomData customDataToUpdate,
-			String value) throws AlKhwarizmixException {
-
-		customDataToUpdate.setCustomDataValue(value);
-		utMoqawalatiDAO.saveOrUpdate(customDataToUpdate);
-		return customDataToUpdate;
-	}
-
-	// ----- -----
-
-	@Test
-	public void test02_add_get_then_update_get_User()
-			throws AlKhwarizmixException {
-
-		Assert.assertNull(utMoqawalatiDAO.getUser(newUser()));
-
-		utMoqawalatiDAO.saveOrUpdate(newUser());
-
-		User savedUser = utMoqawalatiDAO.getUser(newUser());
-		Assert.assertNotNull(savedUser);
-		Assert.assertEquals(newUser().getUserId(), savedUser.getUserId());
-		Assert.assertEquals(newUser().getName(), savedUser.getName());
-		Assert.assertNotNull(savedUser.getDomainObject());
-
-		savedUser.setName("updatedName");
-		utMoqawalatiDAO.saveOrUpdate(savedUser);
-
-		savedUser = utMoqawalatiDAO.getUser(newUser());
-		Assert.assertEquals("updatedName", savedUser.getName());
-	}
-
-	// ----- -----
-
+	
 } // Class

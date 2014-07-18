@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
 //
-//  Fares Belhaouas
-//  Copyright 2011 Fares Belhaouas
-//  All Rights Reserved.
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
@@ -22,11 +22,14 @@ import org.springframework.validation.Errors;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public class AlKhwarizmixException extends Exception {
+
 	private static final long serialVersionUID = 3434782654593101683L;
 
 	// private Order order;
 	private AlKhwarizmixErrorCode errorCode;
+
 	private Errors validationErrors;
+
 	private boolean recoverable;
 
 	/**
@@ -47,7 +50,7 @@ public class AlKhwarizmixException extends Exception {
 	 * @param nested
 	 *            {@link Exception} the exception's cause
 	 */
-	public AlKhwarizmixException(String message, Exception nested) {
+	public AlKhwarizmixException(final String message, final Exception nested) {
 		super(message, nested);
 	}
 
@@ -61,8 +64,8 @@ public class AlKhwarizmixException extends Exception {
 	 * @param nested
 	 *            {@link Throwable} the exception's cause
 	 */
-	public AlKhwarizmixException(String message,
-			AlKhwarizmixErrorCode errorCode, Throwable nested) {
+	public AlKhwarizmixException(final String message,
+			final AlKhwarizmixErrorCode errorCode, final Throwable nested) {
 		super(message, nested);
 		setErrorCode(errorCode);
 	}
@@ -75,7 +78,8 @@ public class AlKhwarizmixException extends Exception {
 	 * @param errorCode
 	 *            {@link AlKhwarizmixErrorCode} the code for the exception
 	 */
-	public AlKhwarizmixException(String message, AlKhwarizmixErrorCode errorCode) {
+	public AlKhwarizmixException(final String message,
+			final AlKhwarizmixErrorCode errorCode) {
 		super(message);
 		setErrorCode(errorCode);
 	}
@@ -139,7 +143,7 @@ public class AlKhwarizmixException extends Exception {
 	/**
 	 * set the errorCode param value {@link AlKhwarizmixErrorCode} the errorCode
 	 */
-	public void setErrorCode(AlKhwarizmixErrorCode value) {
+	public void setErrorCode(final AlKhwarizmixErrorCode value) {
 		this.errorCode = value;
 	}
 

@@ -14,7 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.clientModule.controller
 
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSimpleCommand;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
-import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModule;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModuleConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.model.ClientProxy;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.view.ClientListMediator;
@@ -46,7 +46,7 @@ public class ClientModuleStartupCommand extends MoqawalatiSimpleCommand
 	 */
 	override protected function execute_try(notif:INotification):void	
 	{
-		var app:ClientModule = notif.getBody() as ClientModule;
+		var app:IMoqawalatiModule = notif.getBody() as IMoqawalatiModule;
 		
 		// REGISTER PROXIES FIRST
 		registerProxies(app);
@@ -67,7 +67,7 @@ public class ClientModuleStartupCommand extends MoqawalatiSimpleCommand
 	/**
 	 * TODO: ASDOC Definition of registerMediators
 	 */
-	private function registerMediators(app:ClientModule):void
+	private function registerMediators(app:IMoqawalatiModule):void
 	{
 		facade.registerMediator(new ClientListMediator(app.dataListCanvas));
 	}
@@ -75,7 +75,7 @@ public class ClientModuleStartupCommand extends MoqawalatiSimpleCommand
 	/**
 	 * TODO: ASDOC Definition of registerProxies
 	 */
-	private function registerProxies(app:ClientModule):void
+	private function registerProxies(app:IMoqawalatiModule):void
 	{
 		// ApplicationSpringContextProxy
 		// facade.registerProxy(new ApplicationSpringContextProxy(

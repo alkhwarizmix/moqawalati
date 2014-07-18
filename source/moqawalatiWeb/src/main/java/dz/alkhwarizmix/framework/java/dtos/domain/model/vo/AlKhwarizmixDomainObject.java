@@ -21,8 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -36,7 +35,7 @@ import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 @Table(name = "TAlKhwarizmixDomainObject")
 @XmlRootElement(name = "AlKhwarizmixDomainObject")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class AlKhwarizmixDomainObject extends AlKhwarizmixDomainObjectAbstract
+public class AlKhwarizmixDomainObject extends AbstractAlKhwarizmixDomainObject
 		implements Serializable {
 
 	// --------------------------------------------------------------------------
@@ -46,6 +45,8 @@ public class AlKhwarizmixDomainObject extends AlKhwarizmixDomainObjectAbstract
 	// --------------------------------------------------------------------------
 
 	private static final long serialVersionUID = 2895852789900643357L;
+
+	public static final String CREATORID = "creatorId";
 
 	// --------------------------------------------------------------------------
 	//
@@ -76,13 +77,19 @@ public class AlKhwarizmixDomainObject extends AlKhwarizmixDomainObjectAbstract
 
 	/**
 	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
+	}
+
+	/**
+	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		AlKhwarizmixDomainObject domainObject = (AlKhwarizmixDomainObject) sourceObject;
-		if ((domainObject != null)
-				&& (this.getId().equals(domainObject.getId()))) {
+		AlKhwarizmixDomainObject domObj = (AlKhwarizmixDomainObject) sourceObject;
+		if (domObj != null && getId().equals(domObj.getId())) {
 			// NOOP
 		} else {
-			throw new MoqawalatiException(
+			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
 		}
 	}

@@ -27,6 +27,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٩ جمادى الأول ١٤٣٥ (March 29, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class AlKhwarizmixDAOExceptionTest {
 
 	// --------------------------------------------------------------------------

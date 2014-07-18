@@ -39,17 +39,16 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiPureMVCTestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
 		super.setUp();
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
-		super.tearDown();
 		removeFacadeCore(classUnderTestConstructorArg1);
+		
+		super.tearDown();
 	}
 	
 	override protected function get classUnderTest():Class

@@ -23,13 +23,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 
 /**
  * <p>
@@ -78,7 +78,7 @@ public class ClientService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IMoqawalatiDAO moqawalatiDAO;
+	private IClientDAO clientDAO;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -97,6 +97,7 @@ public class ClientService extends AlKhwarizmixService implements
 		getLogger().trace("addClient");
 
 		try {
+			setupObjectExtendedDataXMLValue(client);
 			addObject(client);
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -113,7 +114,7 @@ public class ClientService extends AlKhwarizmixService implements
 
 		try {
 			Client newClient = (Client) unmarshalObjectFromXML(clientAsXML);
-			newClient.setCreatorId(creatorId);
+			// newClient.setCreatorId(creatorId);
 			addClient(newClient);
 			String result = marshalObjectToXML(newClient);
 			return result;
@@ -125,13 +126,14 @@ public class ClientService extends AlKhwarizmixService implements
 	/**
 	 */
 	@Override
-	public AlKhwarizmixDomainObjectAbstract getObject(
-			AlKhwarizmixDomainObjectAbstract object)
+	public AbstractAlKhwarizmixDomainObject getObject(
+			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 
 		try {
-			Client result = getMoqawalatiDAO().getClient((Client) object);
+			Client result = getClientDAO().getClient((Client) object);
+			updateObjectFromExtendedDataXML(result);
 			nullifyProtectedProperties(result);
 			return result;
 		} catch (AlKhwarizmixException e) {
@@ -189,6 +191,7 @@ public class ClientService extends AlKhwarizmixService implements
 		getLogger().trace("updateClient");
 
 		try {
+			setupObjectExtendedDataXMLValue(client);
 			Client result = (Client) updateObject(client);
 			return result;
 		} catch (AlKhwarizmixException e) {
@@ -206,7 +209,7 @@ public class ClientService extends AlKhwarizmixService implements
 
 		try {
 			Client newClient = (Client) unmarshalObjectFromXML(clientAsXML);
-			newClient.setCreatorId(updaterId);
+			// newClient.setCreatorId(updaterId);
 			Client updatedClient = updateClient(newClient);
 			String result = marshalObjectToXML(updatedClient);
 			return result;
@@ -219,18 +222,18 @@ public class ClientService extends AlKhwarizmixService implements
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Client> getClientList(DetachedCriteria criteria,
+	public List<Client> getClientList(DetachedCriteria criteriaToUse,
 			int firstResult, int maxResult) throws MoqawalatiException {
 		getLogger().trace("getClientList");
 
-		if (criteria == null) {
-			criteria = DetachedCriteria.forClass(Client.class);
-			criteria.addOrder(Order.asc(Client.CLIENTID));
+		if (criteriaToUse == null) {
+			criteriaToUse = DetachedCriteria.forClass(Client.class);
+			criteriaToUse.addOrder(Order.asc(Client.CLIENTID));
 		}
 
 		try {
 			List<Client> result = (List<Client>) (List<?>) getObjectList(
-					criteria, firstResult, maxResult);
+					criteriaToUse, firstResult, maxResult);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -266,7 +269,7 @@ public class ClientService extends AlKhwarizmixService implements
 	private String clientListToJSON(List<Client> clientList) {
 
 		String result = "{\"Clients\": {";
-		result += objectListToJSON((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
+		result += objectListToJSON((List<AbstractAlKhwarizmixDomainObject>) (List<?>) clientList);
 		result += "}}";
 
 		getLogger().trace("clientListToXML(): returns {}", result);
@@ -279,7 +282,7 @@ public class ClientService extends AlKhwarizmixService implements
 	private String clientListToXML(List<Client> clientList) {
 
 		String result = "<Clients>";
-		result += objectListToXML((List<AlKhwarizmixDomainObjectAbstract>) (List<?>) clientList);
+		result += objectListToXML((List<AbstractAlKhwarizmixDomainObject>) (List<?>) clientList);
 		result += "</Clients>";
 
 		getLogger().trace("clientListToXML(): returns {}", result);
@@ -293,20 +296,20 @@ public class ClientService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// moqawalatiDAO
+	// clientDAO
 	// ----------------------------------
 
-	protected IMoqawalatiDAO getMoqawalatiDAO() {
-		return moqawalatiDAO;
+	final IClientDAO getClientDAO() {
+		return clientDAO;
 	}
 
-	protected void setMoqawalatiDAO(IMoqawalatiDAO value) {
-		moqawalatiDAO = value;
+	final void setClientDAO(IClientDAO value) {
+		clientDAO = value;
 	}
 
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
-		return moqawalatiDAO;
+		return clientDAO;
 	}
 
 	// ----------------------------------

@@ -15,6 +15,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.clientModule
 import dz.alkhwarizmix.moqawalati.flex.modules.MoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.facade.ClientModuleFacade;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.view.components.ClientListCanvas;
+import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvas;
 
 /**
  *  <p>
@@ -45,20 +46,27 @@ public class ClientModule extends MoqawalatiModule
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Variables
-	//
-	//--------------------------------------------------------------------------
-	
-	/**
-	 * TODO: ASDOC Definition of dataListCanvas
-	 */
-	public var dataListCanvas:ClientListCanvas = null;
-	
-	//--------------------------------------------------------------------------
-	//
 	//  Overriden properties
 	//
 	//--------------------------------------------------------------------------
+	
+	//----------------------------------
+	//  dataListCanvas
+	//----------------------------------
+	
+	private var _dataListCanvas:ClientListCanvas = null;
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get dataListCanvas():MoqawalatiDataListCanvas
+	{
+		return _dataListCanvas;
+	}
+	
+	//----------------------------------
+	//  initialized
+	//----------------------------------
 	
 	/**
 	 *  @inheritDoc
@@ -70,6 +78,10 @@ public class ClientModule extends MoqawalatiModule
 		if (initialized)
 			facadeStartup();
 	}
+	
+	//----------------------------------
+	//  facadeName
+	//----------------------------------
 	
 	/**
 	 *  @inheritDoc
@@ -123,12 +135,12 @@ public class ClientModule extends MoqawalatiModule
 	 */
 	private function createListCanvas():void
 	{
-		if (dataListCanvas == null)
+		if (_dataListCanvas == null)
 		{
-			dataListCanvas = new ClientListCanvas();
-			dataListCanvas.percentWidth = 100;
-			dataListCanvas.percentHeight = 100;
-			addElement(dataListCanvas);
+			_dataListCanvas = new ClientListCanvas();
+			_dataListCanvas.percentWidth = 100;
+			_dataListCanvas.percentHeight = 100;
+			addElement(_dataListCanvas);
 		}
 	}
 	

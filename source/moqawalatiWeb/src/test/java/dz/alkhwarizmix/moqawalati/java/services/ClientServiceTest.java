@@ -29,11 +29,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAO;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**
@@ -45,6 +45,7 @@ import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
  * @since ٠٨ ذو الحجة ١٤٣٤ (October 12, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class ClientServiceTest {
 
 	// --------------------------------------------------------------------------
@@ -57,7 +58,7 @@ public class ClientServiceTest {
 	private ClientService utClientService;
 
 	@Mock
-	private MoqawalatiDAO mockMoqawalatiDAO;
+	private IClientDAO mockClientDAO;
 
 	@Mock
 	private Jaxb2Marshaller mockJaxb2Marshaller;
@@ -69,7 +70,7 @@ public class ClientServiceTest {
 	}
 
 	private void setupUtClientService() {
-		utClientService.setMoqawalatiDAO(mockMoqawalatiDAO);
+		utClientService.setClientDAO(mockClientDAO);
 		utClientService.setJaxb2Marshaller(mockJaxb2Marshaller);
 	}
 
@@ -116,15 +117,15 @@ public class ClientServiceTest {
 	public void testA03_addClient_calls_dao_saveOrUpdate()
 			throws AlKhwarizmixException {
 		utClientService.addClient(new Client()); // TEST
-		verify(mockMoqawalatiDAO, times(1)).saveOrUpdate(
-				any(AlKhwarizmixDomainObjectAbstract.class));
+		verify(mockClientDAO, times(1)).saveOrUpdate(
+				any(AbstractAlKhwarizmixDomainObject.class));
 	}
 
 	@Test
 	public void testA04_getObject_should_call_dao_getUser()
 			throws AlKhwarizmixException {
 		utClientService.getObject(new Client()); // TEST
-		verify(mockMoqawalatiDAO, times(1)).getClient(any(Client.class));
+		verify(mockClientDAO, times(1)).getClient(any(Client.class));
 	}
 
 	@Test
@@ -132,8 +133,8 @@ public class ClientServiceTest {
 			throws MoqawalatiException {
 		Client expectedClient = new Client();
 		expectedClient.setId(324L);
-		Mockito.when(mockMoqawalatiDAO.getClient(any(Client.class)))
-				.thenReturn(expectedClient);
+		Mockito.when(mockClientDAO.getClient(any(Client.class))).thenReturn(
+				expectedClient);
 		Client foundClient = utClientService.getClient(new Client()); // TEST
 		Assert.assertNull(foundClient.getId());
 	}

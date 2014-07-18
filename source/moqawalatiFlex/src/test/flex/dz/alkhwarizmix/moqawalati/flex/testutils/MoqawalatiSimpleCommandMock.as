@@ -55,4 +55,3 @@ public class MoqawalatiSimpleCommandMock extends MoqawalatiSimpleCommand
 	
 } // class
 } // package
-

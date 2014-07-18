@@ -32,21 +32,24 @@ public class MoqawalatiLabelTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before(async, ui)]
-	override public function setUp():void
+	override protected function setUpAyncUI():void
 	{
-		super.setUp();
+		// NOOP
 	}
 	
-	[After(ui)]
-	override public function tearDown():void
+	override protected function tearDownUI():void
 	{
-		super.tearDown();
+		// NOOP
 	}
 	
 	override protected function get classUnderTest():Class
 	{
 		return MoqawalatiLabel;
+	}
+	
+	private function get moqawalatiLabel():MoqawalatiLabel
+	{
+		return classInstanceUnderTest as MoqawalatiLabel;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -58,7 +61,7 @@ public class MoqawalatiLabelTestCase extends MoqawalatiUITestCase
 	[Test]
 	public function test01_constructor():void
 	{
-		assertNotNull(classInstanceUnderTest);
+		assertNotNull(moqawalatiLabel);
 	}
 	
 } // class

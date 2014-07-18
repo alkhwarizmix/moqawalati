@@ -21,7 +21,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.domain.AlKhwarizmixDomainObjectAbstract;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 
 /**
@@ -52,7 +52,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 
 	/**
 	 */
-	public void saveOrUpdate(AlKhwarizmixDomainObjectAbstract object)
+	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
 
@@ -105,8 +105,8 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public final AlKhwarizmixDomainObjectAbstract get(
-			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
+	public final AbstractAlKhwarizmixDomainObject get(
+			Class<? extends AbstractAlKhwarizmixDomainObject> clazz, Long id)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("get({}, {})", clazz.getSimpleName(), id);
 
@@ -135,13 +135,13 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public final AlKhwarizmixDomainObjectAbstract load(
-			Class<? extends AlKhwarizmixDomainObjectAbstract> clazz, Long id)
+	public final AbstractAlKhwarizmixDomainObject load(
+			Class<? extends AbstractAlKhwarizmixDomainObject> clazz, Long id)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("load({}, {})", clazz.getSimpleName(), id);
 
 		try {
-			AlKhwarizmixDomainObjectAbstract result = get(clazz, id);
+			AbstractAlKhwarizmixDomainObject result = get(clazz, id);
 
 			if (result == null) {
 				AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
@@ -160,7 +160,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public final void merge(AlKhwarizmixDomainObjectAbstract object)
+	public final void merge(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("merge({})", object);
 
@@ -181,7 +181,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public final void delete(AlKhwarizmixDomainObjectAbstract object)
+	public final void delete(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("delete({})", object);
 
@@ -190,6 +190,22 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 		} catch (DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
+	}
+
+	/**
+	 */
+	@Override
+	public final void clear() throws AlKhwarizmixDAOException {
+		getLogger().trace("clear()");
+		getHibernateTemplate().clear();
+	}
+
+	/**
+	 */
+	@Override
+	public final void flush() throws AlKhwarizmixDAOException {
+		getLogger().trace("flush()");
+		getHibernateTemplate().flush();
 	}
 
 	/**

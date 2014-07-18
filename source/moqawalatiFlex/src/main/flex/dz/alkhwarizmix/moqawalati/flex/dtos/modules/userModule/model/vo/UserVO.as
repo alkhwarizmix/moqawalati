@@ -23,7 +23,7 @@ import dz.alkhwarizmix.moqawalati.flex.model.vo.MoqawalatiVO;
  *  @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 [Bindable]
-[RemoteClass(alias="dz.alkhwarizmix.moqawalati.java.dtos.modules.userModule.model.vo.User")]
+[RemoteClass(alias="dz.alkhwarizmix.framework.java.dtos.user.model.vo.User")]
 public class UserVO extends MoqawalatiVO
 {
 	//--------------------------------------------------------------------------

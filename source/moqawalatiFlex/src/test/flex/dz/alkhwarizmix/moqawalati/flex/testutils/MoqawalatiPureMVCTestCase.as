@@ -38,23 +38,17 @@ public class MoqawalatiPureMVCTestCase extends MoqawalatiTestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
-		super.setUp();
-		
 		MoqawalatiSimpleCommandMock.init();
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
 		if (Facade.hasCore(MoqawalatiConstants.FACADE_NAME))
 			removeFacadeCore(MoqawalatiConstants.FACADE_NAME);
 		if (Facade.hasCore(TEST_FACADE_NAME))
 			removeFacadeCore(TEST_FACADE_NAME);
-		
-		super.tearDown();
 	}
 	
 	//--------------------------------------------------------------------------

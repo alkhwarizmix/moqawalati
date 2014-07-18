@@ -13,7 +13,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.clientModule.facade
 {
 
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacade;
-import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModule;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModuleConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.controller.ClientGetListCommand;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.controller.ClientModuleStartupCommand;
@@ -87,7 +87,7 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	/**
 	 * shutdown Method TO_ASDoc_DO:
 	 */
-	public function shutdown(app:ClientModule):void
+	public function shutdown(app:IMoqawalatiModule):void
 	{
 		sendNotification(ClientModuleConstants.STARTUP, app);
 	}
@@ -97,7 +97,7 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	 * 
 	 * @param app a reference to the application component 
 	 */  
-	public function startup(app:ClientModule):void
+	public function startup(app:IMoqawalatiModule):void
 	{
 		logger.debug("startup");
 		

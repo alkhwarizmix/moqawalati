@@ -43,7 +43,7 @@
 		import mx.events.FlexEvent;
 		import mx.events.MenuEvent;
 		import mx.events.PropertyChangeEvent;
-
+		
 		//--------------------------------------------------------------------------
 		//
 		//  Methods
@@ -84,7 +84,7 @@
 	]]>
 	</fx:Script>
 	
-	<mx:MenuBar id="menuBar"
+	<controls:MoqawalatiMenuBar id="menuBar"
 		cornerRadius="10"
 		labelField="@label"
 		dataProvider="{menuList}"

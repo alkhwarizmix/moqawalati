@@ -32,21 +32,24 @@ public class MoqawalatiHBoxTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before(async, ui)]
-	override public function setUp():void
+	override protected function setUpAyncUI():void
 	{
-		super.setUp();
+		// NOOP
 	}
 	
-	[After(ui)]
-	override public function tearDown():void
+	override protected function tearDownUI():void
 	{
-		super.tearDown();
+		// NOOP
 	}
 	
 	override protected function get classUnderTest():Class
 	{
 		return MoqawalatiHBox;
+	}
+	
+	private function get moqawalatiHBox():MoqawalatiHBox
+	{
+		return classInstanceUnderTest as MoqawalatiHBox;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -58,7 +61,13 @@ public class MoqawalatiHBoxTestCase extends MoqawalatiUITestCase
 	[Test]
 	public function test01_constructor():void
 	{
-		assertNotNull(classInstanceUnderTest);
+		assertNotNull(moqawalatiHBox);
+	}
+	
+	[Test]
+	public function test02_resourceBundleName():void
+	{
+		// assertEquals("MoqawalatiFlex", moqawalatiHBox.resourceBundleName);
 	}
 	
 } // class

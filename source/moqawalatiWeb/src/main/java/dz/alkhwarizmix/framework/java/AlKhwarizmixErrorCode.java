@@ -25,11 +25,14 @@ import org.springframework.http.HttpStatus;
 public enum AlKhwarizmixErrorCode {
 
 	ERROR_DATABASE(10500, "Database error", HttpStatus.INTERNAL_SERVER_ERROR),
-	INVALID_DATA(20500, "Invalid Data", HttpStatus.INTERNAL_SERVER_ERROR),
-	UPDATE_DATA_ERROR(30500, "Cannot update data", HttpStatus.INTERNAL_SERVER_ERROR),
 
-	ERROR_XML_PARSING(10400, "Xml parsing error", HttpStatus.BAD_REQUEST),
-	ERROR_JSON_PARSING(20400, "Json parsing error", HttpStatus.BAD_REQUEST),
+	INVALID_DATA(20500, "Invalid Data", HttpStatus.INTERNAL_SERVER_ERROR),
+
+	UPDATE_DATA_ERROR(30500, "Cannot update data",
+			HttpStatus.INTERNAL_SERVER_ERROR),
+
+	ERROR_XML_PARSING(10400, "Xml parsing error", HttpStatus.BAD_REQUEST), ERROR_JSON_PARSING(
+			20400, "Json parsing error", HttpStatus.BAD_REQUEST),
 
 	ERROR_LOGIN(10406, "Login error", HttpStatus.NOT_ACCEPTABLE);
 
@@ -45,9 +48,9 @@ public enum AlKhwarizmixErrorCode {
 	 * @param description
 	 *            {@link String} the error default description
 	 */
-	private AlKhwarizmixErrorCode(int id, String description,
-			HttpStatus httpStatus) {
-		this.id = id;
+	private AlKhwarizmixErrorCode(final int theId, final String description,
+			final HttpStatus httpStatus) {
+		this.id = theId;
 		this.description = description;
 		this.httpStatus = httpStatus;
 	}
@@ -55,19 +58,20 @@ public enum AlKhwarizmixErrorCode {
 	/**
 	 * get an errorCode using it's id
 	 * 
-	 * @param id
+	 * @param errorId
 	 *            {@link Integer} the error code id
 	 * @return {@link ErrorCode}
 	 */
-	public static AlKhwarizmixErrorCode getErrorCode(int id) {
-		AlKhwarizmixErrorCode[] errorCodes = values();
+	public static AlKhwarizmixErrorCode getErrorCode(final int errorId) {
+		AlKhwarizmixErrorCode result = null;
+		final AlKhwarizmixErrorCode[] errorCodes = values();
 
 		for (int i = 0; i < errorCodes.length; i++) {
-			if (errorCodes[i].id == id) {
-				return errorCodes[i];
+			if (errorCodes[i].id == errorId) {
+				result = errorCodes[i];
 			}
 		}
-		return null;
+		return result;
 	}
 
 	/**

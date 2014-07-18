@@ -36,16 +36,14 @@ public class MoqawalatiLoginUserProxyTestCase extends MoqawalatiPureMVCTestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
 		super.setUp();
 		
 		moqawalatiMainFacade.registerProxy(moqawalatiLoginUserProxy);
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
 		moqawalatiMainFacade.removeProxy(
 			moqawalatiLoginUserProxy.getProxyName());

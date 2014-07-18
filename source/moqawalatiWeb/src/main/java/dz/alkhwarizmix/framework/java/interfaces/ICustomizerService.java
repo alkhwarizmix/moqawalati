@@ -11,8 +11,8 @@
 
 package dz.alkhwarizmix.framework.java.interfaces;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 
 /**
  * <p>
@@ -26,26 +26,26 @@ public interface ICustomizerService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public void setCustomData(CustomData customData) throws MoqawalatiException;
+	public void setCustomData(CustomData customData) throws AlKhwarizmixException;
 
 	/**
 	 */
 	public String setCustomDataFromXML(String customDataXml)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
 	/**
 	 */
 	public CustomData getCustomData(CustomData customData)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
 	/**
 	 */
 	public String getCustomDataAsXML(CustomData customData)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
 	/**
 	 */
 	public String getCustomDataAsXML(String partialXml)
-			throws MoqawalatiException;
+			throws AlKhwarizmixException;
 
 } // Class

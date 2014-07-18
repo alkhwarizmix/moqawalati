@@ -14,10 +14,12 @@ package dz.alkhwarizmix.moqawalati.flex.modules
 
 import flash.net.registerClassAlias;
 
+import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.modules.AlKhwarizmixModule;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
+import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvas;
 
 /**
  *  <p>
@@ -57,6 +59,22 @@ public class MoqawalatiModule extends AlKhwarizmixModule
 		getLogger(MoqawalatiModule);
 	
 	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Properties
+	//
+	//--------------------------------------------------------------------------
+	
+	//----------------------------------
+	//  dataListCanvas
+	//----------------------------------
+	
+	public function get dataListCanvas():MoqawalatiDataListCanvas
+	{
+		throw new AlKhwarizmixMissingImplError();
+		return null;
+	}
 	
 } // class
 } // package

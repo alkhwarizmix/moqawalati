@@ -16,9 +16,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -27,8 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
+import dz.alkhwarizmix.moqawalati.java.model.vo.AbstractMoqawalatiDomainObject;
 
 /**
  * <p>
@@ -42,7 +42,8 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.MoqawalatiDomainObject;
 @Table(name = "TClient")
 @XmlRootElement(name = "Client")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Client extends MoqawalatiDomainObject implements Serializable {
+public class Client extends AbstractMoqawalatiDomainObject implements
+		Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -76,6 +77,15 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 		setClientId(theClientId);
 	}
 
+	/**
+	 * constructor
+	 */
+	public Client(String theClientId, String theName) {
+		super();
+		setClientId(theClientId);
+		setName(theName);
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Properties
@@ -88,8 +98,7 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	@Column(name = "name", nullable = false, length = 127)
 	private String name;
 
-	@ManyToOne
-	@JoinColumn(name = "address")
+	@Transient
 	private Address address;
 
 	// --------------------------------------------------------------------------
@@ -97,6 +106,12 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
+	}
 
 	/**
 	 */
@@ -108,10 +123,9 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		Client sourceClient = (Client) sourceObject;
-		if ((sourceClient != null)
-				&& (this.getClientId().equals(sourceClient.getClientId()))
-				&& (this.getCreatorId().equals(sourceClient.getCreatorId()))) {
+		final Client sourceClient = (Client) sourceObject;
+		if (sourceClient != null
+				&& getClientId().equals(sourceClient.getClientId())) {
 			if (sourceClient.name != null) {
 				this.name = sourceClient.name;
 			}
@@ -131,7 +145,7 @@ public class Client extends MoqawalatiDomainObject implements Serializable {
 	 */
 	private void createFakeAddress() {
 		Address newAddress = new Address();
-		newAddress.setCreatorId(getCreatorId());
+		// newAddress.setCreatorId(getCreatorId());
 		newAddress.setAddressId(String.valueOf(Math.random()));
 		newAddress.setStreet(new Date().toString());
 		setAddress(newAddress);

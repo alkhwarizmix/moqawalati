@@ -36,8 +36,7 @@ public class MoqawalatiWebGetDataCommandTestCase extends MoqawalatiPureMVCTestCa
 	
 	private var app:IMoqawalatiApplication = null;
 	
-	[Before]
-	override public function setUp():void
+	override protected function setUp():void
 	{
 		super.setUp();
 		
@@ -45,8 +44,7 @@ public class MoqawalatiWebGetDataCommandTestCase extends MoqawalatiPureMVCTestCa
 		testFacade.registerCommand("NOTE", MoqawalatiWebGetDataCommand);
 	}
 	
-	[After]
-	override public function tearDown():void
+	override protected function tearDown():void
 	{
 		testFacade.removeCommand("NOTE");
 		app = null;
