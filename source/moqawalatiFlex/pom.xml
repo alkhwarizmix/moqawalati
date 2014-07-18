@@ -165,7 +165,7 @@
 
 					<rslUrls>
 						<!-- URL for most Flex framework RSLs -->
-						<url>http://fpdownload.adobe.com/pub/{extension}/flex/${flex.sdk.swz.version}/{artifactId}_{version}.{extension}</url>
+						<url>http://fpdownload.adobe.com/pub/{extension}/flex/${flex.sdk.swz.version}/{artifactId}_${flex.sdk.swz.version}.{extension}</url>
 
 						<!-- Special URL for Text Layout Framework -->
 						<url>http://fpdownload.adobe.com/pub/{extension}/tlf/${flex.tlf.swz.version}/{artifactId}_${flex.tlf.swz.version}.{extension}</url>
