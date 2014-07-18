@@ -14,7 +14,6 @@ package dz.alkhwarizmix.framework.java.dao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -29,6 +28,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٩ جمادى الأول ١٤٣٥ (March 29, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class AlKhwarizmixDAOTest {
 
 	// --------------------------------------------------------------------------

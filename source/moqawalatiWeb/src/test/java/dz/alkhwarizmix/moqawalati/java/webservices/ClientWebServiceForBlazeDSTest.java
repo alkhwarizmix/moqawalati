@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.webServices;
+package dz.alkhwarizmix.moqawalati.java.webservices;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.moqawalati.java.webservices.ClientWebServiceForBlazeDS;
 
 /**
  * <p>
@@ -29,7 +30,8 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class MoqawalatiInterceptorTest {
+@SuppressWarnings("PMD.MethodNamingConventions")
+public class ClientWebServiceForBlazeDSTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -38,7 +40,7 @@ public class MoqawalatiInterceptorTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private MoqawalatiInterceptor utMoqawalatiInterceptor;
+	private ClientWebServiceForBlazeDS utClientWebServiceForBlazeDS;
 
 	// --------------------------------------------------------------------------
 	//
@@ -56,7 +58,7 @@ public class MoqawalatiInterceptorTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utMoqawalatiInterceptor);
+		Assert.assertNotNull(utClientWebServiceForBlazeDS);
 	}
 
 	@Ignore("TODO: TDD")

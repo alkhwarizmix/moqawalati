@@ -29,6 +29,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @since ٢٥ جمادى الأول ١٤٣٥ (March 25, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class AlKhwarizmixSessionDataTest {
 
 	// --------------------------------------------------------------------------

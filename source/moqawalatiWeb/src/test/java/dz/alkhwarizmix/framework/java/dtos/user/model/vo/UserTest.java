@@ -30,6 +30,7 @@ import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class UserTest {
 
 	// --------------------------------------------------------------------------

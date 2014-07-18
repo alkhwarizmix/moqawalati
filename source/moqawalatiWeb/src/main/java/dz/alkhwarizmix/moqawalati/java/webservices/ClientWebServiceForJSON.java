@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.webServices;
+package dz.alkhwarizmix.moqawalati.java.webservices;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebServiceForJSON;
+import dz.alkhwarizmix.framework.java.webservices.AlKhwarizmixWebServiceForJSON;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;

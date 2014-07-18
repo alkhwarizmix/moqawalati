@@ -27,7 +27,7 @@
 	>
 <beans>
 	<bean id="beanClientWebServiceForBlazeDS"
-		class="dz.alkhwarizmix.moqawalati.java.webServices.ClientWebServiceForBlazeDS" />
+		class="dz.alkhwarizmix.moqawalati.java.webservices.ClientWebServiceForBlazeDS" />
 	<bean id="beanUserWebServiceForBlazeDS"
 		class="dz.alkhwarizmix.framework.java.services.UserService" />
 	<bean id="beanCustomizerWebServiceForBlazeDS"

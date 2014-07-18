@@ -45,6 +45,7 @@ import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
  * @since ٠٨ ذو الحجة ١٤٣٤ (October 12, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class ClientServiceTest {
 
 	// --------------------------------------------------------------------------

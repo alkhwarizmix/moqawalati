@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webServices;
+package dz.alkhwarizmix.framework.java.webservices;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -28,6 +28,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.interfaces.IUserService;
+import dz.alkhwarizmix.framework.java.webservices.UserWebServiceForXML;
 
 /**
  * <p>
@@ -38,6 +39,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IUserService;
  * @since ١٨ ربيع الأول ١٤٣٥ (January 19, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class UserWebServiceForXMLTest {
 
 	// --------------------------------------------------------------------------

@@ -58,19 +58,20 @@ public enum AlKhwarizmixErrorCode {
 	/**
 	 * get an errorCode using it's id
 	 * 
-	 * @param id
+	 * @param errorId
 	 *            {@link Integer} the error code id
 	 * @return {@link ErrorCode}
 	 */
-	public static AlKhwarizmixErrorCode getErrorCode(int id) {
-		AlKhwarizmixErrorCode[] errorCodes = values();
+	public static AlKhwarizmixErrorCode getErrorCode(final int errorId) {
+		AlKhwarizmixErrorCode result = null;
+		final AlKhwarizmixErrorCode[] errorCodes = values();
 
 		for (int i = 0; i < errorCodes.length; i++) {
-			if (errorCodes[i].id == id) {
-				return errorCodes[i];
+			if (errorCodes[i].id == errorId) {
+				result = errorCodes[i];
 			}
 		}
-		return null;
+		return result;
 	}
 
 	/**

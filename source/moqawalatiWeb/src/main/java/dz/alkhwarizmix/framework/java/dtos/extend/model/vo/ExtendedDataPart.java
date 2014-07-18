@@ -95,11 +95,10 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		ExtendedDataPart sourceExtendedDataPart = (ExtendedDataPart) sourceObject;
-		if ((sourceExtendedDataPart != null)
-				&& (this.getId().equals(sourceExtendedDataPart.getId()))) {
-			if (sourceExtendedDataPart.extendedDataPartValue != null) {
-				this.extendedDataPartValue = sourceExtendedDataPart.extendedDataPartValue;
+		ExtendedDataPart sourceEDP = (ExtendedDataPart) sourceObject;
+		if (sourceEDP != null && getId().equals(sourceEDP.getId())) {
+			if (sourceEDP.extendedDataPartValue != null) {
+				extendedDataPartValue = sourceEDP.extendedDataPartValue;
 			}
 		} else {
 			throw new AlKhwarizmixException(

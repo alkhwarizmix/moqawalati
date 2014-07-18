@@ -37,6 +37,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAO;
 @ContextConfiguration
 // (value = "MoqawalatiDAOTest-context.xml")
 @Transactional
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class MoqawalatiDAOTest {
 
 	// --------------------------------------------------------------------------

@@ -35,6 +35,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @Transactional
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class ClientDAOTest {
 
 	// --------------------------------------------------------------------------

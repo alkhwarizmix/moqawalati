@@ -29,6 +29,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class AlKhwarizmixDomainObjectExtendableWithSecurityTest {
 
 	// --------------------------------------------------------------------------

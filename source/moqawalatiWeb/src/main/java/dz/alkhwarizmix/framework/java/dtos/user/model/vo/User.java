@@ -130,8 +130,7 @@ public class User extends AlKhwarizmixDomainObjectExtendable implements
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
 		User sourceUser = (User) sourceObject;
-		if ((sourceUser != null)
-				&& (this.getUserId().equals(sourceUser.getUserId()))) {
+		if (sourceUser != null && getUserId().equals(sourceUser.getUserId())) {
 			if (sourceUser.name != null) {
 				this.name = sourceUser.name;
 			}

@@ -36,6 +36,7 @@ import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @Transactional
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class CustomDataDAOTest {
 
 	// --------------------------------------------------------------------------

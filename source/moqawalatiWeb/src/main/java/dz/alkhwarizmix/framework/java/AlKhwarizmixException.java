@@ -50,7 +50,7 @@ public class AlKhwarizmixException extends Exception {
 	 * @param nested
 	 *            {@link Exception} the exception's cause
 	 */
-	public AlKhwarizmixException(String message, Exception nested) {
+	public AlKhwarizmixException(final String message, final Exception nested) {
 		super(message, nested);
 	}
 
@@ -64,8 +64,8 @@ public class AlKhwarizmixException extends Exception {
 	 * @param nested
 	 *            {@link Throwable} the exception's cause
 	 */
-	public AlKhwarizmixException(String message,
-			AlKhwarizmixErrorCode errorCode, Throwable nested) {
+	public AlKhwarizmixException(final String message,
+			final AlKhwarizmixErrorCode errorCode, final Throwable nested) {
 		super(message, nested);
 		setErrorCode(errorCode);
 	}
@@ -78,7 +78,8 @@ public class AlKhwarizmixException extends Exception {
 	 * @param errorCode
 	 *            {@link AlKhwarizmixErrorCode} the code for the exception
 	 */
-	public AlKhwarizmixException(String message, AlKhwarizmixErrorCode errorCode) {
+	public AlKhwarizmixException(final String message,
+			final AlKhwarizmixErrorCode errorCode) {
 		super(message);
 		setErrorCode(errorCode);
 	}
@@ -142,7 +143,7 @@ public class AlKhwarizmixException extends Exception {
 	/**
 	 * set the errorCode param value {@link AlKhwarizmixErrorCode} the errorCode
 	 */
-	public void setErrorCode(AlKhwarizmixErrorCode value) {
+	public void setErrorCode(final AlKhwarizmixErrorCode value) {
 		this.errorCode = value;
 	}
 

@@ -9,16 +9,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webServices;
+package dz.alkhwarizmix.moqawalati.java.webservices;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.moqawalati.java.webservices.ClientWebServiceForXML;
 
 /**
  * <p>
@@ -29,7 +30,8 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AlKhwarizmixWebServiceForXMLTest {
+@SuppressWarnings("PMD.MethodNamingConventions")
+public class ClientWebServiceForXMLTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -37,8 +39,8 @@ public class AlKhwarizmixWebServiceForXMLTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Mock
-	private AlKhwarizmixWebServiceForXML utAlKhwarizmixWebServiceForXML;
+	@InjectMocks
+	private ClientWebServiceForXML utClientWebServiceForXML;
 
 	// --------------------------------------------------------------------------
 	//
@@ -56,7 +58,7 @@ public class AlKhwarizmixWebServiceForXMLTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utAlKhwarizmixWebServiceForXML);
+		Assert.assertNotNull(utClientWebServiceForXML);
 	}
 
 	@Ignore("TODO: TDD")

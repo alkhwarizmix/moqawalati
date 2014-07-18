@@ -35,7 +35,8 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.AbstractMoqawalatiDomainObject;
  */
 @XmlRootElement(name = "Address")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Address extends AbstractMoqawalatiDomainObject implements Serializable {
+public class Address extends AbstractMoqawalatiDomainObject implements
+		Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -102,10 +103,9 @@ public class Address extends AbstractMoqawalatiDomainObject implements Serializa
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		Address sourceAddress = (Address) sourceObject;
-		if ((sourceAddress != null)
-		// && (this.getCreatorId().equals(sourceAddress.getCreatorId()))
-				&& (this.getAddressId().equals(sourceAddress.getAddressId()))) {
+		final Address sourceAddress = (Address) sourceObject;
+		if (sourceAddress != null
+				&& getAddressId().equals(sourceAddress.getAddressId())) {
 			if (sourceAddress.street != null) {
 				this.street = sourceAddress.street;
 			}

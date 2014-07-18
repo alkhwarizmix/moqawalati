@@ -25,6 +25,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٤ رجب ١٤٣٥ (May 13, 2014)
  */
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class CryptoUtilTest {
 
 	// --------------------------------------------------------------------------
@@ -33,10 +34,10 @@ public class CryptoUtilTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private static String CLEAR_TEXT = "This is a text to encrypt 345 éè"
+	private static final String CLEAR_TEXT = "This is a text to encrypt 345 éè"
 			+ "م خ ة";
-	private static String CLEAR_TEXT_AS_HEX = "546869732069732061207465787420746f20656e63727970742033343520c3a9c3a8d98520d8ae20d8a9";
-	private static String ENCRYPTED_BY_FLEX = "9800013c054878194737e873787291051c33432530ae1639d86cb0541f60450047ad0ac2b8b00fbd5635028039c4ee8f";
+	private static final String CLEAR_TEXT_AS_HEX = "546869732069732061207465787420746f20656e63727970742033343520c3a9c3a8d98520d8ae20d8a9";
+	private static final String ENCRYPTED_BY_FLEX = "9800013c054878194737e873787291051c33432530ae1639d86cb0541f60450047ad0ac2b8b00fbd5635028039c4ee8f";
 
 	private CryptoUtil utCryptoUtil;
 
@@ -73,7 +74,7 @@ public class CryptoUtilTest {
 	public void test01_encrypted_should_be_different_than_original_text() {
 		String textToEncrypt = CLEAR_TEXT;
 		String encrypted = utCryptoUtil.encryptString(textToEncrypt);
-		Assert.assertFalse("", textToEncrypt.equals(encrypted));
+		Assert.assertFalse(textToEncrypt.equals(encrypted));
 	}
 
 	@Test

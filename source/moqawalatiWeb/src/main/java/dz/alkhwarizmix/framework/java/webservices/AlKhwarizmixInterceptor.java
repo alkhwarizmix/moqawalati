@@ -9,16 +9,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.webServices;
+package dz.alkhwarizmix.framework.java.webservices;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
-
-import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixInterceptor;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * <p>
@@ -28,7 +26,7 @@ import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixInterceptor;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public class MoqawalatiInterceptor extends AlKhwarizmixInterceptor {
+public abstract class AlKhwarizmixInterceptor extends HandlerInterceptorAdapter {
 
 	// --------------------------------------------------------------------------
 	//
@@ -36,24 +34,27 @@ public class MoqawalatiInterceptor extends AlKhwarizmixInterceptor {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(MoqawalatiInterceptor.class);
-
-	@Override
-	protected Logger getLogger() {
-		return LOG;
-	}
+	protected abstract Logger getLogger();
 
 	// --------------------------------------------------------------------------
 	//
-	// Others
+	// Methods
 	//
 	// --------------------------------------------------------------------------
 
 	/**
+	 * This will help to log the accessing HOSTS
 	 */
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
+		getLogger().trace("Before handling the request");
+
+		final String host = request.getRemoteHost();
+		final String address = request.getRemoteAddr();
+		final String pathInfo = request.getPathInfo();
+		getLogger().info("HOST {} IS CALLING {}",
+				host + "(IP:" + address + ")", pathInfo);
+
 		return super.preHandle(request, response, handler);
 	}
 
@@ -62,6 +63,7 @@ public class MoqawalatiInterceptor extends AlKhwarizmixInterceptor {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
+		getLogger().trace("After handling the request");
 		super.postHandle(request, response, handler, modelAndView);
 	}
 
@@ -70,6 +72,7 @@ public class MoqawalatiInterceptor extends AlKhwarizmixInterceptor {
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
+		getLogger().trace("After rendering the view");
 		super.afterCompletion(request, response, handler, ex);
 	}
 

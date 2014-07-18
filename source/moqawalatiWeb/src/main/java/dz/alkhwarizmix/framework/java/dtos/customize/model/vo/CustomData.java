@@ -100,7 +100,6 @@ public class CustomData extends AlKhwarizmixDomainObjectExtendableWithSecurity
 	 */
 	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
-
 		List<AbstractAlKhwarizmixDomainObject> result = super
 				.getDaoObjectList();
 		if (getCustomizer().getId() == null)
@@ -119,11 +118,10 @@ public class CustomData extends AlKhwarizmixDomainObjectExtendableWithSecurity
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
 
-		CustomData sourceCustomData = (CustomData) sourceObject;
-		if ((sourceCustomData != null)
-				&& (this.getCustomDataId().equals(sourceCustomData
-						.getCustomDataId()))) {
-			this.setCustomDataValue(sourceCustomData.getCustomDataValue());
+		final CustomData sourceCD = (CustomData) sourceObject;
+		if (sourceCD != null
+				&& getCustomDataId().equals(sourceCD.getCustomDataId())) {
+			setCustomDataValue(sourceCD.getCustomDataValue());
 		} else {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);

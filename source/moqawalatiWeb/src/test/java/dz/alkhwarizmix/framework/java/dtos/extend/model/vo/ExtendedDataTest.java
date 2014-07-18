@@ -27,6 +27,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class ExtendedDataTest {
 
 	// --------------------------------------------------------------------------

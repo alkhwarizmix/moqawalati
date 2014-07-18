@@ -27,6 +27,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٥ شعبان ١٤٣٥ (June 03, 2014)
  */
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class XMLUtilTest {
 
 	// --------------------------------------------------------------------------

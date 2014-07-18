@@ -92,7 +92,7 @@ public class XMLUtil {
 		}
 	}
 
-	protected String internal_marshalObjectToXML(
+	protected String internal_marshalObjectToXML( // NOPMD
 			AbstractAlKhwarizmixDomainObject object) {
 
 		StringWriter stringWriter = new StringWriter();
@@ -115,7 +115,7 @@ public class XMLUtil {
 		}
 	}
 
-	protected AbstractAlKhwarizmixDomainObject internal_unmarshalObjectFromXML(
+	protected AbstractAlKhwarizmixDomainObject internal_unmarshalObjectFromXML( // NOPMD
 			String xmlValue) {
 		return (AbstractAlKhwarizmixDomainObject) jaxb2Marshaller
 				.unmarshal(new StreamSource(IOUtils.toInputStream(xmlValue)));

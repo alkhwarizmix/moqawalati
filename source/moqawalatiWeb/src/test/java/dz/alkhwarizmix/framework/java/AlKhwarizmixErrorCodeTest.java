@@ -22,6 +22,7 @@ import org.junit.Test;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
+@SuppressWarnings({"PMD.MethodNamingConventions", "PMD.CommentRequired"})
 public class AlKhwarizmixErrorCodeTest {
 
 	// --------------------------------------------------------------------------

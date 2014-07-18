@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.webServices;
+package dz.alkhwarizmix.framework.java.webservices;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.webServices.AlKhwarizmixWebServiceForXML;
-import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
-import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IClientWebServiceForRest;
+import dz.alkhwarizmix.framework.java.interfaces.IUserService;
 
 /**
  * <p>
@@ -33,12 +32,11 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientWebServiceForRest;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @Controller
-@RequestMapping("moqawalati/xml/client")
-public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
-		implements IClientWebServiceForRest {
+@RequestMapping("alkhwarizmix/xml/user")
+public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
@@ -49,7 +47,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
 	/**
 	 * constructor
 	 */
-	public ClientWebServiceForXML() {
+	public UserWebServiceForXML() {
 		super();
 	}
 
@@ -60,7 +58,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(ClientWebServiceForXML.class);
+			.getLogger(UserWebServiceForXML.class);
 
 	@Override
 	protected Logger getLogger() {
@@ -74,7 +72,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IClientService clientService;
+	private IUserService userService;
 
 	// --------------------------------------------------------------------------
 	//
@@ -83,98 +81,108 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
 	// --------------------------------------------------------------------------
 
 	/**
-	 * add the client to database
+	 * add the user to database
 	 * 
-	 * @param clientAsXML
-	 *            {@link String} the client as xml
+	 * @param xmlValue
+	 *            {@link String} the user as xml
 	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
+	 * @throws AlKhwarizmixException
 	 */
-	public ResponseEntity<String> addClient(
-			@RequestParam("client") String clientAsXML)
-			throws MoqawalatiException {
-		getLogger().debug("addClient({})", clientAsXML);
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<String> addUser(@RequestParam("user") String xmlValue)
+			throws AlKhwarizmixException {
+		getLogger().debug("addUser({})", xmlValue);
 
 		try {
-			String result = getClientService().addClientFromXML(clientAsXML,
+			String result = userService.addUserFromXML(xmlValue,
 					getCurrentRequestRemoteAddress());
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
-		} catch (MoqawalatiException exception) {
-			return errorResponseForXML(exception);
+		} catch (AlKhwarizmixException e) {
+			return errorResponseForXML(e);
 		}
 	}
 
-	/*
-	 * @RequestMapping(method = RequestMethod.POST) public Client
-	 * addClient1(Client client) throws MoqawalatiException {
-	 * getLogger().debug("addClient1({})", client);
-	 * 
-	 * return client; }
-	 */
-
 	/**
-	 * get the client from database
+	 * get the user from database
 	 * 
-	 * @param clientId
-	 *            {@link Long} clientId
+	 * @param userId
+	 *            {@link Long} userId
 	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
+	 * @throws AlKhwarizmixException
 	 */
-	public ResponseEntity<String> getClientById(
-			@PathVariable("clientId") String clientId)
-			throws MoqawalatiException {
-		getLogger().debug("getClientById({})", clientId);
+	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+	public ResponseEntity<String> getUserById(
+			@PathVariable("userId") String userId) throws AlKhwarizmixException {
+		getLogger().debug("getUserById({})", userId);
 
 		try {
-			Client clientToGet = new Client();
-			clientToGet.setClientId(clientId);
-			StringBuilder sBuilder = new StringBuilder(getClientService()
-					.getClientAsXML(clientToGet));
+			User userToGet = new User();
+			userToGet.setUserId(userId);
+			StringBuilder sBuilder = new StringBuilder(
+					userService.getUserAsXML(userToGet));
 			return successResponseForXML(sBuilder);
-		} catch (MoqawalatiException exception) {
-			return errorResponseForXML(exception);
+		} catch (AlKhwarizmixException e) {
+			return errorResponseForXML(e);
 		}
 	}
 
 	/**
-	 * update the client in database
+	 * update the user in database
 	 * 
-	 * @param clientAsXML
-	 *            {@link String} the client as xml
+	 * @param xmlValue
+	 *            {@link String} the user as xml
 	 * @return {@link ResponseEntity}
-	 * @throws MoqawalatiException
+	 * @throws AlKhwarizmixException
 	 */
-	public ResponseEntity<String> updateClient(
-			@PathVariable("clientId") String clientId,
-			@RequestParam("client") String clientAsXML)
-			throws MoqawalatiException {
-		getLogger().debug("updateClient({})", clientAsXML);
+	@RequestMapping(value = "/{userId}", method = RequestMethod.POST)
+	public ResponseEntity<String> updateUser(
+			@PathVariable("userId") String userId,
+			@RequestParam("user") String xmlValue) throws AlKhwarizmixException {
+		getLogger().debug("updateUser({})", xmlValue);
 
 		try {
-			StringBuilder sBuilder = new StringBuilder(getClientService()
-					.updateClientFromXML(clientAsXML,
+			StringBuilder sBuilder = new StringBuilder(
+					userService.updateUserFromXML(xmlValue,
 							getCurrentRequestRemoteAddress()));
 			return successResponseForXML(sBuilder);
-		} catch (MoqawalatiException exception) {
-			return errorResponseForXML(exception);
+		} catch (AlKhwarizmixException e) {
+			return errorResponseForXML(e);
 		}
 	}
 
 	/**
 	 */
-	public ResponseEntity<String> getClientList(
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<String> getUserList(
 			@RequestParam("firstResult") int firstResult,
 			@RequestParam("maxResult") int maxResult) {
 		StringBuilder result = new StringBuilder();
 
 		try {
-			result.append(getClientService().getClientListAsXML(null,
-					firstResult, maxResult));
+			result.append(userService.getUserListAsXML(null, firstResult,
+					maxResult));
 
 			return successResponseForXML(result);
-		} catch (MoqawalatiException exception) {
-			return errorResponseForXML(exception);
+		} catch (AlKhwarizmixException e) {
+			return errorResponseForXML(e);
+		}
+	}
+
+	/**
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<String> login(@RequestParam("user") String xmlValue)
+			throws AlKhwarizmixException {
+		getLogger().debug("login({})", xmlValue);
+
+		try {
+			StringBuilder sBuilder = new StringBuilder(
+					userService.loginFromXML(xmlValue,
+							getCurrentRequestRemoteAddress()));
+			return successResponseForXML(sBuilder);
+		} catch (AlKhwarizmixException e) {
+			return errorResponseForXML(e);
 		}
 	}
 
@@ -185,15 +193,15 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// clientService
+	// userService
 	// ----------------------------------
 
-	protected IClientService getClientService() {
-		return clientService;
+	protected IUserService getUserService() {
+		return userService;
 	}
 
-	protected void setClientService(IClientService value) {
-		clientService = value;
+	protected void setUserService(IUserService value) {
+		userService = value;
 	}
 
 	// ----------------------------------
@@ -202,7 +210,7 @@ public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
 
 	@Override
 	protected IAlKhwarizmixService getService() {
-		return clientService;
+		return userService;
 	}
 
 } // Class

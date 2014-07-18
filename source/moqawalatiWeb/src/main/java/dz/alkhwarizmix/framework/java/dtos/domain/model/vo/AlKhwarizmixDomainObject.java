@@ -85,9 +85,8 @@ public class AlKhwarizmixDomainObject extends AbstractAlKhwarizmixDomainObject
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		AlKhwarizmixDomainObject domainObject = (AlKhwarizmixDomainObject) sourceObject;
-		if ((domainObject != null)
-				&& (this.getId().equals(domainObject.getId()))) {
+		AlKhwarizmixDomainObject domObj = (AlKhwarizmixDomainObject) sourceObject;
+		if (domObj != null && getId().equals(domObj.getId())) {
 			// NOOP
 		} else {
 			throw new AlKhwarizmixException(

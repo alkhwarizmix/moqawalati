@@ -25,6 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @since ١٦ محرم ١٤٣٥ (November 20, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class XMLValidatorTest {
 
 	// --------------------------------------------------------------------------

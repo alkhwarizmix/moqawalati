@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webServices;
+package dz.alkhwarizmix.framework.java.webservices;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +92,7 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	public ResponseEntity<String> setCustomData(
 			@RequestParam("customData") String xmlValue)
 			throws AlKhwarizmixException {
-		LOG.trace("addCustomData({0})", xmlValue);
+		getLogger().trace("addCustomData({0})", xmlValue);
 
 		try {
 			String result = getCustomizerService().setCustomDataFromXML(
@@ -116,7 +116,7 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	public ResponseEntity<String> getCustomDataById(
 			@PathVariable("customDataId") String customDataId)
 			throws AlKhwarizmixException {
-		LOG.debug("getCustomDataById({})", customDataId);
+		getLogger().debug("getCustomDataById({})", customDataId);
 
 		try {
 			CustomData customDataToGet = new CustomData();

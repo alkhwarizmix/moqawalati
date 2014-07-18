@@ -98,11 +98,9 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-
-		ExtendedData sourceExtendedData = (ExtendedData) sourceObject;
-		if ((sourceExtendedData != null)
-				&& (this.getId().equals(sourceExtendedData.getId()))) {
-			this.setExtendedDataValue(sourceExtendedData.getExtendedDataValue());
+		final ExtendedData source = (ExtendedData) sourceObject;
+		if (source != null && getId().equals(source.getId())) {
+			setExtendedDataValue(source.getExtendedDataValue());
 		} else {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);

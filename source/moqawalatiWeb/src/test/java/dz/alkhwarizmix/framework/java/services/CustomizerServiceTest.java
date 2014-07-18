@@ -35,6 +35,7 @@ import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
  * @since ٠٢ ربيع الأول ١٤٣٥ (January 03, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class CustomizerServiceTest {
 
 	// --------------------------------------------------------------------------

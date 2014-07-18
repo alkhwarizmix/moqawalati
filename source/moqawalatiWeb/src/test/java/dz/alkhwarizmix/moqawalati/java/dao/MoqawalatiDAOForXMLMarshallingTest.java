@@ -34,6 +34,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IMoqawalatiDAOForXMLMarshallin
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @Transactional
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class MoqawalatiDAOForXMLMarshallingTest {
 
 	// --------------------------------------------------------------------------

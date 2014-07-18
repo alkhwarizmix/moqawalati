@@ -103,11 +103,12 @@ public class Group extends AlKhwarizmixDomainObjectExtendable implements
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		Group sourceGroup = (Group) sourceObject;
-		if ((sourceGroup != null)
-				&& (this.getGroupId().equals(sourceGroup.getGroupId()))) {
+
+		final Group sourceGroup = (Group) sourceObject;
+		if (sourceGroup != null
+				&& getGroupId().equals(sourceGroup.getGroupId())) {
 			if (sourceGroup.name != null) {
-				this.name = sourceGroup.name;
+				name = sourceGroup.name;
 			}
 		} else {
 			throw new AlKhwarizmixException(

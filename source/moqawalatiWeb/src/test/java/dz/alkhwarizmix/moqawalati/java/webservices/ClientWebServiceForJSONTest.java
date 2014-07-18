@@ -9,15 +9,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webServices;
+package dz.alkhwarizmix.moqawalati.java.webservices;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.moqawalati.java.webservices.ClientWebServiceForJSON;
 
 /**
  * <p>
@@ -28,7 +30,8 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CustomizerWebServiceForXMLTest {
+@SuppressWarnings("PMD.MethodNamingConventions")
+public class ClientWebServiceForJSONTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -37,7 +40,7 @@ public class CustomizerWebServiceForXMLTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private CustomizerWebServiceForXML utCustomizerWebServiceForXML;
+	private ClientWebServiceForJSON utClientWebServiceForJSON;
 
 	// --------------------------------------------------------------------------
 	//
@@ -55,7 +58,13 @@ public class CustomizerWebServiceForXMLTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utCustomizerWebServiceForXML);
+		Assert.assertNotNull(utClientWebServiceForJSON);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test01() throws AlKhwarizmixException {
+		Assert.assertTrue(false);
 	}
 
 } // Class

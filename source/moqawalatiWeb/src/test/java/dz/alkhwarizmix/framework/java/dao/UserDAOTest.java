@@ -35,6 +35,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @Transactional
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class UserDAOTest {
 
 	// --------------------------------------------------------------------------

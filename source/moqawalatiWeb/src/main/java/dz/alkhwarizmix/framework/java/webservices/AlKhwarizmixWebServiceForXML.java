@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webServices;
+package dz.alkhwarizmix.framework.java.webservices;
 
 import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;

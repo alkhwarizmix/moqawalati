@@ -123,9 +123,9 @@ public class Client extends AbstractMoqawalatiDomainObject implements
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		Client sourceClient = (Client) sourceObject;
-		if ((sourceClient != null)
-				&& (this.getClientId().equals(sourceClient.getClientId()))) {
+		final Client sourceClient = (Client) sourceObject;
+		if (sourceClient != null
+				&& getClientId().equals(sourceClient.getClientId())) {
 			if (sourceClient.name != null) {
 				this.name = sourceClient.name;
 			}
