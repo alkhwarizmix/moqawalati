@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.0.6</version>
+		<version>1.0.7</version>
 	</parent>
 
 	<artifactId>moqawalatiFlex</artifactId>
@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>dz.alkhwarizmix.framework</groupId>
 			<artifactId>AlkhwarizmixFlexFramework</artifactId>
-			<version>1.0.6</version>
+			<version>1.0.7</version>
 			<type>swc</type>
 			<scope>merged</scope>
 		</dependency>
