@@ -52,7 +52,7 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 		super();
 	}
 
-	@PostConstruct
+	/*@PostConstruct
 	private void createDefaultClients() {
 		Client defaultUser = new Client("fares.belhaouas", "فارس بلحواس");
 
@@ -66,7 +66,7 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 					.warn("createDefaultClients: default user <{0}> already existing",
 							defaultUser.getName());
 		}
-	}
+	}*/
 
 	// --------------------------------------------------------------------------
 	//
