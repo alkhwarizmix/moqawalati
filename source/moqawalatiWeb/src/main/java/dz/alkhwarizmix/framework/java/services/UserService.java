@@ -41,7 +41,6 @@ import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
  */
 @Service
 @Transactional(readOnly = true)
-@SuppressWarnings("PMD.MethodNamingConventions")
 public class UserService extends AlKhwarizmixService implements IUserService {
 
 	// --------------------------------------------------------------------------

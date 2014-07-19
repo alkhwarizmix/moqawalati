@@ -263,7 +263,7 @@ public class HTTPUtil {
 			HttpEntity entity = response.getEntity();
 
 			getLogger()
-					.trace("Header Local: {0}", response.getHeaders("Local"));
+					.trace("Header Local: {}", response.getHeaders("Local"));
 
 			getLogger().trace("Login form get: " + response.getStatusLine());
 			EntityUtils.consume(entity);

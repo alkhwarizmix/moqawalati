@@ -56,11 +56,11 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 
 		try {
 			saveOrUpdate(defaultUser);
-			getLogger().info("createDefaultUser: Created default user <{0}>",
+			getLogger().info("createDefaultUser: Created default user <{}>",
 					defaultUser.getName());
 		} catch (AlKhwarizmixDAOException e) {
 			getLogger().warn(
-					"createDefaultUser: default user <{0}> already existing",
+					"createDefaultUser: default user <{}> already existing",
 					defaultUser.getName());
 		}
 	}
