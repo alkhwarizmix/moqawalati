@@ -50,7 +50,7 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 		super();
 	}
 
-	@PostConstruct
+	/*@PostConstruct
 	private void createDefaultUsers() {
 		User defaultUser = new User("fares.belhaouas", "فارس بلحواس");
 
@@ -63,7 +63,7 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 					"createDefaultUser: default user <{0}> already existing",
 					defaultUser.getName());
 		}
-	}
+	}*/
 
 	// --------------------------------------------------------------------------
 	//
