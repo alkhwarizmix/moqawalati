@@ -12,52 +12,44 @@
 package dz.alkhwarizmix.moqawalati.flex.view.controls
 {
 
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiUITestCase;
-
-import org.flexunit.asserts.assertNotNull;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+import dz.alkhwarizmix.framework.flex.view.controls.AlKhwarizmixTextArea;
 
 /**
  *  <p>
- *  Test for MoqawalatiTextInput
+ *  TODO: ASDOC
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ جمادى الثانية ١٤٣٥ (April 25, 2014)
+ *  @since  ٢٤ رمضان ١٤٣٥ (July 22, 2014)
  */
-public class MoqawalatiTextInputTestCase extends MoqawalatiUITestCase
+public class MoqawalatiTextArea extends AlKhwarizmixTextArea
 {
 	//--------------------------------------------------------------------------
 	//
-	//  SETUP & TEARDOWN
+	//  Constructor
 	//
 	//--------------------------------------------------------------------------
 	
-	override protected function setUpAyncUI():void
+	/**
+	 *  Constructor.
+	 */
+	public function MoqawalatiTextArea()
 	{
-		// NOOP
-	}
-	
-	override protected function tearDownUI():void
-	{
-		// NOOP
-	}
-	
-	override protected function get classUnderTest():Class
-	{
-		return MoqawalatiTextInput;
+		super();
 	}
 	
 	//--------------------------------------------------------------------------
 	//
-	//  TESTS
+	//  Logger
 	//
 	//--------------------------------------------------------------------------
 	
-	[Test]
-	public function test01_constructor():void
-	{
-		assertNotNull(classInstanceUnderTest);
-	}
+	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
+		getLogger(MoqawalatiTextArea);
 	
-} // class
-} // package
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	
+} // Class
+} // Package

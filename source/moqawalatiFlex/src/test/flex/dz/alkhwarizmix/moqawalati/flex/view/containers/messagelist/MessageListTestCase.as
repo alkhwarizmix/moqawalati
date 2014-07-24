@@ -9,22 +9,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.view.controls
+package dz.alkhwarizmix.moqawalati.flex.view.containers.messagelist
 {
 
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiUITestCase;
 
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
- *  Test for MoqawalatiTextInput
+ *  Test for MessageList
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ جمادى الثانية ١٤٣٥ (April 25, 2014)
+ *  @since  ٢٥ رمضان ١٤٣٥ (July 23, 2014)
  */
-public class MoqawalatiTextInputTestCase extends MoqawalatiUITestCase
+public class MessageListTestCase extends MoqawalatiUITestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -44,7 +45,12 @@ public class MoqawalatiTextInputTestCase extends MoqawalatiUITestCase
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiTextInput;
+		return MessageList;
+	}
+	
+	private function get utMessageList():MessageList
+	{
+		return classInstanceUnderTest as MessageList;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -54,9 +60,16 @@ public class MoqawalatiTextInputTestCase extends MoqawalatiUITestCase
 	//--------------------------------------------------------------------------
 	
 	[Test]
-	public function test01_constructor():void
+	public function test00_constructor():void
 	{
-		assertNotNull(classInstanceUnderTest);
+		assertNotNull(utMessageList);
+	}
+	
+	[Ignore("TODO: TDD")]
+	[Test]
+	public function test01():void
+	{
+		assertTrue(false);
 	}
 	
 } // class

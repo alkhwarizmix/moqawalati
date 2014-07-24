@@ -18,13 +18,13 @@ import org.flexunit.asserts.assertNotNull;
 
 /**
  *  <p>
- *  Test for MoqawalatiTextInput
+ *  Test for MoqawalatiTextArea
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٥ جمادى الثانية ١٤٣٥ (April 25, 2014)
+ *  @since  ٢٥ رمضان ١٤٣٥ (July 23, 2014)
  */
-public class MoqawalatiTextInputTestCase extends MoqawalatiUITestCase
+public class MoqawalatiTextAreaTestCase extends MoqawalatiUITestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -44,7 +44,7 @@ public class MoqawalatiTextInputTestCase extends MoqawalatiUITestCase
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiTextInput;
+		return MoqawalatiTextArea;
 	}
 	
 	//--------------------------------------------------------------------------
