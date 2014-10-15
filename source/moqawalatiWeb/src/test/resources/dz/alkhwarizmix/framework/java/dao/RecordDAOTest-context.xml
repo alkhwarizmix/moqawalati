@@ -18,7 +18,7 @@
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
+ *  @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
 -->
 
@@ -38,5 +38,5 @@
 
 	<import resource="CommonDAOTest-context.xml" />
 
-	<bean id="utUserDAO" class="dz.alkhwarizmix.framework.java.dao.UserDAO" />
+	<bean id="utRecordDAO" class="dz.alkhwarizmix.framework.java.dao.RecordDAO" />
 </beans>

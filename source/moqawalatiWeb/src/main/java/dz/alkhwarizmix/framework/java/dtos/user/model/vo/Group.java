@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendable;
 
 /**
  * <p>
@@ -40,7 +40,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObj
 @Table(name = "TGroup")
 @XmlRootElement(name = "Group")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Group extends AlKhwarizmixDomainObjectExtendable implements
+public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		Serializable {
 
 	// --------------------------------------------------------------------------

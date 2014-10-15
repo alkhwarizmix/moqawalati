@@ -25,7 +25,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendable;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendable;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.utils.XMLUtil;
@@ -210,7 +210,9 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 			throws AlKhwarizmixException {
 		getLogger().trace("marshalObjectToXML()");
 
-		return new XMLUtil(getJaxb2Marshaller()).marshalObjectToXML(object);
+		String result = new XMLUtil(getJaxb2Marshaller())
+				.marshalObjectToXML(object);
+		return result;
 	}
 
 	/**
@@ -262,7 +264,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * @throws AlKhwarizmixException
 	 */
 	protected final void updateObjectFromExtendedDataXML(
-			AlKhwarizmixDomainObjectExtendable object)
+			AbstractAlKhwarizmixDomainObjectExtendable object)
 			throws AlKhwarizmixException {
 
 		if (object != null) {
@@ -278,7 +280,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * @throws AlKhwarizmixException
 	 */
 	protected final void setupObjectExtendedDataXMLValue(
-			AlKhwarizmixDomainObjectExtendable object)
+			AbstractAlKhwarizmixDomainObjectExtendable object)
 			throws AlKhwarizmixException {
 
 		if (object != null) {

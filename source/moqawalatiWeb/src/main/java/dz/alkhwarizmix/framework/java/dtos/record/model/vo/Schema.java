@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,15 +9,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.model;
+package dz.alkhwarizmix.framework.java.dtos.record.model.vo;
 
 import java.io.Serializable;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-
-import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * <p>
@@ -25,11 +24,11 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ١٧ محرم ١٤٣٥ (November 21, 2013)
+ * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
-@Component
-@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AlKhwarizmixSessionData implements Serializable {
+@XmlRootElement(name = "Schema")
+@XmlAccessorType(XmlAccessType.PROPERTY)
+public class Schema extends Record implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -37,9 +36,7 @@ public class AlKhwarizmixSessionData implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final long serialVersionUID = -6782022452977817665L;
-
-	public static final String CURRENTUSER = "CURRENTUSER";
+	private static final long serialVersionUID = 3932005330355690386L;
 
 	// --------------------------------------------------------------------------
 	//
@@ -50,36 +47,15 @@ public class AlKhwarizmixSessionData implements Serializable {
 	/**
 	 * constructor
 	 */
-	public AlKhwarizmixSessionData() {
-		// resetCustomizer();
+	public Schema() {
+		super();
 	}
 
-	// --------------------------------------------------------------------------
-	//
-	// Properties
-	//
-	// --------------------------------------------------------------------------
-
-	private AlKhwarizmixDomainObject customizer = null;
-
-	// --------------------------------------------------------------------------
-	//
-	// Getters & Setters
-	//
-	// --------------------------------------------------------------------------
-
-	// ----------------------------------
-	// customizer
-	// ----------------------------------
-
-	public AlKhwarizmixDomainObject getCustomizer() {
-		if (customizer == null)
-			customizer = new AlKhwarizmixDomainObject();
-		return customizer;
-	}
-
-	public void setCustomizer(AlKhwarizmixDomainObject value) {
-		customizer = value;
+	/**
+	 * constructor
+	 */
+	public Schema(String theSchemaId) {
+		super(theSchemaId);
 	}
 
 	// --------------------------------------------------------------------------
@@ -88,8 +64,30 @@ public class AlKhwarizmixSessionData implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
-	public void resetCustomizer() {
-		setCustomizer(null);
+	/**
+	 */
+	public String toString() {
+		return super.toStringBuilder(this).append("schemaId", getSchemaId())
+				.toString();
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Getters & Setters
+	//
+	// --------------------------------------------------------------------------
+
+	// ----------------------------------
+	// schemaId
+	// ----------------------------------
+
+	@XmlTransient
+	public String getSchemaId() {
+		return getRecordId();
+	}
+
+	public void setSchemaId(String value) {
+		this.setRecordId(value);
 	}
 
 } // Class

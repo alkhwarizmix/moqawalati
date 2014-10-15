@@ -39,7 +39,7 @@ public class AlKhwarizmixDomainObjectExtendableTest {
 	// --------------------------------------------------------------------------
 
 	@Mock
-	private AlKhwarizmixDomainObjectExtendable utAlKhwarizmixDomainObjectExtendable;
+	private AbstractAlKhwarizmixDomainObjectExtendable utAlKhwarizmixDomainObjectExtendable;
 
 	// --------------------------------------------------------------------------
 	//

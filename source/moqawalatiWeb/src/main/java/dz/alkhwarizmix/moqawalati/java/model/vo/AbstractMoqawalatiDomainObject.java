@@ -17,7 +17,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
 import dz.alkhwarizmix.framework.java.EntityInterceptor;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendableWithSecurity;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendableWithSecurity;
 
 /**
  * <p>
@@ -30,7 +30,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObj
 @MappedSuperclass
 @EntityListeners(EntityInterceptor.class)
 public abstract class AbstractMoqawalatiDomainObject extends
-		AlKhwarizmixDomainObjectExtendableWithSecurity implements Serializable {
+		AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements Serializable {
 
 	// --------------------------------------------------------------------------
 	//

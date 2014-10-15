@@ -9,13 +9,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.record.model.vo;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -26,11 +26,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ١٢ ذو الحجة ١٤٣٥ (October 06, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AlKhwarizmixDomainObjectExtendableWithSecurityTest {
+public class SchemaTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -38,8 +38,8 @@ public class AlKhwarizmixDomainObjectExtendableWithSecurityTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Mock
-	private AbstractAlKhwarizmixDomainObjectExtendableWithSecurity utAlKhwarizmixDomainObjectExtendableWithSecurity;
+	@InjectMocks
+	private Schema utSchema;
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,7 +57,7 @@ public class AlKhwarizmixDomainObjectExtendableWithSecurityTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utAlKhwarizmixDomainObjectExtendableWithSecurity);
+		Assert.assertNotNull(utSchema);
 	}
 
 	@Ignore("TODO: TDD")

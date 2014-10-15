@@ -9,16 +9,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.record.model.vo;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
  * <p>
@@ -26,11 +24,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AlKhwarizmixDomainObjectExtendableWithSecurityTest {
+public class RecordTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -38,8 +36,8 @@ public class AlKhwarizmixDomainObjectExtendableWithSecurityTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Mock
-	private AbstractAlKhwarizmixDomainObjectExtendableWithSecurity utAlKhwarizmixDomainObjectExtendableWithSecurity;
+	@InjectMocks
+	private Record utRecord;
 
 	// --------------------------------------------------------------------------
 	//
@@ -56,13 +54,19 @@ public class AlKhwarizmixDomainObjectExtendableWithSecurityTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utAlKhwarizmixDomainObjectExtendableWithSecurity);
+	public void test00_constructor() {
+		Assert.assertNotNull(utRecord);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void test01() throws AlKhwarizmixException {
+	public void test01() {
+		Assert.assertTrue(false);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test02_clone() {
 		Assert.assertTrue(false);
 	}
 

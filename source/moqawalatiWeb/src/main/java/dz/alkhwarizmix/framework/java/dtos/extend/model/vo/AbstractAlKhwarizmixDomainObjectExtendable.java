@@ -22,6 +22,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -36,8 +37,8 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
  */
 @MappedSuperclass
-public abstract class AlKhwarizmixDomainObjectExtendable extends
-		AbstractAlKhwarizmixDomainObject implements Serializable {
+public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
+		AbstractAlKhwarizmixDomainObject implements Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -49,15 +50,21 @@ public abstract class AlKhwarizmixDomainObjectExtendable extends
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
-	public AlKhwarizmixDomainObjectExtendable() {
+	public AbstractAlKhwarizmixDomainObjectExtendable() {
 		super();
+	}
+
+	protected AbstractAlKhwarizmixDomainObjectExtendable(
+			AbstractAlKhwarizmixDomainObjectExtendable other) {
+		super(other);
+		if (other != null) {
+			this.extendedData = (ExtendedData) ObjectUtils
+					.clone(other.extendedData);
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -76,6 +83,39 @@ public abstract class AlKhwarizmixDomainObjectExtendable extends
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = continueHashCode(result, extendedData);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		boolean result = super.equals(other)
+				&& (getObjectAsThisClass(other) != null)
+				&& ObjectUtils.equals(this.extendedData,
+						getObjectAsThisClass(other).extendedData);
+		return result;
+	}
+
+	private AbstractAlKhwarizmixDomainObjectExtendable getObjectAsThisClass(
+			Object other) {
+		return (other instanceof AbstractAlKhwarizmixDomainObjectExtendable)
+				? (AbstractAlKhwarizmixDomainObjectExtendable) other
+				: null;
+	}
 
 	/**
 	 */

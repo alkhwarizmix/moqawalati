@@ -25,6 +25,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDomainObjectList;
 
 /**
  * <p>
@@ -66,7 +67,7 @@ public class XMLUtil {
 	/**
 	 * TODO: Javadoc
 	 */
-	public String objectListToXML(
+	public final String objectListToXML(
 			List<AbstractAlKhwarizmixDomainObject> objectList) {
 		// getLogger().trace("objectListToXML()");
 
@@ -120,4 +121,48 @@ public class XMLUtil {
 		return (AbstractAlKhwarizmixDomainObject) jaxb2Marshaller
 				.unmarshal(new StreamSource(IOUtils.toInputStream(xmlValue)));
 	}
-}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	public final String marshalObjectListToXML(
+			IAlKhwarizmixDomainObjectList objectList)
+			throws AlKhwarizmixException {
+		try {
+			return internal_marshalObjectListToXML(objectList);
+		} catch (XmlMappingException e) {
+			throw new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.ERROR_XML_PARSING, e);
+		}
+	}
+
+	protected String internal_marshalObjectListToXML( // NOPMD
+			IAlKhwarizmixDomainObjectList objectList) {
+
+		StringWriter stringWriter = new StringWriter();
+		StreamResult streamResult = new StreamResult(stringWriter);
+		jaxb2Marshaller.marshal(objectList, streamResult);
+		return stringWriter.toString();
+	}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	public final IAlKhwarizmixDomainObjectList unmarshalObjectListFromXML(
+			String xmlValue) throws AlKhwarizmixException {
+
+		try {
+			return internal_unmarshalObjectListFromXML(xmlValue);
+		} catch (XmlMappingException e) {
+			throw new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.ERROR_XML_PARSING, e);
+		}
+	}
+
+	protected IAlKhwarizmixDomainObjectList internal_unmarshalObjectListFromXML( // NOPMD
+			String xmlValue) {
+		return (IAlKhwarizmixDomainObjectList) jaxb2Marshaller
+				.unmarshal(new StreamSource(IOUtils.toInputStream(xmlValue)));
+	}
+
+} // Class

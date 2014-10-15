@@ -20,12 +20,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.Group;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -36,8 +36,9 @@ import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
  * @since ١٦ شعبان ١٤٣٥ (June 14, 2014)
  */
 @MappedSuperclass
-public abstract class AlKhwarizmixDomainObjectExtendableWithSecurity extends
-		AlKhwarizmixDomainObjectExtendable implements Serializable {
+public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
+		extends AbstractAlKhwarizmixDomainObjectExtendable implements
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -49,15 +50,23 @@ public abstract class AlKhwarizmixDomainObjectExtendableWithSecurity extends
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
-	public AlKhwarizmixDomainObjectExtendableWithSecurity() {
+	public AbstractAlKhwarizmixDomainObjectExtendableWithSecurity() {
 		super();
+	}
+
+	protected AbstractAlKhwarizmixDomainObjectExtendableWithSecurity(
+			AbstractAlKhwarizmixDomainObjectExtendableWithSecurity other) {
+		super(other);
+		if (other != null) {
+			this.owner = (AlKhwarizmixDomainObject) ObjectUtils
+					.clone(other.owner);
+			this.group = (AlKhwarizmixDomainObject) ObjectUtils
+					.clone(other.group);
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -66,21 +75,57 @@ public abstract class AlKhwarizmixDomainObjectExtendableWithSecurity extends
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "owner", nullable = true)
-	private User owner;
+	private AlKhwarizmixDomainObject owner;
 
-	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "theGroup", nullable = true)
-	private Group group;
+	private AlKhwarizmixDomainObject group;
 
 	// --------------------------------------------------------------------------
 	//
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = continueHashCode(result, group);
+		result = continueHashCode(result, owner);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		boolean result = super.equals(other)
+				&& (getObjectAsThisClass(other) != null)
+				&& ObjectUtils.equals(this.group,
+						getObjectAsThisClass(other).group)
+				&& ObjectUtils.equals(this.owner,
+						getObjectAsThisClass(other).owner);
+		return result;
+	}
+
+	private AbstractAlKhwarizmixDomainObjectExtendableWithSecurity getObjectAsThisClass(
+			Object other) {
+		return (other instanceof AbstractAlKhwarizmixDomainObjectExtendableWithSecurity)
+				? (AbstractAlKhwarizmixDomainObjectExtendableWithSecurity) other
+				: null;
+	}
 
 	/**
 	 */
@@ -102,11 +147,11 @@ public abstract class AlKhwarizmixDomainObjectExtendableWithSecurity extends
 	// user
 	// ----------------------------------
 
-	public User getOwner() {
+	public AlKhwarizmixDomainObject getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User value) {
+	public void setOwner(AlKhwarizmixDomainObject value) {
 		this.owner = value;
 	}
 
@@ -114,11 +159,11 @@ public abstract class AlKhwarizmixDomainObjectExtendableWithSecurity extends
 	// group
 	// ----------------------------------
 
-	public Group getGroup() {
+	public AlKhwarizmixDomainObject getGroup() {
 		return group;
 	}
 
-	public void setGroup(Group value) {
+	public void setGroup(AlKhwarizmixDomainObject value) {
 		this.group = value;
 	}
 

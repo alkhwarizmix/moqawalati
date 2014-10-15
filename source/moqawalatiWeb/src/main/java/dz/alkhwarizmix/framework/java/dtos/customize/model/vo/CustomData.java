@@ -35,7 +35,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObjectExtendableWithSecurity;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendableWithSecurity;
 
 /**
  * <p>
@@ -49,7 +49,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AlKhwarizmixDomainObj
 @Table(name = "TCustomData")
 @XmlRootElement(name = "CustomData")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class CustomData extends AlKhwarizmixDomainObjectExtendableWithSecurity
+public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 		implements Serializable {
 
 	// --------------------------------------------------------------------------

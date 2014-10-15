@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.interfaces.IUserService;
+import dz.alkhwarizmix.framework.java.interfaces.IRecordService;
 
 /**
  * <p>
@@ -32,11 +32,11 @@ import dz.alkhwarizmix.framework.java.interfaces.IUserService;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
+ * @since ٢٠ ذو الحجة ١٤٣٥ (October 14, 2014)
  */
 @Controller
-@RequestMapping("alkhwarizmix/xml/user")
-public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
+@RequestMapping("alkhwarizmix/xml/record")
+public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
@@ -47,7 +47,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	/**
 	 * constructor
 	 */
-	public UserWebServiceForXML() {
+	public RecordWebServiceForXML() {
 		super();
 	}
 
@@ -58,7 +58,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// --------------------------------------------------------------------------
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(UserWebServiceForXML.class);
+			.getLogger(RecordWebServiceForXML.class);
 
 	@Override
 	protected Logger getLogger() {
@@ -72,7 +72,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IUserService userService;
+	private IRecordService recordService;
 
 	// --------------------------------------------------------------------------
 	//
@@ -81,21 +81,21 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// --------------------------------------------------------------------------
 
 	/**
-	 * add the user to database
+	 * add the record to database
 	 * 
 	 * @param xmlValue
-	 *            {@link String} the user as xml
+	 *            {@link String} the record as xml
 	 * @return {@link ResponseEntity}
 	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> addUser(@RequestParam("user") String xmlValue)
+	public ResponseEntity<String> addRecord(
+			@RequestParam("record") String xmlValue)
 			throws AlKhwarizmixException {
-		getLogger().debug("addUser({})", xmlValue);
+		getLogger().debug("addRecord({})", xmlValue);
 
 		try {
-			String result = userService.addUserFromXML(xmlValue,
-					getCurrentRequestRemoteAddress());
+			String result = recordService.addRecordFromXML(xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
@@ -104,23 +104,24 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	}
 
 	/**
-	 * get the user from database
+	 * get the record from database
 	 * 
-	 * @param userId
-	 *            {@link Long} userId
+	 * @param recordId
+	 *            {@link Long} recordId
 	 * @return {@link ResponseEntity}
 	 * @throws AlKhwarizmixException
 	 */
-	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<String> getUserById(
-			@PathVariable("userId") String userId) throws AlKhwarizmixException {
-		getLogger().debug("getUserById({})", userId);
+	@RequestMapping(value = "/{recordId}", method = RequestMethod.GET)
+	public ResponseEntity<String> getRecordById(
+			@PathVariable("recordId") String recordId)
+			throws AlKhwarizmixException {
+		getLogger().debug("getRecordById({})", recordId);
 
 		try {
-			User userToGet = new User();
-			userToGet.setUserId(userId);
+			Record recordToGet = new Record();
+			recordToGet.setRecordId(recordId);
 			StringBuilder sBuilder = new StringBuilder(
-					userService.getUserAsXML(userToGet));
+					recordService.getRecordAsXML(recordToGet));
 			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
@@ -128,23 +129,23 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	}
 
 	/**
-	 * update the user in database
+	 * update the record in database
 	 * 
 	 * @param xmlValue
-	 *            {@link String} the user as xml
+	 *            {@link String} the record as xml
 	 * @return {@link ResponseEntity}
 	 * @throws AlKhwarizmixException
 	 */
-	@RequestMapping(value = "/{userId}", method = RequestMethod.POST)
-	public ResponseEntity<String> updateUser(
-			@PathVariable("userId") String userId,
-			@RequestParam("user") String xmlValue) throws AlKhwarizmixException {
-		getLogger().debug("updateUser({})", xmlValue);
+	@RequestMapping(value = "/{recordId}", method = RequestMethod.POST)
+	public ResponseEntity<String> updateRecord(
+			@PathVariable("recordId") String recordId,
+			@RequestParam("record") String xmlValue)
+			throws AlKhwarizmixException {
+		getLogger().debug("updateRecord({})", xmlValue);
 
 		try {
 			StringBuilder sBuilder = new StringBuilder(
-					userService.updateUserFromXML(xmlValue,
-							getCurrentRequestRemoteAddress()));
+					recordService.updateRecordFromXML(xmlValue));
 			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
@@ -154,33 +155,16 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	/**
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<String> getUserList(
+	public ResponseEntity<String> getRecordList(
 			@RequestParam("firstResult") int firstResult,
 			@RequestParam("maxResult") int maxResult) {
 		StringBuilder result = new StringBuilder();
 
 		try {
-			result.append(userService.getUserListAsXML(null, firstResult,
-					maxResult));
+			result.append(recordService.getRecordListAsXML(null, null, null,
+					firstResult, maxResult));
 
 			return successResponseForXML(result);
-		} catch (AlKhwarizmixException e) {
-			return errorResponseForXML(e);
-		}
-	}
-
-	/**
-	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<String> login(@RequestParam("user") String xmlValue)
-			throws AlKhwarizmixException {
-		getLogger().debug("login({})", xmlValue);
-
-		try {
-			StringBuilder sBuilder = new StringBuilder(
-					userService.loginFromXML(xmlValue,
-							getCurrentRequestRemoteAddress()));
-			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}
@@ -193,15 +177,15 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// userService
+	// recordService
 	// ----------------------------------
 
-	protected IUserService getUserService() {
-		return userService;
+	protected IRecordService getRecordService() {
+		return recordService;
 	}
 
-	protected void setUserService(IUserService value) {
-		userService = value;
+	protected void setRecordService(IRecordService value) {
+		recordService = value;
 	}
 
 	// ----------------------------------
@@ -210,7 +194,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 
 	@Override
 	protected IAlKhwarizmixService getService() {
-		return userService;
+		return recordService;
 	}
 
 } // Class
