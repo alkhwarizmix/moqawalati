@@ -51,6 +51,8 @@
 
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<hsqldb.version>1.8.0.10</hsqldb.version>
+		<slf4j-log4j12.version>1.7.7</slf4j-log4j12.version>
+		<slf4j-api.version>1.7.7</slf4j-api.version>
 
 		<jmeter.version>1.8.1</jmeter.version>
 		<findbugs.version>2.5.3</findbugs.version>
@@ -296,9 +298,15 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.8</version>
+			<version>${slf4j-log4j12.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
