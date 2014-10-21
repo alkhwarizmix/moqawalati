@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +124,7 @@ public class RecordService extends AlKhwarizmixService implements
 			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("getObject");
-		Record result = getMoqawalatiDAO().getRecord((Record) object);
+		Record result = getRecordDAO().getRecord((Record) object);
 		updateObjectFromExtendedDataXML(result);
 		return result;
 	}
@@ -196,14 +197,20 @@ public class RecordService extends AlKhwarizmixService implements
 			DetachedCriteria criteriaToUse, int firstResult, int maxResult)
 			throws AlKhwarizmixException {
 		getLogger().debug("getRecordList");
-		if (criteriaToUse == null) {
-			criteriaToUse = DetachedCriteria.forClass(Record.class);
-			criteriaToUse.addOrder(Order.asc(Record.RECORDID));
+		List<Record> listOfRecords = null;
+		Record tableRecord = new Record(null, schema, table).getTableRecord();
+		tableRecord = getRecordDAO().getRecord(tableRecord);
+		if (tableRecord != null) {
+			if (criteriaToUse == null) {
+				criteriaToUse = DetachedCriteria.forClass(Record.class);
+				criteriaToUse.addOrder(Order.asc(Record.RECORDID));
+			}
+			criteriaToUse.add(Restrictions.eq(Record.PARENT,
+					tableRecord.getId()));
+			listOfRecords = (List<Record>) (List<?>) getObjectList(
+					criteriaToUse, firstResult, maxResult);
 		}
-		RecordList result = new RecordList(
-				(List<Record>) (List<?>) getObjectList(criteriaToUse,
-						firstResult, maxResult));
-		return result;
+		return new RecordList(listOfRecords);
 	}
 
 	/**
@@ -260,7 +267,7 @@ public class RecordService extends AlKhwarizmixService implements
 	// recordDAO
 	// ----------------------------------
 
-	final IRecordDAO getMoqawalatiDAO() {
+	final IRecordDAO getRecordDAO() {
 		return recordDAO;
 	}
 

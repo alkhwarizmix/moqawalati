@@ -135,13 +135,14 @@ public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 */
 	@RequestMapping(value = "/{schemaName}/{tableName}", method = RequestMethod.GET)
 	public ResponseEntity<String> getRecordList(
+			@PathVariable("schemaName") String schemaName,
+			@PathVariable("tableName") String tableName,
 			@RequestParam("firstResult") int firstResult,
 			@RequestParam("maxResult") int maxResult) {
 		StringBuilder result = new StringBuilder();
 		try {
-			result.append(recordService.getRecordListAsXML(null, null, null,
-					firstResult, maxResult));
-
+			result.append(recordService.getRecordListAsXML(schemaName,
+					tableName, null, firstResult, maxResult));
 			return successResponseForXML(result);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
