@@ -100,21 +100,6 @@ public class RecordService extends AlKhwarizmixService implements
 	@Override
 	public void addRecord(Record record) throws AlKhwarizmixException {
 		getLogger().debug("addRecord");
-		Record tableRecord = new Record(null, record.getSchemaName(),
-				record.getTableName());
-		Record existingTableRecord = getRecord(tableRecord);
-		if (existingTableRecord == null) {
-			Record schemaRecord = new Record(null, record.getSchemaName(), null);
-			Record existingSchemaRecord = getRecord(schemaRecord);
-			if (existingSchemaRecord == null) {
-				addObject(schemaRecord);
-				existingSchemaRecord = schemaRecord;
-			}
-			tableRecord.setParent(existingSchemaRecord);
-			addObject(tableRecord);
-			existingTableRecord = tableRecord;
-		}
-		record.setParent(existingTableRecord);
 		addObject(record);
 	}
 

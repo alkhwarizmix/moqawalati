@@ -93,7 +93,6 @@ public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 			@RequestParam("record") String xmlValue)
 			throws AlKhwarizmixException {
 		getLogger().debug("addRecord({})", xmlValue);
-
 		try {
 			String result = recordService.addRecordFromXML(xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
@@ -111,18 +110,39 @@ public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 * @return {@link ResponseEntity}
 	 * @throws AlKhwarizmixException
 	 */
-	@RequestMapping(value = "/{recordId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{schemaName}/{tableName}/{recordId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getRecordById(
+			@PathVariable("schemaName") String schemaName,
+			@PathVariable("tableName") String tableName,
 			@PathVariable("recordId") String recordId)
 			throws AlKhwarizmixException {
-		getLogger().debug("getRecordById({})", recordId);
-
+		getLogger().debug("getRecordById({}, {}, {})", schemaName, tableName,
+				recordId);
 		try {
 			Record recordToGet = new Record();
+			recordToGet.setSchemaName(schemaName);
+			recordToGet.setTableName(tableName);
 			recordToGet.setRecordId(recordId);
 			StringBuilder sBuilder = new StringBuilder(
 					recordService.getRecordAsXML(recordToGet));
 			return successResponseForXML(sBuilder);
+		} catch (AlKhwarizmixException e) {
+			return errorResponseForXML(e);
+		}
+	}
+
+	/**
+	 */
+	@RequestMapping(value = "/{schemaName}/{tableName}", method = RequestMethod.GET)
+	public ResponseEntity<String> getRecordList(
+			@RequestParam("firstResult") int firstResult,
+			@RequestParam("maxResult") int maxResult) {
+		StringBuilder result = new StringBuilder();
+		try {
+			result.append(recordService.getRecordListAsXML(null, null, null,
+					firstResult, maxResult));
+
+			return successResponseForXML(result);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}
@@ -142,29 +162,10 @@ public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 			@RequestParam("record") String xmlValue)
 			throws AlKhwarizmixException {
 		getLogger().debug("updateRecord({})", xmlValue);
-
 		try {
 			StringBuilder sBuilder = new StringBuilder(
 					recordService.updateRecordFromXML(xmlValue));
 			return successResponseForXML(sBuilder);
-		} catch (AlKhwarizmixException e) {
-			return errorResponseForXML(e);
-		}
-	}
-
-	/**
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<String> getRecordList(
-			@RequestParam("firstResult") int firstResult,
-			@RequestParam("maxResult") int maxResult) {
-		StringBuilder result = new StringBuilder();
-
-		try {
-			result.append(recordService.getRecordListAsXML(null, null, null,
-					firstResult, maxResult));
-
-			return successResponseForXML(result);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}
