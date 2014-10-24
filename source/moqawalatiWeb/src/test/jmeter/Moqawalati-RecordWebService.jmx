@@ -94,12 +94,12 @@
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testRecordAddSuccess" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
-                <elementProp name="record" elementType="HTTPArgument">
+                <elementProp name="recordList" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;Record id=&quot;R${RAN_RECORD_ID}&quot; schema=&quot;Schema${RAN_RECORD_ID}&quot; table=&quot;Table${RAN_RECORD_ID}&quot;&gt;&lt;data&gt;Data For ${RAN_RECORD_ID}&lt;/data&gt;&lt;/Record&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;RecordList&gt;&lt;Record id=&quot;R${RAN_RECORD_ID}&quot; schema=&quot;Schema${RAN_RECORD_ID}&quot; table=&quot;Table${RAN_RECORD_ID}&quot;&gt;&lt;data&gt;Data For ${RAN_RECORD_ID}&lt;/data&gt;&lt;/Record&gt;&lt;/RecordList&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">record</stringProp>
+                  <stringProp name="Argument.name">recordList</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>

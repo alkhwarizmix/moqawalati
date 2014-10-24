@@ -29,11 +29,12 @@ public interface IRecordService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public void addRecord(Record record) throws AlKhwarizmixException;
+	public void commitRecordList(RecordList recordList)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public String addRecordFromXML(String recordXml)
+	public String commitRecordListFromXML(String recordListXml)
 			throws AlKhwarizmixException;
 
 	/**
@@ -51,15 +52,6 @@ public interface IRecordService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public Record updateRecord(Record record) throws AlKhwarizmixException;
-
-	/**
-	 */
-	public String updateRecordFromXML(String recordXml)
-			throws AlKhwarizmixException;
-
-	/**
-	 */
 	public RecordList getRecordList(String schema, String table,
 			DetachedCriteria criteriaToUse, int firstResult, int maxResult)
 			throws AlKhwarizmixException;
@@ -69,9 +61,5 @@ public interface IRecordService extends IAlKhwarizmixService {
 	public String getRecordListAsXML(String schema, String table,
 			DetachedCriteria criteria, int firstResult, int maxResult)
 			throws AlKhwarizmixException;
-
-	/**
-	 */
-	public String recordListToXML(RecordList recordList);
 
 } // Interface

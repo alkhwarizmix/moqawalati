@@ -69,8 +69,6 @@ public class XMLUtil {
 	 */
 	public final String objectListToXML(
 			List<AbstractAlKhwarizmixDomainObject> objectList) {
-		// getLogger().trace("objectListToXML()");
-
 		StringWriter stringWriter = new StringWriter();
 		XMLResult xmlResult = new XMLResult(stringWriter);
 		for (AbstractAlKhwarizmixDomainObject object : objectList) {
@@ -95,7 +93,6 @@ public class XMLUtil {
 
 	protected String internal_marshalObjectToXML( // NOPMD
 			AbstractAlKhwarizmixDomainObject object) {
-
 		StringWriter stringWriter = new StringWriter();
 		StreamResult streamResult = new StreamResult(stringWriter);
 		jaxb2Marshaller.marshal(object, streamResult);
@@ -107,7 +104,6 @@ public class XMLUtil {
 	 */
 	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException {
-
 		try {
 			return internal_unmarshalObjectFromXML(xmlValue);
 		} catch (XmlMappingException e) {
@@ -138,7 +134,6 @@ public class XMLUtil {
 
 	protected String internal_marshalObjectListToXML( // NOPMD
 			IAlKhwarizmixDomainObjectList objectList) {
-
 		StringWriter stringWriter = new StringWriter();
 		StreamResult streamResult = new StreamResult(stringWriter);
 		jaxb2Marshaller.marshal(objectList, streamResult);
@@ -150,7 +145,6 @@ public class XMLUtil {
 	 */
 	public final IAlKhwarizmixDomainObjectList unmarshalObjectListFromXML(
 			String xmlValue) throws AlKhwarizmixException {
-
 		try {
 			return internal_unmarshalObjectListFromXML(xmlValue);
 		} catch (XmlMappingException e) {

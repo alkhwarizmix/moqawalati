@@ -77,35 +77,29 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 	/**
 	 */
 	@Override
-	public void addRecord(Record record) throws AlKhwarizmixException {
-		getLogger().trace("addRecord");
-		getRecordService().addRecord(record);
+	public void commitRecordList(RecordList recordList)
+			throws AlKhwarizmixException {
+		getLogger().debug("commitRecordList({})", recordList);
+		getRecordService().commitRecordList(recordList);
 	}
 
 	/**
 	 */
 	@Override
 	public Record getRecord(Record record) throws AlKhwarizmixException {
-		getLogger().trace("getRecord");
+		getLogger().debug("getRecord({})", record);
 		return getRecordService().getRecord(record);
 	}
 
 	/**
 	 */
 	@Override
-	public Record updateRecord(Record record) throws AlKhwarizmixException {
-		getLogger().trace("updateRecord");
-		return getRecordService().updateRecord(record);
-	}
-
-	/**
-	 */
-	@Override
-	public RecordList getRecordList(int firstResult, int maxResult)
-			throws AlKhwarizmixException {
-		getLogger().trace("getRecordList");
-		return getRecordService().getRecordList(null, null, null, firstResult,
-				maxResult);
+	public RecordList getRecordList(String schemaName, String tableName,
+			int firstResult, int maxResult) throws AlKhwarizmixException {
+		getLogger().debug("getRecordList({}. {}, {})", schemaName, tableName,
+				firstResult, maxResult);
+		return getRecordService().getRecordList(schemaName, tableName, null,
+				firstResult, maxResult);
 	}
 
 	// --------------------------------------------------------------------------
@@ -130,7 +124,6 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 	// service
 	// ----------------------------------
 
-	// @Override
 	protected IAlKhwarizmixService getService() {
 		return recordService;
 	}

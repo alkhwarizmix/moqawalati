@@ -99,21 +99,28 @@ public class RecordService extends AlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public void addRecord(Record record) throws AlKhwarizmixException {
-		getLogger().debug("addRecord");
+	public void commitRecordList(RecordList recordList)
+			throws AlKhwarizmixException {
+		getLogger().trace("commitRecordList");
+		for (AbstractAlKhwarizmixDomainObject record : recordList.getList())
+			processRecord((Record) record);
+	}
+
+	private Record processRecord(Record record) throws AlKhwarizmixException {
 		addObject(record);
+		return record;
 	}
 
 	/**
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String addRecordFromXML(String recordXml)
+	public String commitRecordListFromXML(String recordListXml)
 			throws AlKhwarizmixException {
-		getLogger().trace("addRecordFromXML");
-		Record newRecord = (Record) unmarshalObjectFromXML(recordXml);
-		addRecord(newRecord);
-		String result = marshalObjectToXML(newRecord);
+		getLogger().trace("commitRecordListFromXML");
+		RecordList newRecordList = xmlToRecordList(recordListXml);
+		commitRecordList(newRecordList);
+		String result = recordListToXML(newRecordList);
 		return result;
 	}
 
@@ -133,7 +140,7 @@ public class RecordService extends AlKhwarizmixService implements
 	 */
 	@Override
 	public Record getRecord(Record record) throws AlKhwarizmixException {
-		getLogger().debug("getRecord");
+		getLogger().trace("getRecord");
 		Record result = internal_getRecord(record);
 		nullifyProtectedProperties(result);
 		return result;
@@ -167,36 +174,11 @@ public class RecordService extends AlKhwarizmixService implements
 
 	/**
 	 */
-	@Transactional(readOnly = false)
-	@Override
-	public Record updateRecord(Record record) throws AlKhwarizmixException {
-		getLogger().debug("updateRecord");
-		setupObjectExtendedDataXMLValue(record);
-		Record result = (Record) updateObject(record);
-		return result;
-	}
-
-	/**
-	 */
-	@Transactional(readOnly = false)
-	@Override
-	public String updateRecordFromXML(String recordXml)
-			throws AlKhwarizmixException {
-		getLogger().trace("updateRecordFromXML");
-		Record newRecord = (Record) unmarshalObjectFromXML(recordXml);
-		// newRecord.setCreatorId(updaterId);
-		Record updatedRecord = updateRecord(newRecord);
-		String result = marshalObjectToXML(updatedRecord);
-		return result;
-	}
-
-	/**
-	 */
 	@Override
 	public RecordList getRecordList(String schema, String table,
 			DetachedCriteria criteriaToUse, int firstResult, int maxResult)
 			throws AlKhwarizmixException {
-		getLogger().debug("getRecordList");
+		getLogger().trace("getRecordList");
 		List<Record> listOfRecords = null;
 		Record tableRecord = new Record(null, schema, table).getTableRecord();
 		tableRecord = getRecordDAO().getRecord(tableRecord);
@@ -225,22 +207,6 @@ public class RecordService extends AlKhwarizmixService implements
 		return result;
 	}
 
-	/**
-	 */
-	@Override
-	public String recordListToXML(RecordList recordList) {
-		String result = null;
-		try {
-			result = new XMLUtil(getJaxb2Marshaller())
-					.marshalObjectListToXML(recordList);
-		} catch (AlKhwarizmixException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException();
-		}
-		getLogger().trace("recordListToXML(): returns {}", result);
-		return result;
-	}
-
 	@Override
 	protected void nullifyProtectedProperties(
 			AbstractAlKhwarizmixDomainObject object) {
@@ -255,6 +221,36 @@ public class RecordService extends AlKhwarizmixService implements
 	 */
 	private AlKhwarizmixDomainObject getSessionCustomizer() {
 		return getSessionData().getCustomizer();
+	}
+
+	/**
+	 */
+	protected String recordListToXML(RecordList recordList) {
+		String result = null;
+		try {
+			result = new XMLUtil(getJaxb2Marshaller())
+					.marshalObjectListToXML(recordList);
+		} catch (AlKhwarizmixException exception) {
+			getLogger().error("recordListToXML(): exception {}", exception);
+			throw new RuntimeException();
+		}
+		getLogger().trace("recordListToXML(): returns {}", result);
+		return result;
+	}
+
+	/**
+	 */
+	protected RecordList xmlToRecordList(String recordListXml) {
+		RecordList result = null;
+		try {
+			result = (RecordList) new XMLUtil(getJaxb2Marshaller())
+					.unmarshalObjectListFromXML(recordListXml);
+		} catch (AlKhwarizmixException exception) {
+			getLogger().error("recordListToXML(): exception {}", exception);
+			throw new RuntimeException();
+		}
+		getLogger().trace("recordListToXML(): returns {}", result);
+		return result;
 	}
 
 	// --------------------------------------------------------------------------

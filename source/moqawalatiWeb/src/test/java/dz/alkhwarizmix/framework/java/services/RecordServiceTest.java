@@ -63,9 +63,6 @@ public class RecordServiceTest {
 	private RecordService utRecordService;
 
 	@Mock
-	private RecordService mockRecordService;
-
-	@Mock
 	private IRecordDAO mockRecordDAO;
 
 	@Mock
@@ -84,8 +81,6 @@ public class RecordServiceTest {
 	public void setUp() throws AlKhwarizmixException {
 		setupUtRecordService();
 		setupMockJaxb2Marshaller();
-		setupMockRecordService();
-
 		when(mockUser.getDomainObject()).thenReturn(mockUserDomainObject);
 	}
 
@@ -100,11 +95,6 @@ public class RecordServiceTest {
 				new Record());
 	}
 
-	private void setupMockRecordService() {
-		when(mockRecordService.getLogger()).thenCallRealMethod();
-		mockRecordService.setSessionData(spySessionData);
-	}
-
 	// --------------------------------------------------------------------------
 	//
 	// Helpers
@@ -113,6 +103,12 @@ public class RecordServiceTest {
 
 	private Jaxb2Marshaller getRealJaxb2Marshaller() {
 		return new HelperTestUtil().getRealJaxb2Marshaller();
+	}
+
+	private RecordList newRecordList(Record record) {
+		RecordList result = new RecordList();
+		result.getList().add(record);
+		return result;
 	}
 
 	// --------------------------------------------------------------------------
@@ -174,9 +170,9 @@ public class RecordServiceTest {
 	}
 
 	@Test
-	public void test03_A_addRecord_calls_dao_saveOrUpdate()
+	public void test03_A_commitRecordList_calls_dao_saveOrUpdate()
 			throws AlKhwarizmixException {
-		utRecordService.addRecord(new Record()); // TEST
+		utRecordService.commitRecordList(newRecordList(new Record())); // TEST
 		verify(mockRecordDAO, times(1)).saveOrUpdate(
 				any(AbstractAlKhwarizmixDomainObject.class));
 	}
@@ -186,7 +182,7 @@ public class RecordServiceTest {
 	public void test03_B_addRecord_should_set_owner_from_session()
 			throws AlKhwarizmixException {
 		Record newRecord = Mockito.mock(Record.class);
-		utRecordService.addRecord(newRecord); // TEST
+		utRecordService.commitRecordList(newRecordList(newRecord)); // TEST
 		verify(newRecord, times(1)).setOwner(mockUserDomainObject);
 	}
 
@@ -229,6 +225,15 @@ public class RecordServiceTest {
 		Assert.assertEquals(
 				"<RecordList><Record id=\"12305\"/><Record id=\"12306\"/></RecordList>",
 				recordAsXML);
+	}
+
+	@Test
+	public void test08_xmlToRecordList() throws AlKhwarizmixException {
+		utRecordService.setJaxb2Marshaller(getRealJaxb2Marshaller());
+		String newRecordListXML = "<RecordList><Record id=\"12305\"/><Record id=\"12306\"/></RecordList>";
+		RecordList recordList = utRecordService
+				.xmlToRecordList(newRecordListXML); // TEST
+		Assert.assertEquals(2, recordList.getList().size());
 	}
 
 } // Class

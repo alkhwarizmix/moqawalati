@@ -27,7 +27,8 @@ public interface IRecordWebServiceForBlazeDS {
 
 	/**
 	 */
-	public void addRecord(Record record) throws AlKhwarizmixException;
+	public void commitRecordList(RecordList recordList)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -35,11 +36,7 @@ public interface IRecordWebServiceForBlazeDS {
 
 	/**
 	 */
-	public Record updateRecord(Record record) throws AlKhwarizmixException;
-
-	/**
-	 */
-	public RecordList getRecordList(int firstResult, int maxResult)
-			throws AlKhwarizmixException;
+	public RecordList getRecordList(String schemaName, String tableName,
+			int firstResult, int maxResult) throws AlKhwarizmixException;
 
 } // Class

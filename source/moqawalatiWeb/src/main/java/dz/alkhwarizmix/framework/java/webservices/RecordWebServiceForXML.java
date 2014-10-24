@@ -81,20 +81,20 @@ public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	// --------------------------------------------------------------------------
 
 	/**
-	 * add the record to database
+	 * commit the records to database
 	 * 
 	 * @param xmlValue
-	 *            {@link String} the record as xml
+	 *            {@link String} the recordList as xml
 	 * @return {@link ResponseEntity}
 	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> addRecord(
-			@RequestParam("record") String xmlValue)
+	public ResponseEntity<String> commitRecordList(
+			@RequestParam("recordList") String xmlValue)
 			throws AlKhwarizmixException {
-		getLogger().debug("addRecord({})", xmlValue);
+		getLogger().debug("commitRecordList({})", xmlValue);
 		try {
-			String result = recordService.addRecordFromXML(xmlValue);
+			String result = recordService.commitRecordListFromXML(xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
@@ -111,7 +111,7 @@ public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(value = "/{schemaName}/{tableName}/{recordId}", method = RequestMethod.GET)
-	public ResponseEntity<String> getRecordById(
+	public ResponseEntity<String> getRecord(
 			@PathVariable("schemaName") String schemaName,
 			@PathVariable("tableName") String tableName,
 			@PathVariable("recordId") String recordId)
@@ -139,34 +139,13 @@ public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 			@PathVariable("tableName") String tableName,
 			@RequestParam("firstResult") int firstResult,
 			@RequestParam("maxResult") int maxResult) {
+		getLogger().debug("getRecordList({}, {}, {}, {})", schemaName,
+				tableName, firstResult, maxResult);
 		StringBuilder result = new StringBuilder();
 		try {
 			result.append(recordService.getRecordListAsXML(schemaName,
 					tableName, null, firstResult, maxResult));
 			return successResponseForXML(result);
-		} catch (AlKhwarizmixException e) {
-			return errorResponseForXML(e);
-		}
-	}
-
-	/**
-	 * update the record in database
-	 * 
-	 * @param xmlValue
-	 *            {@link String} the record as xml
-	 * @return {@link ResponseEntity}
-	 * @throws AlKhwarizmixException
-	 */
-	@RequestMapping(value = "/{recordId}", method = RequestMethod.POST)
-	public ResponseEntity<String> updateRecord(
-			@PathVariable("recordId") String recordId,
-			@RequestParam("record") String xmlValue)
-			throws AlKhwarizmixException {
-		getLogger().debug("updateRecord({})", xmlValue);
-		try {
-			StringBuilder sBuilder = new StringBuilder(
-					recordService.updateRecordFromXML(xmlValue));
-			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}

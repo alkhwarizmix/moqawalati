@@ -26,6 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -206,7 +207,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// id
 	// ----------------------------------
 
-	// @XmlTransient
+	@XmlTransient
 	public Long getId() {
 		return id;
 	}
