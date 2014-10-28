@@ -103,12 +103,37 @@ public class RecordService extends AlKhwarizmixService implements
 			throws AlKhwarizmixException {
 		getLogger().trace("commitRecordList");
 		for (AbstractAlKhwarizmixDomainObject record : recordList.getList())
-			processRecord((Record) record);
+			commitRecord((Record) record);
 	}
 
-	private Record processRecord(Record record) throws AlKhwarizmixException {
+	private Record commitRecord(Record record) throws AlKhwarizmixException {
+		if (record.getAction() == null)
+			throw new AlKhwarizmixException("Wrong action");
+		switch (record.getAction()) {
+		case Record.INSERT_ACTION:
+			return insertRecord(record);
+		case Record.UPDATE_ACTION:
+			return updateRecord(record);
+		case Record.DELETE_ACTION:
+			return deleteRecord(record);
+		default:
+			throw new AlKhwarizmixException("Wrong action");
+		}
+	}
+
+	private Record insertRecord(Record record) throws AlKhwarizmixException {
 		addObject(record);
 		return record;
+	}
+
+	private Record updateRecord(Record record) throws AlKhwarizmixException {
+		updateObject(record);
+		return record;
+	}
+
+	private Record deleteRecord(Record record) throws AlKhwarizmixException {
+		// deleteObject(record);
+		return null;
 	}
 
 	/**

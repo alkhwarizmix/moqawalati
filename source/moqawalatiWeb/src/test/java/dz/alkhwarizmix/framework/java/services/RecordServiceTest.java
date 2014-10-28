@@ -172,7 +172,9 @@ public class RecordServiceTest {
 	@Test
 	public void test03_A_commitRecordList_calls_dao_saveOrUpdate()
 			throws AlKhwarizmixException {
-		utRecordService.commitRecordList(newRecordList(new Record())); // TEST
+		Record newRecord = new Record();
+		newRecord.setAction(Record.INSERT_ACTION);
+		utRecordService.commitRecordList(newRecordList(newRecord)); // TEST
 		verify(mockRecordDAO, times(1)).saveOrUpdate(
 				any(AbstractAlKhwarizmixDomainObject.class));
 	}

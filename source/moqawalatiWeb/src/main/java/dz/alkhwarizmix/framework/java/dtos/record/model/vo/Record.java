@@ -64,6 +64,10 @@ public class Record extends
 
 	private static final long serialVersionUID = 3395819474101382304L;
 
+	public static final int INSERT_ACTION = 1;
+	public static final int UPDATE_ACTION = 2;
+	public static final int DELETE_ACTION = 3;
+
 	public static final String RECORDID = "recordId";
 	public static final String PARENT = "parent.id";
 
@@ -135,6 +139,9 @@ public class Record extends
 
 	@Transient
 	private String tableName;
+
+	@Transient
+	private Integer action;
 
 	// --------------------------------------------------------------------------
 	//
@@ -325,6 +332,19 @@ public class Record extends
 
 	public String getTableRecordId() {
 		return "_T_" + tableName;
+	}
+
+	// ----------------------------------
+	// tableName
+	// ----------------------------------
+
+	@XmlAttribute(name = "action")
+	public Integer getAction() {
+		return action;
+	}
+
+	public void setAction(Integer value) {
+		this.action = value;
 	}
 
 } // Class
