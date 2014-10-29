@@ -20,7 +20,7 @@ import dz.alkhwarizmix.framework.flex.interfaces.IAlKhwarizmixCommand;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ *  @since  ٢٦ محرم ١٤٣٦ (October 27, 2014)
  */
 public interface IMoqawalatiCommand extends IAlKhwarizmixCommand
 {

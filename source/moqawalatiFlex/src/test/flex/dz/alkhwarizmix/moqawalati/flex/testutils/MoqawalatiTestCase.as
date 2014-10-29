@@ -12,12 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.testutils
 {
 
-import flash.events.Event;
-import flash.events.IEventDispatcher;
-
-import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
-
-import org.flexunit.asserts.assertTrue;
+import dz.alkhwarizmix.framework.flex.testutils.AlKhwarizmixTestCase;
 
 /**
  *  <p>
@@ -27,145 +22,8 @@ import org.flexunit.asserts.assertTrue;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since  ١٨ ذو الحجة ١٤٣٤ (October 23, 2013)
  */
-public class MoqawalatiTestCase
+public class MoqawalatiTestCase extends AlKhwarizmixTestCase
 {
-	//--------------------------------------------------------------------------
-	//
-	//  Constants
-	//
-	//--------------------------------------------------------------------------
-	
-	protected static const THREE_SECONDS:Number = 3000;
-	
-	//--------------------------------------------------------------------------
-	//
-	//  SETUP & TEARDOWN
-	//
-	//--------------------------------------------------------------------------
-	
-	protected var classInstanceUnderTest:* = null;
-	
-	[Before(order=1)]
-	public final function setUp_final():void
-	{
-		doBeforeSetUp();
-		
-		if (classUnderTestConstructorArg2)
-		{
-			classInstanceUnderTest = new classUnderTest(
-				classUnderTestConstructorArg1,
-				classUnderTestConstructorArg2);
-		}
-		else if (classUnderTestConstructorArg1)
-		{
-			classInstanceUnderTest = new classUnderTest(
-				classUnderTestConstructorArg1);
-		}
-		else
-		{
-			classInstanceUnderTest = new classUnderTest();
-		}
-		
-		setUp();
-	}
-	
-	protected function doBeforeSetUp():void
-	{
-		// NOOP
-	}
-	
-	protected function setUp():void
-	{
-		throw new AlKhwarizmixMissingImplError();
-	}
-	
-	protected function get classUnderTest():Class
-	{
-		throw new AlKhwarizmixMissingImplError();
-	}
-	
-	protected function get classUnderTestConstructorArg1():*
-	{
-		return null;
-	}
-	
-	protected function get classUnderTestConstructorArg2():*
-	{
-		return null;
-	}
-	
-	[After(order=999)]
-	public final function tearDown_final():void
-	{
-		tearDown();
-		
-		classInstanceUnderTest = null;
-	}
-	
-	protected function tearDown():void
-	{
-		throw new AlKhwarizmixMissingImplError();
-	}
-	
-	//--------------------------------------------------------------------------
-	//
-	//  HELPERS
-	//
-	//--------------------------------------------------------------------------
-	
-	/**
-	 * @private
-	 * 
-	 * Example of use:
-	 *  classUnderTest = new MoqawalatiClass();
-	 *  assert_should_throwMissingImplError(
-	 *    function ():void
-	 *    {
-	 *      classUnderTest.function_should_throw_error();
-	 *    });
-	 */
-	protected  final function assert_should_throwMissingImplError(
-		functionThrowingException:Function):void
-	{
-		try
-		{
-			functionThrowingException();
-			assertTrue("Should throw exception before to be here", false);
-		}
-		catch (error:Error)
-		{
-			assertTrue(error is AlKhwarizmixMissingImplError);
-		}
-	}
-	
-	/**
-	 * @private
-	 * 
-	 * Example of use:
-	 * assert_should_dispatchedEvent(utMainControlBar,
-	 *  MainControlBarEvent.OPEN_WINDOW,
-	 *  MainControlBarEvent,
-	 *  function ():void
-	 *  {
-	 *   utMainControlBar.menuBar.dispatchEvent(
-	 *    new MenuEvent(MenuEvent.ITEM_CLICK));
-	 *  });
-	 */
-	protected final function assert_should_dispatchedEvent(
-		dispatcherToListen:IEventDispatcher,
-		eventToListen:String,
-		eventClassToListen:Class,
-		functionToRun:Function):void
-	{
-		var dispatchedEvent:Event = null;
-		dispatcherToListen.addEventListener(eventToListen,
-			function (event:Event):void
-			{
-				dispatchedEvent = event;
-			});
-		functionToRun();
-		assertTrue(dispatchedEvent is eventClassToListen);
-	}
 	
 } // class
 } // package

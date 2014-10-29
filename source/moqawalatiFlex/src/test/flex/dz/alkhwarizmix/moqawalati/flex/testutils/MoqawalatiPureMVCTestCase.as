@@ -98,14 +98,6 @@ public class MoqawalatiPureMVCTestCase extends MoqawalatiTestCase
 	/**
 	 * @private
 	 */
-	protected final function removeFacadeCore(key:String):void
-	{
-		Facade.removeCore(key);
-	}
-	
-	/**
-	 * @private
-	 */
 	protected final function newFacadeCommandClassWithKey(
 		facade:AlKhwarizmixFacade, key:String):*
 	{

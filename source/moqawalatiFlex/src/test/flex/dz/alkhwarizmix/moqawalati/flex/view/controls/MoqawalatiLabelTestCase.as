@@ -32,7 +32,7 @@ public class MoqawalatiLabelTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	override protected function setUpAyncUI():void
+	override protected function setUpAsyncUI():void
 	{
 		// NOOP
 	}
