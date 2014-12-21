@@ -58,10 +58,32 @@ public class RecordTest {
 		Assert.assertNotNull(utRecord);
 	}
 
-	@Ignore("TODO: TDD")
 	@Test
-	public void test01() {
-		Assert.assertTrue(false);
+	public void test01_recordId_setAndGet() {
+		String valueToSet = "recordId1";
+		utRecord.setRecordId(valueToSet);
+		Assert.assertEquals(valueToSet, utRecord.getRecordId());
+	}
+
+	@Test
+	public void test02_schemaName_setAndGet() {
+		String valueToSet = "schemaName";
+		utRecord.setSchemaName(valueToSet);
+		Assert.assertEquals(valueToSet, utRecord.getSchemaName());
+	}
+
+	@Test
+	public void test03_tableName_setAndGet() {
+		String valueToSet = "tableName";
+		utRecord.setTableName(valueToSet);
+		Assert.assertEquals(valueToSet, utRecord.getTableName());
+	}
+
+	@Test
+	public void test04_action_setAndGet() {
+		Integer valueToSet = Record.INSERT_ACTION;
+		utRecord.setAction(valueToSet);
+		Assert.assertEquals(valueToSet, utRecord.getAction());
 	}
 
 	@Ignore("TODO: TDD")

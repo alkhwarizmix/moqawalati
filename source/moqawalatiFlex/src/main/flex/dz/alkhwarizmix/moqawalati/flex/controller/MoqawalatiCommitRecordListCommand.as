@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,12 +9,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.model.vo
+package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
+import dz.alkhwarizmix.framework.flex.model.RecordProxy;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 
 /**
  *  <p>
@@ -22,9 +23,10 @@ import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ *  @since  ٢٥ صفر ١٤٣٦ (December 17, 2014)
  */
-public class MoqawalatiVO extends AlKhwarizmixVO
+public class MoqawalatiCommitRecordListCommand extends MoqawalatiBlazeDSGetDataCommand
+	implements IMoqawalatiCommand
 {
 	//--------------------------------------------------------------------------
 	//
@@ -35,7 +37,7 @@ public class MoqawalatiVO extends AlKhwarizmixVO
 	/**
 	 *  Constructor.
 	 */
-	public function MoqawalatiVO()
+	public function MoqawalatiCommitRecordListCommand()
 	{
 		super();
 	}
@@ -47,9 +49,39 @@ public class MoqawalatiVO extends AlKhwarizmixVO
 	//--------------------------------------------------------------------------
 	
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiVO);
+		getLogger(MoqawalatiCommitRecordListCommand);
 	
 	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
-} // Class
-} // Package
+	//--------------------------------------------------------------------------
+	//
+	//  Overriden properties
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get destination():String
+	{
+		return "recordBlazeDS";
+	}
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get operationName():String
+	{
+		return "commitRecordList";
+	}
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get proxyName():String
+	{
+		return RecordProxy.NAME;
+	}
+	
+} // class
+} // package

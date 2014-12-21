@@ -55,7 +55,7 @@ public class MoqawalatiFacade extends AlKhwarizmixFacade
 		if (new commandClassRef() is IMoqawalatiCommand)
 			super.registerCommand(notificationName, commandClassRef);
 		else
-			throw new AlKhwarizmixTypeError;
+			throw new AlKhwarizmixTypeError();
 	}
 	
 } // class

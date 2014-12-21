@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.controller
 
 import flash.utils.Dictionary;
 
+import dz.alkhwarizmix.framework.flex.model.RecordProxy;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
@@ -94,6 +95,7 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 			getConfigDico(app.parameters)));
 		facade.registerProxy(new MoqawalatiCustomDataProxy());
 		facade.registerProxy(new MoqawalatiLoginUserProxy());
+		facade.registerProxy(new RecordProxy());
 	}
 	
 	/**

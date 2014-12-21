@@ -28,6 +28,9 @@ import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.view.components.Clie
 [RunWith("org.flexunit.runners.Suite")]
 public class ClientModuleTestSuite
 {
+	public var clientModuleTestCase:ClientModuleTestCase;
+	public var clientModuleConstantsTestCase:ClientModuleConstantsTestCase;
+	
 	// facade
 	public var clientModuleFacadeTestCase:ClientModuleFacadeTestCase;
 	

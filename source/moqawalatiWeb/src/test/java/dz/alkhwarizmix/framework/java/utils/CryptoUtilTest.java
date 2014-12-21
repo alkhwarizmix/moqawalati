@@ -118,4 +118,32 @@ public class CryptoUtilTest {
 		Assert.assertFalse("", encrypted1.equals(encrypted2));
 	}
 
+	@Test
+	public void test07_A_reverse_empty_string_should_return_empty() {
+		String textToReverse = "";
+		String result = utCryptoUtil.reverseString(textToReverse);
+		Assert.assertEquals("", result);
+	}
+
+	@Test
+	public void test07_B_reverse_string_1_should_return_1() {
+		String textToReverse = "1";
+		String result = utCryptoUtil.reverseString(textToReverse);
+		Assert.assertEquals("1", result);
+	}
+
+	@Test
+	public void test07_C_reverse_abc_should_return_cba_char() {
+		String textToReverse = "abc";
+		String result = utCryptoUtil.reverseString(textToReverse);
+		Assert.assertEquals("cba", result);
+	}
+
+	@Test
+	public void test07_D_reverse_null_should_return_null() {
+		String textToReverse = null;
+		String result = utCryptoUtil.reverseString(textToReverse);
+		Assert.assertNull(result);
+	}
+
 } // Class

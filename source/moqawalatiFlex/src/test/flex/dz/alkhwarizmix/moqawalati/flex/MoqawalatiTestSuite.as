@@ -13,7 +13,9 @@ package dz.alkhwarizmix.moqawalati.flex
 {
 
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiCommitRecordListCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetRecordListCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommandTestCase;
@@ -75,6 +77,8 @@ public class MoqawalatiTestSuite
 	public var moqawalatiLogoutCommandTestCase:MoqawalatiLogoutCommandTestCase;
 	public var moqawalatiWebGetDataCommandTestCase:MoqawalatiWebGetDataCommandTestCase;
 	public var moqawalatiSimpleCommandTestCase:MoqawalatiSimpleCommandTestCase;
+	public var moqawalatiGetRecordListCommandTestCase:MoqawalatiGetRecordListCommandTestCase;
+	public var moqawalatiCommitRecordListCommandTestCase:MoqawalatiCommitRecordListCommandTestCase;
 	
 	// event
 	public var moqawalatiEventTestCase:MoqawalatiEventTestCase;

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,13 +9,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.controller
+package dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.vo
 {
 
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
 
 import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
@@ -23,9 +24,9 @@ import org.flexunit.asserts.assertNotNull;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٣ ذو القعدة ١٤٣٤ (September 28, 2013)
+ *  @since  ٢٦ صفر ١٤٣٦ (December 18, 2014)
  */
-public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTestCase
+public class ProductVOTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -35,26 +36,22 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 	
 	override protected function setUp():void
 	{
-		super.setUp();
-		
-		registerMoqawalatiConfigProxy();
+		// NOOP
 	}
 	
 	override protected function tearDown():void
 	{
-		removeMoqawalatiConfigProxy();
-		
-		super.tearDown();
+		// NOOP
 	}
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiBlazeDSGetDataCommand;
+		return ProductVO;
 	}
 	
-	private function get utMoqawalatiBlazeDSGetDataCommand():MoqawalatiBlazeDSGetDataCommand
+	private function get utProductVO():ProductVO
 	{
-		return classInstanceUnderTest as MoqawalatiBlazeDSGetDataCommand;
+		return classInstanceUnderTest as ProductVO;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -66,15 +63,32 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(utMoqawalatiBlazeDSGetDataCommand);
+		assertNotNull(utProductVO);
 	}
 	
 	[Test]
-	public function test01_amfURI():void
+	public function test01_toXML():void
 	{
-		moqawalatiConfigProxy.appParameters.appURL = "http://dz.moqawalati.com/moqawalati.swf";
-		assertEquals("http://dz.moqawalati.com/messagebroker/amf",
-			utMoqawalatiBlazeDSGetDataCommand.amfURI);
+		utProductVO.productId = "productId1";
+		utProductVO.name = "name1";
+		assertEquals(0, utProductVO.toXMLString().indexOf("<Product"));
+		assertTrue(utProductVO.toXMLString().indexOf("name=\"name1\"") > 0);
+		assertTrue(utProductVO.toXMLString().indexOf("productId=\"productId1\"") > 0);
+	}
+	
+	[Test]
+	public function test01_fromXML():void
+	{
+		var xml:String = "<Product productId=\"productId1\"/>";
+		var result:ProductVO = (new ProductVO().fromXMLString(xml) as ProductVO);
+		assertEquals("productId1", result.productId);
+	}
+	
+	[Ignore("TODO: TDD")]
+	[Test]
+	public function test01():void
+	{
+		assertTrue(false);
 	}
 	
 } // class

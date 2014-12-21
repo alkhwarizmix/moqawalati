@@ -12,14 +12,18 @@
 package dz.alkhwarizmix.moqawalati.flex.facade
 {
 
+import dz.alkhwarizmix.framework.flex.AlKhwarizmixConstants;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiCommitRecordListCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetRecordListCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
+import org.flexunit.asserts.assertFalse;
 import org.flexunit.asserts.assertNotNull;
 import org.flexunit.asserts.assertTrue;
 
@@ -79,7 +83,7 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiPureMVCTestCase
 	}
 	
 	[Test]
-	public function test01_registeredCommands():void
+	public function test01_A_registeredCommands_should_register():void
 	{
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
 			MoqawalatiConstants.STARTUP) is MoqawalatiStartupCommand);
@@ -91,6 +95,16 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiPureMVCTestCase
 			MoqawalatiConstants.LOGIN) is MoqawalatiLoginCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
 			MoqawalatiConstants.LOGOUT) is MoqawalatiLogoutCommand);
+	}
+	
+	[Ignore("TODO")]
+	[Test]
+	public function test01_B_registeredCommands_should_NOT_register():void
+	{
+		assertFalse(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
+			AlKhwarizmixConstants.GET_RECORD_LIST) is MoqawalatiGetRecordListCommand);
+		assertFalse(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
+			AlKhwarizmixConstants.COMMIT_RECORD_LIST) is MoqawalatiCommitRecordListCommand);
 	}
 	
 } // class

@@ -12,8 +12,10 @@
 package dz.alkhwarizmix.moqawalati.flex.dtos
 {
 
+import dz.alkhwarizmix.framework.flex.dtos.AlKhwarizmixDTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO;
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+import dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.vo.ProductVO;
 
 /**
  *  <p>
@@ -23,15 +25,18 @@ import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
  *  @author فارس بلحواس (Fares Belhaouas)
  *  @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
-public class DTOsToInclude
+public class MoqawalatiDTOsToInclude extends AlKhwarizmixDTOsToInclude
 {
 	/**
 	 * TODO: ASDOC Definition of registerNeededClasses
 	 */
-	public function registerNeededClasses():void
+	override protected function registerNeededClasses():void
 	{
-		var clientVO:ClientVO = new ClientVO();
-		var userVO:UserVO = new UserVO();
+		super.registerNeededClasses();
+		
+		registerClass(ClientVO);
+		registerClass(UserVO);
+		registerClass(ProductVO);
 	}
 	
 } // Class

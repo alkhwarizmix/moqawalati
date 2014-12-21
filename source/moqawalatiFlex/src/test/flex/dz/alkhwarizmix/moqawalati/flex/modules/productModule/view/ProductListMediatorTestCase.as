@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,13 +9,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.controller
+package dz.alkhwarizmix.moqawalati.flex.modules.productModule.view
 {
 
-import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.productModule.view.components.ProductListCanvas;
+import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
 
-import org.flexunit.asserts.assertEquals;
 import org.flexunit.asserts.assertNotNull;
+import org.flexunit.asserts.assertTrue;
 
 /**
  *  <p>
@@ -23,9 +25,9 @@ import org.flexunit.asserts.assertNotNull;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٣ ذو القعدة ١٤٣٤ (September 28, 2013)
+ *  @since  ٢٥ صفر ١٤٣٦ (December 17, 2014)
  */
-public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTestCase
+public class ProductListMediatorTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -35,26 +37,27 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 	
 	override protected function setUp():void
 	{
-		super.setUp();
-		
-		registerMoqawalatiConfigProxy();
+		// NOOP
 	}
 	
 	override protected function tearDown():void
 	{
-		removeMoqawalatiConfigProxy();
-		
-		super.tearDown();
+		// NOOP
 	}
 	
 	override protected function get classUnderTest():Class
 	{
-		return MoqawalatiBlazeDSGetDataCommand;
+		return ProductListMediator;
 	}
 	
-	private function get utMoqawalatiBlazeDSGetDataCommand():MoqawalatiBlazeDSGetDataCommand
+	override protected function get classUnderTestConstructorArg1():*
 	{
-		return classInstanceUnderTest as MoqawalatiBlazeDSGetDataCommand;
+		return new ProductListCanvas(); // viewComponent
+	}
+	
+	private function get utProductListMediator():ProductListMediator
+	{
+		return classInstanceUnderTest as ProductListMediator;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -66,15 +69,14 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(utMoqawalatiBlazeDSGetDataCommand);
+		assertNotNull(utProductListMediator);
 	}
 	
+	[Ignore("TODO: TDD")]
 	[Test]
-	public function test01_amfURI():void
+	public function test01():void
 	{
-		moqawalatiConfigProxy.appParameters.appURL = "http://dz.moqawalati.com/moqawalati.swf";
-		assertEquals("http://dz.moqawalati.com/messagebroker/amf",
-			utMoqawalatiBlazeDSGetDataCommand.amfURI);
+		assertTrue(false);
 	}
 	
 } // class

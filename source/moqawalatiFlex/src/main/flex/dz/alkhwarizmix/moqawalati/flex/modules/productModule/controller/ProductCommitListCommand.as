@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,12 +9,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.model.vo
+package dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller
 {
 
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiCommitRecordListCommand;
+import dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.ProductProxy;
 
 /**
  *  <p>
@@ -22,9 +23,9 @@ import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ *  @since  ٢٨ صفر ١٤٣٦ (December 20, 2014)
  */
-public class MoqawalatiVO extends AlKhwarizmixVO
+public class ProductCommitListCommand extends MoqawalatiCommitRecordListCommand
 {
 	//--------------------------------------------------------------------------
 	//
@@ -35,7 +36,7 @@ public class MoqawalatiVO extends AlKhwarizmixVO
 	/**
 	 *  Constructor.
 	 */
-	public function MoqawalatiVO()
+	public function ProductCommitListCommand()
 	{
 		super();
 	}
@@ -47,9 +48,23 @@ public class MoqawalatiVO extends AlKhwarizmixVO
 	//--------------------------------------------------------------------------
 	
 	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiVO);
+		getLogger(ProductCommitListCommand);
 	
 	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
-} // Class
-} // Package
+	//--------------------------------------------------------------------------
+	//
+	//  Overriden properties
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get proxyName():String
+	{
+		return ProductProxy.NAME;
+	}
+	
+} // class
+} // package

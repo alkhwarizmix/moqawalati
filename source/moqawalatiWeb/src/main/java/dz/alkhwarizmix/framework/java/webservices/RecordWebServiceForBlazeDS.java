@@ -54,7 +54,6 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(RecordWebServiceForBlazeDS.class);
 
-	// @Override
 	protected Logger getLogger() {
 		return LOG;
 	}
@@ -96,7 +95,7 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 	@Override
 	public RecordList getRecordList(String schemaName, String tableName,
 			int firstResult, int maxResult) throws AlKhwarizmixException {
-		getLogger().debug("getRecordList({}. {}, {})", schemaName, tableName,
+		getLogger().debug("getRecordList({}, {}, {}, {})", schemaName, tableName,
 				firstResult, maxResult);
 		return getRecordService().getRecordList(schemaName, tableName, null,
 				firstResult, maxResult);
