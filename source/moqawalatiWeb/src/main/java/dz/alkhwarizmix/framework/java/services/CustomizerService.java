@@ -23,8 +23,10 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
+import dz.alkhwarizmix.framework.java.interfaces.ICustomizerServiceValidator;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 
 /**
@@ -37,7 +39,7 @@ import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
  */
 @Service
 @Transactional(readOnly = true)
-public class CustomizerService extends AlKhwarizmixService implements
+public class CustomizerService extends AbstractAlKhwarizmixService implements
 		ICustomizerService {
 
 	// --------------------------------------------------------------------------
@@ -59,12 +61,13 @@ public class CustomizerService extends AlKhwarizmixService implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomizerService.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(CustomizerService.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -75,6 +78,9 @@ public class CustomizerService extends AlKhwarizmixService implements
 
 	@Autowired
 	private ICustomDataDAO customDataDAO;
+
+	@Autowired
+	private ICustomizerServiceValidator customDataValidator;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -209,6 +215,19 @@ public class CustomizerService extends AlKhwarizmixService implements
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
 		return customDataDAO;
+	}
+
+	// ----------------------------------
+	// clientValidator
+	// ----------------------------------
+
+	protected void setServiceValidator(ICustomizerServiceValidator value) {
+		customDataValidator = value;
+	}
+
+	@Override
+	protected IAlKhwarizmixServiceValidator getServiceValidator() {
+		return customDataValidator;
 	}
 
 	// ----------------------------------

@@ -66,6 +66,9 @@ public class UserServiceTest {
 	@Mock
 	private IUserDAO mockUserDAO;
 
+	@InjectMocks
+	private UserServiceValidator userValidator;
+
 	@Mock
 	private Jaxb2Marshaller mockJaxb2Marshaller;
 
@@ -81,6 +84,7 @@ public class UserServiceTest {
 
 	private void setupUtUserService() {
 		utUserService.setUserDAO(mockUserDAO);
+		utUserService.setUserValidator(userValidator);
 		utUserService.setSessionData(spySessionData);
 		utUserService.setJaxb2Marshaller(mockJaxb2Marshaller);
 	}

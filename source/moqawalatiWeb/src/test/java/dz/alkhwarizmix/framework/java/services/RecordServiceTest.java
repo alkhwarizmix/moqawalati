@@ -65,6 +65,9 @@ public class RecordServiceTest {
 	@Mock
 	private IRecordDAO mockRecordDAO;
 
+	@InjectMocks
+	private RecordServiceValidator recordValidator;
+
 	@Mock
 	private Jaxb2Marshaller mockJaxb2Marshaller;
 
@@ -86,6 +89,7 @@ public class RecordServiceTest {
 
 	private void setupUtRecordService() {
 		utRecordService.setRecordDAO(mockRecordDAO);
+		utRecordService.setRecordValidator(recordValidator);
 		utRecordService.setSessionData(spySessionData);
 		utRecordService.setJaxb2Marshaller(mockJaxb2Marshaller);
 	}

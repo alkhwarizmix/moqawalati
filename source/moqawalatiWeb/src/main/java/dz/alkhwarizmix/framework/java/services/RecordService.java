@@ -29,8 +29,10 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.RecordList;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.interfaces.IRecordDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IRecordService;
+import dz.alkhwarizmix.framework.java.interfaces.IRecordServiceValidator;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.utils.XMLUtil;
 
@@ -44,7 +46,7 @@ import dz.alkhwarizmix.framework.java.utils.XMLUtil;
  */
 @Service
 @Transactional(readOnly = true)
-public class RecordService extends AlKhwarizmixService implements
+public class RecordService extends AbstractAlKhwarizmixService implements
 		IRecordService {
 
 	// --------------------------------------------------------------------------
@@ -66,12 +68,13 @@ public class RecordService extends AlKhwarizmixService implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(RecordService.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(RecordService.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -82,6 +85,9 @@ public class RecordService extends AlKhwarizmixService implements
 
 	@Autowired
 	private IRecordDAO recordDAO;
+
+	@Autowired
+	private IRecordServiceValidator recordValidator;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -167,7 +173,7 @@ public class RecordService extends AlKhwarizmixService implements
 	public Record getRecord(Record record) throws AlKhwarizmixException {
 		getLogger().trace("getRecord");
 		Record result = internal_getRecord(record);
-		nullifyProtectedProperties(result);
+		getServiceValidator().validateObjectToPublish(result);
 		return result;
 	}
 
@@ -232,16 +238,6 @@ public class RecordService extends AlKhwarizmixService implements
 		return result;
 	}
 
-	@Override
-	protected void nullifyProtectedProperties(
-			AbstractAlKhwarizmixDomainObject object) {
-		super.nullifyProtectedProperties(object);
-		Record record = (Record) object;
-		if (record != null) {
-			record.setOwner(null);
-		}
-	}
-
 	/**
 	 */
 	private AlKhwarizmixDomainObject getSessionCustomizer() {
@@ -288,17 +284,30 @@ public class RecordService extends AlKhwarizmixService implements
 	// recordDAO
 	// ----------------------------------
 
-	final IRecordDAO getRecordDAO() {
+	private final IRecordDAO getRecordDAO() {
 		return recordDAO;
 	}
 
-	final void setRecordDAO(IRecordDAO value) {
+	protected final void setRecordDAO(IRecordDAO value) {
 		recordDAO = value;
 	}
 
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
 		return recordDAO;
+	}
+
+	// ----------------------------------
+	// recordValidator
+	// ----------------------------------
+
+	protected final void setRecordValidator(IRecordServiceValidator value) {
+		recordValidator = value;
+	}
+
+	@Override
+	protected IAlKhwarizmixServiceValidator getServiceValidator() {
+		return recordValidator;
 	}
 
 	// ----------------------------------
@@ -319,11 +328,11 @@ public class RecordService extends AlKhwarizmixService implements
 	// sessionData
 	// ----------------------------------
 
-	final AlKhwarizmixSessionData getSessionData() {
+	private final AlKhwarizmixSessionData getSessionData() {
 		return sessionData;
 	}
 
-	final void setSessionData(AlKhwarizmixSessionData value) {
+	protected final void setSessionData(AlKhwarizmixSessionData value) {
 		sessionData = value;
 	}
 

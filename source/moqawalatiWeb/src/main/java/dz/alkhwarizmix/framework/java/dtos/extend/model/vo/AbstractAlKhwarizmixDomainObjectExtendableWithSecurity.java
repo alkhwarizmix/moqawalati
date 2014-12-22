@@ -82,8 +82,14 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "theGroup", nullable = true)
+	// gruop is not a typo, the word "group" is not allowed as a Table field
+	@JoinColumn(name = "gruop", nullable = true)
 	private AlKhwarizmixDomainObject group;
+
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "encryption", nullable = true)
+	private AlKhwarizmixDomainObject encryption;
 
 	// --------------------------------------------------------------------------
 	//
@@ -101,6 +107,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 		int result = super.hashCode();
 		result = continueHashCode(result, group);
 		result = continueHashCode(result, owner);
+		result = continueHashCode(result, encryption);
 		return result;
 	}
 
@@ -116,7 +123,9 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 				&& ObjectUtils.equals(this.group,
 						getObjectAsThisClass(other).group)
 				&& ObjectUtils.equals(this.owner,
-						getObjectAsThisClass(other).owner);
+						getObjectAsThisClass(other).owner)
+				&& ObjectUtils.equals(this.encryption,
+						getObjectAsThisClass(other).encryption);
 		return result;
 	}
 
@@ -144,7 +153,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// user
+	// owner
 	// ----------------------------------
 
 	public AlKhwarizmixDomainObject getOwner() {
@@ -165,6 +174,18 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 
 	public void setGroup(AlKhwarizmixDomainObject value) {
 		this.group = value;
+	}
+
+	// ----------------------------------
+	// encryption
+	// ----------------------------------
+
+	public AlKhwarizmixDomainObject getEncryption() {
+		return encryption;
+	}
+
+	public void setEncryption(AlKhwarizmixDomainObject value) {
+		this.encryption = value;
 	}
 
 } // Class

@@ -25,11 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.services.AlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
+import dz.alkhwarizmix.framework.java.services.AbstractAlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
+import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
 
 /**
  * <p>
@@ -41,7 +43,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientService;
  */
 @Service
 @Transactional(readOnly = true)
-public class ClientService extends AlKhwarizmixService implements
+public class ClientService extends AbstractAlKhwarizmixService implements
 		IClientService {
 
 	// --------------------------------------------------------------------------
@@ -63,12 +65,13 @@ public class ClientService extends AlKhwarizmixService implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ClientService.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(ClientService.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -79,6 +82,9 @@ public class ClientService extends AlKhwarizmixService implements
 
 	@Autowired
 	private IClientDAO clientDAO;
+
+	@Autowired
+	private IClientServiceValidator clientValidator;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -134,7 +140,7 @@ public class ClientService extends AlKhwarizmixService implements
 		try {
 			Client result = getClientDAO().getClient((Client) object);
 			updateObjectFromExtendedDataXML(result);
-			nullifyProtectedProperties(result);
+			getServiceValidator().validateObjectToPublish(result);
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -299,17 +305,30 @@ public class ClientService extends AlKhwarizmixService implements
 	// clientDAO
 	// ----------------------------------
 
-	final IClientDAO getClientDAO() {
+	private final IClientDAO getClientDAO() {
 		return clientDAO;
 	}
 
-	final void setClientDAO(IClientDAO value) {
+	protected final void setClientDAO(IClientDAO value) {
 		clientDAO = value;
 	}
 
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
 		return clientDAO;
+	}
+
+	// ----------------------------------
+	// clientValidator
+	// ----------------------------------
+
+	protected final void setClientValidator(IClientServiceValidator value) {
+		clientValidator = value;
+	}
+
+	@Override
+	protected IAlKhwarizmixServiceValidator getServiceValidator() {
+		return clientValidator;
 	}
 
 	// ----------------------------------

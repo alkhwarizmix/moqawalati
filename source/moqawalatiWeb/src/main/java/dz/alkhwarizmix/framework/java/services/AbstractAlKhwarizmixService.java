@@ -28,6 +28,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendable;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.utils.XMLUtil;
 
 /**
@@ -38,7 +39,8 @@ import dz.alkhwarizmix.framework.java.utils.XMLUtil;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
+public abstract class AbstractAlKhwarizmixService implements
+		IAlKhwarizmixService {
 
 	// --------------------------------------------------------------------------
 	//
@@ -49,7 +51,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	/**
 	 * constructor
 	 */
-	public AlKhwarizmixService() {
+	public AbstractAlKhwarizmixService() {
 		getLogger().trace("Constructor");
 	}
 
@@ -73,6 +75,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	@Override
 	public void addObject(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
+		getServiceValidator().validateObjectToAdd(object);
 		getServiceDAO().saveOrUpdate(object);
 	}
 
@@ -83,7 +86,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	public String addObject(String objectXml) throws AlKhwarizmixException {
 		AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
 		addObject(newObject);
-		nullifyProtectedProperties(newObject);
+		getServiceValidator().validateObjectToPublish(newObject);
 		return marshalObjectToXML(newObject);
 	}
 
@@ -104,7 +107,7 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 		String result = "";
 		AbstractAlKhwarizmixDomainObject foundObject = getObject(object);
 		if (foundObject != null) {
-			nullifyProtectedProperties(foundObject);
+			getServiceValidator().validateObjectToPublish(foundObject);
 			result = marshalObjectToXML(foundObject);
 		}
 		return result;
@@ -248,15 +251,6 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 
 	/**
 	 * TODO: Javadoc
-	 */
-	protected void nullifyProtectedProperties(
-			AbstractAlKhwarizmixDomainObject object) {
-		if (object != null)
-			object.setId(null);
-	}
-
-	/**
-	 * TODO: Javadoc
 	 * 
 	 * @throws AlKhwarizmixException
 	 */
@@ -295,6 +289,11 @@ public abstract class AlKhwarizmixService implements IAlKhwarizmixService {
 	 * get the serviceDAO
 	 */
 	protected abstract IAlKhwarizmixDAO getServiceDAO();
+
+	/**
+	 * get the serviceDAO
+	 */
+	protected abstract IAlKhwarizmixServiceValidator getServiceValidator();
 
 	// ----------------------------------
 	// jaxb2Marshaller

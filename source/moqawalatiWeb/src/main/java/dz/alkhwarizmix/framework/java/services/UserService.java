@@ -27,8 +27,10 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IUserService;
+import dz.alkhwarizmix.framework.java.interfaces.IUserServiceValidator;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 
 /**
@@ -41,7 +43,8 @@ import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
  */
 @Service
 @Transactional(readOnly = true)
-public class UserService extends AlKhwarizmixService implements IUserService {
+public class UserService extends AbstractAlKhwarizmixService implements
+		IUserService {
 
 	// --------------------------------------------------------------------------
 	//
@@ -62,12 +65,13 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(UserService.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(UserService.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -78,6 +82,9 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 
 	@Autowired
 	private IUserDAO userDAO;
+
+	@Autowired
+	private IUserServiceValidator userValidator;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -135,9 +142,8 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@Override
 	public User getUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("getUser");
-
 		User result = internal_getUser(user);
-		nullifyProtectedProperties(result);
+		getServiceValidator().validateObjectToPublish(result);
 		return result;
 	}
 
@@ -145,7 +151,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	 */
 	User internal_getUser(User user) throws AlKhwarizmixException {
 		getLogger().trace("internal_getUser");
-
 		User result = (User) getObject(user);
 		return result;
 	}
@@ -155,7 +160,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@Override
 	public String getUserAsXML(User user) throws AlKhwarizmixException {
 		getLogger().trace("getUserAsXML 1");
-
 		String result = getObjectAsXML(user);
 		return result;
 	}
@@ -165,7 +169,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@Override
 	public String getUserAsXML(String userXml) throws AlKhwarizmixException {
 		getLogger().trace("getUserAsXML 2");
-
 		String result = getObjectAsXML(userXml);
 		return result;
 	}
@@ -176,7 +179,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@Override
 	public User updateUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("updateUser");
-
 		setupObjectExtendedDataXMLValue(user);
 		User result = (User) updateObject(user);
 		return result;
@@ -189,7 +191,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	public String updateUserFromXML(String userXml, String updaterId)
 			throws AlKhwarizmixException {
 		getLogger().trace("updateUserFromXML");
-
 		User newUser = (User) unmarshalObjectFromXML(userXml);
 		// newUser.setCreatorId(updaterId);
 		User updatedUser = updateUser(newUser);
@@ -220,7 +221,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
 			int maxResult) throws AlKhwarizmixException {
 		getLogger().trace("getUserListAsXML");
-
 		String result = userListToXML(getUserList(criteria, firstResult,
 				maxResult));
 		return result;
@@ -231,7 +231,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public String userListToXML(List<User> userList) {
-
 		String result = "<Users>";
 		result += objectListToXML((List<AbstractAlKhwarizmixDomainObject>) (List<?>) userList);
 		result += "</Users>";
@@ -276,16 +275,6 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 		getSessionData().resetCustomizer();
 	}
 
-	@Override
-	protected void nullifyProtectedProperties(
-			AbstractAlKhwarizmixDomainObject object) {
-		super.nullifyProtectedProperties(object);
-		User user = (User) object;
-		if (user != null) {
-			user.setDomainObject(null);
-		}
-	}
-
 	// --------------------------------------------------------------------------
 	//
 	// Getters & Setters
@@ -296,17 +285,30 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// userDAO
 	// ----------------------------------
 
-	final IUserDAO getMoqawalatiDAO() {
+	private final IUserDAO getMoqawalatiDAO() {
 		return userDAO;
 	}
 
-	final void setUserDAO(IUserDAO value) {
+	protected final void setUserDAO(IUserDAO value) {
 		userDAO = value;
 	}
 
 	@Override
 	protected IAlKhwarizmixDAO getServiceDAO() {
 		return userDAO;
+	}
+
+	// ----------------------------------
+	// userValidator
+	// ----------------------------------
+
+	protected final void setUserValidator(IUserServiceValidator value) {
+		userValidator = value;
+	}
+
+	@Override
+	protected IAlKhwarizmixServiceValidator getServiceValidator() {
+		return userValidator;
 	}
 
 	// ----------------------------------
@@ -327,11 +329,11 @@ public class UserService extends AlKhwarizmixService implements IUserService {
 	// sessionData
 	// ----------------------------------
 
-	final AlKhwarizmixSessionData getSessionData() {
+	private final AlKhwarizmixSessionData getSessionData() {
 		return sessionData;
 	}
 
-	final void setSessionData(AlKhwarizmixSessionData value) {
+	protected final void setSessionData(AlKhwarizmixSessionData value) {
 		sessionData = value;
 	}
 

@@ -60,6 +60,9 @@ public class ClientServiceTest {
 	@Mock
 	private IClientDAO mockClientDAO;
 
+	@InjectMocks
+	private ClientServiceValidator clientValidator;
+
 	@Mock
 	private Jaxb2Marshaller mockJaxb2Marshaller;
 
@@ -71,6 +74,7 @@ public class ClientServiceTest {
 
 	private void setupUtClientService() {
 		utClientService.setClientDAO(mockClientDAO);
+		utClientService.setClientValidator(clientValidator);
 		utClientService.setJaxb2Marshaller(mockJaxb2Marshaller);
 	}
 

@@ -12,15 +12,12 @@
 package dz.alkhwarizmix.framework.java.services;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -36,7 +33,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AlKhwarizmixServiceTest {
+public class AbstractAlKhwarizmixServiceTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -45,7 +42,7 @@ public class AlKhwarizmixServiceTest {
 	// --------------------------------------------------------------------------
 
 	@Mock
-	AlKhwarizmixService mockAlKhwarizmixService;
+	AbstractAlKhwarizmixService mockAlKhwarizmixService;
 
 	@Mock
 	AbstractAlKhwarizmixDomainObject mockAlKhwarizmixDomainObjectAbstract;
@@ -55,17 +52,6 @@ public class AlKhwarizmixServiceTest {
 	// Tests
 	//
 	// --------------------------------------------------------------------------
-
-	@Test
-	public void test01_nullifyProtectedProperies_should_nullifyId() {
-		Mockito.doCallRealMethod()
-				.when(mockAlKhwarizmixService)
-				.nullifyProtectedProperties(
-						any(AbstractAlKhwarizmixDomainObject.class));
-		mockAlKhwarizmixService
-				.nullifyProtectedProperties(mockAlKhwarizmixDomainObjectAbstract); // TEST
-		verify(mockAlKhwarizmixDomainObjectAbstract, times(1)).setId(null);
-	}
 
 	@Ignore
 	@Test
@@ -81,17 +67,8 @@ public class AlKhwarizmixServiceTest {
 				.thenReturn(mockAlKhwarizmixDomainObjectAbstract);
 		mockAlKhwarizmixService
 				.getObjectAsXML(mockAlKhwarizmixDomainObjectAbstract); // TEST
-		verify(mockAlKhwarizmixService, times(1)).nullifyProtectedProperties(
-				mockAlKhwarizmixDomainObjectAbstract);
-	}
-
-	@Test
-	public void test03_nullifyProtectedProperies_should_not_throw_exception_when_passed_null_parameter() {
-		Mockito.doCallRealMethod()
-				.when(mockAlKhwarizmixService)
-				.nullifyProtectedProperties(
-						any(AbstractAlKhwarizmixDomainObject.class));
-		mockAlKhwarizmixService.nullifyProtectedProperties(null); // TEST
+		// verify(mockAlKhwarizmixService, times(1)).nullifyProtectedProperties(
+		// mockAlKhwarizmixDomainObjectAbstract);
 	}
 
 	@Ignore
@@ -105,7 +82,7 @@ public class AlKhwarizmixServiceTest {
 		// .internal_unmarshalObjectFromXML(any(String.class)))
 		// .thenReturn(mockAlKhwarizmixDomainObjectAbstract);
 		mockAlKhwarizmixService.addObject(""); // TEST
-		verify(mockAlKhwarizmixService, times(1)).nullifyProtectedProperties(
-				mockAlKhwarizmixDomainObjectAbstract);
+		// verify(mockAlKhwarizmixService, times(1)).nullifyProtectedProperties(
+		// mockAlKhwarizmixDomainObjectAbstract);
 	}
 } // Class
