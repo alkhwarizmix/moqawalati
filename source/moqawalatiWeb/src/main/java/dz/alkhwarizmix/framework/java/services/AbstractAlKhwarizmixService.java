@@ -146,6 +146,7 @@ public abstract class AbstractAlKhwarizmixService implements
 			throws AlKhwarizmixException {
 		getLogger().trace("getObjectList({}, {}, {})", criteria, firstResult,
 				maxResult);
+		
 		return getServiceDAO().getList(criteria, firstResult, maxResult);
 	}
 
@@ -157,6 +158,8 @@ public abstract class AbstractAlKhwarizmixService implements
 			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("updateObject({})", object);
+		
+		getServiceValidator().validateObjectToUpdate(object);
 		AbstractAlKhwarizmixDomainObject foundObject = getObject(object);
 		if (foundObject != null) {
 			foundObject.updateFrom(object);
@@ -173,6 +176,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	@Override
 	public String updateObject(String objectXml) throws AlKhwarizmixException {
 		getLogger().trace("updateObject({})", objectXml);
+		
 		AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
 		AbstractAlKhwarizmixDomainObject result = updateObject(newObject);
 		return marshalObjectToXML(result);
@@ -185,6 +189,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	public String objectListToJSON(
 			List<AbstractAlKhwarizmixDomainObject> objectList) {
 		getLogger().trace("objectListToJSON(objectList)");
+		
 		StringWriter stringWriter = new StringWriter();
 		// XMLResult xmlResult = new XMLResult(stringWriter);
 		// for (AlKhwarizmixDomainObjectAbstract object : objectList) {
@@ -200,6 +205,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	public String objectListToXML(
 			List<AbstractAlKhwarizmixDomainObject> objectList) {
 		getLogger().trace("objectListToXML(objectList)");
+		
 		return new XMLUtil(getJaxb2Marshaller()).objectListToXML(objectList);
 	}
 
@@ -211,6 +217,7 @@ public abstract class AbstractAlKhwarizmixService implements
 			AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("marshalObjectToXML({})", object);
+		
 		String result = new XMLUtil(getJaxb2Marshaller())
 				.marshalObjectToXML(object);
 		return result;
@@ -223,6 +230,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
 			String xmlValue) throws AlKhwarizmixException {
 		getLogger().trace("unmarshalObjectFromXML({})", xmlValue);
+		
 		return new XMLUtil(getJaxb2Marshaller())
 				.unmarshalObjectFromXML(xmlValue);
 	}

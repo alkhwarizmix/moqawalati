@@ -99,7 +99,8 @@ public abstract class AlKhwarizmixWebServiceForJSON {
 
 	/**
 	 */
-	public ResponseEntity<String> errorResponseForJSON(AlKhwarizmixErrorCode errorCode) {
+	public ResponseEntity<String> errorResponseForJSON(
+			AlKhwarizmixErrorCode errorCode) {
 		StringBuilder sBuilder = new StringBuilder("<error code=\"").append(
 				errorCode.getId()).append("\"/>");
 
@@ -113,7 +114,8 @@ public abstract class AlKhwarizmixWebServiceForJSON {
 
 	/**
 	 */
-	public ResponseEntity<String> errorResponseAsJSON(AlKhwarizmixException exception) {
+	public ResponseEntity<String> errorResponseAsJSON(
+			AlKhwarizmixException exception) {
 		return errorResponseForJSON(exception.getErrorCode());
 	}
 

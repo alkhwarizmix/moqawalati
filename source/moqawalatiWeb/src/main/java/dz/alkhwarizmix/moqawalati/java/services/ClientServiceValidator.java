@@ -74,6 +74,14 @@ public class ClientServiceValidator extends
 	}
 
 	/**
+	 * Validate before to update the object
+	 */
+	@Override
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object) {
+		super.validateObjectToUpdate(object);
+	}
+
+	/**
 	 * Validate before to return the object
 	 */
 	@Override

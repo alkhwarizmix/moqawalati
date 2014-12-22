@@ -62,6 +62,13 @@ public abstract class AbstractAlKhwarizmixServiceValidator implements
 	}
 
 	/**
+	 * Validate before to update the object
+	 */
+	@Override
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object) {
+	}
+
+	/**
 	 * Validate before to return the object
 	 */
 	@Override

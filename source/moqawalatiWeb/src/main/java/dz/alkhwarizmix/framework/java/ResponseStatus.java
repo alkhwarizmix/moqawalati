@@ -20,13 +20,13 @@ package dz.alkhwarizmix.framework.java;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public enum ResponseStatus {
-	
+
 	SUCCESSFUL, // If the request was processed successfully
-	
+
 	DUPLICATE, // If the request is a duplicate
-	
+
 	ERROR, // If there was an error while processing the request.
-	
+
 	WARNING; // If there was an mix success and error while processing the
 				// request.
 
@@ -38,7 +38,7 @@ public enum ResponseStatus {
 	 * @return {@link String}
 	 */
 	public static ResponseStatus getResponseStatus(String name) {
-		
+
 		if (name == null)
 			return null;
 

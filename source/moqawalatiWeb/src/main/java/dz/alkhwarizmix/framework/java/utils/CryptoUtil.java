@@ -245,4 +245,5 @@ public class CryptoUtil {
 
 		return hs;
 	}
-}
+
+} // Class

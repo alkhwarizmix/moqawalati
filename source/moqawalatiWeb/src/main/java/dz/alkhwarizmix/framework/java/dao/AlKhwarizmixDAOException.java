@@ -23,10 +23,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public class AlKhwarizmixDAOException extends AlKhwarizmixException {
-	
+
 	private static final long serialVersionUID = 4419505404277029946L;
 
 	/* ****** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *//**
+	 * 
 	 * 
 	 * constructor
 	 * 
@@ -39,6 +40,7 @@ public class AlKhwarizmixDAOException extends AlKhwarizmixException {
 	}
 
 	/* ****** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *//**
+	 * 
 	 * 
 	 * constructor
 	 * 

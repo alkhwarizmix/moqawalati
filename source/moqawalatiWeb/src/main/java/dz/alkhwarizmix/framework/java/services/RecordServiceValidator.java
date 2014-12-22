@@ -71,6 +71,20 @@ public class RecordServiceValidator extends
 	@Override
 	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object) {
 		super.validateObjectToAdd(object);
+		Record record = (Record) object;
+		if (record != null)
+			nullifyPropertiesForRecordToAdd(record);
+	}
+
+	/**
+	 * Validate before to update the object
+	 */
+	@Override
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object) {
+		super.validateObjectToUpdate(object);
+		Record record = (Record) object;
+		if (record != null)
+			nullifyPropertiesForRecordToUpdate(record);
 	}
 
 	/**
@@ -79,17 +93,30 @@ public class RecordServiceValidator extends
 	@Override
 	public void validateObjectToPublish(AbstractAlKhwarizmixDomainObject object) {
 		super.validateObjectToPublish(object);
-		nullifyRecordOwner(object);
+		Record record = (Record) object;
+		if (record != null)
+			nullifyPropertiesForRecordToPublish(record);
 	}
 
 	/**
-	 * TODO: Javadoc
 	 */
-	private void nullifyRecordOwner(AbstractAlKhwarizmixDomainObject object) {
-		Record record = (Record) object;
-		if (record != null) {
-			record.setOwner(null);
-		}
+	private void nullifyPropertiesForRecordToAdd(Record record) {
+		record.setOwner(null);
+		record.setGroup(null);
+	}
+
+	/**
+	 */
+	private void nullifyPropertiesForRecordToUpdate(Record record) {
+		record.setOwner(null);
+		record.setGroup(null);
+	}
+
+	/**
+	 */
+	private void nullifyPropertiesForRecordToPublish(Record record) {
+		record.setOwner(null);
+		record.setGroup(null);
 	}
 
 } // Class

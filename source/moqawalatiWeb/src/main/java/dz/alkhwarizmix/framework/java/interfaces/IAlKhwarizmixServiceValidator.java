@@ -11,7 +11,6 @@
 
 package dz.alkhwarizmix.framework.java.interfaces;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
@@ -27,6 +26,10 @@ public interface IAlKhwarizmixServiceValidator {
 	/**
 	 */
 	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object);
+
+	/**
+	 */
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object);
 
 	/**
 	 */

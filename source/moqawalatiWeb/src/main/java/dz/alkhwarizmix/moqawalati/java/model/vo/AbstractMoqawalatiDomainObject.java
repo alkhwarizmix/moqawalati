@@ -30,7 +30,8 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
 @MappedSuperclass
 @EntityListeners(EntityInterceptor.class)
 public abstract class AbstractMoqawalatiDomainObject extends
-		AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements Serializable {
+		AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
+		Serializable {
 
 	// --------------------------------------------------------------------------
 	//

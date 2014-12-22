@@ -23,4 +23,6 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
  */
 public interface IMoqawalatiDAO extends IAlKhwarizmixDAO {
 
+	// EMPTY
+
 } // Class
