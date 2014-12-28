@@ -66,6 +66,7 @@ import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiTextInputTestCase
 [RunWith("org.flexunit.runners.Suite")]
 public class MoqawalatiTestSuite
 {
+	public var mMoqawalatiFlexTestCase:MoqawalatiFlexTestCase;
 	public var moqawalatiConstantsTestCase:MoqawalatiConstantsTestCase;
 	public var moqawalatiErrorTestCase:MoqawalatiErrorTestCase;
 	
