@@ -12,6 +12,9 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.clientModule.facade
 {
 
+import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacade;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.ClientModuleConstants;
@@ -30,6 +33,23 @@ public class ClientModuleFacade extends MoqawalatiFacade
 {
 	//--------------------------------------------------------------------------
 	//
+	//  Class methods
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * TODO: ASDOC Definition of getInstance
+	 */
+	public static function getInstance(key:String):ClientModuleFacade 
+	{
+		if (instanceMap[key] == null)
+			instanceMap[key] = new ClientModuleFacade(key);
+		
+		return instanceMap[key] as ClientModuleFacade;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
 	//  Constructor
 	//
 	//--------------------------------------------------------------------------
@@ -46,19 +66,17 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Class methods
+	//  Logger
 	//
 	//--------------------------------------------------------------------------
 	
-	/**
-	 * TODO: ASDOC Definition of getInstance
-	 */
-	public static function getInstance(key:String):ClientModuleFacade 
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
 	{
-		if (instanceMap[key] == null)
-			instanceMap[key] = new ClientModuleFacade(key);
-		
-		return instanceMap[key] as ClientModuleFacade;
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(ClientModuleFacade);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -97,10 +115,11 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	 * 
 	 * @param app a reference to the application component 
 	 */  
-	public function startup(app:IMoqawalatiModule):void
+	override public function startup(app:*):void
 	{
 		logger.debug("startup");
-		
+		if (!app is IMoqawalatiModule)
+			throw new AlKhwarizmixTypeError("IMoqawalatiModule");
 		sendNotification(ClientModuleConstants.STARTUP, app);
 	}
 	

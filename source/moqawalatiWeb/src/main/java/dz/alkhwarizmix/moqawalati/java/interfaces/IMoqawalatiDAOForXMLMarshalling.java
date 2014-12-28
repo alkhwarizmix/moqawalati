@@ -24,4 +24,6 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAOForXMLMarshalli
 public interface IMoqawalatiDAOForXMLMarshalling extends IMoqawalatiDAO,
 		IAlKhwarizmixDAOForXMLMarshalling {
 
+	// EMPTY
+
 } // Class

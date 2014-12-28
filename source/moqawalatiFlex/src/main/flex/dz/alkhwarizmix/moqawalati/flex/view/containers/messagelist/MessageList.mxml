@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO: ASDOC
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٢٢ رمضان ١٤٣٥ (July 20, 2014)
+ */
+-->
+
+<containers:MoqawalatiCanvas
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
+	xmlns:messagelist="dz.alkhwarizmix.moqawalati.flex.view.containers.messagelist.*"
+	contentBackgroundColor="#00FF00"
+	>
+	
+	<fx:Script>
+	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(MessageList);
+			return LOG;
+		}
+		
+	]]>
+	</fx:Script>
+	
+	<containers:MoqawalatiVBox id="vbox"
+		width="100%" height="100%"
+		>
+		<messagelist:MessageRenderer id="renderer1"/>
+		<messagelist:MessageRenderer id="renderer2"/>
+	</containers:MoqawalatiVBox>
+</containers:MoqawalatiCanvas>

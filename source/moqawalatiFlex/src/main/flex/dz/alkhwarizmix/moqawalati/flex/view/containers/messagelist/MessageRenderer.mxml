@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+*  <p>
+*  TODO: ASDOC
+*  </p>
+* 
+*  @author فارس بلحواس (Fares Belhaouas)
+*  @since  ٢٢ رمضان ١٤٣٥ (July 20, 2014)
+*/
+-->
+
+<containers:MoqawalatiCanvas
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
+	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
+	xmlns:components="dz.alkhwarizmix.moqawalati.flex.view.components.*"
+	>
+	
+	<fx:Script>
+	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(MessageRenderer);
+			return LOG;
+		}
+	]]>
+	</fx:Script>
+	
+	<s:BorderContainer>
+		<containers:MoqawalatiVBox id="box1" gap="2" paddingTop="2" paddingRight="2" paddingLeft="2" paddingBottom="2">
+			<controls:MoqawalatiLabel text="Title" verticalAlign="middle"/>
+			<containers:MoqawalatiHBox id="box2" gap="2">
+				<containers:MoqawalatiVBox id="box3">
+					<components:MoqawalatiImage source="assets/image/avatar.jpeg" width="40" height="40"/>
+					<containers:MoqawalatiHBox gap="2">
+						<controls:MoqawalatiButton width="20" height="20"/>
+						<controls:MoqawalatiButton width="20" height="20"/>
+					</containers:MoqawalatiHBox>
+				</containers:MoqawalatiVBox>
+				<controls:MoqawalatiTextArea height="{box3.height}"/>
+			</containers:MoqawalatiHBox>
+		</containers:MoqawalatiVBox>
+	</s:BorderContainer>
+</containers:MoqawalatiCanvas>

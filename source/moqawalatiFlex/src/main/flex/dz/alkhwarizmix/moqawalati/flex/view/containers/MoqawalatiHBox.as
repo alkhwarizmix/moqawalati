@@ -46,10 +46,14 @@ public class MoqawalatiHBox extends AlKhwarizmixHBox
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiHBox);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiHBox);
+		return LOG;
+	}
 	
 } // Class
 } // Package

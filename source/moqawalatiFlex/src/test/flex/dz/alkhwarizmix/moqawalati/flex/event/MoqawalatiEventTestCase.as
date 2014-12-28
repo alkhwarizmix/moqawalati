@@ -58,6 +58,11 @@ public class MoqawalatiEventTestCase extends MoqawalatiTestCase
 		return true; // bubbles
 	}
 	
+	override protected function get shouldNotHaveLogger():Boolean
+	{
+		return true;
+	}
+	
 	private function get utMoqawalatiEvent():MoqawalatiEvent
 	{
 		return classInstanceUnderTest as MoqawalatiEvent;

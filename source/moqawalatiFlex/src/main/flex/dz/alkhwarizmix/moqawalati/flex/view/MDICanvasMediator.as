@@ -69,6 +69,11 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	{
 		super(NAME, viewComponent);
 		
+		addEventListeners();
+	}
+	
+	private function addEventListeners():void
+	{
 		mdiCanvas.addEventListener("TestAndDebugWindow_getCustomData",
 			mdiCanvas_getCustomDataHandler);
 		mdiCanvas.addEventListener("TestAndDebugWindow_setCustomData",

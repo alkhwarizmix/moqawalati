@@ -34,7 +34,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
@@ -66,6 +66,9 @@ public class UserServiceTest {
 	@Mock
 	private IUserDAO mockUserDAO;
 
+	@InjectMocks
+	private UserServiceValidator userValidator;
+
 	@Mock
 	private Jaxb2Marshaller mockJaxb2Marshaller;
 
@@ -81,6 +84,7 @@ public class UserServiceTest {
 
 	private void setupUtUserService() {
 		utUserService.setUserDAO(mockUserDAO);
+		utUserService.setUserValidator(userValidator);
 		utUserService.setSessionData(spySessionData);
 		utUserService.setJaxb2Marshaller(mockJaxb2Marshaller);
 	}
@@ -204,7 +208,7 @@ public class UserServiceTest {
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
 		utUserService.login(userToLogin); // TEST
 		Assert.assertEquals(userToLogin.getDomainObject(),
-				spySessionData.getCustomizer());
+				spySessionData.getSessionOwner());
 	}
 
 	@Test
@@ -214,7 +218,7 @@ public class UserServiceTest {
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
 		utUserService.logout(userToLogin); // TEST
-		verify(spySessionData, times(1)).resetCustomizer();
+		verify(spySessionData, times(1)).resetSessionOwner();
 	}
 
 } // Class

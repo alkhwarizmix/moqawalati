@@ -12,7 +12,10 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.clientModule
 {
 
+import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.controller.ClientGetListCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.controller.ClientModuleStartupCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.facade.ClientModuleFacadeTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.model.ClientProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.view.ClientListMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.view.components.ClientListCanvasTestCase;
 
@@ -28,14 +31,18 @@ import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.view.components.Clie
 [RunWith("org.flexunit.runners.Suite")]
 public class ClientModuleTestSuite
 {
+	public var clientModuleTestCase:ClientModuleTestCase;
+	public var clientModuleConstantsTestCase:ClientModuleConstantsTestCase;
+	
 	// facade
 	public var clientModuleFacadeTestCase:ClientModuleFacadeTestCase;
 	
 	// controller
-	// public var moqawalatiBlazeDSGetDataCommandTestCase:MoqawalatiBlazeDSGetDataCommandTestCase;
+	public var clientModuleStartupCommandTestCase:ClientModuleStartupCommandTestCase;
+	public var clientGetListCommandTestCase:ClientGetListCommandTestCase;
 	
 	// model
-	// public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;
+	public var clientProxyTestCase:ClientProxyTestCase;
 	
 	// view
 	public var clientListMediatorTestCase:ClientListMediatorTestCase;

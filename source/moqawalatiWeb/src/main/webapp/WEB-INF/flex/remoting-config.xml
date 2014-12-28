@@ -55,6 +55,13 @@
 		</properties>
 	</destination>
 
+	<destination id="recordBlazeDS">
+		<properties>
+			<factory>spring</factory>
+			<source>beanRecordWebServiceForBlazeDS</source>
+		</properties>
+	</destination>
+
 	<!--FBEL <destination id="chat-room-service"> <properties> <source>flex.samples.runtimeconfig.ChatRoomService</source> 
 		<scope>application</scope> </properties> </destination> -->
 

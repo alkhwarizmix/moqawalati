@@ -12,7 +12,10 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.rpc.remoting.AlKhwarizmixRemoteObject;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
 
 /**
@@ -24,7 +27,19 @@ import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
  *  @since  ١٨ محرم ١٤٣٥ (November 22, 2013)
  */
 public class MoqawalatiGetCustomizedDataCommand extends MoqawalatiBlazeDSGetDataCommand
+	implements IMoqawalatiCommand
 {
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
+		getLogger(MoqawalatiGetCustomizedDataCommand);
+	
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	
 	//--------------------------------------------------------------------------
 	//
 	//  Constructor

@@ -113,7 +113,7 @@
 		{
 			var newTarget:TraceTarget = new TraceTarget();
 			AlKhwarizmixLog.addTarget(newTarget);
-			newTarget.level = LogEventLevel.ALL;
+			newTarget.level = LogEventLevel.WARN;
 			AlKhwarizmixLog.isLogLevelAll = true;
 			
 			LOG.debug("this_preinitializeHandler");

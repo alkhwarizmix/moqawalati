@@ -52,7 +52,7 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 		return MoqawalatiBlazeDSGetDataCommand;
 	}
 	
-	private function get moqawalatiBlazeDSGetDataCommand():MoqawalatiBlazeDSGetDataCommand
+	private function get utMoqawalatiBlazeDSGetDataCommand():MoqawalatiBlazeDSGetDataCommand
 	{
 		return classInstanceUnderTest as MoqawalatiBlazeDSGetDataCommand;
 	}
@@ -66,7 +66,7 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(moqawalatiBlazeDSGetDataCommand);
+		assertNotNull(utMoqawalatiBlazeDSGetDataCommand);
 	}
 	
 	[Test]
@@ -74,7 +74,7 @@ public class MoqawalatiBlazeDSGetDataCommandTestCase extends MoqawalatiPureMVCTe
 	{
 		moqawalatiConfigProxy.appParameters.appURL = "http://dz.moqawalati.com/moqawalati.swf";
 		assertEquals("http://dz.moqawalati.com/messagebroker/amf",
-			moqawalatiBlazeDSGetDataCommand.amfURI);
+			utMoqawalatiBlazeDSGetDataCommand.amfURI);
 	}
 	
 } // class

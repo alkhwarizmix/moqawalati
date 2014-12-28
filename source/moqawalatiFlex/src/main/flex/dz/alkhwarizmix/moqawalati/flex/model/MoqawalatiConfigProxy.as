@@ -17,7 +17,7 @@ import flash.utils.Dictionary;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
-import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiConfigProxy;
 
 /**
  *  <p>
@@ -28,7 +28,7 @@ import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
  *  @since  ١٨ ذو الحجة ١٤٣٤ (October 23, 2013)
  */
 public class MoqawalatiConfigProxy extends MoqawalatiProxy
-	implements IMoqawalatiProxy
+	implements IMoqawalatiConfigProxy
 {
 	//--------------------------------------------------------------------------
 	//
@@ -63,10 +63,14 @@ public class MoqawalatiConfigProxy extends MoqawalatiProxy
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiConfigProxy);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiConfigProxy);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//

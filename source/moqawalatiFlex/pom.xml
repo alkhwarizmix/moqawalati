@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.0.6</version>
+		<version>1.2.8</version>
 	</parent>
 
 	<artifactId>moqawalatiFlex</artifactId>
@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>dz.alkhwarizmix.framework</groupId>
 			<artifactId>AlkhwarizmixFlexFramework</artifactId>
-			<version>1.0.6</version>
+			<version>${dz.alkhwarizmix.common.version}</version>
 			<type>swc</type>
 			<scope>merged</scope>
 		</dependency>
@@ -183,6 +183,10 @@
 							<sourceFile>dz/alkhwarizmix/moqawalati/flex/modules/userModule/UserModule.as</sourceFile>
 							<optimize>true</optimize>
 						</module>
+						<module>
+							<sourceFile>dz/alkhwarizmix/moqawalati/flex/modules/productModule/ProductModule.as</sourceFile>
+							<optimize>true</optimize>
+						</module>
 					</modules>
 
 					<includeTestFiles>
@@ -190,12 +194,14 @@
 					</includeTestFiles>
 					<excludeTestFiles>
 						<exclude>dz/alkhwarizmix/moqawalati/flex/testutils/*</exclude>
+						<exclude>dz/alkhwarizmix/moqawalati/flex/interfaces/*</exclude>
 					</excludeTestFiles>
 
 					<coverage>true</coverage>
 					<coverageOutputDirectory>target/site/cobertura/flex/</coverageOutputDirectory>
 					<coverageExclusions>
 						<coverageExclusion>**/MoqawalatiFlexTestRunner.mxml</coverageExclusion>
+						<coverageExclusion>**/dz/alkhwarizmix/moqawalati/flex/interfaces/*</coverageExclusion>
 					</coverageExclusions>
 				</configuration>
 			</plugin>

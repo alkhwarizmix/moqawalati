@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
+import dz.alkhwarizmix.framework.flex.model.RecordProxy;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
@@ -85,18 +86,19 @@ public class MoqawalatiStartupCommandTestCase extends MoqawalatiPureMVCTestCase
 	public function test01_execute_should_register_needed_proxies():void
 	{
 		testFacade.sendNotification("NOTE", app);
-		assertTrue(testFacade.hasProxy(MoqawalatiConfigProxy.NAME));
-		assertTrue(testFacade.hasProxy(MoqawalatiCustomDataProxy.NAME));
-		assertTrue(testFacade.hasProxy(MoqawalatiLoginUserProxy.NAME));
+		assertTrue(MoqawalatiConfigProxy.NAME, testFacade.hasProxy(MoqawalatiConfigProxy.NAME));
+		assertTrue(MoqawalatiCustomDataProxy.NAME, testFacade.hasProxy(MoqawalatiCustomDataProxy.NAME));
+		assertTrue(MoqawalatiLoginUserProxy.NAME, testFacade.hasProxy(MoqawalatiLoginUserProxy.NAME));
+		assertTrue(RecordProxy.NAME, testFacade.hasProxy(RecordProxy.NAME));
 	}
 	
 	[Test]
 	public function test01_execute_should_register_needed_mediators():void
 	{
 		testFacade.sendNotification("NOTE", app);
-		assertTrue(testFacade.hasMediator(MainControlBarMediator.NAME));
-		assertTrue(testFacade.hasMediator(MDICanvasMediator.NAME));
-		assertTrue(testFacade.hasMediator(LoginBoxMediator.NAME));
+		assertTrue(MainControlBarMediator.NAME, testFacade.hasMediator(MainControlBarMediator.NAME));
+		assertTrue(MDICanvasMediator.NAME, testFacade.hasMediator(MDICanvasMediator.NAME));
+		assertTrue(LoginBoxMediator.NAME, testFacade.hasMediator(LoginBoxMediator.NAME));
 	}
 	
 } // class

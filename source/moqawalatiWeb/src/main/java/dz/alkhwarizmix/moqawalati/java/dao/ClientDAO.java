@@ -59,11 +59,11 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 		try {
 			saveOrUpdate(defaultUser);
 			getLogger().info(
-					"createDefaultClients: Created default user <{0}>",
+					"createDefaultClients: Created default client <{}>",
 					defaultUser.getName());
 		} catch (AlKhwarizmixDAOException e) {
 			getLogger()
-					.warn("createDefaultClients: default user <{0}> already existing",
+					.warn("createDefaultClients: default client <{}> already existing",
 							defaultUser.getName());
 		}
 	}*/

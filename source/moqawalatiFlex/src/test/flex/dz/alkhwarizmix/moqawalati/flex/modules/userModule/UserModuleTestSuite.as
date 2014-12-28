@@ -12,8 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.userModule
 {
 
-import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVOTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserGetListCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserModuleStartupCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.facade.UserModuleFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.model.UserProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.UserListMediatorTestCase;
@@ -31,20 +31,23 @@ import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.components.UserLi
 [RunWith("org.flexunit.runners.Suite")]
 public class UserModuleTestSuite
 {
+	public var userModuleConstantsTestCase:UserModuleConstantsTestCase;
+	
 	// facade
 	public var userModuleFacadeTestCase:UserModuleFacadeTestCase;
 	
 	// controller
 	public var userGetListCommandTestCase:UserGetListCommandTestCase;
+	public var userModuleStartupCommandTestCase:UserModuleStartupCommandTestCase;
 	
 	// model
-	public var userVOTestCase:UserVOTestCase;
 	public var userProxyTestCase:UserProxyTestCase;
 	
 	// view
 	public var userListMediatorTestCase:UserListMediatorTestCase;
 	
 	// view.components
+	public var userModuleTestCase:UserModuleTestCase; 
 	public var userListCanvasTestCase:UserListCanvasTestCase;
 	
 } // class

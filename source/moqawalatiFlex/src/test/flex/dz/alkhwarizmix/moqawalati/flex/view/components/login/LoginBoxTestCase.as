@@ -14,7 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.view.components.login
 
 import flash.events.MouseEvent;
 
-import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiUITestCase;
 
 import org.flexunit.asserts.assertEquals;
@@ -37,7 +37,7 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	override protected function setUpAyncUI():void
+	override protected function setUpAsyncUI():void
 	{
 		// NOOP
 	}

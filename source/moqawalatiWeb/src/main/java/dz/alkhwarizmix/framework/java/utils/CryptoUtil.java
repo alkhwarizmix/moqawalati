@@ -163,9 +163,22 @@ public class CryptoUtil {
 	}
 
 	/**
+	 * reverseString
+	 */
+	public final String reverseString(String text) {
+		String result = null;
+		if (text != null) {
+			result = "";
+			for (int i = text.length() - 1; i >= 0; i--)
+				result += text.charAt(i);
+		}
+		return result;
+	}
+
+	/**
 	 * stringToHex
 	 */
-	String stringToHex(String arg) {
+	protected String stringToHex(String arg) {
 
 		String result = null;
 
@@ -182,7 +195,7 @@ public class CryptoUtil {
 	/**
 	 * hexToString
 	 */
-	String hexToString(String arg) {
+	protected String hexToString(String arg) {
 
 		String result = null;
 		byte[] bytes = null;
@@ -232,4 +245,5 @@ public class CryptoUtil {
 
 		return hs;
 	}
-}
+
+} // Class

@@ -118,12 +118,14 @@ public abstract class AlKhwarizmixWebServiceForXML {
 		HttpHeaders responseHeaders = getHttpHeadersForXML();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
-				HttpStatus.METHOD_FAILURE);
+				errorCode.getHttpStatus());
 	}
 
 	/**
 	 */
 	public ResponseEntity<String> errorResponseForXML(AlKhwarizmixException ex) {
+		getLogger().error("{}: {}", ex.getLocalizedMessage(),
+				ex.getStackTrace());
 		return errorResponseForXML(ex.getErrorCode());
 	}
 

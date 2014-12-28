@@ -14,6 +14,8 @@ package dz.alkhwarizmix.moqawalati.flex.testutils
 
 import dz.alkhwarizmix.framework.flex.facade.AlKhwarizmixFacade;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiConfigProxy;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 
 import org.puremvc.as3.multicore.interfaces.IFacade;
@@ -68,12 +70,12 @@ public class MoqawalatiPureMVCTestCase extends MoqawalatiTestCase
 	/**
 	 * @private
 	 */
-	protected final function get moqawalatiMainFacade():IFacade
+	protected final function get moqawalatiMainFacade():IMoqawalatiFacade
 	{
-		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME);
+		return MoqawalatiFacadeForTest.getInstance(MoqawalatiConstants.FACADE_NAME) as IMoqawalatiFacade;
 	}
 	
-	protected final  function get moqawalatiConfigProxy():MoqawalatiConfigProxy
+	protected final  function get moqawalatiConfigProxy():IMoqawalatiConfigProxy
 	{
 		return moqawalatiMainFacade.retrieveProxy(MoqawalatiConfigProxy.NAME)
 			as MoqawalatiConfigProxy;
@@ -93,14 +95,6 @@ public class MoqawalatiPureMVCTestCase extends MoqawalatiTestCase
 	protected final function removeMoqawalatiConfigProxy():void
 	{
 		moqawalatiMainFacade.removeProxy(MoqawalatiConfigProxy.NAME);
-	}
-	
-	/**
-	 * @private
-	 */
-	protected final function removeFacadeCore(key:String):void
-	{
-		Facade.removeCore(key);
 	}
 	
 	/**
@@ -130,3 +124,41 @@ public class MoqawalatiPureMVCTestCase extends MoqawalatiTestCase
 	
 } // class
 } // package
+
+//--------------------------------------------------------------------------
+
+import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacade;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
+
+internal class MoqawalatiFacadeForTest extends MoqawalatiFacade
+	implements IMoqawalatiFacade
+{
+	public static function getInstance(key:String):IMoqawalatiFacade 
+	{
+		if (instanceMap[key] == null)
+			instanceMap[key] = new MoqawalatiFacadeForTest(key);
+		
+		return instanceMap[key] as IMoqawalatiFacade;
+	}
+	
+	/**
+	 *  Constructor.
+	 */
+	public function MoqawalatiFacadeForTest(key:String)
+	{
+		super(key);
+	}
+	
+	override public function startup(app:*):void
+	{
+		// NOOP
+	}
+	
+	override protected function initCommandsToRegister():void
+	{
+		// NOOP
+	}
+	
+}
+
+//--------------------------------------------------------------------------

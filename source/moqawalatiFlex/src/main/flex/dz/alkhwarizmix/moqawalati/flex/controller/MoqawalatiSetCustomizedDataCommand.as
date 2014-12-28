@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.rpc.remoting.AlKhwarizmixRemoteObject;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
 
@@ -37,6 +39,21 @@ public class MoqawalatiSetCustomizedDataCommand extends MoqawalatiBlazeDSGetData
 	public function MoqawalatiSetCustomizedDataCommand()
 	{
 		super();
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiSetCustomizedDataCommand);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------

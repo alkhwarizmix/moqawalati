@@ -65,7 +65,6 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
-
 		try {
 			for (AbstractAlKhwarizmixDomainObject cursor : object
 					.getDaoObjectList()) {

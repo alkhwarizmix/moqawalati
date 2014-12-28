@@ -45,6 +45,7 @@ public class MoqawalatiModule extends AlKhwarizmixModule
 	{
 		super();
 		
+		// TODO: CHECK THIS
 		registerClassAlias( "dz.alkhwarizmix.moqawalati.flex.modules." +
 			"MoqawalatiModule", MoqawalatiModule);
 	}
@@ -55,10 +56,14 @@ public class MoqawalatiModule extends AlKhwarizmixModule
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiModule);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiModule);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//

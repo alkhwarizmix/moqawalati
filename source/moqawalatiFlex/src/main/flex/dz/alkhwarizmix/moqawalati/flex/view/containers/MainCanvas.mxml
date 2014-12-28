@@ -26,6 +26,28 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009"
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
 	>
+	<fx:Script>
+	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(MainCanvas);
+			return LOG;
+		}
+		
+	]]>
+	</fx:Script>
 	
 	<containers:MoqawalatiVBox id="vbox"
 		width="100%" height="100%"

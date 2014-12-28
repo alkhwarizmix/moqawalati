@@ -46,10 +46,14 @@ public class MoqawalatiButton extends AlKhwarizmixButton
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiButton);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiButton);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//

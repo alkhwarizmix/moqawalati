@@ -92,7 +92,7 @@ public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	public ResponseEntity<String> setCustomData(
 			@RequestParam("customData") String xmlValue)
 			throws AlKhwarizmixException {
-		getLogger().trace("addCustomData({0})", xmlValue);
+		getLogger().trace("addCustomData({})", xmlValue);
 
 		try {
 			String result = getCustomizerService().setCustomDataFromXML(

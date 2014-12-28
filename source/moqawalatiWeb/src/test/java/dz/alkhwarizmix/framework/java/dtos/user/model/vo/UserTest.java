@@ -19,7 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
  * <p>

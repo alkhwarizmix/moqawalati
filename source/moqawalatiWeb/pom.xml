@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.0.6</version>
+		<version>1.2.8</version>
 	</parent>
 
 	<artifactId>moqawalatiWeb</artifactId>
@@ -51,6 +51,8 @@
 
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<hsqldb.version>1.8.0.10</hsqldb.version>
+		<slf4j-log4j12.version>1.7.7</slf4j-log4j12.version>
+		<slf4j-api.version>1.7.7</slf4j-api.version>
 
 		<jmeter.version>1.8.1</jmeter.version>
 		<findbugs.version>2.5.3</findbugs.version>
@@ -296,9 +298,15 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.8</version>
+			<version>${slf4j-log4j12.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -362,7 +370,7 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>2.5</version>
+			<version>2.6</version>
 		</dependency>
 
 		<dependency>
@@ -551,6 +559,9 @@
 				<artifactId>maven-jetty-plugin</artifactId>
 				<version>6.1.26</version>
 				<configuration>
+					<webAppSourceDirectory>
+						${basedir}/target/${project.build.finalName}
+					</webAppSourceDirectory>
 					<webApp>
 						${basedir}/target/${project.build.finalName}.war
 					</webApp>

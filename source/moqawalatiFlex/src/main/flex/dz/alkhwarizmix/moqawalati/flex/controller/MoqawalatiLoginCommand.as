@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.controller
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
 
 /**
@@ -36,6 +38,21 @@ public class MoqawalatiLoginCommand extends MoqawalatiBlazeDSGetDataCommand
 	public function MoqawalatiLoginCommand()
 	{
 		super();
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiLoginCommand);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------

@@ -54,10 +54,14 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiDataListCanvas);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiDataListCanvas);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//
@@ -98,15 +102,25 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 		var defaultContextMenu:ContextMenu = new ContextMenu();
 		defaultContextMenu.hideBuiltInItems();
 		
-		var arrangeItem:ContextMenuItem = new ContextMenuItem("CONTEXT_MENU_LABEL_CAPTION1");
-		arrangeItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuItemSelectHandler);
-		defaultContextMenu.customItems.push(arrangeItem);
-		
-		var arrangeFillItem:ContextMenuItem = new ContextMenuItem("CONTEXT_MENU_LABEL_CAPTION2");
-		arrangeFillItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuItemSelectHandler);
-		defaultContextMenu.customItems.push(arrangeFillItem);
+		for each (var menuCaption:String in getContextMenuItems())
+		{
+			var contextMenuItem:ContextMenuItem = new ContextMenuItem(menuCaption);
+			contextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, contextMenuItemSelectHandler);
+			defaultContextMenu.customItems.push(contextMenuItem);
+		}
 		
 		this.contextMenu = defaultContextMenu;
+	}
+	
+	/**
+	 * TODO: ASDOC
+	 */
+	protected function getContextMenuItems():Array
+	{
+		return [
+			"CONTEXT_MENU_LABEL_CAPTION1",
+			"CONTEXT_MENU_LABEL_CAPTION2"
+		];
 	}
 	
 	//--------------------------------------------------------------------------
@@ -118,10 +132,18 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 	/**
 	 * @private
 	 */
-	private function menuItemSelectHandler(event:ContextMenuEvent):void
+	private function contextMenuItemSelectHandler(event:ContextMenuEvent):void
 	{
 		var win:MDIWindow = event.contextMenuOwner as MDIWindow;
-		switch (event.target.caption)
+		handleContextMenuItemSelected(event.target.caption);
+	}
+	
+	/**
+	 * TODO: ASDOC
+	 */
+	protected function handleContextMenuItemSelected(caption:String):void
+	{
+		switch (caption)
 		{
 			case ("CONTEXT_MENU_LABEL_CAPTION1"):
 			{

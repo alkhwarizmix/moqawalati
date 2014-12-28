@@ -44,6 +44,24 @@
 		import mx.events.MenuEvent;
 		import mx.events.PropertyChangeEvent;
 		
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(MainControlBar);
+			return LOG;
+		}
+		
 		//--------------------------------------------------------------------------
 		//
 		//  Methods

@@ -15,7 +15,14 @@ package dz.alkhwarizmix.moqawalati.flex.view
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.view.AlkhwarizmixDataListMediator;
+import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiConfigProxy;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
+import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvas;
+
+import org.puremvc.as3.multicore.patterns.facade.Facade;
 
 /**
  *  <p>
@@ -49,10 +56,40 @@ public class MoqawalatiDataListMediator extends AlkhwarizmixDataListMediator
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiDataListMediator);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiDataListMediator);
+		return LOG;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Properties
+	//
+	//--------------------------------------------------------------------------
+	
+	//----------------------------------
+	//  appFacade
+	//----------------------------------
+	
+	public final function get appFacade():IMoqawalatiFacade
+	{
+		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME)
+			as IMoqawalatiFacade;
+	}
+	
+	//----------------------------------
+	//  appConfigProxy
+	//----------------------------------
+	
+	public final function get appConfigProxy():IMoqawalatiConfigProxy
+	{
+		return appFacade.retrieveProxy(MoqawalatiConfigProxy.NAME)
+			as IMoqawalatiConfigProxy;
+	}
 	
 } // class
 } // package

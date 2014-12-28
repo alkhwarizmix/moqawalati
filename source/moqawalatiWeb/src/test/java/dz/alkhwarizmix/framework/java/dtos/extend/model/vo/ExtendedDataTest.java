@@ -12,7 +12,9 @@
 package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -114,6 +116,12 @@ public class ExtendedDataTest {
 		utExtendedData.setExtendedDataValue(value);
 		assertEquals(value, utExtendedData.getExtendedDataValue());
 		assertEquals(2, utExtendedData.getExtendedDataParts().size());
+	}
+
+	@Ignore("TODO")
+	@Test
+	public void test07_clone() {
+		assertTrue("TODO", false);
 	}
 
 } // Class

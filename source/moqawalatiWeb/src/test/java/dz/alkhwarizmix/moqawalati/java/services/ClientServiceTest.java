@@ -30,7 +30,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientDAO;
@@ -60,6 +60,9 @@ public class ClientServiceTest {
 	@Mock
 	private IClientDAO mockClientDAO;
 
+	@InjectMocks
+	private ClientServiceValidator clientValidator;
+
 	@Mock
 	private Jaxb2Marshaller mockJaxb2Marshaller;
 
@@ -71,6 +74,7 @@ public class ClientServiceTest {
 
 	private void setupUtClientService() {
 		utClientService.setClientDAO(mockClientDAO);
+		utClientService.setClientValidator(clientValidator);
 		utClientService.setJaxb2Marshaller(mockJaxb2Marshaller);
 	}
 

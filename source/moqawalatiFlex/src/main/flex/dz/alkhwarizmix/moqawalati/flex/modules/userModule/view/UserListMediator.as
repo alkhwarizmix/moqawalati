@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.userModule.view
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.model.UserProxy;
@@ -51,6 +53,21 @@ public class UserListMediator extends MoqawalatiDataListMediator
 	public function UserListMediator(viewComponent:Object = null)
 	{
 		super(NAME, viewComponent);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(UserListMediator);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------

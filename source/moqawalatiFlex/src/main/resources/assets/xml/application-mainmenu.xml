@@ -3,6 +3,7 @@
 	<menuitem label="FILE">
 		<menuitem label="USER" value="User" />
 		<menuitem label="CLIENT" value="Client" />
+		<menuitem label="PRODUCT" value="Product" />
 	</menuitem>
 
 	<menuitem label="CONTACTS">

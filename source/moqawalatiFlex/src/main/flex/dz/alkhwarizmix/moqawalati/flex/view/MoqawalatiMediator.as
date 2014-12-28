@@ -16,11 +16,12 @@ import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.view.AlKhwarizmixMediator;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiConfigProxy;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
 
-import org.puremvc.as3.multicore.interfaces.IFacade;
 import org.puremvc.as3.multicore.interfaces.INotification;
 import org.puremvc.as3.multicore.patterns.facade.Facade;
 
@@ -71,19 +72,20 @@ public class MoqawalatiMediator extends AlKhwarizmixMediator
 	//  appFacade
 	//----------------------------------
 	
-	public final function get appFacade():IFacade
+	public final function get appFacade():IMoqawalatiFacade
 	{
-		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME);
+		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME)
+			as IMoqawalatiFacade;
 	}
 	
 	//----------------------------------
 	//  appConfigProxy
 	//----------------------------------
 	
-	public final function get appConfigProxy():MoqawalatiConfigProxy
+	public final function get appConfigProxy():IMoqawalatiConfigProxy
 	{
 		return appFacade.retrieveProxy(MoqawalatiConfigProxy.NAME)
-			as MoqawalatiConfigProxy;
+			as IMoqawalatiConfigProxy;
 	}
 	
 	//----------------------------------

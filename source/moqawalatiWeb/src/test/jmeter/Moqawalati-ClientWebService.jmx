@@ -137,7 +137,7 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -170,14 +170,13 @@
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http420" enabled="true">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert-Http500" enabled="true">
               <collectionProp name="Asserion.test_strings">
-                <stringProp name="51570">420</stringProp>
+                <stringProp name="52469">500</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
               <boolProp name="Assertion.assume_success">true</boolProp>
               <intProp name="Assertion.test_type">2</intProp>
-              <stringProp name="TestPlan.comments">Assert un HTTP 420</stringProp>
             </ResponseAssertion>
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-ERROR" enabled="true">
@@ -229,7 +228,7 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-ClientId" enabled="true">
@@ -289,7 +288,7 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -339,7 +338,7 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-Name" enabled="true">
@@ -399,7 +398,7 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -456,7 +455,7 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments">Assert que la réponse est un succès</stringProp>
+              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-Name" enabled="false">

@@ -23,9 +23,10 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
 import dz.alkhwarizmix.framework.java.interfaces.ICustomizerService;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.interfaces.ICustomizerServiceValidator;
 
 /**
  * <p>
@@ -37,7 +38,7 @@ import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
  */
 @Service
 @Transactional(readOnly = true)
-public class CustomizerService extends AlKhwarizmixService implements
+public class CustomizerService extends AbstractAlKhwarizmixService implements
 		ICustomizerService {
 
 	// --------------------------------------------------------------------------
@@ -59,12 +60,13 @@ public class CustomizerService extends AlKhwarizmixService implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomizerService.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(CustomizerService.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -77,10 +79,10 @@ public class CustomizerService extends AlKhwarizmixService implements
 	private ICustomDataDAO customDataDAO;
 
 	@Autowired
-	private Jaxb2Marshaller jaxb2Marshaller;
+	private ICustomizerServiceValidator customDataValidator;
 
 	@Autowired
-	private AlKhwarizmixSessionData sessionData;
+	private Jaxb2Marshaller jaxb2Marshaller;
 
 	// --------------------------------------------------------------------------
 	//
@@ -89,6 +91,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -107,6 +110,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -121,6 +125,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
@@ -138,6 +143,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public CustomData getCustomData(CustomData customData)
@@ -161,6 +167,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getCustomDataAsXML(CustomData customData)
@@ -172,6 +179,7 @@ public class CustomizerService extends AlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getCustomDataAsXML(String customDataXml)
@@ -183,9 +191,10 @@ public class CustomizerService extends AlKhwarizmixService implements
 	}
 
 	/**
+	 * @private
 	 */
 	private AlKhwarizmixDomainObject getSessionCustomizer() {
-		return getSessionData().getCustomizer();
+		return getSessionData().getSessionOwner();
 	}
 
 	// --------------------------------------------------------------------------
@@ -212,6 +221,19 @@ public class CustomizerService extends AlKhwarizmixService implements
 	}
 
 	// ----------------------------------
+	// clientValidator
+	// ----------------------------------
+
+	protected void setServiceValidator(ICustomizerServiceValidator value) {
+		customDataValidator = value;
+	}
+
+	@Override
+	protected IAlKhwarizmixServiceValidator getServiceValidator() {
+		return customDataValidator;
+	}
+
+	// ----------------------------------
 	// jaxb2Marshaller
 	// ----------------------------------
 
@@ -223,18 +245,6 @@ public class CustomizerService extends AlKhwarizmixService implements
 	@Override
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
-	}
-
-	// ----------------------------------
-	// sessionData
-	// ----------------------------------
-
-	final AlKhwarizmixSessionData getSessionData() {
-		return sessionData;
-	}
-
-	final void setSessionData(AlKhwarizmixSessionData value) {
-		sessionData = value;
 	}
 
 } // Class

@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.userModule
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.modules.MoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.facade.UserModuleFacade;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.components.UserListCanvas;
@@ -42,6 +44,21 @@ public class UserModule extends MoqawalatiModule
 		
 		percentWidth = 100;
 		percentHeight = 100;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(UserModule);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------

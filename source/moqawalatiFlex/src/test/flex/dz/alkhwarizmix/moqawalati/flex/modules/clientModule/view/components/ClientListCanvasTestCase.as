@@ -33,7 +33,7 @@ public class ClientListCanvasTestCase extends MoqawalatiUITestCase
 	//
 	//--------------------------------------------------------------------------
 	
-	override protected function setUpAyncUI():void
+	override protected function setUpAsyncUI():void
 	{
 		// NOOP
 	}

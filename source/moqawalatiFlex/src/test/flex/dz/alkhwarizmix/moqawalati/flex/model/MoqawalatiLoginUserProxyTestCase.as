@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.model
 {
 
-import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
 import org.flexunit.asserts.assertEquals;

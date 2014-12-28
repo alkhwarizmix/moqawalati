@@ -16,7 +16,7 @@ import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
 
 /**

@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -38,7 +39,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 @Entity
 @Table(name = "TExtendedData")
 public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
-		Serializable {
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -50,15 +51,20 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public ExtendedData() {
 		super();
+	}
+
+	private ExtendedData(ExtendedData other) {
+		super(other);
+		if (other != null) {
+			this.extendedDataParts = (List<ExtendedDataPart>) ObjectUtils
+					.clone(other.extendedDataParts);
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -76,6 +82,13 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	@Override
+	public Object clone() {
+		return new ExtendedData(this);
+	}
 
 	/**
 	 */

@@ -29,14 +29,14 @@
 	<parent>
 		<groupId>dz.alkhwarizmix</groupId>
 		<artifactId>alkhwarizmix-common</artifactId>
-		<version>1.0.6</version>
+		<version>1.1.7</version>
 	</parent>
 
 	<groupId>dz.alkhwarizmix.moqawalati</groupId>
 	<artifactId>moqawalati</artifactId>
-	<version>1.0.6</version>
+	<version>1.2.8</version>
 	<packaging>pom</packaging>
-
+	
 	<name>moqawalati Maven</name>
 	<description></description>
 

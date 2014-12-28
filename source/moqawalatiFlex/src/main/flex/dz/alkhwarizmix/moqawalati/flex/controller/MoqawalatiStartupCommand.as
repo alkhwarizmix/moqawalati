@@ -14,6 +14,9 @@ package dz.alkhwarizmix.moqawalati.flex.controller
 
 import flash.utils.Dictionary;
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+import dz.alkhwarizmix.framework.flex.model.RecordProxy;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
@@ -22,6 +25,7 @@ import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiCustomDataProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
 import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediator;
+import dz.alkhwarizmix.moqawalati.flex.view.MainCanvasMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvas;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
@@ -39,6 +43,21 @@ import org.puremvc.as3.multicore.interfaces.INotification;
 public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 	implements IMoqawalatiCommand
 {
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiStartupCommand);
+		return LOG;
+	}
+	
 	//--------------------------------------------------------------------------
 	//
 	//  Overriden methods
@@ -77,6 +96,8 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 	{
 		var mainCanvas:MainCanvas = app.mainCanvas as MainCanvas;
 		var mainControlBar:MainControlBar = app.mainControlBar as MainControlBar;
+		facade.registerMediator(new MainCanvasMediator(
+			mainCanvas));
 		facade.registerMediator(new MainControlBarMediator(
 			app.mainControlBar));
 		facade.registerMediator(new MDICanvasMediator(
@@ -94,6 +115,7 @@ public class MoqawalatiStartupCommand extends MoqawalatiSimpleCommand
 			getConfigDico(app.parameters)));
 		facade.registerProxy(new MoqawalatiCustomDataProxy());
 		facade.registerProxy(new MoqawalatiLoginUserProxy());
+		facade.registerProxy(new RecordProxy());
 	}
 	
 	/**
