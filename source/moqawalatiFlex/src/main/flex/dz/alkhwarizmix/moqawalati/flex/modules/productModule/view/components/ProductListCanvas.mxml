@@ -28,13 +28,10 @@
 	xmlns:components="dz.alkhwarizmix.moqawalati.flex.view.components.*"
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
 	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
-	creationComplete="moqawalatidatalistcanvas1_creationCompleteHandler(event)"
 	>
 	
 	<fx:Script>
 	<![CDATA[
-		import mx.events.FlexEvent;
-		
 		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 		
@@ -55,34 +52,43 @@
 		
 		//--------------------------------------------------------------------------
 		//
-		//  Event handlers
+		//  Overriden methods
 		//
 		//--------------------------------------------------------------------------
 		
-		private function btnRefresh_clickHandler(event:MouseEvent):void
+		/**
+		 * @inheritDoc
+		 */
+		override protected function getContextMenuItems():Array
 		{
-			sendEvent("ProductListCanvas_REFRESH");
+			return [
+				"ProductListCanvas_REFRESH",
+				"ProductListCanvas_COMMIT"
+			];
 		}
 		
-		private function btnCommit_clickHandler(event:MouseEvent):void
+		/**
+		 * @inheritDoc
+		 */
+		override protected function handleContextMenuItemSelected(caption:String):void
 		{
-			sendEvent("ProductListCanvas_COMMIT");
-		}
-		
-		private function moqawalatidatalistcanvas1_creationCompleteHandler(event:FlexEvent):void
-		{
-			this.setElementIndex(btnsBar, this.numChildren - 1);
+			switch (caption)
+			{
+				case ("ProductListCanvas_REFRESH"):
+				{
+					sendEvent("ProductListCanvas_REFRESH");
+					break;
+				}
+					
+				case ("ProductListCanvas_COMMIT"):
+				{
+					sendEvent("ProductListCanvas_COMMIT");
+					break;
+				}
+			}
 		}
 		
 	]]>
 	</fx:Script>
 	
-	<containers:MoqawalatiHBox id="btnsBar">
-		<controls:MoqawalatiButton id="btnRefresh"
-			label="Refresh"
-			click="btnRefresh_clickHandler(event)"/>
-		<controls:MoqawalatiButton id="btnCommit"
-			label="Commit"
-			click="btnCommit_clickHandler(event)"/>
-	</containers:MoqawalatiHBox>
 </components:MoqawalatiDataListCanvas>
