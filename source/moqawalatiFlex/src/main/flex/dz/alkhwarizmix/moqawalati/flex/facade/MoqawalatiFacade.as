@@ -12,9 +12,13 @@
 package dz.alkhwarizmix.moqawalati.flex.facade
 {
 
+import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixMissingImplError;
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
 import dz.alkhwarizmix.framework.flex.facade.AlKhwarizmixFacade;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
 
 /**
  *  <p>
@@ -25,6 +29,7 @@ import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
  *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
  */
 public class MoqawalatiFacade extends AlKhwarizmixFacade
+	implements IMoqawalatiFacade
 {
 	//--------------------------------------------------------------------------
 	//
@@ -38,6 +43,21 @@ public class MoqawalatiFacade extends AlKhwarizmixFacade
 	public function MoqawalatiFacade(key:String)
 	{
 		super(key);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiFacade);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -56,6 +76,22 @@ public class MoqawalatiFacade extends AlKhwarizmixFacade
 			super.registerCommand(notificationName, commandClassRef);
 		else
 			throw new AlKhwarizmixTypeError();
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Methods
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * Application or Module startup
+	 * 
+	 * @param app a reference to the application or module component 
+	 */  
+	public function startup(app:*):void
+	{
+		throw new AlKhwarizmixMissingImplError();
 	}
 	
 } // class

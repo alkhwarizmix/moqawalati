@@ -11,7 +11,6 @@
 
 package dz.alkhwarizmix.moqawalati.flex.interfaces
 {
-
 import dz.alkhwarizmix.framework.flex.interfaces.IAlKhwarizmixCommand;
 
 /**
@@ -24,6 +23,13 @@ import dz.alkhwarizmix.framework.flex.interfaces.IAlKhwarizmixCommand;
  */
 public interface IMoqawalatiCommand extends IAlKhwarizmixCommand
 {
+	/**
+	 */
+	function get appFacade():IMoqawalatiFacade;
+	
+	/**
+	 */
+	function get appConfigProxy():IMoqawalatiConfigProxy;
 	
 } // Interface
 } // Package

@@ -13,21 +13,45 @@
 ////////////////////////////////////////////////////////////////////////////////
 --><!---
 /**
- *  <p>
- *  TODO: ASDOC
- *  </p>
- * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٢٢ رمضان ١٤٣٥ (July 20, 2014)
- */
+*  <p>
+*  TODO: ASDOC
+*  </p>
+* 
+*  @author فارس بلحواس (Fares Belhaouas)
+*  @since  ٢٢ رمضان ١٤٣٥ (July 20, 2014)
+*/
 -->
 
 <containers:MoqawalatiCanvas
 	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
 	xmlns:containers="dz.alkhwarizmix.moqawalati.flex.view.containers.*"
 	xmlns:controls="dz.alkhwarizmix.moqawalati.flex.view.controls.*"
-	xmlns:components="dz.alkhwarizmix.moqawalati.flex.view.components.*" xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:components="dz.alkhwarizmix.moqawalati.flex.view.components.*"
 	>
+	
+	<fx:Script>
+	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(MessageRenderer);
+			return LOG;
+		}
+	]]>
+	</fx:Script>
+	
 	<s:BorderContainer>
 		<containers:MoqawalatiVBox id="box1" gap="2" paddingTop="2" paddingRight="2" paddingLeft="2" paddingBottom="2">
 			<controls:MoqawalatiLabel text="Title" verticalAlign="middle"/>

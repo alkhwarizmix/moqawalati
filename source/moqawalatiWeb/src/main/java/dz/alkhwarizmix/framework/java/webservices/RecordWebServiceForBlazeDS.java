@@ -95,8 +95,8 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 	@Override
 	public RecordList getRecordList(String schemaName, String tableName,
 			int firstResult, int maxResult) throws AlKhwarizmixException {
-		getLogger().debug("getRecordList({}, {}, {}, {})", schemaName, tableName,
-				firstResult, maxResult);
+		getLogger().debug("getRecordList({}, {}, {}, {})", schemaName,
+				tableName, firstResult, maxResult);
 		return getRecordService().getRecordList(schemaName, tableName, null,
 				firstResult, maxResult);
 	}

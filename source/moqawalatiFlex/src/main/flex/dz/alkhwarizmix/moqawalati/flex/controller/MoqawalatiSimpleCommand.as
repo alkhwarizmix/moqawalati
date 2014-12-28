@@ -15,7 +15,13 @@ package dz.alkhwarizmix.moqawalati.flex.controller
 import dz.alkhwarizmix.framework.flex.controller.AlKhwarizmixSimpleCommand;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiConfigProxy;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
+import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxy;
+
+import org.puremvc.as3.multicore.patterns.facade.Facade;
 
 /**
  *  <p>
@@ -34,10 +40,40 @@ public class MoqawalatiSimpleCommand extends AlKhwarizmixSimpleCommand
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiSimpleCommand);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiSimpleCommand);
+		return LOG;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Properties
+	//
+	//--------------------------------------------------------------------------
+	
+	//----------------------------------
+	//  appFacade
+	//----------------------------------
+	
+	public final function get appFacade():IMoqawalatiFacade
+	{
+		return Facade.getInstance(MoqawalatiConstants.FACADE_NAME)
+			as IMoqawalatiFacade;
+	}
+	
+	//----------------------------------
+	//  appConfigProxy
+	//----------------------------------
+	
+	public final function get appConfigProxy():IMoqawalatiConfigProxy
+	{
+		return appFacade.retrieveProxy(MoqawalatiConfigProxy.NAME)
+			as IMoqawalatiConfigProxy;
+	}
 	
 } // class
 } // package

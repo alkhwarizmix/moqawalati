@@ -13,7 +13,10 @@ package dz.alkhwarizmix.framework.java.services;
 
 import org.slf4j.Logger;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 
 /**
@@ -55,25 +58,43 @@ public abstract class AbstractAlKhwarizmixServiceValidator implements
 	// --------------------------------------------------------------------------
 
 	/**
-	 * Validate before to add the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object) {
+	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		validateObjectOwner(objectOwner);
 	}
 
 	/**
-	 * Validate before to update the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		validateObjectOwner(objectOwner);
 	}
 
 	/**
-	 * Validate before to return the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToPublish(AbstractAlKhwarizmixDomainObject object) {
+	public void validateObjectToPublish(
+			AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		validateObjectOwner(objectOwner);
 		nullifyObjectId(object);
+	}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	private void validateObjectOwner(AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
+		if (objectOwner == null || objectOwner.getId() == null) {
+			throw new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.ERROR_UNAUTHORIZED);
+		}
 	}
 
 	/**

@@ -18,6 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
+
 /**
  * <p>
  * TODO: Javadoc
@@ -84,6 +86,13 @@ public class RecordTest {
 		Integer valueToSet = Record.INSERT_ACTION;
 		utRecord.setAction(valueToSet);
 		Assert.assertEquals(valueToSet, utRecord.getAction());
+	}
+
+	@Test
+	public void test05_encryption_setAndGet() {
+		Encryption valueToSet = new Encryption();
+		utRecord.setEncryption1(valueToSet);
+		Assert.assertEquals(valueToSet, utRecord.getEncryption1());
 	}
 
 	@Ignore("TODO: TDD")

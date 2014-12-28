@@ -14,7 +14,6 @@ package dz.alkhwarizmix.moqawalati.flex.modules.productModule.view
 
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.view.components.ProductListCanvas;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
-import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
 
 import org.flexunit.asserts.assertNotNull;
 import org.flexunit.asserts.assertTrue;

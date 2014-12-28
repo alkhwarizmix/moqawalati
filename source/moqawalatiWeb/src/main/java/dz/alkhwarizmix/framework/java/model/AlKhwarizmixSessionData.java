@@ -60,7 +60,7 @@ public class AlKhwarizmixSessionData implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
-	private AlKhwarizmixDomainObject customizer = null;
+	private AlKhwarizmixDomainObject sessionOwner = null;
 
 	// --------------------------------------------------------------------------
 	//
@@ -72,14 +72,14 @@ public class AlKhwarizmixSessionData implements Serializable {
 	// customizer
 	// ----------------------------------
 
-	public AlKhwarizmixDomainObject getCustomizer() {
-		if (customizer == null)
-			customizer = new AlKhwarizmixDomainObject();
-		return customizer;
+	public AlKhwarizmixDomainObject getSessionOwner() {
+		if (sessionOwner == null)
+			sessionOwner = new AlKhwarizmixDomainObject();
+		return sessionOwner;
 	}
 
-	public void setCustomizer(AlKhwarizmixDomainObject value) {
-		customizer = value;
+	public void setSessionOwner(AlKhwarizmixDomainObject value) {
+		sessionOwner = value;
 	}
 
 	// --------------------------------------------------------------------------
@@ -88,8 +88,8 @@ public class AlKhwarizmixSessionData implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
-	public void resetCustomizer() {
-		setCustomizer(null);
+	public void resetSessionOwner() {
+		setSessionOwner(null);
 	}
 
 } // Class

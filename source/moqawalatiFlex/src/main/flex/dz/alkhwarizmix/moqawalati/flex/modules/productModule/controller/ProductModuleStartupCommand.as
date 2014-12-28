@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSimpleCommand;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
@@ -32,6 +34,21 @@ import org.puremvc.as3.multicore.interfaces.INotification;
 public class ProductModuleStartupCommand extends MoqawalatiSimpleCommand
 	implements IMoqawalatiCommand
 {
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(ProductModuleStartupCommand);
+		return LOG;
+	}
+	
 	//--------------------------------------------------------------------------
 	//
 	//  Overriden methods

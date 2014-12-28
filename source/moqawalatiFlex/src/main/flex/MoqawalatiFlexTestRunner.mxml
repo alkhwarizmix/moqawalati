@@ -13,13 +13,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 --><!---
 /**
-*  <p>
-*  TODO: ASDOC
-*  </p>
-* 
-*  @author فارس بلحواس (Fares Belhaouas)
-*  @since  ١٨ ذو الحجة ١٤٣٤ (October 23, 2013)
-*/
+ *  <p>
+ *  TODO: ASDOC
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ١٨ ذو الحجة ١٤٣٤ (October 23, 2013)
+ */
 -->
 
 <mx:Application xmlns:mx="library://ns.adobe.com/flex/mx"
@@ -27,6 +27,7 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:flexUnitUIRunner="http://www.adobe.com/2009/flexUnitUIRunner"
 	xmlns:messagelist="dz.alkhwarizmix.moqawalati.flex.view.containers.messagelist.*"
+	width="800" height="600"
 	creationComplete="this_creationCompleteHandler(event)"
 	>
 	
@@ -57,6 +58,9 @@
 		 */
 		private function this_creationCompleteHandler(event:FlexEvent):void
 		{
+			this.percentWidth = 100;
+			this.percentHeight = 100;
+			
 			runTests();
 		}
 		

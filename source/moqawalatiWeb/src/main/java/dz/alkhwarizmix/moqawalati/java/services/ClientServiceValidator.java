@@ -15,7 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.services.AbstractAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
 
@@ -66,27 +68,31 @@ public class ClientServiceValidator extends
 	// --------------------------------------------------------------------------
 
 	/**
-	 * Validate before to add the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object) {
-		super.validateObjectToAdd(object);
+	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		super.validateObjectToAdd(object, objectOwner);
 	}
 
 	/**
-	 * Validate before to update the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object) {
-		super.validateObjectToUpdate(object);
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		super.validateObjectToUpdate(object, objectOwner);
 	}
 
 	/**
-	 * Validate before to return the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToPublish(AbstractAlKhwarizmixDomainObject object) {
-		super.validateObjectToPublish(object);
+	public void validateObjectToPublish(
+			AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		super.validateObjectToPublish(object, objectOwner);
 	}
 
 } // Class

@@ -184,8 +184,8 @@ public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 
 	private Criterion getEqualsParentCriterion(final Record record) {
 		return (record.getParent() != null)
-				? Restrictions.eq(Record.PARENT, record.getParent().getId())
-				: Restrictions.isNull(Record.PARENT);
+				? Restrictions.eq(Record.PARENT_ID, record.getParent().getId())
+				: Restrictions.isNull(Record.PARENT_ID);
 	}
 
 } // Class

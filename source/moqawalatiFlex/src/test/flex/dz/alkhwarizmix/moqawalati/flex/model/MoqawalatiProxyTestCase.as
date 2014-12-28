@@ -82,6 +82,10 @@ import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxy;
 
 internal class MoqawalatiProxyEnhancedForTest extends MoqawalatiProxy
 {
+	/**
+	 * Used by AlKhwarizmixTestCase::test_logger to test super class logger
+	 */
+	public static const loggerClazzForTest:Class = MoqawalatiProxy;
 	
 	public function MoqawalatiProxyEnhancedForTest(proxyName:String=null, data:Object=null)
 	{

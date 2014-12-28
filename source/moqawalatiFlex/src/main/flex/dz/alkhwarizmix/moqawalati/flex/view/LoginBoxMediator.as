@@ -12,8 +12,10 @@
 package dz.alkhwarizmix.moqawalati.flex.view
 {
 
+import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.event.MoqawalatiEvent;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
@@ -58,6 +60,21 @@ public class LoginBoxMediator extends MoqawalatiMediator
 		super(NAME, viewComponent);
 		
 		setViewComponent(viewComponent);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(LoginBoxMediator);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------

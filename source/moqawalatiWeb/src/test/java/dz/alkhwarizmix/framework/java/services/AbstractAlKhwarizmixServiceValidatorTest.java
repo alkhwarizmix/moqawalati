@@ -11,7 +11,6 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -21,7 +20,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -47,6 +48,9 @@ public class AbstractAlKhwarizmixServiceValidatorTest {
 	@Mock
 	AbstractAlKhwarizmixDomainObject mockAlKhwarizmixDomainObjectAbstract;
 
+	@Mock
+	AlKhwarizmixDomainObject mockObjectOwner;
+
 	// --------------------------------------------------------------------------
 	//
 	// Tests
@@ -54,23 +58,24 @@ public class AbstractAlKhwarizmixServiceValidatorTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_validateObjectToPublish_should_nullifyId() {
+	public void test01_validateObjectToPublish_should_nullifyId()
+			throws AlKhwarizmixException {
 		Mockito.doCallRealMethod()
 				.when(mockAlKhwarizmixServiceValidator)
-				.validateObjectToPublish(
-						any(AbstractAlKhwarizmixDomainObject.class));
-		mockAlKhwarizmixServiceValidator
-				.validateObjectToPublish(mockAlKhwarizmixDomainObjectAbstract); // TEST
+				.validateObjectToPublish(mockAlKhwarizmixDomainObjectAbstract,
+						mockObjectOwner);
+		mockAlKhwarizmixServiceValidator.validateObjectToPublish(
+				mockAlKhwarizmixDomainObjectAbstract, mockObjectOwner); // TEST
 		verify(mockAlKhwarizmixDomainObjectAbstract, times(1)).setId(null);
 	}
 
 	@Test
-	public void test03_validateObjectToPublish_should_not_throw_exception_when_passed_null_parameter() {
-		Mockito.doCallRealMethod()
-				.when(mockAlKhwarizmixServiceValidator)
-				.validateObjectToPublish(
-						any(AbstractAlKhwarizmixDomainObject.class));
-		mockAlKhwarizmixServiceValidator.validateObjectToPublish(null); // TEST
+	public void test03_validateObjectToPublish_should_not_throw_exception_when_passed_null_parameter()
+			throws AlKhwarizmixException {
+		Mockito.doCallRealMethod().when(mockAlKhwarizmixServiceValidator)
+				.validateObjectToPublish(null, mockObjectOwner);
+		mockAlKhwarizmixServiceValidator.validateObjectToPublish(null,
+				mockObjectOwner); // TEST
 	}
 
 } // Class

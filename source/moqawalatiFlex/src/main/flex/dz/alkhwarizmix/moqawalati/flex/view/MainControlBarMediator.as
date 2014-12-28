@@ -15,6 +15,8 @@ package dz.alkhwarizmix.moqawalati.flex.view
 import mx.controls.Alert;
 import mx.events.PropertyChangeEvent;
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
 import dz.alkhwarizmix.moqawalati.flex.view.containers.MainControlBar;
@@ -58,6 +60,17 @@ public class MainControlBarMediator extends MoqawalatiMediator
 		mainControlBar.addEventListener(MainControlBarEvent.OPEN_WINDOW,
 			mainControlBar_openWindowHandler);
 	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
+		getLogger(MainControlBarMediator);
+	
+	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
 	
 	//--------------------------------------------------------------------------
 	//

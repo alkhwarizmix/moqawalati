@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.AbstractAlKhwarizmixService;
@@ -96,6 +97,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -111,6 +113,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -130,6 +133,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
@@ -140,7 +144,8 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 		try {
 			Client result = getClientDAO().getClient((Client) object);
 			updateObjectFromExtendedDataXML(result);
-			getServiceValidator().validateObjectToPublish(result);
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
 			return result;
 		} catch (AlKhwarizmixException e) {
 			throw new MoqawalatiException(e);
@@ -148,6 +153,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Client getClient(Client client) throws MoqawalatiException {
@@ -162,6 +168,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getClientAsXML(Client client) throws MoqawalatiException {
@@ -176,6 +183,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getClientAsJSON(Client client) throws MoqawalatiException {
@@ -190,6 +198,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -206,6 +215,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -225,6 +235,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -247,6 +258,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getClientListAsJSON(DetachedCriteria criteria,
@@ -259,6 +271,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getClientListAsXML(DetachedCriteria criteria,
@@ -292,6 +305,16 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 		result += "</Clients>";
 
 		getLogger().trace("clientListToXML(): returns {}", result);
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected AlKhwarizmixDomainObject getSessionOwner() {
+		AlKhwarizmixDomainObject result = new AlKhwarizmixDomainObject();
+		result.setId(-1L);
 		return result;
 	}
 

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,10 +9,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo
+package dz.alkhwarizmix.moqawalati.flex.view
 {
 
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.containers.MainCanvas;
 
 import org.flexunit.asserts.assertNotNull;
 import org.flexunit.asserts.assertTrue;
@@ -23,9 +24,9 @@ import org.flexunit.asserts.assertTrue;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٣٠ شعبان ١٤٣٥ (June 28, 2014)
+ *  @since  ٠٣ ربيع الأول ١٤٣٦ (December 24, 2014)
  */
-public class UserVOTestCase extends MoqawalatiTestCase
+public class MainCanvasMediatorTestCase extends MoqawalatiTestCase
 {
 	//--------------------------------------------------------------------------
 	//
@@ -45,12 +46,17 @@ public class UserVOTestCase extends MoqawalatiTestCase
 	
 	override protected function get classUnderTest():Class
 	{
-		return UserVO;
+		return MainCanvasMediator;
 	}
 	
-	private function get utUserVO():UserVO
+	override protected function get classUnderTestConstructorArg1():*
 	{
-		return classInstanceUnderTest as UserVO;
+		return new MainCanvas(); // viewComponent
+	}
+	
+	private function get utMainCanvasMediator():MainCanvasMediator
+	{
+		return classInstanceUnderTest as MainCanvasMediator;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -62,7 +68,7 @@ public class UserVOTestCase extends MoqawalatiTestCase
 	[Test]
 	public function test00_constructor():void
 	{
-		assertNotNull(utUserVO);
+		assertNotNull(utMainCanvasMediator);
 	}
 	
 	[Ignore("TODO: TDD")]

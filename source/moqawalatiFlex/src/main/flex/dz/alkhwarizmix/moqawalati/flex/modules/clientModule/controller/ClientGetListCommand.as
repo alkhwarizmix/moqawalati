@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.clientModule.controller
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiBlazeDSGetDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.modules.clientModule.model.ClientProxy;
 
@@ -37,6 +39,21 @@ public class ClientGetListCommand extends MoqawalatiBlazeDSGetDataCommand
 	public function ClientGetListCommand()
 	{
 		super();
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(ClientGetListCommand);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------

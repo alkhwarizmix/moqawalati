@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.productModule
 {
 
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.MoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.facade.ProductModuleFacade;
@@ -44,6 +46,21 @@ public class ProductModule extends MoqawalatiModule
 		
 		percentWidth = 100;
 		percentHeight = 100;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(ProductModule);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------

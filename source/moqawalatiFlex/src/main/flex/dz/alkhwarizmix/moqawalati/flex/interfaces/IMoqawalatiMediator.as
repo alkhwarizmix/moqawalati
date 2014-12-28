@@ -24,6 +24,13 @@ import dz.alkhwarizmix.framework.flex.interfaces.IAlKhwarizmixMediator;
  */
 public interface IMoqawalatiMediator extends IAlKhwarizmixMediator
 {
+	/**
+	 */
+	function get appFacade():IMoqawalatiFacade;
+	
+	/**
+	 */
+	function get appConfigProxy():IMoqawalatiConfigProxy;
 	
 } // Interface
 } // Package

@@ -11,6 +11,9 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -86,12 +89,24 @@ public class CustomizerServiceTest {
 	}
 
 	private void setUpMocks() throws AlKhwarizmixException {
-		Mockito.when(mockSessionData.getCustomizer())
-				.thenReturn(mockCustomizer);
+		Mockito.when(mockSessionData.getSessionOwner()).thenReturn(
+				mockCustomizer);
 		utCustomizerService.setSessionData(mockSessionData);
 		utCustomizerService.setCustomDataDAO(mockCustomDataDAO);
 	}
 
 	// -----
+
+	@Test
+	public void test03_getSessionOwner_should_return_getSessionData_getSessionOwner()
+			throws AlKhwarizmixException {
+		AlKhwarizmixDomainObject mockSessionOwner = Mockito
+				.mock(AlKhwarizmixDomainObject.class);
+		Mockito.when(mockSessionData.getSessionOwner()).thenReturn(
+				mockSessionOwner);
+		AlKhwarizmixDomainObject result = utCustomizerService.getSessionOwner();
+		verify(mockSessionData, times(1)).getSessionOwner();
+		Assert.assertEquals(mockSessionOwner, result);
+	}
 
 } // Class

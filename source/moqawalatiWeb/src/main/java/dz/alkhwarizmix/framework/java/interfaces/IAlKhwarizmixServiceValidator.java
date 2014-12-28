@@ -11,7 +11,9 @@
 
 package dz.alkhwarizmix.framework.java.interfaces;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -24,15 +26,22 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 public interface IAlKhwarizmixServiceValidator {
 
 	/**
+	 * Validate before to add the object
 	 */
-	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object);
+	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException;
 
 	/**
+	 * Validate before to update the object
 	 */
-	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object);
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException;
 
 	/**
+	 * Validate before to return the object
 	 */
-	public void validateObjectToPublish(AbstractAlKhwarizmixDomainObject object);
+	public void validateObjectToPublish(
+			AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException;
 
 } // Class

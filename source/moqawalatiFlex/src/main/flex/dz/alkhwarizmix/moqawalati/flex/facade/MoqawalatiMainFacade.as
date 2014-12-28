@@ -17,6 +17,9 @@ import mx.messaging.messages.RemotingMessage;
 import spark.skins.spark.DataGridSkin;
 import spark.skins.spark.ScrollerSkin;
 
+import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
@@ -25,6 +28,7 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCom
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
 import dz.alkhwarizmix.moqawalati.flex.dtos.MoqawalatiDTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
 
 /**
  *  <p>
@@ -35,6 +39,7 @@ import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
  *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
  */
 public class MoqawalatiMainFacade extends MoqawalatiFacade
+	implements IMoqawalatiFacade
 {
 	//--------------------------------------------------------------------------
 	//
@@ -69,6 +74,21 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	
 	//--------------------------------------------------------------------------
 	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiMainFacade);
+		return LOG;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
 	//  Class methods
 	//
 	//--------------------------------------------------------------------------
@@ -76,12 +96,12 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	/**
 	 * TODO: ASDOC Definition of getInstance
 	 */
-	public static function getInstance(key:String):MoqawalatiMainFacade 
+	public static function getInstance(key:String):IMoqawalatiFacade 
 	{
 		if (instanceMap[key] == null)
 			instanceMap[key] = new MoqawalatiMainFacade(key);
 		
-		return instanceMap[key] as MoqawalatiMainFacade;
+		return instanceMap[key] as IMoqawalatiFacade;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -118,8 +138,10 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 * 
 	 * @param app a reference to the application component 
 	 */  
-	public function startup(app:IMoqawalatiApplication):void
+	override public function startup(app:*):void
 	{
+		if (!app is IMoqawalatiApplication)
+			throw new AlKhwarizmixTypeError("IMoqawalatiApplication");
 		sendNotification(MoqawalatiConstants.STARTUP, app);
 	}
 	

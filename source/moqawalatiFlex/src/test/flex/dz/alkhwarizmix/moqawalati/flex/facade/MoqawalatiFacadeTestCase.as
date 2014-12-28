@@ -86,6 +86,10 @@ import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacade;
 
 internal class MoqawalatiFacadeEnhancedForTest extends MoqawalatiFacade
 {
+	/**
+	 * Used by AlKhwarizmixTestCase::test_logger to test super class logger
+	 */
+	public static const loggerClazzForTest:Class = MoqawalatiFacade;
 	
 	public function MoqawalatiFacadeEnhancedForTest(key:String)
 	{

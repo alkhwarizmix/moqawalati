@@ -13,13 +13,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 --><!---
 /**
- *  <p>
- *  TODO: ASDOC
- *  </p>
- * 
- *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
- */
+*  <p>
+*  TODO: ASDOC
+*  </p>
+* 
+*  @author فارس بلحواس (Fares Belhaouas)
+*  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+*/
 -->
 
 <containers:MoqawalatiMDIWindow
@@ -33,7 +33,24 @@
 	
 	<fx:Script>
 	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 		import dz.alkhwarizmix.framework.flex.utils.EventUtil;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(TestAndDebugWindow);
+			return LOG;
+		}
 		
 		//--------------------------------------------------------------------------
 		//

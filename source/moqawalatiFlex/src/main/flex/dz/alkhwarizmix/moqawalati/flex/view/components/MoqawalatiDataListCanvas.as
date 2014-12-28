@@ -54,10 +54,14 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiDataListCanvas);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiDataListCanvas);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//

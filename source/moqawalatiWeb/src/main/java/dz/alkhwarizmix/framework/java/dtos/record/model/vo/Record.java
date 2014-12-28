@@ -69,7 +69,7 @@ public class Record extends
 	public static final int DELETE_ACTION = 3;
 
 	public static final String RECORDID = "recordId";
-	public static final String PARENT = "parent.id";
+	public static final String PARENT_ID = "parent.id";
 
 	// --------------------------------------------------------------------------
 	//
@@ -82,20 +82,17 @@ public class Record extends
 	}
 
 	public Record(String theRecordId) {
-		super();
+		this();
 		setRecordId(theRecordId);
 	}
 
 	public Record(String theRecordId, String theSchemaName) {
-		super();
-		setRecordId(theRecordId);
+		this(theRecordId);
 		setSchemaName(theSchemaName);
 	}
 
 	public Record(String theRecordId, String theSchemaName, String theTableName) {
-		super();
-		setRecordId(theRecordId);
-		setSchemaName(theSchemaName);
+		this(theRecordId, theSchemaName);
 		setTableName(theTableName);
 	}
 
@@ -159,7 +156,7 @@ public class Record extends
 	/**
 	 */
 	public String toString() {
-		return "";
+		return super.toString();
 	}
 
 	/*
@@ -259,6 +256,14 @@ public class Record extends
 	//
 	// --------------------------------------------------------------------------
 
+	static {
+		ignoreBlazeDSProperty(Record.class, "id");
+		ignoreBlazeDSProperty(Record.class, "extendedData");
+		ignoreBlazeDSProperty(Record.class, "extendedDataValue");
+		ignoreBlazeDSProperty(Record.class, "owner");
+		ignoreBlazeDSProperty(Record.class, "group");
+	}
+
 	// ----------------------------------
 	// data
 	// ----------------------------------
@@ -290,6 +295,10 @@ public class Record extends
 	// ----------------------------------
 	// parent
 	// ----------------------------------
+
+	static {
+		ignoreBlazeDSProperty(Record.class, "parent");
+	}
 
 	@XmlTransient
 	public Record getParent() {
@@ -335,7 +344,7 @@ public class Record extends
 	}
 
 	// ----------------------------------
-	// tableName
+	// action
 	// ----------------------------------
 
 	@XmlAttribute(name = "action")

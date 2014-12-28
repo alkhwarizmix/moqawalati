@@ -26,6 +26,8 @@ import org.hibernate.annotations.NotFoundAction;
 
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Group;
 
 /**
  * <p>
@@ -62,10 +64,10 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 			AbstractAlKhwarizmixDomainObjectExtendableWithSecurity other) {
 		super(other);
 		if (other != null) {
-			this.owner = (AlKhwarizmixDomainObject) ObjectUtils
-					.clone(other.owner);
-			this.group = (AlKhwarizmixDomainObject) ObjectUtils
-					.clone(other.group);
+			this.owner1 = (AlKhwarizmixDomainObject) ObjectUtils
+					.clone(other.owner1);
+			this.group1 = (Group) ObjectUtils.clone(other.group1);
+			this.encryption1 = (Encryption) ObjectUtils.clone(other.encryption1);
 		}
 	}
 
@@ -78,18 +80,18 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "owner", nullable = true)
-	private AlKhwarizmixDomainObject owner;
+	private AlKhwarizmixDomainObject owner1;
 
-	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	// gruop is not a typo, the word "group" is not allowed as a Table field
 	@JoinColumn(name = "gruop", nullable = true)
-	private AlKhwarizmixDomainObject group;
+	private Group group1;
 
-	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Encryption.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "encryption", nullable = true)
-	private AlKhwarizmixDomainObject encryption;
+	private Encryption encryption1;
 
 	// --------------------------------------------------------------------------
 	//
@@ -105,9 +107,9 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	@Override
 	public int hashCode() {
 		int result = super.hashCode();
-		result = continueHashCode(result, group);
-		result = continueHashCode(result, owner);
-		result = continueHashCode(result, encryption);
+		result = continueHashCode(result, group1);
+		result = continueHashCode(result, owner1);
+		result = continueHashCode(result, encryption1);
 		return result;
 	}
 
@@ -120,12 +122,12 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	public boolean equals(Object other) {
 		boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.group,
-						getObjectAsThisClass(other).group)
-				&& ObjectUtils.equals(this.owner,
-						getObjectAsThisClass(other).owner)
-				&& ObjectUtils.equals(this.encryption,
-						getObjectAsThisClass(other).encryption);
+				&& ObjectUtils.equals(this.group1,
+						getObjectAsThisClass(other).group1)
+				&& ObjectUtils.equals(this.owner1,
+						getObjectAsThisClass(other).owner1)
+				&& ObjectUtils.equals(this.encryption1,
+						getObjectAsThisClass(other).encryption1);
 		return result;
 	}
 
@@ -156,36 +158,36 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// owner
 	// ----------------------------------
 
-	public AlKhwarizmixDomainObject getOwner() {
-		return owner;
+	public AlKhwarizmixDomainObject getOwner1() {
+		return owner1;
 	}
 
-	public void setOwner(AlKhwarizmixDomainObject value) {
-		this.owner = value;
+	public void setOwner1(AlKhwarizmixDomainObject value) {
+		this.owner1 = value;
 	}
 
 	// ----------------------------------
 	// group
 	// ----------------------------------
 
-	public AlKhwarizmixDomainObject getGroup() {
-		return group;
+	public Group getGroup1() {
+		return group1;
 	}
 
-	public void setGroup(AlKhwarizmixDomainObject value) {
-		this.group = value;
+	public void setGroup1(Group value) {
+		this.group1 = value;
 	}
 
 	// ----------------------------------
 	// encryption
 	// ----------------------------------
 
-	public AlKhwarizmixDomainObject getEncryption() {
-		return encryption;
+	public Encryption getEncryption1() {
+		return encryption1;
 	}
 
-	public void setEncryption(AlKhwarizmixDomainObject value) {
-		this.encryption = value;
+	public void setEncryption1(Encryption value) {
+		this.encryption1 = value;
 	}
 
 } // Class

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 
 /**
@@ -96,10 +96,6 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 					.getCurrentSession().createCriteria(User.class);
 			criteria.add(Restrictions.eq(User.USERID, userId));
 			userToGet = (User) criteria.uniqueResult();
-
-			if (userToGet != null)
-				userToGet.setExtendedData(getExtendedData(userToGet
-						.getExtendedData()));
 
 			return userToGet;
 		} catch (DataAccessException e) {

@@ -63,6 +63,42 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 
 	// --------------------------------------------------------------------------
 	//
+	// Static methods
+	//
+	// --------------------------------------------------------------------------
+
+	protected static void ignoreBlazeDSProperties(Class<?> clazz,
+			String[] properties) {
+		for (String property : properties)
+			ignoreBlazeDSProperty(clazz, property);
+	}
+
+	protected static void ignoreBlazeDSProperty(Class<?> clazz, String property) {
+		flex.messaging.io.BeanProxy.addIgnoreProperty(clazz, property);
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Constructors
+	//
+	// --------------------------------------------------------------------------
+
+	public AbstractAlKhwarizmixDomainObject() {
+		created = new Date();
+	}
+
+	protected AbstractAlKhwarizmixDomainObject(
+			AbstractAlKhwarizmixDomainObject other) {
+		if (other != null) {
+			this.id = (Long) ObjectUtils.clone(other.id);
+			this.version = (Integer) ObjectUtils.clone(other.version);
+			this.created = (Date) ObjectUtils.clone(other.created);
+			this.modified = (Date) ObjectUtils.clone(other.modified);
+		}
+	}
+
+	// --------------------------------------------------------------------------
+	//
 	// Properties
 	//
 	// --------------------------------------------------------------------------
@@ -85,26 +121,6 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
-
-	// --------------------------------------------------------------------------
-	//
-	// Constructors
-	//
-	// --------------------------------------------------------------------------
-
-	public AbstractAlKhwarizmixDomainObject() {
-		created = new Date();
-	}
-
-	protected AbstractAlKhwarizmixDomainObject(
-			AbstractAlKhwarizmixDomainObject other) {
-		if (other != null) {
-			this.id = (Long) ObjectUtils.clone(other.id);
-			this.version = (Integer) ObjectUtils.clone(other.version);
-			this.created = (Date) ObjectUtils.clone(other.created);
-			this.modified = (Date) ObjectUtils.clone(other.modified);
-		}
-	}
 
 	// --------------------------------------------------------------------------
 	//

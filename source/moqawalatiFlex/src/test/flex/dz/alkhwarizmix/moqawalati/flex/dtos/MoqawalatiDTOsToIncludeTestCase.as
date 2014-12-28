@@ -43,6 +43,11 @@ public class MoqawalatiDTOsToIncludeTestCase extends MoqawalatiTestCase
 		// NOOP
 	}
 	
+	override protected function get shouldNotHaveLogger():Boolean
+	{
+		return true;
+	}
+	
 	override protected function get classUnderTest():Class
 	{
 		return MoqawalatiDTOsToInclude;

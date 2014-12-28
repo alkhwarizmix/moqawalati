@@ -14,7 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.view
 
 import dz.alkhwarizmix.framework.flex.utils.EventUtil;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
+import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxy;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiSimpleCommandMock;

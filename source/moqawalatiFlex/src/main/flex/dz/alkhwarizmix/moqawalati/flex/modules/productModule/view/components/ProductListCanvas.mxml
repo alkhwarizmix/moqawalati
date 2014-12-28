@@ -13,13 +13,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 --><!---
 /**
-*  <p>
-*  TODO: ASDOC
-*  </p>
-* 
-*  @author فارس بلحواس (Fares Belhaouas)
-*  @since  ٢٦ صفر ١٤٣٦ (December 18, 2014)
-*/
+ *  <p>
+ *  TODO: ASDOC
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٢٦ صفر ١٤٣٦ (December 18, 2014)
+ */
 -->
 
 <components:MoqawalatiDataListCanvas
@@ -34,6 +34,30 @@
 	<fx:Script>
 	<![CDATA[
 		import mx.events.FlexEvent;
+		
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(ProductListCanvas);
+			return LOG;
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Event handlers
+		//
+		//--------------------------------------------------------------------------
 		
 		private function btnRefresh_clickHandler(event:MouseEvent):void
 		{

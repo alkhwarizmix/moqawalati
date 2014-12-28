@@ -25,13 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IUserService;
 import dz.alkhwarizmix.framework.java.interfaces.IUserServiceValidator;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 
 /**
  * <p>
@@ -89,9 +89,6 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
 
-	@Autowired
-	private AlKhwarizmixSessionData sessionData;
-
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -99,17 +96,17 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
 	public void addUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("addUser");
-
-		setupObjectExtendedDataXMLValue(user);
 		addObject(user);
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -125,6 +122,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
@@ -133,29 +131,32 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		getLogger().trace("getObject");
 
 		User result = getMoqawalatiDAO().getUser((User) object);
-		updateObjectFromExtendedDataXML(result);
 		return result;
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public User getUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("getUser");
 		User result = internal_getUser(user);
-		getServiceValidator().validateObjectToPublish(result);
+		getServiceValidator()
+				.validateObjectToPublish(result, getSessionOwner());
 		return result;
 	}
 
 	/**
+	 * TODO: JAVADOC
 	 */
-	User internal_getUser(User user) throws AlKhwarizmixException {
+	protected User internal_getUser(User user) throws AlKhwarizmixException {
 		getLogger().trace("internal_getUser");
 		User result = (User) getObject(user);
 		return result;
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getUserAsXML(User user) throws AlKhwarizmixException {
@@ -165,6 +166,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getUserAsXML(String userXml) throws AlKhwarizmixException {
@@ -174,17 +176,18 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
 	public User updateUser(User user) throws AlKhwarizmixException {
 		getLogger().debug("updateUser");
-		setupObjectExtendedDataXMLValue(user);
 		User result = (User) updateObject(user);
 		return result;
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -199,6 +202,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * TODO: JAVADOC
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> getUserList(DetachedCriteria criteriaToUse,
@@ -216,6 +220,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
@@ -227,6 +232,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -239,6 +245,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User login(User user) throws AlKhwarizmixException {
 		getLogger().debug("login");
@@ -247,11 +256,14 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		if (loggedUser == null)
 			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
 
-		getSessionData().setCustomizer(loggedUser.getDomainObject());
+		getSessionData().setSessionOwner(loggedUser.getDomainObject());
 
 		return loggedUser;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String loginFromXML(String userXml, String loggerId)
 			throws AlKhwarizmixException {
@@ -264,6 +276,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void logout(User user) throws AlKhwarizmixException {
 		getLogger().debug("logout");
@@ -272,7 +287,17 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		if (loggedUser == null)
 			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
 
-		getSessionData().resetCustomizer();
+		getSessionData().resetSessionOwner();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected AlKhwarizmixDomainObject getSessionOwner() {
+		AlKhwarizmixDomainObject result = new AlKhwarizmixDomainObject();
+		result.setId(-1L);
+		return result;
 	}
 
 	// --------------------------------------------------------------------------
@@ -323,18 +348,6 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
-	}
-
-	// ----------------------------------
-	// sessionData
-	// ----------------------------------
-
-	private final AlKhwarizmixSessionData getSessionData() {
-		return sessionData;
-	}
-
-	protected final void setSessionData(AlKhwarizmixSessionData value) {
-		sessionData = value;
 	}
 
 } // Class

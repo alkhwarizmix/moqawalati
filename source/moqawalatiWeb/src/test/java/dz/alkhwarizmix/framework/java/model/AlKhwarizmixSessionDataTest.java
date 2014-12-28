@@ -48,11 +48,11 @@ public class AlKhwarizmixSessionDataTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_resetCustomizer_should_nullify_customizer() {
+	public void test01_resetSessionOwner_should_nullify_sessionOwner() {
 		Mockito.doCallRealMethod().when(mockAlKhwarizmixSessionData)
-				.resetCustomizer();
-		mockAlKhwarizmixSessionData.resetCustomizer();
-		verify(mockAlKhwarizmixSessionData, times(1)).setCustomizer(null);
+				.resetSessionOwner();
+		mockAlKhwarizmixSessionData.resetSessionOwner();
+		verify(mockAlKhwarizmixSessionData, times(1)).setSessionOwner(null);
 	}
 
 } // Class

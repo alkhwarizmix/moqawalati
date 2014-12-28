@@ -12,6 +12,9 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.userModule.facade
 {
 
+import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacade;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleConstants;
@@ -39,11 +42,23 @@ public class UserModuleFacade extends MoqawalatiFacade
 	 */
 	public function UserModuleFacade(key:String)
 	{
-		logger.debug("New UserModuleFacade");
-		
 		super(key);
 	}
 	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(UserModuleFacade);
+		return LOG;
+	}
 	//--------------------------------------------------------------------------
 	//
 	//  Class methods
@@ -97,10 +112,11 @@ public class UserModuleFacade extends MoqawalatiFacade
 	 * 
 	 * @param app a reference to the application component 
 	 */  
-	public function startup(app:IMoqawalatiModule):void
+	override public function startup(app:*):void
 	{
 		logger.debug("startup");
-		
+		if (!app is IMoqawalatiModule)
+			throw new AlKhwarizmixTypeError("IMoqawalatiModule");
 		sendNotification(UserModuleConstants.STARTUP, app);
 	}
 	

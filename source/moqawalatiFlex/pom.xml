@@ -183,6 +183,10 @@
 							<sourceFile>dz/alkhwarizmix/moqawalati/flex/modules/userModule/UserModule.as</sourceFile>
 							<optimize>true</optimize>
 						</module>
+						<module>
+							<sourceFile>dz/alkhwarizmix/moqawalati/flex/modules/productModule/ProductModule.as</sourceFile>
+							<optimize>true</optimize>
+						</module>
 					</modules>
 
 					<includeTestFiles>

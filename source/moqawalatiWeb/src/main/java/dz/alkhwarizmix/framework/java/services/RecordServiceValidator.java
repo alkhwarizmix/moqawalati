@@ -15,7 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.interfaces.IRecordServiceValidator;
 
@@ -66,33 +68,38 @@ public class RecordServiceValidator extends
 	// --------------------------------------------------------------------------
 
 	/**
-	 * Validate before to add the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object) {
-		super.validateObjectToAdd(object);
+	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		super.validateObjectToAdd(object, objectOwner);
 		Record record = (Record) object;
 		if (record != null)
 			nullifyPropertiesForRecordToAdd(record);
 	}
 
 	/**
-	 * Validate before to update the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object) {
-		super.validateObjectToUpdate(object);
+	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		super.validateObjectToUpdate(object, objectOwner);
 		Record record = (Record) object;
 		if (record != null)
 			nullifyPropertiesForRecordToUpdate(record);
 	}
 
 	/**
-	 * Validate before to return the object
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToPublish(AbstractAlKhwarizmixDomainObject object) {
-		super.validateObjectToPublish(object);
+	public void validateObjectToPublish(
+			AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+		super.validateObjectToPublish(object, objectOwner);
+
 		Record record = (Record) object;
 		if (record != null)
 			nullifyPropertiesForRecordToPublish(record);
@@ -101,22 +108,22 @@ public class RecordServiceValidator extends
 	/**
 	 */
 	private void nullifyPropertiesForRecordToAdd(Record record) {
-		record.setOwner(null);
-		record.setGroup(null);
+		record.setOwner1(null);
+		record.setGroup1(null);
 	}
 
 	/**
 	 */
 	private void nullifyPropertiesForRecordToUpdate(Record record) {
-		record.setOwner(null);
-		record.setGroup(null);
+		record.setOwner1(null);
+		record.setGroup1(null);
 	}
 
 	/**
 	 */
 	private void nullifyPropertiesForRecordToPublish(Record record) {
-		record.setOwner(null);
-		record.setGroup(null);
+		record.setOwner1(null);
+		record.setGroup1(null);
 	}
 
 } // Class

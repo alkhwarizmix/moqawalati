@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.RecordList;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
@@ -33,7 +32,6 @@ import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.interfaces.IRecordDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IRecordService;
 import dz.alkhwarizmix.framework.java.interfaces.IRecordServiceValidator;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.utils.XMLUtil;
 
 /**
@@ -92,9 +90,6 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
 
-	@Autowired
-	private AlKhwarizmixSessionData sessionData;
-
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -102,16 +97,20 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
 	public void commitRecordList(RecordList recordList)
 			throws AlKhwarizmixException {
 		getLogger().trace("commitRecordList");
+
 		for (AbstractAlKhwarizmixDomainObject record : recordList.getList())
 			commitRecord((Record) record);
 	}
 
+	/**
+	 */
 	private Record commitRecord(Record record) throws AlKhwarizmixException {
 		if (record.getAction() == null)
 			throw new AlKhwarizmixException("Wrong action");
@@ -127,22 +126,30 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 		}
 	}
 
+	/**
+	 */
 	private Record insertRecord(Record record) throws AlKhwarizmixException {
+		record.setOwner1(getSessionOwner());
 		addObject(record);
 		return record;
 	}
 
+	/**
+	 */
 	private Record updateRecord(Record record) throws AlKhwarizmixException {
 		updateObject(record);
 		return record;
 	}
 
+	/**
+	 */
 	private Record deleteRecord(Record record) throws AlKhwarizmixException {
 		// deleteObject(record);
 		return null;
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly = false)
 	@Override
@@ -156,6 +163,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
@@ -168,24 +176,29 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Record getRecord(Record record) throws AlKhwarizmixException {
 		getLogger().trace("getRecord");
 		Record result = internal_getRecord(record);
-		getServiceValidator().validateObjectToPublish(result);
+		getServiceValidator()
+				.validateObjectToPublish(result, getSessionOwner());
 		return result;
 	}
 
 	/**
+	 * TODO: JAVADOC
 	 */
-	Record internal_getRecord(Record record) throws AlKhwarizmixException {
+	protected Record internal_getRecord(Record record)
+			throws AlKhwarizmixException {
 		getLogger().trace("internal_getRecord");
 		Record result = (Record) getObject(record);
 		return result;
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getRecordAsXML(Record record) throws AlKhwarizmixException {
@@ -195,6 +208,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getRecordAsXML(String recordXml) throws AlKhwarizmixException {
@@ -204,12 +218,14 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public RecordList getRecordList(String schema, String table,
 			DetachedCriteria criteriaToUse, int firstResult, int maxResult)
 			throws AlKhwarizmixException {
 		getLogger().trace("getRecordList");
+
 		List<Record> listOfRecords = null;
 		Record tableRecord = new Record(null, schema, table).getTableRecord();
 		tableRecord = getRecordDAO().getRecord(tableRecord);
@@ -218,7 +234,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 				criteriaToUse = DetachedCriteria.forClass(Record.class);
 				criteriaToUse.addOrder(Order.asc(Record.RECORDID));
 			}
-			criteriaToUse.add(Restrictions.eq(Record.PARENT,
+			criteriaToUse.add(Restrictions.eq(Record.PARENT_ID,
 					tableRecord.getId()));
 			listOfRecords = (List<Record>) (List<?>) getObjectList(
 					criteriaToUse, firstResult, maxResult);
@@ -227,6 +243,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getRecordListAsXML(String schema, String table,
@@ -239,12 +256,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
-	 */
-	private AlKhwarizmixDomainObject getSessionCustomizer() {
-		return getSessionData().getCustomizer();
-	}
-
-	/**
+	 * TODO: JAVADOC
 	 */
 	protected String recordListToXML(RecordList recordList) {
 		String result = null;
@@ -260,6 +272,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
+	 * TODO: JAVADOC
 	 */
 	protected RecordList xmlToRecordList(String recordListXml) {
 		RecordList result = null;
@@ -322,18 +335,6 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	@Override
 	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
-	}
-
-	// ----------------------------------
-	// sessionData
-	// ----------------------------------
-
-	private final AlKhwarizmixSessionData getSessionData() {
-		return sessionData;
-	}
-
-	protected final void setSessionData(AlKhwarizmixSessionData value) {
-		sessionData = value;
 	}
 
 } // Class

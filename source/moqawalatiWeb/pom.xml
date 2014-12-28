@@ -559,6 +559,9 @@
 				<artifactId>maven-jetty-plugin</artifactId>
 				<version>6.1.26</version>
 				<configuration>
+					<webAppSourceDirectory>
+						${basedir}/target/${project.build.finalName}
+					</webAppSourceDirectory>
 					<webApp>
 						${basedir}/target/${project.build.finalName}.war
 					</webApp>

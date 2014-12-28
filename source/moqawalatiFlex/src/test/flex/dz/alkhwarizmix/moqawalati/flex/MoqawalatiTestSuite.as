@@ -22,6 +22,9 @@ import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCom
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSimpleCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiWebGetDataCommandTestCase;
+import dz.alkhwarizmix.moqawalati.flex.dtos.MoqawalatiDTOsToIncludeTestCase;
+import dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVOTestCase;
+import dz.alkhwarizmix.moqawalati.flex.errors.MoqawalatiErrorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.event.MoqawalatiEventTestCase;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiMainFacadeTestCase;
@@ -30,10 +33,13 @@ import dz.alkhwarizmix.moqawalati.flex.messaging.MoqawalatiProducerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiConfigProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiLoginUserProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxyTestCase;
+import dz.alkhwarizmix.moqawalati.flex.model.vo.MoqawalatiVOTestCase;
 import dz.alkhwarizmix.moqawalati.flex.resources.MoqawalatiResourceManagerTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.LoginBoxMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediatorTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.MainCanvasMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediatorTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.MoqawalatiModuleMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiImageTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxEventTestCase;
@@ -60,6 +66,9 @@ import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiTextInputTestCase
 [RunWith("org.flexunit.runners.Suite")]
 public class MoqawalatiTestSuite
 {
+	public var moqawalatiConstantsTestCase:MoqawalatiConstantsTestCase;
+	public var moqawalatiErrorTestCase:MoqawalatiErrorTestCase;
+	
 	// facade
 	public var moqawalatiMainFacadeTestCase:MoqawalatiMainFacadeTestCase;
 	public var moqawalatiFacadeTestCase:MoqawalatiFacadeTestCase;
@@ -89,6 +98,11 @@ public class MoqawalatiTestSuite
 	public var moqawalatiMDICanvasTestCase:MoqawalatiMDICanvasTestCase;
 	public var moqawalatiProxyTestCase:MoqawalatiProxyTestCase;
 	
+	// dtos
+	public var moqawalatiDTOsToIncludeTestCase:MoqawalatiDTOsToIncludeTestCase;
+	public var moqawalatiVOTestCase:MoqawalatiVOTestCase;
+	public var clientVOTestCase:ClientVOTestCase;
+	
 	// resources
 	public var moqawalatiResourceManagerTestCase:MoqawalatiResourceManagerTestCase;
 	
@@ -106,6 +120,8 @@ public class MoqawalatiTestSuite
 	public var mdiCanvasMediatorTestCase:MDICanvasMediatorTestCase;
 	public var mainControlBarMediatorTestCase:MainControlBarMediatorTestCase;
 	public var moqawalatiTextAreaTestCase:MoqawalatiTextAreaTestCase;
+	public var mainCanvasMediatorTestCase:MainCanvasMediatorTestCase;
+	public var moqawalatiModuleMediatorTestCase:MoqawalatiModuleMediatorTestCase;
 	
 	// view.components
 	public var loginBoxEventTestCase:LoginBoxEventTestCase;

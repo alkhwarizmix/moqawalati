@@ -46,10 +46,14 @@ public class MoqawalatiMenuBar extends AlKhwarizmixMenuBar
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiMenuBar);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiMenuBar);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//

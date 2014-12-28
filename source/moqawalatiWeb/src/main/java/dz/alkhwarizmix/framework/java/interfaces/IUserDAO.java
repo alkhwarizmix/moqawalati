@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.framework.java.interfaces;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
  * <p>

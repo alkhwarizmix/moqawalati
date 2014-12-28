@@ -15,6 +15,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetRecordListCommand;
+import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiCommand;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.ProductProxy;
 
 /**
@@ -26,6 +27,7 @@ import dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.ProductProxy;
  *  @since  ٢٦ صفر ١٤٣٦ (December 18, 2014)
  */
 public class ProductGetListCommand extends MoqawalatiGetRecordListCommand
+	implements IMoqawalatiCommand
 {
 	//--------------------------------------------------------------------------
 	//

@@ -36,7 +36,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.RecordList;
-import dz.alkhwarizmix.framework.java.dtos.user.model.vo.User;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IRecordDAO;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
@@ -75,7 +75,7 @@ public class RecordServiceTest {
 	private AlKhwarizmixSessionData spySessionData;
 
 	@Mock
-	private AlKhwarizmixDomainObject mockUserDomainObject;
+	private AlKhwarizmixDomainObject mockSessionOwner;
 
 	@Mock
 	private User mockUser;
@@ -84,7 +84,9 @@ public class RecordServiceTest {
 	public void setUp() throws AlKhwarizmixException {
 		setupUtRecordService();
 		setupMockJaxb2Marshaller();
-		when(mockUser.getDomainObject()).thenReturn(mockUserDomainObject);
+		when(mockUser.getDomainObject()).thenReturn(mockSessionOwner);
+		when(mockSessionOwner.getId()).thenReturn(1234L);
+		spySessionData.setSessionOwner(mockSessionOwner);
 	}
 
 	private void setupUtRecordService() {
@@ -189,7 +191,7 @@ public class RecordServiceTest {
 			throws AlKhwarizmixException {
 		Record newRecord = Mockito.mock(Record.class);
 		utRecordService.commitRecordList(newRecordList(newRecord)); // TEST
-		verify(newRecord, times(1)).setOwner(mockUserDomainObject);
+		verify(newRecord, times(1)).setOwner1(mockSessionOwner);
 	}
 
 	@Test
@@ -214,11 +216,11 @@ public class RecordServiceTest {
 	public void test06_getRecord_should_not_return_domainObject()
 			throws AlKhwarizmixException {
 		Record expectedRecord = new Record();
-		expectedRecord.setOwner(mockUserDomainObject);
+		expectedRecord.setOwner1(mockSessionOwner);
 		when(mockRecordDAO.getRecord(any(Record.class))).thenReturn(
 				expectedRecord);
 		Record foundRecord = utRecordService.getRecord(new Record()); // TEST
-		Assert.assertNull(foundRecord.getOwner());
+		Assert.assertNull(foundRecord.getOwner1());
 	}
 
 	@Test
@@ -240,6 +242,20 @@ public class RecordServiceTest {
 		RecordList recordList = utRecordService
 				.xmlToRecordList(newRecordListXML); // TEST
 		Assert.assertEquals(2, recordList.getList().size());
+	}
+
+	// -----
+
+	@Test
+	public void test09_getSessionOwner_should_return_getSessionData_getSessionOwner()
+			throws AlKhwarizmixException {
+		AlKhwarizmixDomainObject mockSessionOwner = Mockito
+				.mock(AlKhwarizmixDomainObject.class);
+		Mockito.when(spySessionData.getSessionOwner()).thenReturn(
+				mockSessionOwner);
+		AlKhwarizmixDomainObject result = utRecordService.getSessionOwner();
+		verify(spySessionData, times(1)).getSessionOwner();
+		Assert.assertEquals(mockSessionOwner, result);
 	}
 
 } // Class

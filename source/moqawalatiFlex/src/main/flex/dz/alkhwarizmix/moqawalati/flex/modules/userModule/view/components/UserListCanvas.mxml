@@ -27,4 +27,26 @@
 	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:components="dz.alkhwarizmix.moqawalati.flex.view.components.*"
 	>
+	<fx:Script>
+	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Logger
+		//
+		//--------------------------------------------------------------------------
+		
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(UserListCanvas);
+			return LOG;
+		}
+		
+	]]>
+	</fx:Script>
 </components:MoqawalatiDataListCanvas>

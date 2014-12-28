@@ -12,12 +12,17 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.productModule.facade
 {
 
+import dz.alkhwarizmix.framework.flex.AlKhwarizmixConstants;
+import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.facade.MoqawalatiFacade;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiModule;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.ProductModuleConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.ProductCommitListCommand;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.ProductGetListCommand;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.ProductModuleStartupCommand;
+import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.RemoteServerErrorCommand;
 
 /**
  *  <p>
@@ -43,6 +48,21 @@ public class ProductModuleFacade extends MoqawalatiFacade
 		logger.debug("New ProductModuleFacade");
 		
 		super(key);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(ProductModuleFacade);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -79,6 +99,8 @@ public class ProductModuleFacade extends MoqawalatiFacade
 			ProductGetListCommand);
 		addCommandToRegister(ProductModuleConstants.RECORD_COMMIT_LIST,
 			ProductCommitListCommand);
+		addCommandToRegister(AlKhwarizmixConstants.REMOTE_SERVER_ERROR,
+			RemoteServerErrorCommand);
 	}
 	
 	//--------------------------------------------------------------------------
@@ -102,10 +124,11 @@ public class ProductModuleFacade extends MoqawalatiFacade
 	 * 
 	 * @param app a reference to the application component 
 	 */  
-	public function startup(app:IMoqawalatiModule):void
+	override public function startup(app:*):void
 	{
 		logger.debug("startup");
-		
+		if (!app is IMoqawalatiModule)
+			throw new AlKhwarizmixTypeError("IMoqawalatiModule");
 		sendNotification(ProductModuleConstants.STARTUP, app);
 	}
 	

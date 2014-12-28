@@ -9,24 +9,31 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.user.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.security.model.vo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.apache.commons.lang.ObjectUtils;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendable;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -40,7 +47,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
 @Table(name = "TGroup")
 @XmlRootElement(name = "Group")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
+public class Group extends AbstractAlKhwarizmixDomainObject implements
 		Serializable {
 
 	// --------------------------------------------------------------------------
@@ -75,6 +82,18 @@ public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		setGroupId(theGroupId);
 	}
 
+	/**
+	 * constructor
+	 */
+	protected Group(Group other) {
+		super(other);
+		if (other != null) {
+			this.groupId = other.groupId;
+			this.domainObject = (AlKhwarizmixDomainObject) ObjectUtils
+					.clone(other.domainObject);
+		}
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Properties
@@ -84,8 +103,10 @@ public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	@Column(name = "groupId", unique = true, nullable = false, length = 63)
 	private String groupId;
 
-	@Transient
-	private String name;
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "domainObject", nullable = false)
+	private AlKhwarizmixDomainObject domainObject;
 
 	// --------------------------------------------------------------------------
 	//
@@ -106,10 +127,8 @@ public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
 
 		final Group sourceGroup = (Group) sourceObject;
 		if (sourceGroup != null
-				&& getGroupId().equals(sourceGroup.getGroupId())) {
-			if (sourceGroup.name != null) {
-				name = sourceGroup.name;
-			}
+				&& this.getGroupId().equals(sourceGroup.getGroupId())) {
+			// NOOP
 		} else {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
@@ -120,7 +139,8 @@ public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	 */
 	@Override
 	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
-		// NOOP
+		if (domainObject == null)
+			domainObject = new AlKhwarizmixDomainObject();
 	}
 
 	// --------------------------------------------------------------------------
@@ -128,6 +148,10 @@ public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	// Getters & Setters
 	//
 	// --------------------------------------------------------------------------
+
+	static {
+		ignoreBlazeDSProperty(Group.class, "id");
+	}
 
 	// ----------------------------------
 	// groupId
@@ -143,16 +167,20 @@ public class Group extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	}
 
 	// ----------------------------------
-	// name
+	// domainObject
 	// ----------------------------------
 
-	@XmlElement(name = "Name")
-	public String getName() {
-		return name;
+	static {
+		ignoreBlazeDSProperty(User.class, "domainObject");
 	}
 
-	public void setName(String value) {
-		this.name = value;
+	@XmlTransient
+	public AlKhwarizmixDomainObject getDomainObject() {
+		return domainObject;
+	}
+
+	public void setDomainObject(AlKhwarizmixDomainObject value) {
+		this.domainObject = value;
 	}
 
 } // Class

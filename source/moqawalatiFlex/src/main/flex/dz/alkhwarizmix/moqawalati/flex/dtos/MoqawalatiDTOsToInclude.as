@@ -14,7 +14,6 @@ package dz.alkhwarizmix.moqawalati.flex.dtos
 
 import dz.alkhwarizmix.framework.flex.dtos.AlKhwarizmixDTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO;
-import dz.alkhwarizmix.moqawalati.flex.dtos.modules.userModule.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.vo.ProductVO;
 
 /**
@@ -35,7 +34,6 @@ public class MoqawalatiDTOsToInclude extends AlKhwarizmixDTOsToInclude
 		super.registerNeededClasses();
 		
 		registerClass(ClientVO);
-		registerClass(UserVO);
 		registerClass(ProductVO);
 	}
 	

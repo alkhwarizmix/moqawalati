@@ -11,7 +11,6 @@
 
 package dz.alkhwarizmix.moqawalati.flex.interfaces
 {
-
 import dz.alkhwarizmix.framework.flex.interfaces.IAlKhwarizmixProxy;
 
 /**
