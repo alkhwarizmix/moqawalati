@@ -16,7 +16,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
@@ -28,6 +30,8 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
+@RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("PMD.MethodNamingConventions")
 public class AddressTest {
 
 	// --------------------------------------------------------------------------
