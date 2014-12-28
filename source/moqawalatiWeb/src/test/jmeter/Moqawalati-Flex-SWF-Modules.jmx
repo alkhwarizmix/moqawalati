@@ -53,6 +53,11 @@
               <stringProp name="Argument.value">70</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
+            <elementProp name="moqawalati-version" elementType="Argument">
+              <stringProp name="Argument.name">moqawalati-version</stringProp>
+              <stringProp name="Argument.value">1.2.9</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
           </collectionProp>
         </Arguments>
         <hashTree/>
@@ -71,7 +76,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">${flex-swf-url-path}/moqawalatiFlex-1.2.8-clientmodule.swf</stringProp>
+            <stringProp name="HTTPSampler.path">${flex-swf-url-path}/moqawalatiFlex-${moqawalati-version}-clientmodule.swf</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -102,7 +107,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">${flex-swf-url-path}/moqawalatiFlex-1.2.8-usermodule.swf</stringProp>
+            <stringProp name="HTTPSampler.path">${flex-swf-url-path}/moqawalatiFlex-${moqawalati-version}-usermodule.swf</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -133,7 +138,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">${flex-swf-url-path}/moqawalatiFlex-1.2.8-productmodule.swf</stringProp>
+            <stringProp name="HTTPSampler.path">${flex-swf-url-path}/moqawalatiFlex-${moqawalati-version}-productmodule.swf</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
