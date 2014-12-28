@@ -11,9 +11,12 @@
 
 package dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
@@ -33,15 +36,8 @@ public class AddressTest {
 	//
 	// --------------------------------------------------------------------------
 
-	// EMPTY
-
-	// --------------------------------------------------------------------------
-	//
-	// Helpers
-	//
-	// --------------------------------------------------------------------------
-
-	// EMPTY
+	@InjectMocks
+	private Address utAddress;
 
 	// --------------------------------------------------------------------------
 	//
@@ -53,6 +49,13 @@ public class AddressTest {
 	@Test
 	public void test00() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void test01_set_then_get_addressId() {
+		String value = "AddressTest";
+		utAddress.setAddressId(value);
+		assertEquals(value, utAddress.getAddressId());
 	}
 
 } // Class

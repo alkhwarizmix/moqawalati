@@ -194,12 +194,14 @@
 					</includeTestFiles>
 					<excludeTestFiles>
 						<exclude>dz/alkhwarizmix/moqawalati/flex/testutils/*</exclude>
+						<exclude>dz/alkhwarizmix/moqawalati/flex/interfaces/*</exclude>
 					</excludeTestFiles>
 
 					<coverage>true</coverage>
 					<coverageOutputDirectory>target/site/cobertura/flex/</coverageOutputDirectory>
 					<coverageExclusions>
 						<coverageExclusion>**/MoqawalatiFlexTestRunner.mxml</coverageExclusion>
+						<coverageExclusion>**/dz/alkhwarizmix/moqawalati/flex/interfaces/*</coverageExclusion>
 					</coverageExclusions>
 				</configuration>
 			</plugin>

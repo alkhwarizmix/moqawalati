@@ -17,6 +17,7 @@ import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.ProductG
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.ProductModuleStartupCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.RemoteServerErrorCommandTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.facade.ProductModuleFacadeTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.ProductProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.vo.ProductVOTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.view.ProductListMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.view.components.ProductListCanvasTestCase;
@@ -45,7 +46,7 @@ public class ProductModuleTestSuite
 	public var remoteServerErrorCommandTestCase:RemoteServerErrorCommandTestCase;
 	
 	// model
-	// public var moqawalatiConfigProxyTestCase:MoqawalatiConfigProxyTestCase;
+	public var productProxyTestCase:ProductProxyTestCase;
 	public var productVOTestCase:ProductVOTestCase;
 	
 	// view

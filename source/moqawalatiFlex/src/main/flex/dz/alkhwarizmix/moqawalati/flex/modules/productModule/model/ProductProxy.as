@@ -16,6 +16,8 @@ import mx.collections.ArrayCollection;
 
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordListVO;
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordVO;
+import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
+import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxy;
@@ -58,6 +60,21 @@ public class ProductProxy extends MoqawalatiProxy
 	public function ProductProxy(data:Object=null)
 	{
 		super(NAME, data);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Logger
+	//
+	//--------------------------------------------------------------------------
+	
+	private static var LOG:IAlKhwarizmixLogger = null;
+	
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(ProductProxy);
+		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------
