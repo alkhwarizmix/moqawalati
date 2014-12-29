@@ -118,7 +118,7 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 	protected function getContextMenuItems():Array
 	{
 		return [
-			"CONTEXT_MENU_LABEL_CAPTION1",
+			"كونتاكست مونيو",
 			"CONTEXT_MENU_LABEL_CAPTION2"
 		];
 	}
