@@ -17,6 +17,7 @@ import dz.alkhwarizmix.moqawalati.flex.modules.userModule.controller.UserModuleS
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.facade.UserModuleFacadeTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.model.UserProxyTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.UserListMediatorTestCase;
+import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.components.UserEditFormCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.view.components.UserListCanvasTestCase;
 
 /**
@@ -49,6 +50,7 @@ public class UserModuleTestSuite
 	// view.components
 	public var userModuleTestCase:UserModuleTestCase; 
 	public var userListCanvasTestCase:UserListCanvasTestCase;
+	public var userEditFormCanvasTestCase:UserEditFormCanvasTestCase;
 	
 } // class
 } // package

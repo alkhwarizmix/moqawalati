@@ -48,6 +48,7 @@
 	<import resource="dz.alkhwarizmix.moqawalati.web.spring.xml" />
 	<import resource="dz.alkhwarizmix.moqawalati.flex.spring.xml" />
 	<!-- <import resource="dz.alkhwarizmix.moqawalati.security.spring.xml" /> -->
+	<import resource="dz.alkhwarizmix.moqawalati.mail.spring.xml" />
 
 	<!-- <aop:config proxy-target-class="true"/> -->
 	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->

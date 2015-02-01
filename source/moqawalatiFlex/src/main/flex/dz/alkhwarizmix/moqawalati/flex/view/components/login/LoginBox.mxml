@@ -13,13 +13,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 --><!---
 /**
-*  <p>
-*  TODO: ASDOC
-*  </p>
-* 
-*  @author فارس بلحواس (Fares Belhaouas)
-*  @since  ١١ جمادى الأول ١٤٣٥ (March 11, 2014)
-*/
+ *  <p>
+ *  TODO: ASDOC
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ١١ جمادى الأول ١٤٣٥ (March 11, 2014)
+ */
 -->
 
 <containers:MoqawalatiHBox
@@ -115,23 +115,48 @@
 		{
 			if (invalidateLoggedUserFlag)
 			{
-				// labelUserName
-				labelUserName.setVisible(isUserLogged);
-				labelUserName.includeInLayout = isUserLogged;
-				if (isUserLogged)
-					labelUserName.text = loggedUser.name;	
-				
-				// textUserName
-				textUserName.setVisible(!isUserLogged);
-				textUserName.includeInLayout = !isUserLogged;
-				if (isUserLogged)
-					textUserName.text = "";
+				updateLabelUserName();
+				updateTextUserName();
+				updateTextPassword();
 				
 				// btnLogInOrOut
 				btnLogInOrOut.labelResKey = isUserLogged ? "LOGOUT" : "LOGIN";
 				
 				invalidateLoggedUserFlag = false;
 			}
+		}
+		
+		/**
+		 * @private
+		 */
+		private function updateLabelUserName():void
+		{
+			labelUserName.setVisible(isUserLogged);
+			labelUserName.includeInLayout = isUserLogged;
+			if (isUserLogged)
+				labelUserName.text = loggedUser.name;	
+		}
+		
+		/**
+		 * @private
+		 */
+		private function updateTextUserName():void
+		{
+			textUserName.setVisible(!isUserLogged);
+			textUserName.includeInLayout = !isUserLogged;
+			if (isUserLogged)
+				textUserName.text = "";
+		}
+		
+		/**
+		 * @private
+		 */
+		private function updateTextPassword():void
+		{
+			textPassword.setVisible(!isUserLogged);
+			textPassword.includeInLayout = !isUserLogged;
+			if (isUserLogged)
+				textPassword.text = "";
 		}
 		
 		//--------------------------------------------------------------------------
@@ -153,7 +178,11 @@
 	</fx:Script>
 	
 	<controls:MoqawalatiLabel id="labelUserName"/>
-	<controls:MoqawalatiTextInput id="textUserName"/>
+	<controls:MoqawalatiTextInput id="textUserName"
+		promptResKey="USER_NAME"/>
+	<controls:MoqawalatiTextInput id="textPassword"
+		promptResKey="PASSWORD"
+		displayAsPassword="true"/>
 	<controls:MoqawalatiButton id="btnLogInOrOut"
 		click="btnLogInOrOut_clickHandler(event)"/>
 	

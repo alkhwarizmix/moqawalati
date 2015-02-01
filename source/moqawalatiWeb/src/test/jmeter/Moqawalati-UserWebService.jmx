@@ -96,7 +96,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-1&lt;/Name&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}@dz.alkhwarizmix.com&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-1&lt;/Name&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -145,7 +145,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}&lt;/Name&gt;&lt;address&gt;street-${RAN_USER_ID}&lt;/address&gt;&lt;city&gt;Sidi Bel Abbès&lt;/city&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}@dz.alkhwarizmix.com&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}&lt;/Name&gt;&lt;address&gt;street-${RAN_USER_ID}&lt;/address&gt;&lt;city&gt;Sidi Bel Abbès&lt;/city&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -199,7 +199,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/user/U${RAN_USER_ID}</stringProp>
+            <stringProp name="HTTPSampler.path">${alkh-xml-url-path}/user/U${RAN_USER_ID}@dz.alkhwarizmix.com/</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -231,7 +231,7 @@
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-UserId" enabled="true">
               <boolProp name="XPath.negate">false</boolProp>
-              <stringProp name="XPath.xpath">response[User[@id=&quot;U${RAN_USER_ID}&quot;]]</stringProp>
+              <stringProp name="XPath.xpath">response[User[@id=&quot;U${RAN_USER_ID}@dz.alkhwarizmix.com&quot;]]</stringProp>
               <boolProp name="XPath.validate">false</boolProp>
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
@@ -499,7 +499,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-1&lt;/Name&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1@dz.alkhwarizmix.com&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-1&lt;/Name&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -548,7 +548,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1@dz.alkhwarizmix.com&quot;&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -646,7 +646,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-2&lt;/Name&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2@dz.alkhwarizmix.com&quot;&gt;&lt;Name&gt;user-${RAN_USER_ID}-2&lt;/Name&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -695,7 +695,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2@dz.alkhwarizmix.com&quot;&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -793,7 +793,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-1@dz.alkhwarizmix.com&quot;&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -883,7 +883,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_USER_ID}-2@dz.alkhwarizmix.com&quot;&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>

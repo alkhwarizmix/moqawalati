@@ -62,9 +62,9 @@
 	<root>
 		<priority value="info" />
 		<appender-ref ref="moqawalatiRollFileAppender" />
-		<!-- - ->
+		<!-- -->
 		<appender-ref ref="consoleAppender" />
-		<!- - -->
+		<!-- -->
 	</root>
 
 </log4j:configuration>

@@ -54,7 +54,7 @@ public class UserDAOTest {
 	// --------------------------------------------------------------------------
 
 	private User newUser() {
-		User user = new User("userId", "userName");
+		User user = new User("user1@dz.alkhwarizmix.com", "userName");
 		// user.setCreatorId("creatorId");
 		return user;
 	}
@@ -118,12 +118,19 @@ public class UserDAOTest {
 	// ----- -----
 
 	@Test
-	public void test02_default_user_was_created() throws AlKhwarizmixException {
+	public void test02_default_users_were_created()
+			throws AlKhwarizmixException {
 
-		User userToFind = new User("fares.belhaouas");
+		assertDefaultUser("fbelhaouas@icloud.com", "فارس بلحواس");
+		assertDefaultUser("fares@dz.moqawalati.com", "Fares @ Moqawalati");
+	}
+
+	private void assertDefaultUser(String userId, String userName)
+			throws AlKhwarizmixException {
+		User userToFind = new User(userId);
 		User defaultUser = utUserDAO.getUser(userToFind);
 		Assert.assertNotNull(defaultUser);
-		Assert.assertEquals("فارس بلحواس", defaultUser.getName());
+		Assert.assertEquals(userName, defaultUser.getName());
 	}
 
 } // Class

@@ -26,6 +26,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
@@ -85,6 +86,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 
 	@Autowired
 	private IUserServiceValidator userValidator;
+
+	@Autowired
+	private EMailService emailService;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -257,6 +261,17 @@ public class UserService extends AbstractAlKhwarizmixService implements
 			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
 
 		getSessionData().setSessionOwner(loggedUser.getDomainObject());
+
+		if ("fbelhaouas@icloud.com".equals(loggedUser.getUserId())) {
+			User infoUser = internal_getUser(new User("fares@dz.moqawalati.com"));
+			EMail email = new EMail();
+			email.setSender(infoUser);
+			email.setReceiver(loggedUser);
+			email.setBody("Dear " + loggedUser.getName()
+					+ ", thank you for placing order. Your order number is "
+					+ "12345");
+			emailService.sendEMail(email);
+		}
 
 		return loggedUser;
 	}

@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu>
-	<menuitem label="FILE">
+	<menuitem label="FOLDER">
+		<menuitem label="FOLDER1" value="FOLDER1" />
+	</menuitem>
+
+	<menuitem label="EDITION">
+		<menuitem label="EDITION1" value="EDITION1" />
+	</menuitem>
+
+	<menuitem label="DISPLAY">
+		<menuitem label="DISPLAY1" value="DISPLAY1" />
+	</menuitem>
+
+	<menuitem label="FILES">
 		<menuitem label="USER" value="User" />
 		<menuitem label="CLIENT" value="Client" />
 		<menuitem label="PRODUCT" value="Product" />
+	</menuitem>
+
+	<menuitem label="SALES">
+		<menuitem label="SALES1" value="SALES1" />
 	</menuitem>
 
 	<menuitem label="CONTACTS">

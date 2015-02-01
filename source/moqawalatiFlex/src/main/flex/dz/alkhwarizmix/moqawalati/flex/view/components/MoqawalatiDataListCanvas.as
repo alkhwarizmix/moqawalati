@@ -12,17 +12,9 @@
 package dz.alkhwarizmix.moqawalati.flex.view.components
 {
 
-import flash.events.ContextMenuEvent;
-import flash.ui.ContextMenu;
-import flash.ui.ContextMenuItem;
-
-import mx.controls.Alert;
-
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.view.components.AlKhwarizmixDataListCanvas;
-
-import flexlib.mdi.containers.MDIWindow;
 
 /**
  *  <p>
@@ -75,8 +67,6 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 	override protected function createChildren():void
 	{
 		super.createChildren();
-		
-		addContextMenu();
 	}
 	
 	/**
@@ -94,34 +84,7 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 	//
 	//--------------------------------------------------------------------------
 	
-	/**
-	 * @private
-	 */
-	private function addContextMenu():void
-	{
-		var defaultContextMenu:ContextMenu = new ContextMenu();
-		defaultContextMenu.hideBuiltInItems();
-		
-		for each (var menuCaption:String in getContextMenuItems())
-		{
-			var contextMenuItem:ContextMenuItem = new ContextMenuItem(menuCaption);
-			contextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, contextMenuItemSelectHandler);
-			defaultContextMenu.customItems.push(contextMenuItem);
-		}
-		
-		this.contextMenu = defaultContextMenu;
-	}
-	
-	/**
-	 * TODO: ASDOC
-	 */
-	protected function getContextMenuItems():Array
-	{
-		return [
-			"كونتاكست مونيو",
-			"CONTEXT_MENU_LABEL_CAPTION2"
-		];
-	}
+	// EMPTY
 	
 	//--------------------------------------------------------------------------
 	//
@@ -129,35 +92,7 @@ public class MoqawalatiDataListCanvas extends AlKhwarizmixDataListCanvas
 	//
 	//--------------------------------------------------------------------------
 	
-	/**
-	 * @private
-	 */
-	private function contextMenuItemSelectHandler(event:ContextMenuEvent):void
-	{
-		var win:MDIWindow = event.contextMenuOwner as MDIWindow;
-		handleContextMenuItemSelected(event.target.caption);
-	}
-	
-	/**
-	 * TODO: ASDOC
-	 */
-	protected function handleContextMenuItemSelected(caption:String):void
-	{
-		switch (caption)
-		{
-			case ("CONTEXT_MENU_LABEL_CAPTION1"):
-			{
-				Alert.show("CONTEXT_MENU_LABEL_CAPTION1");
-				break;
-			}
-				
-			case ("CONTEXT_MENU_LABEL_CAPTION2"):
-			{
-				Alert.show("CONTEXT_MENU_LABEL_CAPTION2");
-				break;
-			}
-		}
-	}
+	// EMPTY
 	
 } // Class
 } // Package

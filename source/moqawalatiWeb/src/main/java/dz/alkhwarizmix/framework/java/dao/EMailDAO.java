@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -11,10 +11,6 @@
 
 package dz.alkhwarizmix.framework.java.dao;
 
-import javax.annotation.PostConstruct;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -22,8 +18,8 @@ import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
-import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
+import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
+import dz.alkhwarizmix.framework.java.interfaces.IEMailDAO;
 
 /**
  * <p>
@@ -31,11 +27,11 @@ import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
+ * @since ٠٧ ربيع الثاني ١٤٣٦ (January 27, 2015)
  */
 @Repository
-public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
-		IUserDAO {
+public class EMailDAO extends AlKhwarizmixDAOForXMLMarshalling implements
+		IEMailDAO {
 
 	// --------------------------------------------------------------------------
 	//
@@ -46,27 +42,8 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	/**
 	 * constructor
 	 */
-	public UserDAO() {
+	public EMailDAO() {
 		super();
-	}
-
-	@PostConstruct
-	private void createDefaultUsers() {
-		createDefaultUser("fbelhaouas@icloud.com", "فارس بلحواس");
-		createDefaultUser("fares@dz.moqawalati.com", "Fares @ Moqawalati");
-	}
-
-	private void createDefaultUser(String userId, String userName) {
-		User defaultUser = new User(userId, userName);
-		try {
-			saveOrUpdate(defaultUser);
-			getLogger().info("createDefaultUser: Created default user <{}>",
-					defaultUser.getName());
-		} catch (AlKhwarizmixDAOException e) {
-			getLogger().warn(
-					"createDefaultUser: default user <{}> already existing",
-					defaultUser.getName());
-		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -75,11 +52,13 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserDAO.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(EMailDAO.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -91,17 +70,17 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	/**
 	 */
 	@Override
-	public User getUser(User userToGet) throws AlKhwarizmixException {
-		getLogger().trace("getUser()");
+	public EMail getEMail(EMail emailToGet) throws AlKhwarizmixException {
+		getLogger().trace("getEMail()");
 
 		try {
-			String userId = userToGet.getUserId();
+			/*String userId = userToGet.getUserId();
 			Criteria criteria = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession().createCriteria(User.class);
 			criteria.add(Restrictions.eq(User.USERID, userId));
-			userToGet = (User) criteria.uniqueResult();
+			emailToGet = (EMail) criteria.uniqueResult();*/
 
-			return userToGet;
+			return emailToGet;
 		} catch (DataAccessException e) {
 			AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);

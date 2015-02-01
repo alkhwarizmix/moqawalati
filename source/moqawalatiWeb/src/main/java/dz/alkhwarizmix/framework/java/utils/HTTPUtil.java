@@ -61,7 +61,7 @@ public class HTTPUtil {
 
 	private static final Logger LOG = LoggerFactory.getLogger(HTTPUtil.class);
 
-	Logger getLogger() {
+	private Logger getLogger() {
 		return LOG;
 	}
 

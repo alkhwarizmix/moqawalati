@@ -101,7 +101,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_CUSTOMDATA_ID}-1&quot;&gt;&lt;Name&gt;user-${RAN_CUSTOMDATA_ID}-1&lt;/Name&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_CUSTOMDATA_ID}-1@dz.alkhwarizmix.com&quot;&gt;&lt;Name&gt;user-${RAN_CUSTOMDATA_ID}-1&lt;/Name&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -142,7 +142,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
             <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="Gestionnaire de cookies HTTP" enabled="true">
@@ -156,7 +155,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="user" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_CUSTOMDATA_ID}-1&quot;&gt;&lt;/User&gt;</stringProp>
+                  <stringProp name="Argument.value">&lt;User id=&quot;U${RAN_CUSTOMDATA_ID}-1@dz.alkhwarizmix.com&quot;&gt;&lt;/User&gt;</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">user</stringProp>
@@ -197,7 +196,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -247,7 +245,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -289,7 +286,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -339,7 +335,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -381,7 +376,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>

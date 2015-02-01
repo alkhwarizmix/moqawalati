@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,12 +9,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.flex.view.controls
+package dz.alkhwarizmix.moqawalati.flex.view.components
 {
 
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-import dz.alkhwarizmix.framework.flex.view.controls.AlKhwarizmixTextInput;
+import dz.alkhwarizmix.framework.flex.view.components.AlKhwarizmixDataListCanvas;
 
 /**
  *  <p>
@@ -22,9 +22,9 @@ import dz.alkhwarizmix.framework.flex.view.controls.AlKhwarizmixTextInput;
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since  ٠٢ ذو القعدة ١٤٣٤ (September 08, 2013)
+ *  @since  ٠٨ ربيع الأول ١٤٣٦ (December 29, 2014)
  */
-public class MoqawalatiTextInput extends AlKhwarizmixTextInput
+public class MoqawalatiDataEditFormCanvas extends AlKhwarizmixDataListCanvas
 {
 	//--------------------------------------------------------------------------
 	//
@@ -35,7 +35,7 @@ public class MoqawalatiTextInput extends AlKhwarizmixTextInput
 	/**
 	 *  Constructor.
 	 */
-	public function MoqawalatiTextInput()
+	public function MoqawalatiDataEditFormCanvas()
 	{
 		super();
 	}
@@ -51,26 +51,59 @@ public class MoqawalatiTextInput extends AlKhwarizmixTextInput
 	override protected function get logger():IAlKhwarizmixLogger
 	{
 		if (!LOG)
-			LOG = AlKhwarizmixLog.getLogger(MoqawalatiTextInput);
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiDataEditFormCanvas);
 		return LOG;
 	}
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overriden methods
 	//
 	//--------------------------------------------------------------------------
 	
-	//----------------------------------
-	//  resourceBundleName
-	//----------------------------------
+	/**
+	 * @inheritDoc
+	 */
+	override protected function createChildren():void
+	{
+		super.createChildren();
+	}
 	
 	/**
-	 *  @inheritDoc
+	 * @inheritDoc
 	 */
-	override public function get resourceBundleName():String
+	override protected function updateDisplayList(
+		unscaledWidth:Number, unscaledHeight:Number):void
 	{
-		return "MoqawalatiFlex";
+		super.updateDisplayList(unscaledWidth, unscaledHeight);
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Methods
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * TODO: ASDOC
+	 */
+	override protected function getContextMenuItems():Array
+	{
+		return [];
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Event handlers
+	//
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * TODO: ASDOC
+	 */
+	override protected function handleContextMenuItemSelected(caption:String):void
+	{
+		// NOOP
 	}
 	
 } // Class

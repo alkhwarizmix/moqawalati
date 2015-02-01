@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -18,7 +18,7 @@
  *  </p>
  * 
  *  @author فارس بلحواس (Fares Belhaouas)
- *  @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
+ * @since ١٢ ربيع الثاني ١٤٣٦ (February 01, 2015)
  */
 -->
 
@@ -39,5 +39,5 @@
 
 	<import resource="CommonDAOTest-context.xml" />
 
-	<bean id="utRecordDAO" class="dz.alkhwarizmix.framework.java.dao.RecordDAO" />
+	<bean id="utEMailDAO" class="dz.alkhwarizmix.framework.java.dao.EMailDAO" />
 </beans>
