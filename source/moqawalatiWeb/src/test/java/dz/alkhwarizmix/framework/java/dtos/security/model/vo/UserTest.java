@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,17 +9,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.user.model.vo;
+package dz.alkhwarizmix.framework.java.dtos.security.model.vo;
 
-import org.junit.Assert;
-import org.junit.Ignore;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Group;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -27,11 +26,11 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Group;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class GroupTest {
+public class UserTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,15 +39,7 @@ public class GroupTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private Group utGroup;
-
-	// --------------------------------------------------------------------------
-	//
-	// Helpers
-	//
-	// --------------------------------------------------------------------------
-
-	// EMPTY
+	private User utUser;
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,14 +48,17 @@ public class GroupTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utGroup);
+	public void test01_set_then_get_UserId() {
+		String value = "UserTest";
+		utUser.setUserId(value);
+		assertEquals(value, utUser.getUserId());
 	}
 
-	@Ignore("TODO: TDD")
 	@Test
-	public void test01() throws AlKhwarizmixException {
-		Assert.assertTrue(false);
+	public void test02_set_then_get_DomainObject() {
+		AlKhwarizmixDomainObject value = new AlKhwarizmixDomainObject();
+		utUser.setDomainObject(value);
+		assertEquals(value, utUser.getDomainObject());
 	}
 
 } // Class

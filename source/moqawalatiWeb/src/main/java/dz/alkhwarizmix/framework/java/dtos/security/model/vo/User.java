@@ -113,20 +113,20 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	// --------------------------------------------------------------------------
 
 	@Email
-	@Column(name = "userId", unique = true, nullable = false, length = 63)
+	@Column(name = "fUserId", unique = true, nullable = false, length = 63)
 	private String userId;
 
-	@Column(name = "name", nullable = false, length = 127)
+	@Column(name = "fName", nullable = false, length = 127)
 	private String name;
 
 	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "gruop", nullable = true)
+	@JoinColumn(name = "fGroup", nullable = true)
 	private Group group;
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "domainObject", nullable = false)
+	@JoinColumn(name = "fDomainObject", nullable = false)
 	private AlKhwarizmixDomainObject domainObject;
 
 	// --------------------------------------------------------------------------

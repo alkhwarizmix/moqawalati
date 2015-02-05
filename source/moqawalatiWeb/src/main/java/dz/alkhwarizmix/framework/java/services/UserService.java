@@ -114,12 +114,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String addUserFromXML(String userXml, String creatorId)
-			throws AlKhwarizmixException {
+	public String addUserFromXML(String userXml) throws AlKhwarizmixException {
 		getLogger().trace("addUserFromXML");
-
 		User newUser = (User) unmarshalObjectFromXML(userXml);
-		// newUser.setCreatorId(creatorId);
 		addUser(newUser);
 		String result = marshalObjectToXML(newUser);
 		return result;
@@ -195,11 +192,10 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String updateUserFromXML(String userXml, String updaterId)
+	public String updateUserFromXML(String userXml)
 			throws AlKhwarizmixException {
 		getLogger().trace("updateUserFromXML");
 		User newUser = (User) unmarshalObjectFromXML(userXml);
-		// newUser.setCreatorId(updaterId);
 		User updatedUser = updateUser(newUser);
 		String result = marshalObjectToXML(updatedUser);
 		return result;
@@ -253,7 +249,19 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User login(User user) throws AlKhwarizmixException {
+	public User connect(User user) throws AlKhwarizmixException {
+		getLogger().debug("connect");
+		User existingUser = internal_getUser(user);
+		if (existingUser != null)
+			getServiceValidator().validateObjectToPublish(existingUser, null);
+		return existingUser;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User login(User user, String password) throws AlKhwarizmixException {
 		getLogger().debug("login");
 
 		User loggedUser = internal_getUser(user);
@@ -280,13 +288,13 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String loginFromXML(String userXml, String loggerId)
+	public String loginFromXML(String userXml, String password)
 			throws AlKhwarizmixException {
 		getLogger().trace("loginFromXML");
 
 		User userToLogin = (User) unmarshalObjectFromXML(userXml);
 		// newUser.setCreatorId(updaterId);
-		User loggedUser = login(userToLogin);
+		User loggedUser = login(userToLogin, password);
 		String result = marshalObjectToXML(loggedUser);
 		return result;
 	}

@@ -94,8 +94,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 		getLogger().debug("addUser({})", xmlValue);
 
 		try {
-			String result = userService.addUserFromXML(xmlValue,
-					getCurrentRequestRemoteAddress());
+			String result = userService.addUserFromXML(xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
@@ -143,8 +142,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 
 		try {
 			StringBuilder sBuilder = new StringBuilder(
-					userService.updateUserFromXML(xmlValue,
-							getCurrentRequestRemoteAddress()));
+					userService.updateUserFromXML(xmlValue));
 			return successResponseForXML(sBuilder);
 		} catch (AlKhwarizmixException e) {
 			return errorResponseForXML(e);

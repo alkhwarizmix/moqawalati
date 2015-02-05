@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.user.model.vo;
+package dz.alkhwarizmix.framework.java.webservices;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -19,7 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
 
 /**
  * <p>
@@ -27,11 +26,11 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٦ ربيع الأول ١٤٣٦ (December 27, 2014)
+ * @since ١٤ ربيع الثاني ١٤٣٦ (February 03, 2015)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class EncryptionTest {
+public class UserWebServiceForBlazeDSTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,7 +39,7 @@ public class EncryptionTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private Encryption utEncryption;
+	private UserWebServiceForBlazeDS utUserWebServiceForBlazeDS;
 
 	// --------------------------------------------------------------------------
 	//
@@ -58,7 +57,7 @@ public class EncryptionTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utEncryption);
+		Assert.assertNotNull(utUserWebServiceForBlazeDS);
 	}
 
 	@Ignore("TODO: TDD")

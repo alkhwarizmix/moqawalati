@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.framework.java.services;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -183,8 +184,9 @@ public class UserServiceTest {
 		User existingUser = new User("user124");
 		when(mockUserService.internal_getUser(any(User.class))).thenReturn(
 				existingUser);
-		when(mockUserService.login(any(User.class))).thenCallRealMethod();
-		User loggedUser = mockUserService.login(userToFind); // TEST
+		when(mockUserService.login(any(User.class), anyString()))
+				.thenCallRealMethod();
+		User loggedUser = mockUserService.login(userToFind, "pass"); // TEST
 		Assert.assertEquals(existingUser, loggedUser);
 		verify(mockUserService, times(1)).internal_getUser(
 				Mockito.eq(userToFind));
@@ -196,8 +198,9 @@ public class UserServiceTest {
 		User userToFind = new User("user124");
 		when(mockUserService.internal_getUser(Mockito.eq(userToFind)))
 				.thenReturn(null);
-		when(mockUserService.login(any(User.class))).thenCallRealMethod();
-		mockUserService.login(userToFind); // TEST
+		when(mockUserService.login(any(User.class), anyString()))
+				.thenCallRealMethod();
+		mockUserService.login(userToFind, "pass"); // TEST
 	}
 
 	@Test
@@ -206,7 +209,7 @@ public class UserServiceTest {
 		User userToLogin = new User();
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
-		utUserService.login(userToLogin); // TEST
+		utUserService.login(userToLogin, "pass"); // TEST
 		Assert.assertEquals(userToLogin.getDomainObject(),
 				spySessionData.getSessionOwner());
 	}
