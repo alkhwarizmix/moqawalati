@@ -100,12 +100,12 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "groupId", unique = true, nullable = false, length = 63)
+	@Column(name = "fGroupId", unique = true, nullable = false, length = 63)
 	private String groupId;
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "domainObject", nullable = false)
+	@JoinColumn(name = "fDomainObject", nullable = false)
 	private AlKhwarizmixDomainObject domainObject;
 
 	// --------------------------------------------------------------------------

@@ -102,17 +102,17 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "encryptionId", unique = true, nullable = false, length = 63)
+	@Column(name = "fEncryptionId", unique = true, nullable = false, length = 63)
 	private String encryptionId;
 
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "user", nullable = false)
+	@JoinColumn(name = "fUser", nullable = false)
 	private User user;
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "domainObject", nullable = false)
+	@JoinColumn(name = "fDomainObject", nullable = false)
 	private AlKhwarizmixDomainObject domainObject;
 
 	// --------------------------------------------------------------------------

@@ -75,7 +75,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 
 	@OneToOne(targetEntity = ExtendedData.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "extendedData", nullable = true)
+	@JoinColumn(name = "fExtendedData", nullable = true)
 	private ExtendedData extendedData;
 
 	// --------------------------------------------------------------------------

@@ -84,12 +84,12 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "sender", nullable = false)
+	@JoinColumn(name = "fSender", nullable = false)
 	private User sender;
 
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "receiver", nullable = false)
+	@JoinColumn(name = "fReceiver", nullable = false)
 	private User receiver;
 
 	// --------------------------------------------------------------------------

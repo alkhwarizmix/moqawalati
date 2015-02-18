@@ -49,7 +49,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
  */
 @Entity
 @Table(name = "TRecord", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"recordId", "parent" }))
+		"fRecordId", "fParent" }))
 @XmlRootElement(name = "Record")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Record extends
@@ -123,12 +123,12 @@ public class Record extends
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "recordId", unique = false, nullable = false, length = 63)
+	@Column(name = "fRecordId", unique = false, nullable = false, length = 63)
 	private String recordId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "parent", nullable = true)
+	@JoinColumn(name = "fParent", nullable = true)
 	private Record parent;
 
 	@Transient

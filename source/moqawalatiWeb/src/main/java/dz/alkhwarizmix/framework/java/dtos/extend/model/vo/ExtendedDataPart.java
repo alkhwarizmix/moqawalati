@@ -74,10 +74,10 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "extendedData", nullable = false)
+	@JoinColumn(name = "fExtendedData", nullable = false)
 	private ExtendedData extendedData;
 
-	@Column(name = "extendedDataPartValue", nullable = false, length = 127)
+	@Column(name = "fExtendedDataPartValue", nullable = false, length = 127)
 	private String extendedDataPartValue;
 
 	// --------------------------------------------------------------------------

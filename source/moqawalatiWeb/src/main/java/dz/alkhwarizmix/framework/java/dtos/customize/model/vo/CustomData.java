@@ -82,12 +82,12 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "customDataId", unique = false, nullable = false, length = 63)
+	@Column(name = "fCustomDataId", unique = false, nullable = false, length = 63)
 	private String customDataId;
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "customizer", nullable = false)
+	@JoinColumn(name = "fCustomizer", nullable = false)
 	private AlKhwarizmixDomainObject customizer;
 
 	// --------------------------------------------------------------------------

@@ -64,10 +64,10 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 			AbstractAlKhwarizmixDomainObjectExtendableWithSecurity other) {
 		super(other);
 		if (other != null) {
-			this.owner1 = (AlKhwarizmixDomainObject) ObjectUtils
-					.clone(other.owner1);
-			this.group1 = (Group) ObjectUtils.clone(other.group1);
-			this.encryption1 = (Encryption) ObjectUtils.clone(other.encryption1);
+			this.owner = (AlKhwarizmixDomainObject) ObjectUtils
+					.clone(other.owner);
+			this.group = (Group) ObjectUtils.clone(other.group);
+			this.encryption = (Encryption) ObjectUtils.clone(other.encryption);
 		}
 	}
 
@@ -79,19 +79,18 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "owner", nullable = true)
-	private AlKhwarizmixDomainObject owner1;
+	@JoinColumn(name = "fOwner", nullable = true)
+	private AlKhwarizmixDomainObject owner;
 
 	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	// gruop is not a typo, the word "group" is not allowed as a Table field
-	@JoinColumn(name = "gruop", nullable = true)
-	private Group group1;
+	@JoinColumn(name = "fGroup", nullable = true)
+	private Group group;
 
 	@ManyToOne(targetEntity = Encryption.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "encryption", nullable = true)
-	private Encryption encryption1;
+	@JoinColumn(name = "fEncryption", nullable = true)
+	private Encryption encryption;
 
 	// --------------------------------------------------------------------------
 	//
@@ -107,9 +106,9 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	@Override
 	public int hashCode() {
 		int result = super.hashCode();
-		result = continueHashCode(result, group1);
-		result = continueHashCode(result, owner1);
-		result = continueHashCode(result, encryption1);
+		result = continueHashCode(result, group);
+		result = continueHashCode(result, owner);
+		result = continueHashCode(result, encryption);
 		return result;
 	}
 
@@ -122,12 +121,12 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	public boolean equals(Object other) {
 		boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.group1,
-						getObjectAsThisClass(other).group1)
-				&& ObjectUtils.equals(this.owner1,
-						getObjectAsThisClass(other).owner1)
-				&& ObjectUtils.equals(this.encryption1,
-						getObjectAsThisClass(other).encryption1);
+				&& ObjectUtils.equals(this.group,
+						getObjectAsThisClass(other).group)
+				&& ObjectUtils.equals(this.owner,
+						getObjectAsThisClass(other).owner)
+				&& ObjectUtils.equals(this.encryption,
+						getObjectAsThisClass(other).encryption);
 		return result;
 	}
 
@@ -159,11 +158,11 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// ----------------------------------
 
 	public AlKhwarizmixDomainObject getOwner1() {
-		return owner1;
+		return owner;
 	}
 
 	public void setOwner1(AlKhwarizmixDomainObject value) {
-		this.owner1 = value;
+		this.owner = value;
 	}
 
 	// ----------------------------------
@@ -171,11 +170,11 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// ----------------------------------
 
 	public Group getGroup1() {
-		return group1;
+		return group;
 	}
 
 	public void setGroup1(Group value) {
-		this.group1 = value;
+		this.group = value;
 	}
 
 	// ----------------------------------
@@ -183,11 +182,11 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// ----------------------------------
 
 	public Encryption getEncryption1() {
-		return encryption1;
+		return encryption;
 	}
 
 	public void setEncryption1(Encryption value) {
-		this.encryption1 = value;
+		this.encryption = value;
 	}
 
 } // Class
