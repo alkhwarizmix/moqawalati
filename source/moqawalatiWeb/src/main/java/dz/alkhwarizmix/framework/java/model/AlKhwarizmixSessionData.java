@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
  * <p>
@@ -62,6 +63,8 @@ public class AlKhwarizmixSessionData implements Serializable {
 
 	private AlKhwarizmixDomainObject sessionOwner = null;
 
+	private User connectedUser = null;
+
 	// --------------------------------------------------------------------------
 	//
 	// Getters & Setters
@@ -69,7 +72,7 @@ public class AlKhwarizmixSessionData implements Serializable {
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// customizer
+	// sessionOwner
 	// ----------------------------------
 
 	public AlKhwarizmixDomainObject getSessionOwner() {
@@ -80,6 +83,18 @@ public class AlKhwarizmixSessionData implements Serializable {
 
 	public void setSessionOwner(AlKhwarizmixDomainObject value) {
 		sessionOwner = value;
+	}
+
+	// ----------------------------------
+	// connectedUser
+	// ----------------------------------
+
+	public User getConnectedUser() {
+		return connectedUser;
+	}
+
+	public void setConnectedUser(User value) {
+		connectedUser = value;
 	}
 
 	// --------------------------------------------------------------------------

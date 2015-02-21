@@ -11,14 +11,18 @@
 
 package dz.alkhwarizmix.framework.java.model;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
  * <p>
@@ -53,6 +57,18 @@ public class AlKhwarizmixSessionDataTest {
 				.resetSessionOwner();
 		mockAlKhwarizmixSessionData.resetSessionOwner();
 		verify(mockAlKhwarizmixSessionData, times(1)).setSessionOwner(null);
+	}
+
+	@Test
+	public void test02_set_then_get_connectedUser() {
+		Mockito.doCallRealMethod().when(mockAlKhwarizmixSessionData)
+				.setConnectedUser(any(User.class));
+		Mockito.doCallRealMethod().when(mockAlKhwarizmixSessionData)
+				.getConnectedUser();
+		User valueToSet = new User("userId145");
+		mockAlKhwarizmixSessionData.setConnectedUser(valueToSet);
+		Assert.assertEquals(valueToSet,
+				mockAlKhwarizmixSessionData.getConnectedUser());
 	}
 
 } // Class

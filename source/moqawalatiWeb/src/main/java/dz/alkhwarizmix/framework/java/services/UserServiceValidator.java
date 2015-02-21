@@ -11,6 +11,7 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -71,6 +72,16 @@ public class UserServiceValidator extends AbstractAlKhwarizmixServiceValidator
 	 * {@inheritDoc}
 	 */
 	@Override
+	public boolean isValidUserId(User user) {
+		return (user != null)
+				? EmailValidator.getInstance().isValid(user.getUserId())
+				: false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
 		super.validateObjectToAdd(object, objectOwner);
@@ -83,6 +94,7 @@ public class UserServiceValidator extends AbstractAlKhwarizmixServiceValidator
 	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
 		super.validateObjectToUpdate(object, objectOwner);
+
 	}
 
 	/**

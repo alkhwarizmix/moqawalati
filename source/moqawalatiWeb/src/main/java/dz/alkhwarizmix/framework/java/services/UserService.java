@@ -85,7 +85,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	private IUserDAO userDAO;
 
 	@Autowired
-	private IUserServiceValidator userValidator;
+	private IUserServiceValidator userServiceValidator;
 
 	@Autowired
 	private EMailService emailService;
@@ -251,10 +251,35 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public User connect(User user) throws AlKhwarizmixException {
 		getLogger().debug("connect");
+
+		if (getSessionData().getConnectedUser() != null)
+			throw getErrorLoginException("connect1.");
+		validateUserAndUserId(user, getErrorLoginException("connect2."));
+		User result = new User(user.getUserId());
 		User existingUser = internal_getUser(user);
 		if (existingUser != null)
-			getServiceValidator().validateObjectToPublish(existingUser, null);
-		return existingUser;
+			result.setName(existingUser.getName());
+		getSessionData().setConnectedUser(existingUser != null
+				? existingUser
+				: result);
+		return result;
+	}
+
+	/**
+	 */
+	private AlKhwarizmixException getErrorLoginException(String message) {
+		return new AlKhwarizmixException(message,
+				AlKhwarizmixErrorCode.ERROR_LOGIN);
+	}
+
+	/**
+	 */
+	private void validateUserAndUserId(User user,
+			AlKhwarizmixException exception) throws AlKhwarizmixException {
+		if (user == null)
+			throw exception;
+		if (!getUserServiceValidator().isValidUserId(user))
+			throw exception;
 	}
 
 	/**
@@ -264,9 +289,12 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	public User login(User user, String password) throws AlKhwarizmixException {
 		getLogger().debug("login");
 
+		validateUserAndUserId(user, getErrorLoginException("login1."));
 		User loggedUser = internal_getUser(user);
 		if (loggedUser == null)
-			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
+			throw getErrorLoginException("login2.");
+		if (!("Mohamed").equals(password))
+			throw getErrorLoginException("login3.");
 
 		getSessionData().setSessionOwner(loggedUser.getDomainObject());
 
@@ -347,16 +375,20 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	// ----------------------------------
-	// userValidator
+	// userServiceValidator
 	// ----------------------------------
 
-	protected final void setUserValidator(IUserServiceValidator value) {
-		userValidator = value;
+	protected final void setUserServiceValidator(IUserServiceValidator value) {
+		userServiceValidator = value;
+	}
+
+	protected final IUserServiceValidator getUserServiceValidator() {
+		return userServiceValidator;
 	}
 
 	@Override
 	protected IAlKhwarizmixServiceValidator getServiceValidator() {
-		return userValidator;
+		return userServiceValidator;
 	}
 
 	// ----------------------------------

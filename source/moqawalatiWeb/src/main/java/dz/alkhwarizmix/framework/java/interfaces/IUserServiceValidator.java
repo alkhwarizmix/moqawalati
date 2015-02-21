@@ -11,6 +11,8 @@
 
 package dz.alkhwarizmix.framework.java.interfaces;
 
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
+
 /**
  * <p>
  * TODO: Javadoc
@@ -21,6 +23,9 @@ package dz.alkhwarizmix.framework.java.interfaces;
  */
 public interface IUserServiceValidator extends IAlKhwarizmixServiceValidator {
 
-	// EMPTY
+	/**
+	 * 
+	 */
+	public boolean isValidUserId(User user);
 
 } // Class
