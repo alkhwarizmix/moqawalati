@@ -103,6 +103,7 @@ public class Record extends
 			this.parent = (Record) ObjectUtils.clone(other.parent);
 			this.schemaName = other.schemaName;
 			this.tableName = other.tableName;
+			this.action = other.action;
 		}
 	}
 
@@ -171,6 +172,7 @@ public class Record extends
 		result = continueHashCode(result, parent);
 		result = continueHashCode(result, schemaName);
 		result = continueHashCode(result, tableName);
+		result = continueHashCode(result, action);
 		return result;
 	}
 
@@ -183,14 +185,16 @@ public class Record extends
 	public boolean equals(Object other) {
 		boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
+				&& ObjectUtils.equals(this.action,
+						getObjectAsThisClass(other).action)
 				&& ObjectUtils.equals(this.recordId,
 						getObjectAsThisClass(other).recordId)
-				&& ObjectUtils.equals(this.parent,
-						getObjectAsThisClass(other).parent)
 				&& ObjectUtils.equals(this.schemaName,
 						getObjectAsThisClass(other).schemaName)
 				&& ObjectUtils.equals(this.tableName,
-						getObjectAsThisClass(other).tableName);
+						getObjectAsThisClass(other).tableName)
+				&& ObjectUtils.equals(this.parent,
+						getObjectAsThisClass(other).parent);
 		return result;
 	}
 

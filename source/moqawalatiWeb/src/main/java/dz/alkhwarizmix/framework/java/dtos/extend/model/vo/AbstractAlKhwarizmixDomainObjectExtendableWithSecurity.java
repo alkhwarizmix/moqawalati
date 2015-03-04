@@ -157,11 +157,11 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// owner
 	// ----------------------------------
 
-	public AlKhwarizmixDomainObject getOwner1() {
+	public final AlKhwarizmixDomainObject getOwner() {
 		return owner;
 	}
 
-	public void setOwner1(AlKhwarizmixDomainObject value) {
+	public final void setOwner(AlKhwarizmixDomainObject value) {
 		this.owner = value;
 	}
 
@@ -169,11 +169,11 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// group
 	// ----------------------------------
 
-	public Group getGroup1() {
+	public final Group getGroup() {
 		return group;
 	}
 
-	public void setGroup1(Group value) {
+	public final void setGroup(Group value) {
 		this.group = value;
 	}
 
@@ -181,11 +181,11 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// encryption
 	// ----------------------------------
 
-	public Encryption getEncryption1() {
+	public final Encryption getEncryption() {
 		return encryption;
 	}
 
-	public void setEncryption1(Encryption value) {
+	public final void setEncryption(Encryption value) {
 		this.encryption = value;
 	}
 

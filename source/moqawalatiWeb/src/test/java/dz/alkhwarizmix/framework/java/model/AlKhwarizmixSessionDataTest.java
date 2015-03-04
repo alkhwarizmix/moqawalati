@@ -11,17 +11,13 @@
 
 package dz.alkhwarizmix.framework.java.model;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
@@ -42,8 +38,8 @@ public class AlKhwarizmixSessionDataTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Mock
-	AlKhwarizmixSessionData mockAlKhwarizmixSessionData;
+	@InjectMocks
+	AlKhwarizmixSessionData utAlKhwarizmixSessionData;
 
 	// --------------------------------------------------------------------------
 	//
@@ -53,22 +49,56 @@ public class AlKhwarizmixSessionDataTest {
 
 	@Test
 	public void test01_resetSessionOwner_should_nullify_sessionOwner() {
-		Mockito.doCallRealMethod().when(mockAlKhwarizmixSessionData)
-				.resetSessionOwner();
-		mockAlKhwarizmixSessionData.resetSessionOwner();
-		verify(mockAlKhwarizmixSessionData, times(1)).setSessionOwner(null);
+		// SETUP
+		AlKhwarizmixDomainObject sessionOwner = new AlKhwarizmixDomainObject();
+		utAlKhwarizmixSessionData.setSessionOwner(sessionOwner);
+		// TEST
+		utAlKhwarizmixSessionData.resetSessionOwner();
+		// ASSERTS
+		Assert.assertNotSame(sessionOwner,
+				utAlKhwarizmixSessionData.getSessionOwner());
 	}
 
 	@Test
 	public void test02_set_then_get_connectedUser() {
-		Mockito.doCallRealMethod().when(mockAlKhwarizmixSessionData)
-				.setConnectedUser(any(User.class));
-		Mockito.doCallRealMethod().when(mockAlKhwarizmixSessionData)
-				.getConnectedUser();
-		User valueToSet = new User("userId145");
-		mockAlKhwarizmixSessionData.setConnectedUser(valueToSet);
+		User valueToSet = new User("userId135");
+		// TEST
+		utAlKhwarizmixSessionData.setConnectedUser(valueToSet);
+		// ASSERTS
 		Assert.assertEquals(valueToSet,
-				mockAlKhwarizmixSessionData.getConnectedUser());
+				utAlKhwarizmixSessionData.getConnectedUser());
+	}
+
+	@Test
+	public void test03_set_then_get_loggedUser() {
+		User valueToSet = new User("userId1375");
+		// TEST
+		utAlKhwarizmixSessionData.setLoggedUser(valueToSet);
+		// ASSERTS
+		Assert.assertEquals(valueToSet,
+				utAlKhwarizmixSessionData.getLoggedUser());
+	}
+
+	@Test
+	public void test04_resetConnectedUser_should_nullify_connectedUser() {
+		// SETUP
+		utAlKhwarizmixSessionData.setConnectedUser(new User());
+		Assert.assertNotNull(utAlKhwarizmixSessionData.getConnectedUser());
+		// TEST
+		utAlKhwarizmixSessionData.resetConnectedUser();
+		// ASSERTS
+		Assert.assertNull(utAlKhwarizmixSessionData.getConnectedUser());
+	}
+
+	@Test
+	public void test05_resetLoggedUser_should_nullify_connectedUser() {
+		// SETUP
+		utAlKhwarizmixSessionData.setLoggedUser(new User());
+		Assert.assertNotNull(utAlKhwarizmixSessionData.getLoggedUser());
+		// TEST
+		utAlKhwarizmixSessionData.resetLoggedUser();
+		// ASSERTS
+		Assert.assertNull(utAlKhwarizmixSessionData.getLoggedUser());
 	}
 
 } // Class

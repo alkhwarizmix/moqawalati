@@ -12,8 +12,10 @@
 package dz.alkhwarizmix.framework.java.webservices;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,13 +24,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.interfaces.IUserService;
-import dz.alkhwarizmix.framework.java.webservices.UserWebServiceForXML;
 
 /**
  * <p>
@@ -61,7 +61,7 @@ public class UserWebServiceForXMLTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Mockito.when(mockHttpServletRequest.getRemoteAddr()).thenReturn("");
+		when(mockHttpServletRequest.getRemoteAddr()).thenReturn("");
 		setupMockServletRequestAttributes();
 		setupMockUserService();
 	}
@@ -74,9 +74,9 @@ public class UserWebServiceForXMLTest {
 	}
 
 	private void setupMockUserService() throws AlKhwarizmixException {
-		Mockito.when(
-				mockUserService.loginFromXML(any(String.class),
-						any(String.class))).thenReturn("");
+		when(mockUserService.loginFromXML(any(String.class), any(String.class)))
+				.thenReturn("");
+		when(mockUserService.connectFromXML(any(String.class))).thenReturn("");
 		utUserWebServiceForXML.setUserService(mockUserService);
 	}
 
@@ -89,10 +89,35 @@ public class UserWebServiceForXMLTest {
 	@Test
 	public void test01_login_should_call_service_loginFromXML()
 			throws Exception {
-
-		utUserWebServiceForXML.login("");
-		verify(mockUserService, times(1)).loginFromXML(any(String.class),
-				any(String.class));
+		String userAsXML = "<User/>";
+		String password = "PasswordIsNotImportant";
+		utUserWebServiceForXML.login(userAsXML, password);
+		verify(mockUserService, times(1)).loginFromXML(eq(userAsXML),
+				eq(password));
 	}
 
-} // Class 
+	@Test
+	public void test02_connect_should_call_service_connectFromXML()
+			throws Exception {
+		String userAsXML = "<User/>";
+		utUserWebServiceForXML.connect(userAsXML);
+		verify(mockUserService, times(1)).connectFromXML(eq(userAsXML));
+	}
+
+	@Test
+	public void test03_logout_should_call_service_logoutFromXML()
+			throws Exception {
+		String userAsXML = "<User/>";
+		utUserWebServiceForXML.logout(userAsXML);
+		verify(mockUserService, times(1)).logoutFromXML(eq(userAsXML));
+	}
+
+	@Test
+	public void test04_subscribe_should_call_service_subscribeFromXML()
+			throws Exception {
+		String userAsXML = "<User/>";
+		utUserWebServiceForXML.subscribe(userAsXML);
+		verify(mockUserService, times(1)).subscribeFromXML(eq(userAsXML));
+	}
+
+} // Class

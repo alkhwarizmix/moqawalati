@@ -123,10 +123,32 @@ public abstract class AlKhwarizmixWebServiceForXML {
 
 	/**
 	 */
-	public ResponseEntity<String> errorResponseForXML(AlKhwarizmixException ex) {
+	protected final ResponseEntity<String> errorResponseForXML(
+			AlKhwarizmixException ex) {
 		getLogger().error("{}: {}", ex.getLocalizedMessage(),
 				ex.getStackTrace());
 		return errorResponseForXML(ex.getErrorCode());
+	}
+
+	/**
+	 */
+	protected final ResponseEntity<String> errorResponseForXML(
+			Exception exception) {
+		return errorResponseForXML(getAlKhwarizmixException(exception));
+	}
+
+	/**
+	 */
+	protected final AlKhwarizmixException getAlKhwarizmixException(
+			Exception exception) {
+		AlKhwarizmixException result = null;
+		if (exception instanceof AlKhwarizmixException) {
+			result = (AlKhwarizmixException) exception;
+		} else {
+			result = new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR);
+		}
+		return result;
 	}
 
 	/**

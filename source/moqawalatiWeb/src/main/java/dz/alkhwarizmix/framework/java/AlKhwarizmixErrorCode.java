@@ -37,6 +37,9 @@ public enum AlKhwarizmixErrorCode {
 	INVALID_DATA(20500, "Invalid Data", HttpStatus.INTERNAL_SERVER_ERROR),
 
 	UPDATE_DATA_ERROR(30500, "Cannot update data",
+			HttpStatus.INTERNAL_SERVER_ERROR),
+
+	SERVER_INTERNAL_ERROR(40500, "Server Internal Error",
 			HttpStatus.INTERNAL_SERVER_ERROR);
 
 	private int id;

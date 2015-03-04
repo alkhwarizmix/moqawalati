@@ -33,6 +33,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.EntityInterceptor;
+import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
  * <p>
@@ -63,6 +64,14 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 
 	// --------------------------------------------------------------------------
 	//
+	// Static Variables
+	//
+	// --------------------------------------------------------------------------
+
+	static public DateUtil dateUtil = null;
+
+	// --------------------------------------------------------------------------
+	//
 	// Static methods
 	//
 	// --------------------------------------------------------------------------
@@ -84,14 +93,24 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// --------------------------------------------------------------------------
 
 	public AbstractAlKhwarizmixDomainObject() {
-		created = new Date();
+		if (dateUtil == null)
+			dateUtil = new DateUtil();
+		created = dateUtil.newDate();
+	}
+
+	protected AbstractAlKhwarizmixDomainObject(Long theId, Integer theVersion,
+			Date theCreated, Date theModified) {
+		this.id = theId;
+		this.version = theVersion;
+		this.created = theCreated;
+		this.modified = theModified;
 	}
 
 	protected AbstractAlKhwarizmixDomainObject(
 			AbstractAlKhwarizmixDomainObject other) {
 		if (other != null) {
-			this.id = (Long) ObjectUtils.clone(other.id);
-			this.version = (Integer) ObjectUtils.clone(other.version);
+			this.id = other.id;
+			this.version = other.version;
 			this.created = (Date) ObjectUtils.clone(other.created);
 			this.modified = (Date) ObjectUtils.clone(other.modified);
 		}
@@ -236,7 +255,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// version
 	// ----------------------------------
 
-	public Integer getVersion() {
+	public final Integer getVersion() {
 		return version;
 	}
 
@@ -244,7 +263,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// created
 	// ----------------------------------
 
-	public Date getCreated() {
+	public final Date getCreated() {
 		return created;
 	}
 
@@ -252,7 +271,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// modified
 	// ----------------------------------
 
-	public Date getModified() {
+	public final Date getModified() {
 		return modified;
 	}
 

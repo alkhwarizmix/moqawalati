@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -11,12 +11,7 @@
 
 package dz.alkhwarizmix.framework.java.utils;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import java.util.Date;
 
 /**
  * <p>
@@ -24,38 +19,31 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٩ جمادى الأول ١٤٣٥ (March 30, 2014)
+ * @since ١٢ جمادى الأولى ١٤٣٦ (March 03, 2015)
  */
-@RunWith(MockitoJUnitRunner.class)
-@SuppressWarnings("PMD.MethodNamingConventions")
-public class HTTPUtilTest {
+public class DateUtil {
 
 	// --------------------------------------------------------------------------
 	//
-	// Setup & Teardown
+	// Constructor
 	//
 	// --------------------------------------------------------------------------
 
-	private HTTPUtil utHTTPUtil;
+	/**
+	 * Constructor.
+	 */
+	public DateUtil() {
+		// NOOP
+	}
 
 	// --------------------------------------------------------------------------
 	//
-	// Helpers
+	// Methods
 	//
 	// --------------------------------------------------------------------------
 
-	// EMPTY
-
-	// --------------------------------------------------------------------------
-	//
-	// Tests
-	//
-	// --------------------------------------------------------------------------
-
-	@Test
-	public void test00_constructor1() throws AlKhwarizmixException {
-		utHTTPUtil = new HTTPUtil();
-		Assert.assertNotNull(utHTTPUtil);
+	public Date newDate() {
+		return new Date();
 	}
 
 } // Class

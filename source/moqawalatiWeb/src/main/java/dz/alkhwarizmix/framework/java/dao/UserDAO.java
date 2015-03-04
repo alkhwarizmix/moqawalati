@@ -54,6 +54,7 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	private void createDefaultUsers() {
 		createDefaultUser("fbelhaouas@icloud.com", "فارس بلحواس");
 		createDefaultUser("fares@dz.moqawalati.com", "Fares @ Moqawalati");
+		createDefaultUser("jmeter@dz.alkhwarizmix.com", "JMeter Test User");
 	}
 
 	private void createDefaultUser(String userId, String userName) {

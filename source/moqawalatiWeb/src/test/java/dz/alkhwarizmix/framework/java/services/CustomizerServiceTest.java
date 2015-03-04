@@ -11,9 +11,6 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -50,8 +47,8 @@ public class CustomizerServiceTest {
 	@InjectMocks
 	private CustomizerService utCustomizerService;
 
-	@Mock
-	AlKhwarizmixSessionData mockSessionData;
+	@InjectMocks
+	AlKhwarizmixSessionData sessionData;
 
 	@Mock
 	AlKhwarizmixDomainObject mockCustomizer;
@@ -89,9 +86,8 @@ public class CustomizerServiceTest {
 	}
 
 	private void setUpMocks() throws AlKhwarizmixException {
-		Mockito.when(mockSessionData.getSessionOwner()).thenReturn(
-				mockCustomizer);
-		utCustomizerService.setSessionData(mockSessionData);
+		sessionData.setSessionOwner(mockCustomizer);
+		utCustomizerService.setSessionData(sessionData);
 		utCustomizerService.setCustomDataDAO(mockCustomDataDAO);
 	}
 
@@ -102,10 +98,9 @@ public class CustomizerServiceTest {
 			throws AlKhwarizmixException {
 		AlKhwarizmixDomainObject mockSessionOwner = Mockito
 				.mock(AlKhwarizmixDomainObject.class);
-		Mockito.when(mockSessionData.getSessionOwner()).thenReturn(
-				mockSessionOwner);
+		sessionData.setSessionOwner(mockSessionOwner);
+		utCustomizerService.setSessionData(sessionData);
 		AlKhwarizmixDomainObject result = utCustomizerService.getSessionOwner();
-		verify(mockSessionData, times(1)).getSessionOwner();
 		Assert.assertEquals(mockSessionOwner, result);
 	}
 

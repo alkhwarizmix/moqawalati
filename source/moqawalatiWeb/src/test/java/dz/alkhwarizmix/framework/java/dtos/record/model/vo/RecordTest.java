@@ -11,14 +11,21 @@
 
 package dz.alkhwarizmix.framework.java.dtos.record.model.vo;
 
+import java.util.Date;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
+import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
  * <p>
@@ -41,13 +48,52 @@ public class RecordTest {
 	@InjectMocks
 	private Record utRecord;
 
+	@BeforeClass
+	static public void setUp() {
+		DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
+		Mockito.when(mockDateUtil.newDate()).thenReturn(new Date(1234));
+		AbstractAlKhwarizmixDomainObject.dateUtil = mockDateUtil;
+	}
+
+	@AfterClass
+	static public void tearDown() {
+		AbstractAlKhwarizmixDomainObject.dateUtil = null;
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Helpers
 	//
 	// --------------------------------------------------------------------------
 
-	// EMPTY
+	private void setDataForRecordWithId(Record record, int id) {
+		record.setId(new Long(id));
+		record.setRecordId("recordId" + id);
+		record.setSchemaName("SchemaName" + id);
+		record.setTableName("TableName" + id);
+		record.setParent(new Record());
+		record.getParent().setId(new Long(id + 1));
+		record.setAction(Record.INSERT_ACTION);
+	}
+
+	private void assertEqualRecords(Record expectedRecord, Record cloneRecord,
+			boolean testDeep) {
+		Assert.assertEquals("recordId", expectedRecord.getRecordId(),
+				cloneRecord.getRecordId());
+		Assert.assertEquals("schemaName", expectedRecord.getSchemaName(),
+				cloneRecord.getSchemaName());
+		Assert.assertEquals("tableName", expectedRecord.getTableName(),
+				cloneRecord.getTableName());
+		Assert.assertEquals("action", expectedRecord.getAction(),
+				cloneRecord.getAction());
+		Assert.assertEquals("parent", expectedRecord.getParent(),
+				cloneRecord.getParent());
+		if (testDeep) {
+			Assert.assertEquals("parent id",
+					expectedRecord.getParent().getId(), cloneRecord.getParent()
+							.getId());
+		}
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -58,6 +104,11 @@ public class RecordTest {
 	@Test
 	public void test00_constructor() {
 		Assert.assertNotNull(utRecord);
+	}
+
+	@Test
+	public void test00_B_Cloneable() {
+		Assert.assertTrue(utRecord instanceof Cloneable);
 	}
 
 	@Test
@@ -91,13 +142,53 @@ public class RecordTest {
 	@Test
 	public void test05_encryption_setAndGet() {
 		Encryption valueToSet = new Encryption();
-		utRecord.setEncryption1(valueToSet);
-		Assert.assertEquals(valueToSet, utRecord.getEncryption1());
+		utRecord.setEncryption(valueToSet);
+		Assert.assertEquals(valueToSet, utRecord.getEncryption());
+	}
+
+	@Test
+	public void test06_A_clone_null_properties() {
+		// SetUp
+		Record expectedRecord = new Record();
+		utRecord = new Record();
+		// Test
+		Record cloneRecord = (Record) utRecord.clone();
+		// Others
+		setDataForRecordWithId(utRecord, 1567);
+		// Asserts
+		assertEqualRecords(expectedRecord, cloneRecord, false);
+	}
+
+	@Test
+	public void test06_B_clone() {
+		// SetUp
+		Record expectedRecord = new Record();
+		setDataForRecordWithId(expectedRecord, 7651);
+		setDataForRecordWithId(utRecord, 7651);
+		// Test
+		Record cloneRecord = (Record) utRecord.clone();
+		// Others
+		setDataForRecordWithId(utRecord, 1569);
+		// Asserts
+		assertEqualRecords(expectedRecord, cloneRecord, true);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void test02_clone() {
+	public void test07_toString_TDD() {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void test08_hashCode() {
+		Assert.assertEquals(-1787616399, utRecord.hashCode());
+		setDataForRecordWithId(utRecord, 7953);
+		Assert.assertEquals(1331481537, utRecord.hashCode());
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test09_equals_TDD() {
 		Assert.assertTrue(false);
 	}
 

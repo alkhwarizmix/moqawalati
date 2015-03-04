@@ -140,14 +140,14 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 	// ----------------------------------
 
 	@XmlTransient
-	public String getExtendedDataValue() {
+	public final String getExtendedDataValue() {
 		String result = "";
 		if (extendedData != null)
 			result = extendedData.getExtendedDataValue();
 		return result;
 	}
 
-	public void setExtendedDataValue(String value) {
+	public final void setExtendedDataValue(String value) {
 		if (extendedData == null)
 			extendedData = new ExtendedData();
 		extendedData.setExtendedDataValue(value);
@@ -158,11 +158,11 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 	// ----------------------------------
 
 	@XmlTransient
-	public ExtendedData getExtendedData() {
+	public final ExtendedData getExtendedData() {
 		return extendedData;
 	}
 
-	public void setExtendedData(ExtendedData value) {
+	public final void setExtendedData(ExtendedData value) {
 		this.extendedData = value;
 	}
 

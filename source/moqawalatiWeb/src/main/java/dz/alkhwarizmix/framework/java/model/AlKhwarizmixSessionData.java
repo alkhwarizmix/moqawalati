@@ -61,9 +61,11 @@ public class AlKhwarizmixSessionData implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
-	private AlKhwarizmixDomainObject sessionOwner = null;
-
 	private User connectedUser = null;
+
+	private User loggedUser = null;
+
+	private AlKhwarizmixDomainObject sessionOwner = null;
 
 	// --------------------------------------------------------------------------
 	//
@@ -72,29 +74,41 @@ public class AlKhwarizmixSessionData implements Serializable {
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
+	// connectedUser
+	// ----------------------------------
+
+	public final User getConnectedUser() {
+		return connectedUser;
+	}
+
+	public final void setConnectedUser(User value) {
+		connectedUser = value;
+	}
+
+	// ----------------------------------
+	// loggedUser
+	// ----------------------------------
+
+	public final User getLoggedUser() {
+		return loggedUser;
+	}
+
+	public final void setLoggedUser(User value) {
+		loggedUser = value;
+	}
+
+	// ----------------------------------
 	// sessionOwner
 	// ----------------------------------
 
-	public AlKhwarizmixDomainObject getSessionOwner() {
+	public final AlKhwarizmixDomainObject getSessionOwner() {
 		if (sessionOwner == null)
 			sessionOwner = new AlKhwarizmixDomainObject();
 		return sessionOwner;
 	}
 
-	public void setSessionOwner(AlKhwarizmixDomainObject value) {
+	public final void setSessionOwner(AlKhwarizmixDomainObject value) {
 		sessionOwner = value;
-	}
-
-	// ----------------------------------
-	// connectedUser
-	// ----------------------------------
-
-	public User getConnectedUser() {
-		return connectedUser;
-	}
-
-	public void setConnectedUser(User value) {
-		connectedUser = value;
 	}
 
 	// --------------------------------------------------------------------------
@@ -103,7 +117,15 @@ public class AlKhwarizmixSessionData implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
-	public void resetSessionOwner() {
+	public final void resetConnectedUser() {
+		setConnectedUser(null);
+	}
+
+	public final void resetLoggedUser() {
+		setLoggedUser(null);
+	}
+
+	public final void resetSessionOwner() {
 		setSessionOwner(null);
 	}
 

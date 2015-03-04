@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.interfaces.IUserService;
@@ -57,12 +56,13 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(UserWebServiceForXML.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(UserWebServiceForXML.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -86,18 +86,16 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 * @param xmlValue
 	 *            {@link String} the user as xml
 	 * @return {@link ResponseEntity}
-	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> addUser(@RequestParam("user") String xmlValue)
-			throws AlKhwarizmixException {
+	public ResponseEntity<String> addUser(@RequestParam("user") String xmlValue) {
 		getLogger().debug("addUser({})", xmlValue);
 
 		try {
 			String result = userService.addUserFromXML(xmlValue);
 			StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
-		} catch (AlKhwarizmixException e) {
+		} catch (Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -108,11 +106,10 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 * @param userId
 	 *            {@link Long} userId
 	 * @return {@link ResponseEntity}
-	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getUserById(
-			@PathVariable("userId") String userId) throws AlKhwarizmixException {
+			@PathVariable("userId") String userId) {
 		getLogger().debug("getUserById({})", userId);
 
 		try {
@@ -121,7 +118,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 			StringBuilder sBuilder = new StringBuilder(
 					userService.getUserAsXML(userToGet));
 			return successResponseForXML(sBuilder);
-		} catch (AlKhwarizmixException e) {
+		} catch (Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -132,19 +129,18 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	 * @param xmlValue
 	 *            {@link String} the user as xml
 	 * @return {@link ResponseEntity}
-	 * @throws AlKhwarizmixException
 	 */
 	@RequestMapping(value = "/{userId}", method = RequestMethod.POST)
 	public ResponseEntity<String> updateUser(
 			@PathVariable("userId") String userId,
-			@RequestParam("user") String xmlValue) throws AlKhwarizmixException {
+			@RequestParam("user") String xmlValue) {
 		getLogger().debug("updateUser({})", xmlValue);
 
 		try {
 			StringBuilder sBuilder = new StringBuilder(
 					userService.updateUserFromXML(xmlValue));
 			return successResponseForXML(sBuilder);
-		} catch (AlKhwarizmixException e) {
+		} catch (Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -162,7 +158,7 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 					maxResult));
 
 			return successResponseForXML(result);
-		} catch (AlKhwarizmixException e) {
+		} catch (Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -170,16 +166,56 @@ public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
 	/**
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<String> login(@RequestParam("user") String xmlValue)
-			throws AlKhwarizmixException {
-		getLogger().debug("login({})", xmlValue);
-
+	public ResponseEntity<String> login(@RequestParam("user") String userAsXML,
+			@RequestParam("password") String password) {
+		getLogger().debug("login({})", userAsXML);
 		try {
 			StringBuilder sBuilder = new StringBuilder(
-					userService.loginFromXML(xmlValue,
-							getCurrentRequestRemoteAddress()));
+					userService.loginFromXML(userAsXML, password));
 			return successResponseForXML(sBuilder);
-		} catch (AlKhwarizmixException e) {
+		} catch (Exception e) {
+			return errorResponseForXML(e);
+		}
+	}
+
+	/**
+	 */
+	@RequestMapping(value = "/connect", method = RequestMethod.POST)
+	public ResponseEntity<String> connect(@RequestParam("user") String userAsXML) {
+		getLogger().debug("connect({})", userAsXML);
+		try {
+			StringBuilder sBuilder = new StringBuilder(
+					userService.connectFromXML(userAsXML));
+			return successResponseForXML(sBuilder);
+		} catch (Exception e) {
+			return errorResponseForXML(e);
+		}
+	}
+
+	/**
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public ResponseEntity<String> logout(@RequestParam("user") String userAsXML) {
+		getLogger().debug("logout({})", userAsXML);
+		try {
+			userService.logoutFromXML(userAsXML);
+			return successResponseForXML(new StringBuilder());
+		} catch (Exception e) {
+			return errorResponseForXML(e);
+		}
+	}
+
+	/**
+	 */
+	@RequestMapping(value = "/subscribe", method = RequestMethod.POST)
+	public ResponseEntity<String> subscribe(
+			@RequestParam("user") String userAsXML) {
+		getLogger().debug("subscribe({})", userAsXML);
+		try {
+			StringBuilder sBuilder = new StringBuilder(
+					userService.subscribeFromXML(userAsXML));
+			return successResponseForXML(sBuilder);
+		} catch (Exception e) {
 			return errorResponseForXML(e);
 		}
 	}

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,16 +9,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dtos.security.model.vo;
+package dz.alkhwarizmix.framework.java.utils;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -26,11 +25,11 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
  * </p>
  * 
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
+ * @since ١٢ جمادى الأولى ١٤٣٦ (March 03, 2015)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class UserTest {
+public class DateUtilTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -39,7 +38,15 @@ public class UserTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private User utUser;
+	private DateUtil utDateUtil;
+
+	// --------------------------------------------------------------------------
+	//
+	// Helpers
+	//
+	// --------------------------------------------------------------------------
+
+	// EMPTY
 
 	// --------------------------------------------------------------------------
 	//
@@ -48,17 +55,19 @@ public class UserTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_set_then_get_UserId() {
-		String value = "UserTest";
-		utUser.setUserId(value);
-		assertEquals(value, utUser.getUserId());
+	public void test00_constructor1() {
+		Assert.assertNotNull(utDateUtil);
 	}
 
 	@Test
-	public void test02_set_then_get_DomainObject() {
-		AlKhwarizmixDomainObject value = new AlKhwarizmixDomainObject();
-		utUser.setDomainObject(value);
-		assertEquals(value, utUser.getDomainObject());
+	public void test01_newDate() {
+		Date expectedBeforeDate = new Date();
+		Date result = utDateUtil.newDate();
+		Date expectedAfterDate = new Date();
+		Assert.assertTrue(expectedBeforeDate.before(result)
+				|| expectedBeforeDate.equals(result));
+		Assert.assertTrue(expectedAfterDate.after(result)
+				|| expectedAfterDate.equals(result));
 	}
 
 } // Class

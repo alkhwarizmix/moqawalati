@@ -66,11 +66,24 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String userListToXML(List<User> userList);
+	public String userListToXML(List<User> userList)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
 	public User connect(User user) throws AlKhwarizmixException;
+
+	/**
+	 */
+	public String connectFromXML(String userXml) throws AlKhwarizmixException;
+
+	/**
+	 */
+	public User subscribe(User user) throws AlKhwarizmixException;
+
+	/**
+	 */
+	public String subscribeFromXML(String userXml) throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -84,5 +97,9 @@ public interface IUserService extends IAlKhwarizmixService {
 	/**
 	 */
 	public void logout(User user) throws AlKhwarizmixException;
+
+	/**
+	 */
+	public void logoutFromXML(String userXml) throws AlKhwarizmixException;
 
 } // Interface

@@ -67,7 +67,7 @@ public class EMailServiceTest {
 	private User mockUser;
 
 	@Before
-	public void setUp() throws AlKhwarizmixException {
+	public void setUp() {
 		setupUtEMailService();
 		setupMockJaxb2Marshaller();
 	}
@@ -106,7 +106,7 @@ public class EMailServiceTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test01_unmarshalObjectFromXML() throws AlKhwarizmixException {
+	public void test01_unmarshalObjectFromXML() {
 		/*
 		 * String recordAsXML = "<EMail id=\"1\" table=\"Table1\"/>";
 		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); EMail
@@ -117,8 +117,7 @@ public class EMailServiceTest {
 	}
 
 	@Test
-	public void test02_A_marshalObjectToXML_recordId()
-			throws AlKhwarizmixException {
+	public void test02_A_marshalObjectToXML_recordId() {
 		/*
 		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); String
 		 * recordAsXML = utEMailService.marshalObjectToXML(new EMail( "12301"));
@@ -127,7 +126,7 @@ public class EMailServiceTest {
 	}
 
 	@Test
-	public void test02_D_marshalObjectToXML_data() throws AlKhwarizmixException {
+	public void test02_D_marshalObjectToXML_data() {
 		/*
 		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); EMail
 		 * newEMail = new EMail("12303");
@@ -140,8 +139,7 @@ public class EMailServiceTest {
 	}
 
 	@Test
-	public void test03_A_commitEMailList_calls_dao_saveOrUpdate()
-			throws AlKhwarizmixException {
+	public void test03_A_commitEMailList_calls_dao_saveOrUpdate() {
 		/*
 		 * EMail newEMail = new EMail();
 		 * newEMail.setAction(EMail.INSERT_ACTION);
@@ -152,14 +150,13 @@ public class EMailServiceTest {
 	}
 
 	@Test
-	public void test04_getObject_should_call_dao_getEMail()
-			throws AlKhwarizmixException {
+	public void test04_getObject_should_call_dao_getEMail() throws AlKhwarizmixException {
 		utEMailService.getObject(new EMail()); // TEST
 		verify(mockEMailDAO, times(1)).getEMail(any(EMail.class));
 	}
 
 	@Test
-	public void test07_recordListToXML() throws AlKhwarizmixException {
+	public void test07_recordListToXML() {
 		/*
 		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller());
 		 * EMailList newEMailList = new EMailList();
@@ -173,7 +170,7 @@ public class EMailServiceTest {
 	}
 
 	@Test
-	public void test08_xmlToEMailList() throws AlKhwarizmixException {
+	public void test08_xmlToEMailList() {
 		/*
 		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); String
 		 * newEMailListXML =

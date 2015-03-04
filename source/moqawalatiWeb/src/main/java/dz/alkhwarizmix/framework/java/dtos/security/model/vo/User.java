@@ -50,7 +50,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class User extends AbstractAlKhwarizmixDomainObject implements
-		Serializable {
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -137,8 +137,58 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
+	@Override
+	public Object clone() {
+		return new User(this);
+	}
+
+	/**
+	 */
 	public String toString() {
-		return super.toStringBuilder(this).append("userId", userId).toString();
+		return super.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = continueHashCode(result, userId);
+		result = continueHashCode(result, name);
+		result = continueHashCode(result, group);
+		result = continueHashCode(result, domainObject);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		boolean result = super.equals(other)
+				&& (getObjectAsThisClass(other) != null)
+				&& ObjectUtils.equals(this.userId,
+						getObjectAsThisClass(other).userId)
+				&& ObjectUtils.equals(this.name,
+						getObjectAsThisClass(other).name)
+				&& ObjectUtils.equals(this.group,
+						getObjectAsThisClass(other).group)
+				&& ObjectUtils.equals(this.domainObject,
+						getObjectAsThisClass(other).domainObject);
+		return result;
+	}
+
+	/**
+	 */
+	private User getObjectAsThisClass(Object other) {
+		return (other instanceof User)
+				? (User) other
+				: null;
 	}
 
 	/**
@@ -179,6 +229,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	//
 	@XmlAttribute(name = "id")
 	public String getUserId() {
+		if (userId == null)
+			userId = "";
 		return userId;
 	}
 

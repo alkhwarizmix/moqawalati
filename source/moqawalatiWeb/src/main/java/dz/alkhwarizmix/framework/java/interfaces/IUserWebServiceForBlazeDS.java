@@ -11,7 +11,7 @@
 
 package dz.alkhwarizmix.framework.java.interfaces;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.AlKhwarizmixBlazeDSException;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
@@ -26,26 +26,31 @@ public interface IUserWebServiceForBlazeDS {
 
 	/**
 	 */
-	public void addUser(User user) throws AlKhwarizmixException;
+	public void addUser(User user) throws AlKhwarizmixBlazeDSException;
 
 	/**
 	 */
-	public User getUser(User user) throws AlKhwarizmixException;
+	public User getUser(User user) throws AlKhwarizmixBlazeDSException;
 
 	/**
 	 */
-	public User updateUser(User user) throws AlKhwarizmixException;
+	public User updateUser(User user) throws AlKhwarizmixBlazeDSException;
 
 	/**
 	 */
-	public User connect(User user) throws AlKhwarizmixException;
+	public User connect(User user) throws AlKhwarizmixBlazeDSException;
 
 	/**
 	 */
-	public User login(User user, String password) throws AlKhwarizmixException;
+	public User subscribe(User user) throws AlKhwarizmixBlazeDSException;
 
 	/**
 	 */
-	public void logout(User user) throws AlKhwarizmixException;
+	public User login(User user, String password)
+			throws AlKhwarizmixBlazeDSException;
+
+	/**
+	 */
+	public void logout(User user) throws AlKhwarizmixBlazeDSException;
 
 } // Class

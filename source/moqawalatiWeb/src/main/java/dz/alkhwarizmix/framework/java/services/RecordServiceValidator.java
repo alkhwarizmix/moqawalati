@@ -108,22 +108,22 @@ public class RecordServiceValidator extends
 	/**
 	 */
 	private void nullifyPropertiesForRecordToAdd(Record record) {
-		record.setOwner1(null);
-		record.setGroup1(null);
+		record.setOwner(null);
+		record.setGroup(null);
 	}
 
 	/**
 	 */
 	private void nullifyPropertiesForRecordToUpdate(Record record) {
-		record.setOwner1(null);
-		record.setGroup1(null);
+		record.setOwner(null);
+		record.setGroup(null);
 	}
 
 	/**
 	 */
 	private void nullifyPropertiesForRecordToPublish(Record record) {
-		record.setOwner1(null);
-		record.setGroup1(null);
+		record.setOwner(null);
+		record.setGroup(null);
 	}
 
 } // Class

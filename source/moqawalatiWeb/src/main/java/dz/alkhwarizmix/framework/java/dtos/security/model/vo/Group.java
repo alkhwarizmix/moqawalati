@@ -48,7 +48,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 @XmlRootElement(name = "Group")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Group extends AbstractAlKhwarizmixDomainObject implements
-		Serializable {
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -116,9 +116,52 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
+	@Override
+	public Object clone() {
+		return new Group(this);
+	}
+
+	/**
+	 */
 	public String toString() {
-		return super.toStringBuilder(this).append("groupId", groupId)
-				.toString();
+		return super.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = continueHashCode(result, groupId);
+		result = continueHashCode(result, domainObject);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		boolean result = super.equals(other)
+				&& (getObjectAsThisClass(other) != null)
+				&& ObjectUtils.equals(this.groupId,
+						getObjectAsThisClass(other).groupId)
+				&& ObjectUtils.equals(this.domainObject,
+						getObjectAsThisClass(other).domainObject);
+		return result;
+	}
+
+	/**
+	 */
+	private Group getObjectAsThisClass(Object other) {
+		return (other instanceof Group)
+				? (Group) other
+				: null;
 	}
 
 	/**

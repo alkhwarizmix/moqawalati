@@ -129,7 +129,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	/**
 	 */
 	private Record insertRecord(Record record) throws AlKhwarizmixException {
-		record.setOwner1(getSessionOwner());
+		record.setOwner(getSessionOwner());
 		addObject(record);
 		return record;
 	}

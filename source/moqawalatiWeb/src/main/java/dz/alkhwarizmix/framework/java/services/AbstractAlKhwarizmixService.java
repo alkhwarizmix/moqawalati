@@ -313,7 +313,6 @@ public abstract class AbstractAlKhwarizmixService implements
 	protected final void setupObjectExtendedDataXMLValue(
 			AbstractAlKhwarizmixDomainObjectExtendable object)
 			throws AlKhwarizmixException {
-
 		if (object != null) {
 			object.setExtendedDataValue(marshalObjectToXML(object));
 		}
