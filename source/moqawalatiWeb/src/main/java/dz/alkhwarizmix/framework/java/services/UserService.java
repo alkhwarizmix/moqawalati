@@ -334,7 +334,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 			throw getErrorLoginException("subscribe4.");
 
 		addUser(user);
-		// sendEmailToAddedUser(user);
+		sendEmailToAddedUser(user);
 
 		getSessionData().setLoggedUser(user);
 		getSessionData().setSessionOwner(user.getDomainObject());
@@ -437,7 +437,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		email.setBody("Dear " + user.getName()
 				+ ", thank you for your subscription. Your password is "
 				+ "Mohamed");
-		getEmailService().sendEMail(email);
+		getEmailService().addEMail(email);
 	}
 
 	/**

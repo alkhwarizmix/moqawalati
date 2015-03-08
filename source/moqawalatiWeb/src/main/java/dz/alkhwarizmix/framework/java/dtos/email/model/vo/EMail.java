@@ -12,13 +12,18 @@
 package dz.alkhwarizmix.framework.java.dtos.email.model.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.NotFound;
@@ -73,6 +78,7 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		if (other != null) {
 			this.sender = (User) ObjectUtils.clone(other.sender);
 			this.receiver = (User) ObjectUtils.clone(other.receiver);
+			this.sentAt = (Date) ObjectUtils.clone(other.sentAt);
 		}
 	}
 
@@ -91,6 +97,11 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fReceiver", nullable = false)
 	private User receiver;
+
+	@Column(name = "fSendAt", nullable = true, updatable = false)
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date sentAt;
 
 	// --------------------------------------------------------------------------
 	//
@@ -121,6 +132,7 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		int result = super.hashCode();
 		result = continueHashCode(result, sender);
 		result = continueHashCode(result, receiver);
+		result = continueHashCode(result, sentAt);
 		return result;
 	}
 
@@ -136,7 +148,9 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 				&& ObjectUtils.equals(this.sender,
 						getObjectAsThisClass(other).sender)
 				&& ObjectUtils.equals(this.receiver,
-						getObjectAsThisClass(other).receiver);
+						getObjectAsThisClass(other).receiver)
+				&& ObjectUtils.equals(this.sentAt,
+						getObjectAsThisClass(other).sentAt);
 		return result;
 	}
 
@@ -175,14 +189,14 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	// data
 	// ----------------------------------
 
-	public String getBody() {
+	public final String getBody() {
 		String result = getExtendedDataValue();
 		return (result == ""
 				? null
 				: result);
 	}
 
-	public void setBody(String value) {
+	public final void setBody(String value) {
 		setExtendedDataValue(value);
 	}
 
@@ -190,11 +204,11 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	// sender
 	// ----------------------------------
 
-	public User getSender() {
+	public final User getSender() {
 		return sender;
 	}
 
-	public void setSender(User value) {
+	public final void setSender(User value) {
 		this.sender = value;
 	}
 
@@ -202,12 +216,24 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	// receiver
 	// ----------------------------------
 
-	public User getReceiver() {
+	public final User getReceiver() {
 		return receiver;
 	}
 
-	public void setReceiver(User value) {
+	public final void setReceiver(User value) {
 		this.receiver = value;
+	}
+
+	// ----------------------------------
+	// sentAt
+	// ----------------------------------
+
+	public final Date getSentAt() {
+		return sentAt;
+	}
+
+	public final void setSentAt(Date value) {
+		this.sentAt = value;
 	}
 
 } // Class

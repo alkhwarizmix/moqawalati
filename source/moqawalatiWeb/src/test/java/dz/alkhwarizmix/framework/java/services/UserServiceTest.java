@@ -402,9 +402,25 @@ public class UserServiceTest {
 		verify(mockJaxb2Marshaller, times(1)).unmarshal(any(Source.class));
 	}
 
+	@Test
+	public void test11_A_suscribe() throws AlKhwarizmixException {
+		// SETUP
+		User userToSuscribe = new User("u1@alkhwarizmix.com", "Fares Belhaouas");
+		when(mockUserService.internal_getUser(eq(userToSuscribe))).thenReturn(
+				null);
+		when(mockUserService.subscribe(any(User.class))).thenCallRealMethod();
+		sessionData.setConnectedUser(new User("u1@alkhwarizmix.com"));
+		mockUserService.setEmailService(mockEmailService);
+		// TEST
+		mockUserService.subscribe(userToSuscribe);
+		// ASSERTS
+		verify(mockUserService, times(1)).addUser(eq(userToSuscribe));
+		verify(mockEmailService, times(1)).addEMail(any(EMail.class));
+	}
+
 	@Ignore("TODO: TDD")
 	@Test
-	public void test11_suscribe_TDD() throws AlKhwarizmixException {
+	public void test11_B_suscribe_TDD() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 

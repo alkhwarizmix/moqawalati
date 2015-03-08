@@ -34,6 +34,14 @@ public interface IEMailService extends IAlKhwarizmixService {
 
 	/**
 	 */
+	public EMail getPendingEMail() throws AlKhwarizmixException;
+
+	/**
+	 */
 	public void sendEMail(EMail email) throws AlKhwarizmixException;
+
+	/**
+	 */
+	public EMail updateEMail(EMail email) throws AlKhwarizmixException;
 
 } // Interface

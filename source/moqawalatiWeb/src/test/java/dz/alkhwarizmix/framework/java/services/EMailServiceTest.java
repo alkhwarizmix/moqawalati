@@ -11,14 +11,11 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.Date;
 
-import javax.xml.transform.Source;
-
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -29,8 +26,8 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMailList;
-import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IEMailDAO;
+import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**
@@ -55,32 +52,23 @@ public class EMailServiceTest {
 	private EMailService utEMailService;
 
 	@Mock
+	private AlKhwarizmixSessionData mockSessionData;
+
+	@Mock
 	private IEMailDAO mockEMailDAO;
 
-	@InjectMocks
-	private EMailServiceValidator recordValidator;
-
 	@Mock
-	private Jaxb2Marshaller mockJaxb2Marshaller;
-
-	@Mock
-	private User mockUser;
+	private EMailServiceValidator mockEmailServiceValidator;
 
 	@Before
 	public void setUp() {
 		setupUtEMailService();
-		setupMockJaxb2Marshaller();
 	}
 
 	private void setupUtEMailService() {
+		utEMailService.setSessionData(mockSessionData);
 		utEMailService.setEMailDAO(mockEMailDAO);
-		utEMailService.setEMailValidator(recordValidator);
-		utEMailService.setJaxb2Marshaller(mockJaxb2Marshaller);
-	}
-
-	private void setupMockJaxb2Marshaller() {
-		when(mockJaxb2Marshaller.unmarshal(any(Source.class))).thenReturn(
-				new EMail());
+		utEMailService.setEMailValidator(mockEmailServiceValidator);
 	}
 
 	// --------------------------------------------------------------------------
@@ -105,80 +93,68 @@ public class EMailServiceTest {
 	//
 	// --------------------------------------------------------------------------
 
+	@Ignore("TODO: TDD")
 	@Test
-	public void test01_unmarshalObjectFromXML() {
-		/*
-		 * String recordAsXML = "<EMail id=\"1\" table=\"Table1\"/>";
-		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); EMail
-		 * record = (EMail) utEMailService .unmarshalObjectFromXML(recordAsXML);
-		 * // TEST Assert.assertEquals("1", record.getEMailId());
-		 * Assert.assertEquals("Table1", record.getTableName());
-		 */
+	public void test01_addEMail() {
+		Assert.assertTrue(false);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test02_getEMail() {
+		Assert.assertTrue(false);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test03_getEMail() {
+		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void test02_A_marshalObjectToXML_recordId() {
-		/*
-		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); String
-		 * recordAsXML = utEMailService.marshalObjectToXML(new EMail( "12301"));
-		 * // TEST Assert.assertEquals("<EMail id=\"12301\"/>", recordAsXML);
-		 */
+	public void test04_A_getPendingEMail_should_return_first_added_email()
+			throws AlKhwarizmixException {
+		EMail email1 = new EMail();
+		EMail email2 = new EMail();
+		utEMailService.addEMail(email1);
+		utEMailService.addEMail(email2);
+		// TEST
+		EMail result = utEMailService.getPendingEMail();
+		// ASSERT
+		Assert.assertEquals(email1, result);
 	}
 
 	@Test
-	public void test02_D_marshalObjectToXML_data() {
-		/*
-		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); EMail
-		 * newEMail = new EMail("12303");
-		 * newEMail.setData("<EMail id=\"746\"/>"); String recordAsXML =
-		 * utEMailService.marshalObjectToXML(newEMail); // TEST
-		 * Assert.assertEquals(
-		 * "<EMail id=\"12303\"><data>&lt;EMail id=\"746\"/&gt;</data></EMail>",
-		 * recordAsXML);
-		 */
+	public void test04_B_getPendingEMail_should_not_return_sent_email()
+			throws AlKhwarizmixException {
+		EMail email1 = new EMail();
+		EMail email2 = new EMail();
+		EMail email3 = new EMail();
+		utEMailService.addEMail(email1);
+		utEMailService.addEMail(email2);
+		utEMailService.addEMail(email3);
+		// TEST 1
+		email1.setSentAt(new Date());
+		EMail result = utEMailService.getPendingEMail();
+		// ASSERT 1
+		Assert.assertEquals(email2, result);
+		// TEST 2
+		email1.setSentAt(null);
+		result = utEMailService.getPendingEMail();
+		// ASSERT 1
+		Assert.assertEquals(email2, result);
 	}
 
+	@Ignore("TODO: TDD")
 	@Test
-	public void test03_A_commitEMailList_calls_dao_saveOrUpdate() {
-		/*
-		 * EMail newEMail = new EMail();
-		 * newEMail.setAction(EMail.INSERT_ACTION);
-		 * utEMailService.commitEMailList(newEMailList(newEMail)); // TEST
-		 * verify(mockEMailDAO, times(1)).saveOrUpdate(
-		 * any(AbstractAlKhwarizmixDomainObject.class));
-		 */
+	public void test05_sendEMail() {
+		Assert.assertTrue(false);
 	}
 
+	@Ignore("TODO: TDD")
 	@Test
-	public void test04_getObject_should_call_dao_getEMail() throws AlKhwarizmixException {
-		utEMailService.getObject(new EMail()); // TEST
-		verify(mockEMailDAO, times(1)).getEMail(any(EMail.class));
-	}
-
-	@Test
-	public void test07_recordListToXML() {
-		/*
-		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller());
-		 * EMailList newEMailList = new EMailList();
-		 * newEMailList.getList().add(new EMail("12305"));
-		 * newEMailList.getList().add(new EMail("12306")); String recordAsXML =
-		 * utEMailService.recordListToXML(newEMailList); // TEST
-		 * Assert.assertEquals(
-		 * "<EMailList><EMail id=\"12305\"/><EMail id=\"12306\"/></EMailList>",
-		 * recordAsXML);
-		 */
-	}
-
-	@Test
-	public void test08_xmlToEMailList() {
-		/*
-		 * utEMailService.setJaxb2Marshaller(getRealJaxb2Marshaller()); String
-		 * newEMailListXML =
-		 * "<EMailList><EMail id=\"12305\"/><EMail id=\"12306\"/></EMailList>";
-		 * EMailList recordList = utEMailService
-		 * .xmlToEMailList(newEMailListXML); // TEST Assert.assertEquals(2,
-		 * recordList.getList().size());
-		 */
+	public void test06_updateEMail() {
+		Assert.assertTrue(false);
 	}
 
 } // Class

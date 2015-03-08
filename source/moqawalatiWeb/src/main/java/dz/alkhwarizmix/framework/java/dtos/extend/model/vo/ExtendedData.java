@@ -20,7 +20,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -62,8 +61,7 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 	private ExtendedData(ExtendedData other) {
 		super(other);
 		if (other != null) {
-			this.extendedDataParts = (List<ExtendedDataPart>) ObjectUtils
-					.clone(other.extendedDataParts);
+			this.setExtendedDataValue(other.getExtendedDataValue());
 		}
 	}
 
