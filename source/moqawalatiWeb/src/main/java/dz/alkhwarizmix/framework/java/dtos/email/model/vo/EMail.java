@@ -23,7 +23,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.NotFound;
@@ -33,7 +32,6 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendable;
-import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
@@ -99,7 +97,6 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	private User receiver;
 
 	@Column(name = "fSendAt", nullable = true, updatable = false)
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sentAt;
 
@@ -163,8 +160,8 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	/**
 	 */
 	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		final Record sourceRecord = (Record) sourceObject;
-		if (sourceRecord != null) {
+		final EMail sourceEMail = (EMail) sourceObject;
+		if (sourceEMail != null) {
 			// NOOP
 		} else {
 			throw new AlKhwarizmixException(

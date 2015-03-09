@@ -62,6 +62,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	 */
 	public EMailService() {
 		super();
+		pendingEMailList = new ArrayList<EMail>();
 	}
 
 	// --------------------------------------------------------------------------
@@ -147,22 +148,23 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 			throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 		EMail result = getEMailDAO().getEMail((EMail) object);
-		updateObjectFromExtendedDataXML(result);
+		// updateObjectFromExtendedDataXML(result);
 		return result;
 	}
 
 	/**
 	 */
 	@Override
-	public EMail getPendingEMail() throws AlKhwarizmixException {
+	public synchronized EMail getPendingEMail() throws AlKhwarizmixException {
 		getLogger().trace("getPendingEMail");
 		EMail result = null;
 		while (getPendingEMailList().size() > 0) {
 			result = getPendingEMailList().get(0);
-			if (result.getSentAt() != null)
-				getPendingEMailList().remove(0);
-			else
+			if (result.getSentAt() == null) {
 				break;
+			}
+			getPendingEMailList().remove(0);
+			result = null;
 		}
 		getLogger().trace("getPendingEMail: result={}", result);
 		return result;
@@ -183,7 +185,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 			helper.setTo(simpleMailMessage.getTo());
 			helper.setSubject(simpleMailMessage.getSubject());
 			helper.setText(simpleMailMessage.getText());
-			mailSender.send(mimeMessage);
+			// mailSender.send(mimeMessage);
 		} catch (MessagingException ex) {
 			getLogger().warn("sendEmail: {}", ex.getMessage());
 			throw new AlKhwarizmixException(
@@ -197,6 +199,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 
 	/**
 	 */
+	@Transactional(readOnly = false)
 	@Override
 	public EMail updateEMail(EMail email) throws AlKhwarizmixException {
 		getLogger().debug("updateEMail");
@@ -217,9 +220,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	/**
 	 * 
 	 */
-	private List<EMail> getPendingEMailList() {
-		if (pendingEMailList == null)
-			pendingEMailList = new ArrayList<EMail>();
+	private synchronized List<EMail> getPendingEMailList() {
 		return pendingEMailList;
 	}
 

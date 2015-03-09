@@ -334,10 +334,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 			throw getErrorLoginException("subscribe4.");
 
 		addUser(user);
-		sendEmailToAddedUser(user);
-
 		getSessionData().setLoggedUser(user);
 		getSessionData().setSessionOwner(user.getDomainObject());
+		sendEmailToAddedUser(user);
 
 		subscribedUser = (User) user.clone();
 		getUserServiceValidator().validateObjectToPublish(subscribedUser,
