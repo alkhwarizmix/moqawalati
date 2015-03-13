@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -39,7 +39,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IUserServiceValidator;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
@@ -64,7 +64,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	/**
 	 * constructor
 	 */
-	protected UserService(Logger theLogger) {
+	protected UserService(final Logger theLogger) {
 		this();
 		logger = theLogger;
 	}
@@ -113,9 +113,11 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public void addUser(User user) throws AlKhwarizmixException {
+	public User addUser(final User user, final boolean validateObjectToPublish)
+			throws AlKhwarizmixException {
 		getLogger().debug("addUser");
-		addObject(user);
+		final User result = (User) addObject(user, validateObjectToPublish);
+		return result;
 	}
 
 	/**
@@ -123,11 +125,12 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String addUserFromXML(String userXml) throws AlKhwarizmixException {
+	public String addUserFromXML(final String userXml)
+			throws AlKhwarizmixException {
 		getLogger().trace("addUserFromXML");
-		User newUser = (User) unmarshalObjectFromXML(userXml);
-		addUser(newUser);
-		String result = marshalObjectToXML(newUser);
+		final User newUser = (User) unmarshalObjectFromXML(userXml);
+		final User addedUser = addUser(newUser, true);
+		final String result = marshalObjectToXML(addedUser);
 		return result;
 	}
 
@@ -136,10 +139,15 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException {
+			final AbstractAlKhwarizmixDomainObject object,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 		User result = getMoqawalatiDAO().getUser((User) object);
+		if (validateObjectToPublish && (result != null)) {
+			result = (User) result.clone();
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
 		return result;
 	}
 
@@ -147,11 +155,10 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User getUser(User user) throws AlKhwarizmixException {
+	public User getUser(final User user, final boolean validateObjectToPublish)
+			throws AlKhwarizmixException {
 		getLogger().debug("getUser");
-		User result = internal_getUser(user);
-		getUserServiceValidator().validateObjectToPublish(result,
-				getSessionOwner());
+		final User result = (User) getObject(user, validateObjectToPublish);
 		return result;
 	}
 
@@ -159,9 +166,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getUserAsXML(User user) throws AlKhwarizmixException {
+	public String getUserAsXML(final User user) throws AlKhwarizmixException {
 		getLogger().trace("getUserAsXML 1");
-		String result = getObjectAsXML(user);
+		final String result = getObjectAsXML(user);
 		return result;
 	}
 
@@ -169,9 +176,10 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getUserAsXML(String userXml) throws AlKhwarizmixException {
+	public String getUserAsXML(final String userXml)
+			throws AlKhwarizmixException {
 		getLogger().trace("getUserAsXML 2");
-		String result = getObjectAsXML(userXml);
+		final String result = getObjectAsXML(userXml);
 		return result;
 	}
 
@@ -180,9 +188,10 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public User updateUser(User user) throws AlKhwarizmixException {
+	public User updateUser(final User user,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().debug("updateUser");
-		User result = (User) updateObject(user);
+		final User result = (User) updateObject(user, validateObjectToPublish);
 		return result;
 	}
 
@@ -191,12 +200,12 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String updateUserFromXML(String userXml)
+	public String updateUserFromXML(final String userXml)
 			throws AlKhwarizmixException {
 		getLogger().trace("updateUserFromXML");
-		User newUser = (User) unmarshalObjectFromXML(userXml);
-		User updatedUser = updateUser(newUser);
-		String result = marshalObjectToXML(updatedUser);
+		final User newUser = (User) unmarshalObjectFromXML(userXml);
+		final User updatedUser = updateUser(newUser, true);
+		final String result = marshalObjectToXML(updatedUser);
 		return result;
 	}
 
@@ -205,15 +214,16 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> getUserList(DetachedCriteria criteriaToUse,
-			int firstResult, int maxResult) throws AlKhwarizmixException {
+			final int firstResult, final int maxResult)
+			throws AlKhwarizmixException {
 		getLogger().debug("getUserList");
 		if (criteriaToUse == null) {
 			criteriaToUse = DetachedCriteria.forClass(User.class);
 			criteriaToUse.addOrder(Order.asc(User.USERID));
 		}
 
-		List<User> result = (List<User>) (List<?>) getObjectList(criteriaToUse,
-				firstResult, maxResult);
+		final List<User> result = (List<User>) (List<?>) getObjectList(
+				criteriaToUse, firstResult, maxResult, true);
 		return result;
 	}
 
@@ -221,10 +231,11 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getUserListAsXML(DetachedCriteria criteria, int firstResult,
-			int maxResult) throws AlKhwarizmixException {
+	public String getUserListAsXML(final DetachedCriteria criteria,
+			final int firstResult, final int maxResult)
+			throws AlKhwarizmixException {
 		getLogger().trace("getUserListAsXML");
-		String result = userListToXML(getUserList(criteria, firstResult,
+		final String result = userListToXML(getUserList(criteria, firstResult,
 				maxResult));
 		return result;
 	}
@@ -234,7 +245,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public String userListToXML(List<User> userList)
+	public String userListToXML(final List<User> userList)
 			throws AlKhwarizmixException {
 		getLogger().trace("userListToXML");
 		String result = "<Users>";
@@ -249,21 +260,26 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User connect(User user) throws AlKhwarizmixException {
+	public User connect(final User user, final boolean validateObjectToPublish)
+			throws AlKhwarizmixException {
 		getLogger().debug("connect");
+
 		if (getSessionData().getConnectedUser() != null)
 			throw getErrorLoginException("connect1.");
 		validateUserAndUserId(user, getErrorLoginException("connect2."));
 		User result = new User(user.getUserId());
-		User existingUser = internal_getUser(user);
+		final User existingUser = getUser(user, false);
 		if (existingUser != null)
 			result.setName(existingUser.getName());
 		getSessionData().setConnectedUser(existingUser != null
 				? existingUser
 				: result);
 
-		getUserServiceValidator().validateObjectToPublish(result,
-				getSessionOwner());
+		if (validateObjectToPublish && (result != null)) {
+			result = (User) result.clone();
+			getUserServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
 		return result;
 	}
 
@@ -271,11 +287,12 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String connectFromXML(String userXml) throws AlKhwarizmixException {
+	public String connectFromXML(final String userXml)
+			throws AlKhwarizmixException {
 		getLogger().trace("connectFromXML");
-		User userToConnect = (User) unmarshalObjectFromXML(userXml);
-		User connectedUser = connect(userToConnect);
-		String result = marshalObjectToXML(connectedUser);
+		final User userToConnect = (User) unmarshalObjectFromXML(userXml);
+		final User connectedUser = connect(userToConnect, true);
+		final String result = marshalObjectToXML(connectedUser);
 		return result;
 	}
 
@@ -283,38 +300,42 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User login(User user, String password) throws AlKhwarizmixException {
+	public User login(final User user, final String password,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().debug("login");
 		validateUserAndUserId(user, getErrorLoginException("login1."));
 		validateUserIsNotLogged(user, getErrorLoginException("login2."));
 		validateUserIsConnected(user, getErrorLoginException("login3."));
 
-		User userToLogin = internal_getUser(user);
-		if (userToLogin != null) {
+		final User userToLogin = getUser(user, false);
+		if (userToLogin != null)
 			validateUserPassword(user, password,
 					getErrorLoginException("login4."));
-		} else {
+		else
 			throw getErrorLoginException("login5.");
-		}
 
 		getSessionData().setLoggedUser(userToLogin);
 		getSessionData().setSessionOwner(userToLogin.getDomainObject());
 
-		getUserServiceValidator().validateObjectToPublish(userToLogin,
-				getSessionOwner());
-		return userToLogin;
+		User result = userToLogin;
+		if (validateObjectToPublish && (result != null)) {
+			result = (User) result.clone();
+			getUserServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
+		return result;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String loginFromXML(String userXml, String password)
+	public String loginFromXML(final String userXml, final String password)
 			throws AlKhwarizmixException {
 		getLogger().trace("loginFromXML");
-		User userToLogin = (User) unmarshalObjectFromXML(userXml);
-		User loggedUser = login(userToLogin, password);
-		String result = marshalObjectToXML(loggedUser);
+		final User userToLogin = (User) unmarshalObjectFromXML(userXml);
+		final User loggedUser = login(userToLogin, password, true);
+		final String result = marshalObjectToXML(loggedUser);
 		return result;
 	}
 
@@ -323,24 +344,27 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public User subscribe(User user) throws AlKhwarizmixException {
+	public User subscribe(final User user, final boolean validateObjectToPublish)
+			throws AlKhwarizmixException {
 		getLogger().debug("subscribe");
 		validateUserAndUserId(user, getErrorLoginException("subscribe1."));
 		validateUserIsNotLogged(user, getErrorLoginException("subscribe2."));
 		validateUserIsConnected(user, getErrorLoginException("subscribe3."));
 
-		User subscribedUser = internal_getUser(user);
+		User subscribedUser = getUser(user, false);
 		if (subscribedUser != null)
 			throw getErrorLoginException("subscribe4.");
 
-		addUser(user);
-		getSessionData().setLoggedUser(user);
-		getSessionData().setSessionOwner(user.getDomainObject());
-		sendEmailToAddedUser(user);
+		subscribedUser = addUser(user, false);
+		getSessionData().setLoggedUser(subscribedUser);
+		getSessionData().setSessionOwner(subscribedUser.getDomainObject());
+		sendEmailToAddedUser(subscribedUser);
 
-		subscribedUser = (User) user.clone();
-		getUserServiceValidator().validateObjectToPublish(subscribedUser,
-				getSessionOwner());
+		if (validateObjectToPublish && (subscribedUser != null)) {
+			subscribedUser = (User) subscribedUser.clone();
+			getUserServiceValidator().validateObjectToPublish(subscribedUser,
+					getSessionOwner());
+		}
 		return subscribedUser;
 	}
 
@@ -349,11 +373,12 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String subscribeFromXML(String userXml) throws AlKhwarizmixException {
+	public String subscribeFromXML(final String userXml)
+			throws AlKhwarizmixException {
 		getLogger().trace("subscribeFromXML");
-		User userToSubscribe = (User) unmarshalObjectFromXML(userXml);
-		User loggedUser = subscribe(userToSubscribe);
-		String result = marshalObjectToXML(loggedUser);
+		final User userToSubscribe = (User) unmarshalObjectFromXML(userXml);
+		final User loggedUser = subscribe(userToSubscribe, true);
+		final String result = marshalObjectToXML(loggedUser);
 		return result;
 	}
 
@@ -361,9 +386,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void logout(User user) throws AlKhwarizmixException {
+	public void logout(final User user) throws AlKhwarizmixException {
 		getLogger().debug("logout");
-		User loggedUser = internal_getUser(user);
+		final User loggedUser = getUser(user, false);
 		if (loggedUser == null)
 			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
 
@@ -376,23 +401,24 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void logoutFromXML(String userXml) throws AlKhwarizmixException {
+	public void logoutFromXML(final String userXml)
+			throws AlKhwarizmixException {
 		getLogger().trace("logoutFromXML");
-		User userToLogout = (User) unmarshalObjectFromXML(userXml);
+		final User userToLogout = (User) unmarshalObjectFromXML(userXml);
 		logout(userToLogout);
 	}
 
 	/**
 	 */
-	private AlKhwarizmixException getErrorLoginException(String message) {
+	private AlKhwarizmixException getErrorLoginException(final String message) {
 		return new AlKhwarizmixException(message,
 				AlKhwarizmixErrorCode.ERROR_LOGIN);
 	}
 
 	/**
 	 */
-	private void validateUserAndUserId(User user,
-			AlKhwarizmixException exception) throws AlKhwarizmixException {
+	private void validateUserAndUserId(final User user,
+			final AlKhwarizmixException exception) throws AlKhwarizmixException {
 		if (user == null)
 			throw exception;
 		if (!getUserServiceValidator().isValidUserId(user))
@@ -401,16 +427,16 @@ public class UserService extends AbstractAlKhwarizmixService implements
 
 	/**
 	 */
-	private void validateUserIsNotLogged(User user,
-			AlKhwarizmixException exception) throws AlKhwarizmixException {
+	private void validateUserIsNotLogged(final User user,
+			final AlKhwarizmixException exception) throws AlKhwarizmixException {
 		if (getSessionData().getLoggedUser() != null)
 			throw exception;
 	}
 
 	/**
 	 */
-	private void validateUserIsConnected(User user,
-			AlKhwarizmixException exception) throws AlKhwarizmixException {
+	private void validateUserIsConnected(final User user,
+			final AlKhwarizmixException exception) throws AlKhwarizmixException {
 		if (getSessionData().getConnectedUser() == null)
 			throw exception;
 		if (!user.getUserId().equals(
@@ -420,32 +446,25 @@ public class UserService extends AbstractAlKhwarizmixService implements
 
 	/**
 	 */
-	private void validateUserPassword(User user, String password,
-			AlKhwarizmixException exception) throws AlKhwarizmixException {
+	private void validateUserPassword(final User user, final String password,
+			final AlKhwarizmixException exception) throws AlKhwarizmixException {
 		if (!("Mohamed").equals(password))
 			throw exception;
 	}
 
 	/**
 	 */
-	private void sendEmailToAddedUser(User user) throws AlKhwarizmixException {
-		User infoUser = internal_getUser(new User("fares@dz.moqawalati.com"));
-		EMail email = new EMail();
+	private void sendEmailToAddedUser(final User user)
+			throws AlKhwarizmixException {
+		final User infoUser = getUser(new User("fares@dz.moqawalati.com"),
+				false);
+		final EMail email = new EMail();
 		email.setSender(infoUser);
 		email.setReceiver(user);
 		email.setBody("Dear " + user.getName()
 				+ ", thank you for your subscription. Your password is "
 				+ "Mohamed");
-		getEmailService().addEMail(email);
-	}
-
-	/**
-	 * TODO: JAVADOC
-	 */
-	protected User internal_getUser(User user) throws AlKhwarizmixException {
-		getLogger().trace("internal_getUser");
-		User result = (User) getObject(user);
-		return result;
+		getEmailService().addEMail(email, false);
 	}
 
 	/**
@@ -453,7 +472,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	protected final AlKhwarizmixDomainObject getSessionOwner() {
-		AlKhwarizmixDomainObject result = new AlKhwarizmixDomainObject();
+		final AlKhwarizmixDomainObject result = new AlKhwarizmixDomainObject();
 		result.setId(-1L);
 		return result;
 	}
@@ -468,7 +487,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	// emailService
 	// ----------------------------------
 
-	protected final void setEmailService(IEMailService value) {
+	protected final void setEmailService(final IEMailService value) {
 		emailService = value;
 	}
 
@@ -484,7 +503,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		return userDAO;
 	}
 
-	protected final void setUserDAO(IUserDAO value) {
+	protected final void setUserDAO(final IUserDAO value) {
 		userDAO = value;
 	}
 
@@ -497,7 +516,8 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	// userServiceValidator
 	// ----------------------------------
 
-	protected final void setUserServiceValidator(IUserServiceValidator value) {
+	protected final void setUserServiceValidator(
+			final IUserServiceValidator value) {
 		userServiceValidator = value;
 	}
 
@@ -520,7 +540,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	}
 
 	@Override
-	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
+	protected void setJaxb2Marshaller(final Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}
 

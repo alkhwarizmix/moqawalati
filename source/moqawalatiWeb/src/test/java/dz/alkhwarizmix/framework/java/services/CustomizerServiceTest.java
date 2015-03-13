@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -30,7 +30,7 @@ import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٢ ربيع الأول ١٤٣٥ (January 03, 2014)
  */
@@ -79,9 +79,10 @@ public class CustomizerServiceTest {
 				mockCustomDataDAO.getCustomData(Mockito.any(CustomData.class)))
 				.thenReturn(null);
 
-		CustomData customData = new CustomData();
+		final CustomData customData = new CustomData();
 		customData.setCustomDataId("id12345");
-		CustomData result = utCustomizerService.getCustomData(customData);
+		final CustomData result = utCustomizerService.getCustomData(customData,
+				true);
 		Assert.assertEquals("Default", result.getCustomDataValue());
 	}
 
@@ -96,11 +97,12 @@ public class CustomizerServiceTest {
 	@Test
 	public void test03_getSessionOwner_should_return_getSessionData_getSessionOwner()
 			throws AlKhwarizmixException {
-		AlKhwarizmixDomainObject mockSessionOwner = Mockito
+		final AlKhwarizmixDomainObject mockSessionOwner = Mockito
 				.mock(AlKhwarizmixDomainObject.class);
 		sessionData.setSessionOwner(mockSessionOwner);
 		utCustomizerService.setSessionData(sessionData);
-		AlKhwarizmixDomainObject result = utCustomizerService.getSessionOwner();
+		final AlKhwarizmixDomainObject result = utCustomizerService
+				.getSessionOwner();
 		Assert.assertEquals(mockSessionOwner, result);
 	}
 

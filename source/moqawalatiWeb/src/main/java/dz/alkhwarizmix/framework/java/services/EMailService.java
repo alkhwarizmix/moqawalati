@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -12,12 +12,13 @@
 package dz.alkhwarizmix.framework.java.services;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IEMailServiceValidator;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ ربيع الأول ١٤٣٦ (January 18, 2015)
  */
@@ -62,7 +63,6 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	 */
 	public EMailService() {
 		super();
-		pendingEMailList = new ArrayList<EMail>();
 	}
 
 	// --------------------------------------------------------------------------
@@ -101,8 +101,6 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	@Autowired
 	private SimpleMailMessage simpleMailMessage;
 
-	private List<EMail> pendingEMailList;
-
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -114,28 +112,23 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public void addEMail(EMail email) throws AlKhwarizmixException {
+	public EMail addEMail(final EMail email,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().debug("addEmail");
-		addObject(email);
-		getPendingEMailList().add(email);
+		final EMail result = (EMail) addObject(email, validateObjectToPublish);
+		getLogger().trace("addEMail: return {}", result);
+		return result;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EMail getEMail(EMail email) throws AlKhwarizmixException {
+	public EMail getEMail(final EMail email,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().debug("getEMail");
-		EMail result = internal_getEMail(email);
-		return result;
-	}
-
-	/**
-	 * TODO: JAVADOC
-	 */
-	protected EMail internal_getEMail(EMail email) throws AlKhwarizmixException {
-		getLogger().trace("internal_getEMail");
-		EMail result = (EMail) getObject(email);
+		final EMail result = (EMail) getObject(email, validateObjectToPublish);
+		getLogger().trace("getEMail: return {}", result);
 		return result;
 	}
 
@@ -144,53 +137,78 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException {
+			final AbstractAlKhwarizmixDomainObject object,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 		EMail result = getEMailDAO().getEMail((EMail) object);
-		// updateObjectFromExtendedDataXML(result);
+		if (validateObjectToPublish && (result != null)) {
+			result = (EMail) result.clone();
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
+		getLogger().trace("getObject: return {}", result);
+		return result;
+	}
+
+	/**
+	 * TODO: JAVADOC
+	 */
+	public List<EMail> getEMailList(DetachedCriteria criteriaToUse,
+			final int firstResult, final int maxResult,
+			final boolean validateForPublishing) throws AlKhwarizmixException {
+		getLogger().debug("getEMailList");
+		if (criteriaToUse == null) {
+			criteriaToUse = DetachedCriteria.forClass(EMail.class);
+			// criteriaToUse.addOrder(Order.asc(EMail.USERID));
+		}
+		final List<EMail> result = (List<EMail>) (List<?>) getObjectList(
+				criteriaToUse, firstResult, maxResult, validateForPublishing);
 		return result;
 	}
 
 	/**
 	 */
 	@Override
-	public synchronized EMail getPendingEMail() throws AlKhwarizmixException {
+	public EMail getPendingEMail(final boolean validateObjectToPublish)
+			throws AlKhwarizmixException {
 		getLogger().trace("getPendingEMail");
 		EMail result = null;
-		while (getPendingEMailList().size() > 0) {
-			result = getPendingEMailList().get(0);
-			if (result.getSentAt() == null) {
-				break;
-			}
-			getPendingEMailList().remove(0);
-			result = null;
-		}
-		getLogger().trace("getPendingEMail: result={}", result);
+		final List<EMail> pendingEMails = getEMailList(
+				getPendingEMailsCriteria(), 0, 1, validateObjectToPublish);
+		if (pendingEMails.size() > 0)
+			result = pendingEMails.get(0);
+		getLogger().trace("getPendingEMail: return {}", result);
+		return result;
+	}
+
+	private DetachedCriteria getPendingEMailsCriteria() {
+		final DetachedCriteria result = DetachedCriteria.forClass(EMail.class);
+		result.add(Restrictions.isNull("sentAt"));
 		return result;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
-	public void sendEMail(EMail email) throws AlKhwarizmixException {
-		SimpleMailMessage simpleMailMessage = getSimpleMailMessage(email);
-		MimeMessage mimeMessage = mailSender.createMimeMessage();
+	public void sendEMail(final EMail email) throws AlKhwarizmixException {
+		final SimpleMailMessage simpleMailMessage = getSimpleMailMessage(email);
+		final MimeMessage mimeMessage = mailSender.createMimeMessage();
 
 		try {
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+			final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,
+					true);
 			helper.setFrom(simpleMailMessage.getFrom(), email.getSender()
 					.getName());
 			helper.setTo(simpleMailMessage.getTo());
 			helper.setSubject(simpleMailMessage.getSubject());
 			helper.setText(simpleMailMessage.getText());
 			// mailSender.send(mimeMessage);
-		} catch (MessagingException ex) {
+		} catch (final MessagingException ex) {
 			getLogger().warn("sendEmail: {}", ex.getMessage());
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR, ex);
-		} catch (UnsupportedEncodingException ex) {
+		} catch (final UnsupportedEncodingException ex) {
 			getLogger().warn("sendEmail: {}", ex.getMessage());
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR, ex);
@@ -201,9 +219,12 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public EMail updateEMail(EMail email) throws AlKhwarizmixException {
+	public EMail updateEMail(final EMail email,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().debug("updateEMail");
-		EMail result = (EMail) updateObject(email);
+		final EMail result = (EMail) updateObject(email,
+				validateObjectToPublish);
+		getLogger().trace("updateEMail: return {}", result);
 		return result;
 	}
 
@@ -214,25 +235,14 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// pendingEMailList
-	// ----------------------------------
-
-	/**
-	 * 
-	 */
-	private synchronized List<EMail> getPendingEMailList() {
-		return pendingEMailList;
-	}
-
-	// ----------------------------------
 	// mailSender
 	// ----------------------------------
 
 	/**
-	 * 
+	 *
 	 */
-	public void setMailSender(JavaMailSender value) {
-		this.mailSender = value;
+	public void setMailSender(final JavaMailSender value) {
+		mailSender = value;
 	}
 
 	// ----------------------------------
@@ -240,17 +250,18 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	// ----------------------------------
 
 	/**
-	 * 
+	 *
 	 */
-	public void setSimpleMailMessage(SimpleMailMessage value) {
-		this.simpleMailMessage = value;
+	public void setSimpleMailMessage(final SimpleMailMessage value) {
+		simpleMailMessage = value;
 	}
 
 	/**
-	 * 
+	 *
 	 */
-	public SimpleMailMessage getSimpleMailMessage(EMail email) {
-		SimpleMailMessage result = new SimpleMailMessage(this.simpleMailMessage);
+	public SimpleMailMessage getSimpleMailMessage(final EMail email) {
+		final SimpleMailMessage result = new SimpleMailMessage(
+				simpleMailMessage);
 		result.setFrom(email.getSender().getUserId());
 		result.setTo(email.getReceiver().getUserId());
 		result.setText(email.getBody());
@@ -265,7 +276,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 		return emailDAO;
 	}
 
-	protected final void setEMailDAO(IEMailDAO value) {
+	protected final void setEMailDAO(final IEMailDAO value) {
 		emailDAO = value;
 	}
 
@@ -278,7 +289,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	// emailValidator
 	// ----------------------------------
 
-	protected final void setEMailValidator(IEMailServiceValidator value) {
+	protected final void setEMailValidator(final IEMailServiceValidator value) {
 		emailValidator = value;
 	}
 
@@ -297,7 +308,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	}
 
 	@Override
-	protected final void setJaxb2Marshaller(Jaxb2Marshaller value) {
+	protected final void setJaxb2Marshaller(final Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}
 

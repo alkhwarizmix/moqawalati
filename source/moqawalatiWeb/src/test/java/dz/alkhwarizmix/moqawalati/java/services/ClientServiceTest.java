@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //بسم الله الرحمن الرحيم
 //
-//حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //كافة الحقوق محفوظة (All Rights Reserved)
 //
 //NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -40,7 +40,7 @@ import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ ذو الحجة ١٤٣٤ (October 12, 2013)
  */
@@ -101,9 +101,9 @@ public class ClientServiceTest {
 
 	@Test
 	public void testA01_unmarshalObjectFromXML() throws AlKhwarizmixException {
-		String clientAsXML = "<Client id=\"1\"><Name>Client1</Name></Client>";
+		final String clientAsXML = "<Client id=\"1\"><Name>Client1</Name></Client>";
 		utClientService.setJaxb2Marshaller(getRealJaxb2Marshaller());
-		Client client = (Client) utClientService
+		final Client client = (Client) utClientService
 				.unmarshalObjectFromXML(clientAsXML); // TEST
 		Assert.assertEquals("1", client.getClientId());
 		Assert.assertEquals("Client1", client.getName());
@@ -112,15 +112,15 @@ public class ClientServiceTest {
 	@Test
 	public void testA02_marshalObjectToXML() throws AlKhwarizmixException {
 		utClientService.setJaxb2Marshaller(getRealJaxb2Marshaller());
-		String clientAsXML = utClientService.marshalObjectToXML(new Client(
-				"746")); // TEST
+		final String clientAsXML = utClientService
+				.marshalObjectToXML(new Client("746")); // TEST
 		Assert.assertEquals("<Client id=\"746\"/>", clientAsXML);
 	}
 
 	@Test
 	public void testA03_addClient_calls_dao_saveOrUpdate()
 			throws AlKhwarizmixException {
-		utClientService.addClient(new Client()); // TEST
+		utClientService.addClient(new Client(), true); // TEST
 		verify(mockClientDAO, times(1)).saveOrUpdate(
 				any(AbstractAlKhwarizmixDomainObject.class));
 	}
@@ -128,26 +128,27 @@ public class ClientServiceTest {
 	@Test
 	public void testA04_getObject_should_call_dao_getUser()
 			throws AlKhwarizmixException {
-		utClientService.getObject(new Client()); // TEST
+		utClientService.getObject(new Client(), true); // TEST
 		verify(mockClientDAO, times(1)).getClient(any(Client.class));
 	}
 
 	@Test
 	public void testA05_getClient_should_not_return_id()
 			throws MoqawalatiException {
-		Client expectedClient = new Client();
+		final Client expectedClient = new Client();
 		expectedClient.setId(324L);
 		Mockito.when(mockClientDAO.getClient(any(Client.class))).thenReturn(
 				expectedClient);
-		Client foundClient = utClientService.getClient(new Client()); // TEST
+		final Client foundClient = utClientService
+				.getClient(new Client(), true); // TEST
 		Assert.assertNull(foundClient.getId());
 	}
 
 	@Test
 	public void testZ01_getClientAsJSON() throws Exception {
-		Client client = new Client();
+		final Client client = new Client();
 		client.setName("Fares");
-		String s = utClientService.getClientAsJSON(client);
+		final String s = utClientService.getClientAsJSON(client);
 		Assert.assertNotNull(s);
 	}
 

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -25,7 +25,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IUserWebServiceForBlazeDS;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٤ ربيع الثاني ١٤٣٦ (February 03, 2015)
  */
@@ -78,11 +78,11 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 	/**
 	 */
 	@Override
-	public void addUser(User user) throws AlKhwarizmixBlazeDSException {
+	public void addUser(final User user) throws AlKhwarizmixBlazeDSException {
 		getLogger().debug("addUser({})", user);
 		try {
-			getUserService().addUser(user);
-		} catch (Exception e) {
+			getUserService().addUser(user, true);
+		} catch (final Exception e) {
 			throw getAlKhwarizmixBlazeDSException(e, "addUser");
 		}
 	}
@@ -90,11 +90,11 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 	/**
 	 */
 	@Override
-	public User getUser(User user) throws AlKhwarizmixBlazeDSException {
+	public User getUser(final User user) throws AlKhwarizmixBlazeDSException {
 		getLogger().debug("getUser({})", user);
 		try {
-			return getUserService().getUser(user);
-		} catch (Exception e) {
+			return getUserService().getUser(user, true);
+		} catch (final Exception e) {
 			throw getAlKhwarizmixBlazeDSException(e, "getUser");
 		}
 	}
@@ -102,11 +102,11 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 	/**
 	 */
 	@Override
-	public User updateUser(User user) throws AlKhwarizmixBlazeDSException {
+	public User updateUser(final User user) throws AlKhwarizmixBlazeDSException {
 		getLogger().debug("updateUser({})", user);
 		try {
-			return getUserService().updateUser(user);
-		} catch (Exception e) {
+			return getUserService().updateUser(user, true);
+		} catch (final Exception e) {
 			throw getAlKhwarizmixBlazeDSException(e, "updateUser");
 		}
 	}
@@ -114,11 +114,11 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 	/**
 	 */
 	@Override
-	public User connect(User user) throws AlKhwarizmixBlazeDSException {
+	public User connect(final User user) throws AlKhwarizmixBlazeDSException {
 		getLogger().debug("connect({})", user);
 		try {
-			return getUserService().connect(user);
-		} catch (Exception e) {
+			return getUserService().connect(user, true);
+		} catch (final Exception e) {
 			throw getAlKhwarizmixBlazeDSException(e, "connect");
 		}
 	}
@@ -126,11 +126,11 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 	/**
 	 */
 	@Override
-	public User subscribe(User user) throws AlKhwarizmixBlazeDSException {
+	public User subscribe(final User user) throws AlKhwarizmixBlazeDSException {
 		getLogger().debug("subscribe({})", user);
 		try {
-			return getUserService().subscribe(user);
-		} catch (Exception e) {
+			return getUserService().subscribe(user, true);
+		} catch (final Exception e) {
 			throw getAlKhwarizmixBlazeDSException(e, "subscribe");
 		}
 	}
@@ -138,12 +138,12 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 	/**
 	 */
 	@Override
-	public User login(User user, String password)
+	public User login(final User user, final String password)
 			throws AlKhwarizmixBlazeDSException {
 		getLogger().debug("login({})", user);
 		try {
-			return getUserService().login(user, password);
-		} catch (Exception e) {
+			return getUserService().login(user, password, true);
+		} catch (final Exception e) {
 			throw getAlKhwarizmixBlazeDSException(e, "login");
 		}
 	}
@@ -151,11 +151,11 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 	/**
 	 */
 	@Override
-	public void logout(User user) throws AlKhwarizmixBlazeDSException {
+	public void logout(final User user) throws AlKhwarizmixBlazeDSException {
 		getLogger().debug("logout({})", user);
 		try {
 			getUserService().logout(user);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw getAlKhwarizmixBlazeDSException(e, "logout");
 		}
 	}
@@ -174,7 +174,7 @@ public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
 		return userService;
 	}
 
-	protected void setUserService(IUserService value) {
+	protected void setUserService(final IUserService value) {
 		userService = value;
 	}
 

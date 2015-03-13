@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -25,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -38,7 +39,7 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٧ ربيع الثاني ١٤٣٦ (January 27, 2015)
  */
@@ -71,12 +72,12 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	/**
 	 * constructor
 	 */
-	protected EMail(EMail other) {
+	protected EMail(final EMail other) {
 		super(other);
 		if (other != null) {
-			this.sender = (User) ObjectUtils.clone(other.sender);
-			this.receiver = (User) ObjectUtils.clone(other.receiver);
-			this.sentAt = (Date) ObjectUtils.clone(other.sentAt);
+			sender = (User) ObjectUtils.clone(other.sender);
+			receiver = (User) ObjectUtils.clone(other.receiver);
+			sentAt = (Date) ObjectUtils.clone(other.sentAt);
 		}
 	}
 
@@ -88,15 +89,15 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "fSender", nullable = false)
+	@JoinColumn(name = "fSender", nullable = false, updatable = false)
 	private User sender;
 
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "fReceiver", nullable = false)
+	@JoinColumn(name = "fReceiver", nullable = false, updatable = false)
 	private User receiver;
 
-	@Column(name = "fSendAt", nullable = true, updatable = false)
+	@Column(name = "fSendAt", nullable = true, updatable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sentAt;
 
@@ -115,13 +116,15 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 
 	/**
 	 */
-	public String toString() {
-		return super.toString();
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("sentAt", sentAt)
+				.append("sender", sender).append("receiver", receiver);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -135,31 +138,32 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		boolean result = super.equals(other)
+	public boolean equals(final Object other) {
+		final boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.sender,
+				&& ObjectUtils.equals(sender,
 						getObjectAsThisClass(other).sender)
-				&& ObjectUtils.equals(this.receiver,
-						getObjectAsThisClass(other).receiver)
-				&& ObjectUtils.equals(this.sentAt,
-						getObjectAsThisClass(other).sentAt);
+						&& ObjectUtils.equals(receiver,
+								getObjectAsThisClass(other).receiver)
+								&& ObjectUtils.equals(sentAt,
+										getObjectAsThisClass(other).sentAt);
 		return result;
 	}
 
-	private EMail getObjectAsThisClass(Object other) {
+	private EMail getObjectAsThisClass(final Object other) {
 		return (other instanceof EMail)
 				? (EMail) other
-				: null;
+						: null;
 	}
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+	@Override
+	public void updateFrom(final Object sourceObject) throws AlKhwarizmixException {
 		final EMail sourceEMail = (EMail) sourceObject;
 		if (sourceEMail != null) {
 			// NOOP
@@ -172,7 +176,7 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
@@ -187,13 +191,13 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	// ----------------------------------
 
 	public final String getBody() {
-		String result = getExtendedDataValue();
+		final String result = getExtendedDataValue();
 		return (result == ""
 				? null
-				: result);
+						: result);
 	}
 
-	public final void setBody(String value) {
+	public final void setBody(final String value) {
 		setExtendedDataValue(value);
 	}
 
@@ -205,8 +209,8 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		return sender;
 	}
 
-	public final void setSender(User value) {
-		this.sender = value;
+	public final void setSender(final User value) {
+		sender = value;
 	}
 
 	// ----------------------------------
@@ -217,8 +221,8 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		return receiver;
 	}
 
-	public final void setReceiver(User value) {
-		this.receiver = value;
+	public final void setReceiver(final User value) {
+		receiver = value;
 	}
 
 	// ----------------------------------
@@ -229,8 +233,8 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		return sentAt;
 	}
 
-	public final void setSentAt(Date value) {
-		this.sentAt = value;
+	public final void setSentAt(final Date value) {
+		sentAt = value;
 	}
 
 } // Class

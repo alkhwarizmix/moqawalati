@@ -21,20 +21,17 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
-import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMailList;
 import dz.alkhwarizmix.framework.java.interfaces.IEMailDAO;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
-import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ ربيع الثاني ١٤٣٦ (February 01, 2015)
  */
@@ -77,16 +74,6 @@ public class EMailServiceTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private Jaxb2Marshaller getRealJaxb2Marshaller() {
-		return new HelperTestUtil().getRealJaxb2Marshaller();
-	}
-
-	private EMailList newEMailList(EMail record) {
-		EMailList result = new EMailList();
-		result.getList().add(record);
-		return result;
-	}
-
 	// --------------------------------------------------------------------------
 	//
 	// Tests
@@ -114,12 +101,12 @@ public class EMailServiceTest {
 	@Test
 	public void test04_A_getPendingEMail_should_return_first_added_email()
 			throws AlKhwarizmixException {
-		EMail email1 = new EMail();
-		EMail email2 = new EMail();
-		utEMailService.addEMail(email1);
-		utEMailService.addEMail(email2);
+		final EMail email1 = new EMail();
+		final EMail email2 = new EMail();
+		utEMailService.addEMail(email1, true);
+		utEMailService.addEMail(email2, true);
 		// TEST
-		EMail result = utEMailService.getPendingEMail();
+		final EMail result = utEMailService.getPendingEMail(false);
 		// ASSERT
 		Assert.assertEquals(email1, result);
 	}
@@ -127,20 +114,20 @@ public class EMailServiceTest {
 	@Test
 	public void test04_B_getPendingEMail_should_not_return_sent_email()
 			throws AlKhwarizmixException {
-		EMail email1 = new EMail();
-		EMail email2 = new EMail();
-		EMail email3 = new EMail();
-		utEMailService.addEMail(email1);
-		utEMailService.addEMail(email2);
-		utEMailService.addEMail(email3);
+		final EMail email1 = new EMail();
+		final EMail email2 = new EMail();
+		final EMail email3 = new EMail();
+		utEMailService.addEMail(email1, true);
+		utEMailService.addEMail(email2, true);
+		utEMailService.addEMail(email3, true);
 		// TEST 1
 		email1.setSentAt(new Date());
-		EMail result = utEMailService.getPendingEMail();
+		EMail result = utEMailService.getPendingEMail(false);
 		// ASSERT 1
 		Assert.assertEquals(email2, result);
 		// TEST 2
 		email1.setSentAt(null);
-		result = utEMailService.getPendingEMail();
+		result = utEMailService.getPendingEMail(false);
 		// ASSERT 1
 		Assert.assertEquals(email2, result);
 	}

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -24,6 +24,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
@@ -34,7 +37,7 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.AbstractMoqawalatiDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -43,7 +46,7 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.AbstractMoqawalatiDomainObject;
 @XmlRootElement(name = "Client")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Client extends AbstractMoqawalatiDomainObject implements
-		Serializable {
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -58,32 +61,32 @@ public class Client extends AbstractMoqawalatiDomainObject implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public Client() {
 		super();
 	}
 
-	/**
-	 * constructor
-	 */
-	public Client(String theClientId) {
+	public Client(final String theClientId) {
 		super();
 		setClientId(theClientId);
 	}
 
-	/**
-	 * constructor
-	 */
-	public Client(String theClientId, String theName) {
+	public Client(final String theClientId, final String theName) {
 		super();
 		setClientId(theClientId);
 		setName(theName);
+	}
+
+	protected Client(final Client other) {
+		// super(other);
+		if (other != null) {
+			clientId = other.clientId;
+			name = other.name;
+			address = (Address) ObjectUtils.clone(other.address);
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -109,25 +112,36 @@ public class Client extends AbstractMoqawalatiDomainObject implements
 
 	/**
 	 */
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	@Override
+	public Object clone() {
+		return new Client(this);
+	}
+
+	/**
+	 */
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("clientId", clientId);
+	}
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
 	/**
 	 */
-	public String toString() {
-		return super.toStringBuilder(this).append("clientId", clientId)
-				.toString();
-	}
-
-	/**
-	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
 		final Client sourceClient = (Client) sourceObject;
-		if (sourceClient != null
+		if ((sourceClient != null)
 				&& getClientId().equals(sourceClient.getClientId())) {
 			if (sourceClient.name != null) {
-				this.name = sourceClient.name;
+				name = sourceClient.name;
 			}
 		} else {
 			throw new MoqawalatiException(
@@ -144,7 +158,7 @@ public class Client extends AbstractMoqawalatiDomainObject implements
 	/**
 	 */
 	private void createFakeAddress() {
-		Address newAddress = new Address();
+		final Address newAddress = new Address();
 		// newAddress.setCreatorId(getCreatorId());
 		newAddress.setAddressId(String.valueOf(Math.random()));
 		newAddress.setStreet(new Date().toString());
@@ -166,8 +180,8 @@ public class Client extends AbstractMoqawalatiDomainObject implements
 		return clientId;
 	}
 
-	public void setClientId(String value) {
-		this.clientId = value;
+	public void setClientId(final String value) {
+		clientId = value;
 	}
 
 	// ----------------------------------
@@ -179,8 +193,8 @@ public class Client extends AbstractMoqawalatiDomainObject implements
 		return name;
 	}
 
-	public void setName(String value) {
-		this.name = value;
+	public void setName(final String value) {
+		name = value;
 	}
 
 	// ----------------------------------
@@ -192,8 +206,8 @@ public class Client extends AbstractMoqawalatiDomainObject implements
 		return address;
 	}
 
-	public void setAddress(Address value) {
-		this.address = value;
+	public void setAddress(final Address value) {
+		address = value;
 	}
 
 } // Class

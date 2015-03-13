@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -25,7 +25,7 @@ import dz.alkhwarizmix.framework.java.interfaces.ICustomizerWebServiceForBlazeDS
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٤ ربيع الثاني ١٤٣٦ (February 03, 2015)
  */
@@ -75,18 +75,20 @@ public class CustomizerWebServiceForBlazeDS implements
 
 	/**
 	 */
-	public void setCustomData(CustomData customData)
+	@Override
+	public void setCustomData(final CustomData customData)
 			throws AlKhwarizmixException {
 		getLogger().debug("setCustomData({})", customData);
-		getCustomizerService().setCustomData(customData);
+		getCustomizerService().setCustomData(customData, true);
 	}
 
 	/**
 	 */
-	public CustomData getCustomData(CustomData customData)
+	@Override
+	public CustomData getCustomData(final CustomData customData)
 			throws AlKhwarizmixException {
 		getLogger().debug("getCustomData({})", customData);
-		return getCustomizerService().getCustomData(customData);
+		return getCustomizerService().getCustomData(customData, true);
 	}
 
 	// --------------------------------------------------------------------------
@@ -103,7 +105,7 @@ public class CustomizerWebServiceForBlazeDS implements
 		return customizerService;
 	}
 
-	protected void setCustomizerService(ICustomizerService value) {
+	protected void setCustomizerService(final ICustomizerService value) {
 		customizerService = value;
 	}
 

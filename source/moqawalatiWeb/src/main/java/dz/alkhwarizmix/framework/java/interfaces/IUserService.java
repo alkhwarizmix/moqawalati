@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -23,7 +23,7 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -31,7 +31,8 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public void addUser(User user) throws AlKhwarizmixException;
+	public User addUser(User user, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -39,7 +40,8 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public User getUser(User user) throws AlKhwarizmixException;
+	public User getUser(User user, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -51,7 +53,8 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public User updateUser(User user) throws AlKhwarizmixException;
+	public User updateUser(User user, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -71,7 +74,8 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public User connect(User user) throws AlKhwarizmixException;
+	public User connect(User user, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -79,7 +83,8 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public User subscribe(User user) throws AlKhwarizmixException;
+	public User subscribe(User user, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -87,7 +92,8 @@ public interface IUserService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public User login(User user, String password) throws AlKhwarizmixException;
+	public User login(User user, String password,
+			boolean validateObjectToPublish) throws AlKhwarizmixException;
 
 	/**
 	 */

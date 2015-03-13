@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -33,14 +34,14 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٥ ربيع الثاني ١٤٣٦ (February 04, 2015)
  */
 @Entity
 @Table(name = "TPassword")
 public class Password extends AbstractAlKhwarizmixDomainObject implements
-		Serializable {
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -54,26 +55,20 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public Password() {
 		super();
 	}
 
-	/**
-	 * constructor
-	 */
-	protected Password(Password other) {
+	protected Password(final Password other) {
 		super(other);
 		if (other != null) {
-			this.encryption = (Encryption) ObjectUtils.clone(other.encryption);
-			this.password = other.password;
-			this.user = (User) ObjectUtils.clone(other.user);
+			encryption = (Encryption) ObjectUtils.clone(other.encryption);
+			password = other.password;
+			user = (User) ObjectUtils.clone(other.user);
 		}
 	}
 
@@ -104,19 +99,27 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	public String toString() {
-		// return super.toStringBuilder(this).append("userId",
-		// userId).toString();
-		return "";
+	@Override
+	public Object clone() {
+		return new Password(this);
 	}
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		Password sourceUser = (Password) sourceObject;
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder();
+	}
+
+	/**
+	 */
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
+		final Password sourceUser = (Password) sourceObject;
 		if (sourceUser != null) {
 			if (sourceUser.password != null) {
-				this.password = sourceUser.password;
+				password = sourceUser.password;
 			}
 		} else {
 			throw new AlKhwarizmixException(
@@ -127,7 +130,8 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
@@ -149,8 +153,8 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 		return encryption;
 	}
 
-	public void setEncryption(Encryption value) {
-		this.encryption = value;
+	public void setEncryption(final Encryption value) {
+		encryption = value;
 	}
 
 	// ----------------------------------
@@ -165,8 +169,8 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 		return password;
 	}
 
-	public void setPassword(String value) {
-		this.password = value;
+	public void setPassword(final String value) {
+		password = value;
 	}
 
 	// ----------------------------------
@@ -177,8 +181,8 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 		return user;
 	}
 
-	public void setUser(User value) {
-		this.user = value;
+	public void setUser(final User value) {
+		user = value;
 	}
 
 } // Class

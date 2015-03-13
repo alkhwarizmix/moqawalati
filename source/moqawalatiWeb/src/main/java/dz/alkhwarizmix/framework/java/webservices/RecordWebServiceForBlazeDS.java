@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //بسم الله الرحمن الرحيم
 //
-//حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //كافة الحقوق محفوظة (All Rights Reserved)
 //
 //NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -26,7 +26,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IRecordWebServiceForBlazeDS;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٠ ذو الحجة ١٤٣٥ (October 14, 2014)
  */
@@ -76,29 +76,30 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 	/**
 	 */
 	@Override
-	public void commitRecordList(RecordList recordList)
+	public void commitRecordList(final RecordList recordList)
 			throws AlKhwarizmixException {
 		getLogger().debug("commitRecordList({})", recordList);
-		getRecordService().commitRecordList(recordList);
+		getRecordService().commitRecordList(recordList, true);
 	}
 
 	/**
 	 */
 	@Override
-	public Record getRecord(Record record) throws AlKhwarizmixException {
+	public Record getRecord(final Record record) throws AlKhwarizmixException {
 		getLogger().debug("getRecord({})", record);
-		return getRecordService().getRecord(record);
+		return getRecordService().getRecord(record, true);
 	}
 
 	/**
 	 */
 	@Override
-	public RecordList getRecordList(String schemaName, String tableName,
-			int firstResult, int maxResult) throws AlKhwarizmixException {
+	public RecordList getRecordList(final String schemaName,
+			final String tableName, final int firstResult, final int maxResult)
+			throws AlKhwarizmixException {
 		getLogger().debug("getRecordList({}, {}, {}, {})", schemaName,
 				tableName, firstResult, maxResult);
 		return getRecordService().getRecordList(schemaName, tableName, null,
-				firstResult, maxResult);
+				firstResult, maxResult, true);
 	}
 
 	// --------------------------------------------------------------------------
@@ -115,7 +116,7 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 		return recordService;
 	}
 
-	protected void setRecordService(IRecordService value) {
+	protected void setRecordService(final IRecordService value) {
 		recordService = value;
 	}
 

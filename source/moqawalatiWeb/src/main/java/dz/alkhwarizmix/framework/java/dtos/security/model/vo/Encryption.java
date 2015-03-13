@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -40,7 +41,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٣ ربيع الأول ١٤٣٦ (December 24, 2014)
  */
@@ -49,7 +50,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 @XmlRootElement(name = "Encryption")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Encryption extends AbstractAlKhwarizmixDomainObject implements
-		Serializable {
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -64,21 +65,15 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public Encryption() {
 		super();
 	}
 
-	/**
-	 * constructor
-	 */
-	public Encryption(String theEncryptionId) {
+	public Encryption(final String theEncryptionId) {
 		this();
 		setEncryptionId(theEncryptionId);
 	}
@@ -86,12 +81,12 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	protected Encryption(Encryption other) {
+	protected Encryption(final Encryption other) {
 		super(other);
 		if (other != null) {
-			this.encryptionId = other.encryptionId;
-			this.user = (User) ObjectUtils.clone(other.user);
-			this.domainObject = (AlKhwarizmixDomainObject) ObjectUtils
+			encryptionId = other.encryptionId;
+			user = (User) ObjectUtils.clone(other.user);
+			domainObject = (AlKhwarizmixDomainObject) ObjectUtils
 					.clone(other.domainObject);
 		}
 	}
@@ -123,18 +118,26 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	public String toString() {
-		return super.toStringBuilder(this).append("encryptionId", encryptionId)
-				.toString();
+	@Override
+	public Object clone() {
+		return new Encryption(this);
 	}
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		Encryption sourceEncryption = (Encryption) sourceObject;
-		if (sourceEncryption != null
-				&& this.getEncryptionId().equals(
-						sourceEncryption.getEncryptionId())) {
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("encryptionId", encryptionId);
+	}
+
+	/**
+	 */
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
+		final Encryption sourceEncryption = (Encryption) sourceObject;
+		if ((sourceEncryption != null)
+				&& getEncryptionId().equals(sourceEncryption.getEncryptionId())) {
 			// NOOP
 		} else {
 			throw new AlKhwarizmixException(
@@ -145,7 +148,8 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		if (domainObject == null)
 			domainObject = new AlKhwarizmixDomainObject();
 	}
@@ -169,8 +173,8 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 		return encryptionId;
 	}
 
-	public void setEncryptionId(String value) {
-		this.encryptionId = value;
+	public void setEncryptionId(final String value) {
+		encryptionId = value;
 	}
 
 	// ----------------------------------
@@ -182,8 +186,8 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 		return user;
 	}
 
-	public void setUser(User value) {
-		this.user = value;
+	public void setUser(final User value) {
+		user = value;
 	}
 
 	// ----------------------------------
@@ -199,8 +203,8 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 		return domainObject;
 	}
 
-	public void setDomainObject(AlKhwarizmixDomainObject value) {
-		this.domainObject = value;
+	public void setDomainObject(final AlKhwarizmixDomainObject value) {
+		domainObject = value;
 	}
 
 } // Class

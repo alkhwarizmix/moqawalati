@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.framework.java.webservices;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,7 +34,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IUserService;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٤ ربيع الثاني ١٤٣٦ (February 03, 2015)
  */
@@ -62,9 +63,11 @@ public class UserWebServiceForBlazeDSTest {
 	}
 
 	private void setupMockUserService() throws AlKhwarizmixException {
-		when(mockUserService.login(any(User.class), any(String.class)))
+		when(
+				mockUserService.login(any(User.class), any(String.class),
+						anyBoolean())).thenReturn(null);
+		when(mockUserService.connect(any(User.class), anyBoolean()))
 				.thenReturn(null);
-		when(mockUserService.connect(any(User.class))).thenReturn(null);
 		utUserWebServiceForBlazeDS.setUserService(mockUserService);
 	}
 
@@ -89,15 +92,16 @@ public class UserWebServiceForBlazeDSTest {
 
 	@Test
 	public void test01_login_should_call_service_login() throws Exception {
-		String password = "PasswordIsNotImportant";
+		final String password = "PasswordIsNotImportant";
 		utUserWebServiceForBlazeDS.login(mockUser, password);
-		verify(mockUserService, times(1)).login(eq(mockUser), eq(password));
+		verify(mockUserService, times(1)).login(eq(mockUser), eq(password),
+				eq(true));
 	}
 
 	@Test
 	public void test02_connect_should_call_service_connect() throws Exception {
 		utUserWebServiceForBlazeDS.connect(mockUser);
-		verify(mockUserService, times(1)).connect(eq(mockUser));
+		verify(mockUserService, times(1)).connect(eq(mockUser), eq(true));
 	}
 
 	@Test
@@ -110,7 +114,7 @@ public class UserWebServiceForBlazeDSTest {
 	public void test04_subscribe_should_call_service_subscribe()
 			throws Exception {
 		utUserWebServiceForBlazeDS.subscribe(mockUser);
-		verify(mockUserService, times(1)).subscribe(eq(mockUser));
+		verify(mockUserService, times(1)).subscribe(eq(mockUser), eq(true));
 	}
 
 } // Class

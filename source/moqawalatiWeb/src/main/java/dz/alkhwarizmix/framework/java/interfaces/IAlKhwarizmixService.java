@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -22,15 +22,16 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 public interface IAlKhwarizmixService {
 	/**
 	 */
-	public void addObject(AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException;
+	public AbstractAlKhwarizmixDomainObject addObject(
+			AbstractAlKhwarizmixDomainObject object,
+			boolean validateForPublishing) throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -40,8 +41,8 @@ public interface IAlKhwarizmixService {
 	 * get the object
 	 */
 	public AbstractAlKhwarizmixDomainObject getObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException;
+			AbstractAlKhwarizmixDomainObject object,
+			boolean validateForPublishing) throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -60,14 +61,14 @@ public interface IAlKhwarizmixService {
 	/**
 	 */
 	public List<AbstractAlKhwarizmixDomainObject> getObjectList(
-			DetachedCriteria criteria, int firstResult, int maxResult)
-			throws AlKhwarizmixException;
+			DetachedCriteria criteria, int firstResult, int maxResult,
+			boolean validateForPublishing) throws AlKhwarizmixException;
 
 	/**
 	 */
 	public AbstractAlKhwarizmixDomainObject updateObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException;
+			AbstractAlKhwarizmixDomainObject object,
+			boolean validateForPublishing) throws AlKhwarizmixException;
 
 	/**
 	 */

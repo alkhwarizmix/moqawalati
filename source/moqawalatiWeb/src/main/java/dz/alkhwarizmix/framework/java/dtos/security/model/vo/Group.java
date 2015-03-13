@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -39,7 +40,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٦ شعبان ١٤٣٥ (June 14, 2014)
  */
@@ -77,7 +78,7 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	public Group(String theGroupId) {
+	public Group(final String theGroupId) {
 		super();
 		setGroupId(theGroupId);
 	}
@@ -85,11 +86,11 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	protected Group(Group other) {
+	protected Group(final Group other) {
 		super(other);
 		if (other != null) {
-			this.groupId = other.groupId;
-			this.domainObject = (AlKhwarizmixDomainObject) ObjectUtils
+			groupId = other.groupId;
+			domainObject = (AlKhwarizmixDomainObject) ObjectUtils
 					.clone(other.domainObject);
 		}
 	}
@@ -123,13 +124,14 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	public String toString() {
-		return super.toString();
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -142,23 +144,23 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		boolean result = super.equals(other)
+	public boolean equals(final Object other) {
+		final boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.groupId,
+				&& ObjectUtils.equals(groupId,
 						getObjectAsThisClass(other).groupId)
-				&& ObjectUtils.equals(this.domainObject,
+				&& ObjectUtils.equals(domainObject,
 						getObjectAsThisClass(other).domainObject);
 		return result;
 	}
 
 	/**
 	 */
-	private Group getObjectAsThisClass(Object other) {
+	private Group getObjectAsThisClass(final Object other) {
 		return (other instanceof Group)
 				? (Group) other
 				: null;
@@ -166,11 +168,12 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+	@Override
+	public void updateFrom(final Object sourceObject) throws AlKhwarizmixException {
 
 		final Group sourceGroup = (Group) sourceObject;
-		if (sourceGroup != null
-				&& this.getGroupId().equals(sourceGroup.getGroupId())) {
+		if ((sourceGroup != null)
+				&& getGroupId().equals(sourceGroup.getGroupId())) {
 			// NOOP
 		} else {
 			throw new AlKhwarizmixException(
@@ -181,7 +184,7 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(final AbstractAlKhwarizmixDomainObject object) {
 		if (domainObject == null)
 			domainObject = new AlKhwarizmixDomainObject();
 	}
@@ -205,8 +208,8 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 		return groupId;
 	}
 
-	public void setGroupId(String value) {
-		this.groupId = value;
+	public void setGroupId(final String value) {
+		groupId = value;
 	}
 
 	// ----------------------------------
@@ -222,8 +225,8 @@ public class Group extends AbstractAlKhwarizmixDomainObject implements
 		return domainObject;
 	}
 
-	public void setDomainObject(AlKhwarizmixDomainObject value) {
-		this.domainObject = value;
+	public void setDomainObject(final AlKhwarizmixDomainObject value) {
+		domainObject = value;
 	}
 
 } // Class

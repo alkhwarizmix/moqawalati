@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -33,7 +33,7 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Group;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٦ شعبان ١٤٣٥ (June 14, 2014)
  */
@@ -61,13 +61,12 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	}
 
 	protected AbstractAlKhwarizmixDomainObjectExtendableWithSecurity(
-			AbstractAlKhwarizmixDomainObjectExtendableWithSecurity other) {
+			final AbstractAlKhwarizmixDomainObjectExtendableWithSecurity other) {
 		super(other);
 		if (other != null) {
-			this.owner = (AlKhwarizmixDomainObject) ObjectUtils
-					.clone(other.owner);
-			this.group = (Group) ObjectUtils.clone(other.group);
-			this.encryption = (Encryption) ObjectUtils.clone(other.encryption);
+			owner = (AlKhwarizmixDomainObject) ObjectUtils.clone(other.owner);
+			group = (Group) ObjectUtils.clone(other.group);
+			encryption = (Encryption) ObjectUtils.clone(other.encryption);
 		}
 	}
 
@@ -100,7 +99,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -114,24 +113,22 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		boolean result = super.equals(other)
+	public boolean equals(final Object other) {
+		final boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.group,
-						getObjectAsThisClass(other).group)
-				&& ObjectUtils.equals(this.owner,
-						getObjectAsThisClass(other).owner)
-				&& ObjectUtils.equals(this.encryption,
+				&& ObjectUtils.equals(group, getObjectAsThisClass(other).group)
+				&& ObjectUtils.equals(owner, getObjectAsThisClass(other).owner)
+				&& ObjectUtils.equals(encryption,
 						getObjectAsThisClass(other).encryption);
 		return result;
 	}
 
 	private AbstractAlKhwarizmixDomainObjectExtendableWithSecurity getObjectAsThisClass(
-			Object other) {
+			final Object other) {
 		return (other instanceof AbstractAlKhwarizmixDomainObjectExtendableWithSecurity)
 				? (AbstractAlKhwarizmixDomainObjectExtendableWithSecurity) other
 				: null;
@@ -142,7 +139,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
 
-		List<AbstractAlKhwarizmixDomainObject> result = super
+		final List<AbstractAlKhwarizmixDomainObject> result = super
 				.getDaoObjectList();
 		return result;
 	}
@@ -161,8 +158,8 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 		return owner;
 	}
 
-	public final void setOwner(AlKhwarizmixDomainObject value) {
-		this.owner = value;
+	public final void setOwner(final AlKhwarizmixDomainObject value) {
+		owner = value;
 	}
 
 	// ----------------------------------
@@ -173,8 +170,8 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 		return group;
 	}
 
-	public final void setGroup(Group value) {
-		this.group = value;
+	public final void setGroup(final Group value) {
+		group = value;
 	}
 
 	// ----------------------------------
@@ -185,8 +182,8 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 		return encryption;
 	}
 
-	public final void setEncryption(Encryption value) {
-		this.encryption = value;
+	public final void setEncryption(final Encryption value) {
+		encryption = value;
 	}
 
 } // Class

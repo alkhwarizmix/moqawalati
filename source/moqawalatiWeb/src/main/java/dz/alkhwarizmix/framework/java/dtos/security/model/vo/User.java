@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.Email;
@@ -41,7 +42,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
@@ -79,7 +80,7 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	public User(String theUserId) {
+	public User(final String theUserId) {
 		this();
 		setUserId(theUserId);
 	}
@@ -87,7 +88,7 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	public User(String theUserId, String theName) {
+	public User(final String theUserId, final String theName) {
 		this(theUserId);
 		setName(theName);
 	}
@@ -95,13 +96,13 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	protected User(User other) {
+	protected User(final User other) {
 		super(other);
 		if (other != null) {
-			this.userId = other.userId;
-			this.name = other.name;
-			this.group = (Group) ObjectUtils.clone(other.group);
-			this.domainObject = (AlKhwarizmixDomainObject) ObjectUtils
+			userId = other.userId;
+			name = other.name;
+			group = (Group) ObjectUtils.clone(other.group);
+			domainObject = (AlKhwarizmixDomainObject) ObjectUtils
 					.clone(other.domainObject);
 		}
 	}
@@ -144,13 +145,14 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	public String toString() {
-		return super.toString();
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -165,27 +167,25 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		boolean result = super.equals(other)
+	public boolean equals(final Object other) {
+		final boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.userId,
+				&& ObjectUtils.equals(userId,
 						getObjectAsThisClass(other).userId)
-				&& ObjectUtils.equals(this.name,
-						getObjectAsThisClass(other).name)
-				&& ObjectUtils.equals(this.group,
-						getObjectAsThisClass(other).group)
-				&& ObjectUtils.equals(this.domainObject,
+				&& ObjectUtils.equals(name, getObjectAsThisClass(other).name)
+				&& ObjectUtils.equals(group, getObjectAsThisClass(other).group)
+				&& ObjectUtils.equals(domainObject,
 						getObjectAsThisClass(other).domainObject);
 		return result;
 	}
 
 	/**
 	 */
-	private User getObjectAsThisClass(Object other) {
+	private User getObjectAsThisClass(final Object other) {
 		return (other instanceof User)
 				? (User) other
 				: null;
@@ -193,11 +193,13 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		User sourceUser = (User) sourceObject;
-		if (sourceUser != null && getUserId().equals(sourceUser.getUserId())) {
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
+		final User sourceUser = (User) sourceObject;
+		if ((sourceUser != null) && getUserId().equals(sourceUser.getUserId())) {
 			if (sourceUser.name != null) {
-				this.name = sourceUser.name;
+				name = sourceUser.name;
 			}
 		} else {
 			throw new AlKhwarizmixException(
@@ -208,7 +210,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		if (domainObject == null)
 			domainObject = new AlKhwarizmixDomainObject();
 	}
@@ -234,8 +237,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 		return userId;
 	}
 
-	public void setUserId(String value) {
-		this.userId = value;
+	public void setUserId(final String value) {
+		userId = value;
 	}
 
 	// ----------------------------------
@@ -247,8 +250,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 		return name;
 	}
 
-	public void setName(String value) {
-		this.name = value;
+	public void setName(final String value) {
+		name = value;
 	}
 
 	// ----------------------------------
@@ -260,8 +263,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 		return group;
 	}
 
-	public void setGroup(Group value) {
-		this.group = value;
+	public void setGroup(final Group value) {
+		group = value;
 	}
 
 	// ----------------------------------
@@ -277,8 +280,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 		return domainObject;
 	}
 
-	public void setDomainObject(AlKhwarizmixDomainObject value) {
-		this.domainObject = value;
+	public void setDomainObject(final AlKhwarizmixDomainObject value) {
+		domainObject = value;
 	}
 
 } // Class

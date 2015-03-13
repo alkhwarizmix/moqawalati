@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.framework.java.services;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -49,7 +50,7 @@ import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
@@ -133,9 +134,10 @@ public class UserServiceTest {
 
 	@Test
 	public void test01_unmarshalObjectFromXML() throws AlKhwarizmixException {
-		String userAsXML = "<User id=\"1\"><Name>User1</Name></User>";
+		final String userAsXML = "<User id=\"1\"><Name>User1</Name></User>";
 		utUserService.setJaxb2Marshaller(getRealJaxb2Marshaller());
-		User user = (User) utUserService.unmarshalObjectFromXML(userAsXML); // TEST
+		final User user = (User) utUserService
+				.unmarshalObjectFromXML(userAsXML); // TEST
 		Assert.assertEquals("1", user.getUserId());
 		Assert.assertEquals("User1", user.getName());
 	}
@@ -143,14 +145,15 @@ public class UserServiceTest {
 	@Test
 	public void test02_marshalObjectToXML() throws AlKhwarizmixException {
 		utUserService.setJaxb2Marshaller(getRealJaxb2Marshaller());
-		String userAsXML = utUserService.marshalObjectToXML(new User("746")); // TEST
+		final String userAsXML = utUserService.marshalObjectToXML(new User(
+				"746")); // TEST
 		Assert.assertEquals("<User id=\"746\"/>", userAsXML);
 	}
 
 	@Test
 	public void test03_addUser_calls_dao_saveOrUpdate()
 			throws AlKhwarizmixException {
-		utUserService.addUser(new User()); // TEST
+		utUserService.addUser(new User(), true); // TEST
 		verify(mockUserDAO, times(1)).saveOrUpdate(
 				any(AbstractAlKhwarizmixDomainObject.class));
 	}
@@ -158,27 +161,27 @@ public class UserServiceTest {
 	@Test
 	public void test04_getObject_should_call_dao_getUser()
 			throws AlKhwarizmixException {
-		utUserService.getObject(new User()); // TEST
+		utUserService.getObject(new User(), true); // TEST
 		verify(mockUserDAO, times(1)).getUser(any(User.class));
 	}
 
 	@Test
 	public void test05_A_getUser_should_not_return_id()
 			throws AlKhwarizmixException {
-		User expectedUser = new User();
+		final User expectedUser = new User();
 		expectedUser.setId(324L);
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(expectedUser);
-		User foundUser = utUserService.getUser(new User()); // TEST
+		final User foundUser = utUserService.getUser(new User(), true); // TEST
 		Assert.assertNull(foundUser.getId());
 	}
 
 	@Test
 	public void test05_B_getUser_should_not_return_domainObject()
 			throws AlKhwarizmixException {
-		User expectedUser = new User();
+		final User expectedUser = new User();
 		expectedUser.setDomainObject(new AlKhwarizmixDomainObject());
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(expectedUser);
-		User foundUser = utUserService.getUser(new User()); // TEST
+		final User foundUser = utUserService.getUser(new User(), true); // TEST
 		Assert.assertNull(foundUser.getDomainObject());
 	}
 
@@ -201,18 +204,19 @@ public class UserServiceTest {
 	public void test07_A_login_should_return_internal_getUser_not_null_result()
 			throws AlKhwarizmixException {
 		// SETUP
-		User userToFind = new User("u1@alkhwarizmix.com");
-		User existingUser = new User("u2@alkhwarizmix.com");
-		when(mockUserService.internal_getUser(any(User.class))).thenReturn(
-				existingUser);
-		when(mockUserService.login(any(User.class), anyString()))
+		final User userToFind = new User("u1@alkhwarizmix.com");
+		final User existingUser = new User("u2@alkhwarizmix.com");
+		when(mockUserService.getUser(any(User.class), anyBoolean()))
+				.thenReturn(existingUser);
+		when(mockUserService.login(any(User.class), anyString(), anyBoolean()))
 				.thenCallRealMethod();
 		sessionData.setConnectedUser(new User("u1@alkhwarizmix.com"));
 		// TEST
-		User loggedUser = mockUserService.login(userToFind, "Mohamed");
+		final User loggedUser = mockUserService.login(userToFind, "Mohamed",
+				false);
 		// ASSERTS
 		Assert.assertEquals(existingUser, loggedUser);
-		verify(mockUserService, times(1)).internal_getUser(eq(userToFind));
+		verify(mockUserService, times(1)).getUser(eq(userToFind), eq(false));
 	}
 
 	@Ignore("TODO: TDD")
@@ -220,30 +224,31 @@ public class UserServiceTest {
 	public void test07_B_login_should_add_user_and_send_email_when_internal_getUser_return_null()
 			throws AlKhwarizmixException {
 		// SETUP
-		User userToFind = new User("u1@alkhwarizmix.com");
-		when(mockUserService.internal_getUser(eq(userToFind))).thenReturn(null);
-		when(mockUserService.login(any(User.class), anyString()))
+		final User userToFind = new User("u1@alkhwarizmix.com");
+		when(mockUserService.getUser(eq(userToFind), anyBoolean())).thenReturn(
+				null);
+		when(mockUserService.login(any(User.class), anyString(), anyBoolean()))
 				.thenCallRealMethod();
 		sessionData.setConnectedUser(new User("u1@alkhwarizmix.com"));
 		mockUserService.setEmailService(mockEmailService);
 		// TEST
-		mockUserService.login(userToFind, "PasswordIsNotImportant");
+		mockUserService.login(userToFind, "PasswordIsNotImportant", true);
 		// ASSERTS
 		verify(mockEmailService, times(1)).sendEMail(any(EMail.class));
-		verify(mockUserService, times(1)).addObject(eq(userToFind));
+		verify(mockUserService, times(1)).addObject(eq(userToFind), eq(true));
 	}
 
 	@Test
 	public void test07_C_login_should_set_logged_user_and_session_owner()
 			throws AlKhwarizmixException {
 		// SETUP
-		User userToLogin = new User("u1@alkhwarizmix.com");
-		AlKhwarizmixDomainObject userToLoginDomainObject = new AlKhwarizmixDomainObject();
+		final User userToLogin = new User("u1@alkhwarizmix.com");
+		final AlKhwarizmixDomainObject userToLoginDomainObject = new AlKhwarizmixDomainObject();
 		userToLogin.setDomainObject(userToLoginDomainObject);
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
 		sessionData.setConnectedUser(new User("u1@alkhwarizmix.com"));
 		// TEST
-		utUserService.login(userToLogin, "Mohamed");
+		utUserService.login(userToLogin, "Mohamed", true);
 		// ASSERTS
 		Assert.assertEquals(userToLogin, sessionData.getLoggedUser());
 		Assert.assertEquals(userToLoginDomainObject,
@@ -257,7 +262,7 @@ public class UserServiceTest {
 		thrown.expect(AlKhwarizmixException.class);
 		thrown.expectMessage("login1.");
 		// TEST
-		utUserService.login(null, "PasswordIsNotImportant");
+		utUserService.login(null, "PasswordIsNotImportant", true);
 	}
 
 	@Test
@@ -266,9 +271,9 @@ public class UserServiceTest {
 		// EXPECTED EXCEPTION
 		thrown.expect(AlKhwarizmixException.class);
 		thrown.expectMessage("login1.");
-		User userToLogin = new User("wrong@@alkhwarizmix.com");
+		final User userToLogin = new User("wrong@@alkhwarizmix.com");
 		// TEST
-		utUserService.login(userToLogin, "PasswordIsNotImportant");
+		utUserService.login(userToLogin, "PasswordIsNotImportant", true);
 	}
 
 	@Test
@@ -279,9 +284,9 @@ public class UserServiceTest {
 		thrown.expectMessage("login3.");
 		// SETUP
 		sessionData.setConnectedUser(new User("u2@alkhwarizmix.com"));
-		User userToLogin = new User("u1@alkhwarizmix.com");
+		final User userToLogin = new User("u1@alkhwarizmix.com");
 		// TEST
-		utUserService.login(userToLogin, "PasswordIsNotImportant");
+		utUserService.login(userToLogin, "PasswordIsNotImportant", true);
 	}
 
 	@Test
@@ -292,21 +297,21 @@ public class UserServiceTest {
 		thrown.expectMessage("login2.");
 		// SETUP
 		sessionData.setLoggedUser(new User(""));
-		User userToLogin = new User("u1@alkhwarizmix.com");
+		final User userToLogin = new User("u1@alkhwarizmix.com");
 		// TEST
-		utUserService.login(userToLogin, "PasswordIsNotImportant");
+		utUserService.login(userToLogin, "PasswordIsNotImportant", true);
 	}
 
 	@Test
 	public void test07_H_login_should_return_logged_user_validated_before_to_publish()
 			throws AlKhwarizmixException {
 		// SETUP
-		User userToLogin = new User("u1@alkhwarizmix.com");
+		final User userToLogin = new User("u1@alkhwarizmix.com");
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
 		sessionData.setConnectedUser(new User("u1@alkhwarizmix.com"));
 		utUserService.setUserServiceValidator(mockUserValidator);
 		// TEST
-		utUserService.login(userToLogin, "Mohamed");
+		utUserService.login(userToLogin, "Mohamed", true);
 		// ASSERTS
 		verify(mockUserValidator, times(1)).validateObjectToPublish(
 				eq(userToLogin), any(AlKhwarizmixDomainObject.class));
@@ -316,10 +321,10 @@ public class UserServiceTest {
 	public void test08_logout_should_reset_session()
 			throws AlKhwarizmixException {
 		// SETUP
-		User userToLogin = new User();
+		final User userToLogin = new User();
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
 		when(mockUserDAO.getUser(any(User.class))).thenReturn(userToLogin);
-		AlKhwarizmixDomainObject sessionOwner = new AlKhwarizmixDomainObject();
+		final AlKhwarizmixDomainObject sessionOwner = new AlKhwarizmixDomainObject();
 		sessionData.setSessionOwner(sessionOwner);
 		sessionData.setLoggedUser(userToLogin);
 		sessionData.setConnectedUser(userToLogin);
@@ -336,30 +341,31 @@ public class UserServiceTest {
 			throws AlKhwarizmixException {
 		thrown.expect(AlKhwarizmixException.class);
 		thrown.expectMessage("connect1.");
-		User userToLogin = new User();
+		final User userToLogin = new User();
 		userToLogin.setDomainObject(new AlKhwarizmixDomainObject());
 		sessionData.setConnectedUser(new User());
-		utUserService.connect(userToLogin); // TEST
+		utUserService.connect(userToLogin, true); // TEST
 	}
 
 	@Test
 	public void test09_B_connect_should_return_internal_getUser_not_null_result()
 			throws AlKhwarizmixException {
 		// SETUP
-		User userToFind = new User("u1@alkhwarizmix.com", "User 1");
-		User existingUser = new User("u1@alkhwarizmix.com", "User 2");
+		final User userToFind = new User("u1@alkhwarizmix.com", "User 1");
+		final User existingUser = new User("u1@alkhwarizmix.com", "User 2");
 		existingUser.setGroup(new Group());
-		when(mockUserService.internal_getUser(any(User.class))).thenReturn(
-				existingUser);
-		when(mockUserService.connect(any(User.class))).thenCallRealMethod();
+		when(mockUserService.getUser(any(User.class), anyBoolean()))
+				.thenReturn(existingUser);
+		when(mockUserService.connect(any(User.class), anyBoolean()))
+				.thenCallRealMethod();
 		// TEST
-		User connectedUser = mockUserService.connect(userToFind);
+		final User connectedUser = mockUserService.connect(userToFind, true);
 		// ASSERTS
 		Assert.assertNotSame(existingUser, connectedUser);
 		Assert.assertEquals(existingUser.getUserId(), connectedUser.getUserId());
 		Assert.assertEquals("User 2", connectedUser.getName());
 		Assert.assertNull(connectedUser.getGroup());
-		verify(mockUserService, times(1)).internal_getUser(eq(userToFind));
+		verify(mockUserService, times(1)).getUser(eq(userToFind), eq(false));
 	}
 
 	@Test
@@ -367,7 +373,7 @@ public class UserServiceTest {
 			throws AlKhwarizmixException {
 		thrown.expect(AlKhwarizmixException.class);
 		thrown.expectMessage("connect2.");
-		utUserService.connect(null); // TEST
+		utUserService.connect(null, true); // TEST
 	}
 
 	@Test
@@ -375,17 +381,17 @@ public class UserServiceTest {
 			throws AlKhwarizmixException {
 		thrown.expect(AlKhwarizmixException.class);
 		thrown.expectMessage("connect2.");
-		User userToLogin = new User("id@@alkhwarizmix.com");
-		utUserService.connect(userToLogin); // TEST
+		final User userToLogin = new User("id@@alkhwarizmix.com");
+		utUserService.connect(userToLogin, true); // TEST
 	}
 
 	@Test
 	public void test09_E_connect_should_save_connectedUser_in_sessionData()
 			throws AlKhwarizmixException {
-		User userToLogin = new User("fares@alkhwarizmix.com");
-		User existingUser = new User("fares@alkhwarizmix.com");
+		final User userToLogin = new User("fares@alkhwarizmix.com");
+		final User existingUser = new User("fares@alkhwarizmix.com");
 		when(mockUserDAO.getUser(eq(userToLogin))).thenReturn(existingUser);
-		utUserService.connect(userToLogin); // TEST
+		utUserService.connect(userToLogin, true); // TEST
 		Assert.assertEquals(userToLogin, sessionData.getConnectedUser());
 	}
 
@@ -405,17 +411,23 @@ public class UserServiceTest {
 	@Test
 	public void test11_A_suscribe() throws AlKhwarizmixException {
 		// SETUP
-		User userToSuscribe = new User("u1@alkhwarizmix.com", "Fares Belhaouas");
-		when(mockUserService.internal_getUser(eq(userToSuscribe))).thenReturn(
-				null);
-		when(mockUserService.subscribe(any(User.class))).thenCallRealMethod();
+		final User userToSuscribe = new User("u1@alkhwarizmix.com",
+				"Fares Belhaouas");
+		when(mockUserService.getUser(eq(userToSuscribe), anyBoolean()))
+				.thenReturn(null);
+		when(mockUserService.subscribe(any(User.class), anyBoolean()))
+				.thenCallRealMethod();
+		when(mockUserService.addUser(any(User.class), anyBoolean()))
+				.thenReturn(userToSuscribe);
 		sessionData.setConnectedUser(new User("u1@alkhwarizmix.com"));
 		mockUserService.setEmailService(mockEmailService);
 		// TEST
-		mockUserService.subscribe(userToSuscribe);
+		mockUserService.subscribe(userToSuscribe, true);
 		// ASSERTS
-		verify(mockUserService, times(1)).addUser(eq(userToSuscribe));
-		verify(mockEmailService, times(1)).addEMail(any(EMail.class));
+		verify(mockUserService, times(1))
+				.addUser(eq(userToSuscribe), eq(false));
+		verify(mockEmailService, times(1))
+				.addEMail(any(EMail.class), eq(false));
 	}
 
 	@Ignore("TODO: TDD")

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -23,7 +23,7 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -31,7 +31,8 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public void addClient(Client client) throws MoqawalatiException;
+	public Client addClient(Client client, boolean validateObjectToPublish)
+			throws MoqawalatiException;
 
 	/**
 	 */
@@ -40,7 +41,8 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public Client getClient(Client client) throws MoqawalatiException;
+	public Client getClient(Client client, boolean validateObjectToPublish)
+			throws MoqawalatiException;
 
 	/**
 	 */
@@ -52,7 +54,8 @@ public interface IClientService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public Client updateClient(Client client) throws MoqawalatiException;
+	public Client updateClient(Client client, boolean validateObjectToPublish)
+			throws MoqawalatiException;
 
 	/**
 	 */
@@ -62,7 +65,8 @@ public interface IClientService extends IAlKhwarizmixService {
 	/**
 	 */
 	public List<Client> getClientList(DetachedCriteria criteria,
-			int firstResult, int maxResult) throws MoqawalatiException;
+			int firstResult, int maxResult, boolean validateObjectToPublish)
+			throws MoqawalatiException;
 
 	/**
 	 */

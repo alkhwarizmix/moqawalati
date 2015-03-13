@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //بسم الله الرحمن الرحيم
 //
-//حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //كافة الحقوق محفوظة (All Rights Reserved)
 //
 //NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -27,7 +27,7 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientWebServiceForBlazeDS;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (February 04, 2014) TODO: HIDJRI
  */
@@ -78,34 +78,35 @@ public class ClientWebServiceForBlazeDS implements IClientWebServiceForBlazeDS {
 	/**
 	 */
 	@Override
-	public void addClient(Client client) throws MoqawalatiException {
+	public void addClient(final Client client) throws MoqawalatiException {
 		getLogger().trace("addClient");
-		getClientService().addClient(client);
+		getClientService().addClient(client, true);
 	}
 
 	/**
 	 */
 	@Override
-	public Client getClient(Client client) throws MoqawalatiException {
+	public Client getClient(final Client client) throws MoqawalatiException {
 		getLogger().trace("getClient");
-		return getClientService().getClient(client);
+		return getClientService().getClient(client, true);
 	}
 
 	/**
 	 */
 	@Override
-	public Client updateClient(Client client) throws MoqawalatiException {
+	public Client updateClient(final Client client) throws MoqawalatiException {
 		getLogger().trace("updateClient");
-		return getClientService().updateClient(client);
+		return getClientService().updateClient(client, true);
 	}
 
 	/**
 	 */
 	@Override
-	public List<Client> getClientList(int firstResult, int maxResult)
+	public List<Client> getClientList(final int firstResult, final int maxResult)
 			throws MoqawalatiException {
 		getLogger().trace("getClientList");
-		return getClientService().getClientList(null, firstResult, maxResult);
+		return getClientService().getClientList(null, firstResult, maxResult,
+				true);
 	}
 
 	// --------------------------------------------------------------------------
@@ -122,7 +123,7 @@ public class ClientWebServiceForBlazeDS implements IClientWebServiceForBlazeDS {
 		return clientService;
 	}
 
-	protected void setClientService(IClientService value) {
+	protected void setClientService(final IClientService value) {
 		clientService = value;
 	}
 

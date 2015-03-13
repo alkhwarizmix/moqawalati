@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -18,7 +18,7 @@ import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٧ ربيع الثاني ١٤٣٦ (January 27, 2015)
  */
@@ -26,15 +26,18 @@ public interface IEMailService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public void addEMail(EMail email) throws AlKhwarizmixException;
+	public EMail addEMail(EMail email, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public EMail getEMail(EMail email) throws AlKhwarizmixException;
+	public EMail getEMail(EMail email, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public EMail getPendingEMail() throws AlKhwarizmixException;
+	public EMail getPendingEMail(boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -42,6 +45,7 @@ public interface IEMailService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public EMail updateEMail(EMail email) throws AlKhwarizmixException;
+	public EMail updateEMail(EMail email, boolean validateObjectToPublish)
+			throws AlKhwarizmixException;
 
 } // Interface

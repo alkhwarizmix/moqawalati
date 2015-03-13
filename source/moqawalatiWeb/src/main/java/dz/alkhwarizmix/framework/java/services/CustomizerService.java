@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -32,7 +32,7 @@ import dz.alkhwarizmix.framework.java.interfaces.ICustomizerServiceValidator;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٩ محرم ١٤٣٥ (November 13, 2013)
  */
@@ -95,18 +95,20 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public void setCustomData(CustomData customData)
-			throws AlKhwarizmixException {
+	public CustomData setCustomData(final CustomData customData,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("setCustomData");
 
-		CustomData customDataToSave = getCustomData(customData);
+		CustomData customDataToSave = getCustomData(customData, false);
 
 		if (customDataToSave != null)
 			customDataToSave.updateFrom(customData);
 		else
 			customDataToSave = customData;
 
-		addObject(customDataToSave);
+		final CustomData result = (CustomData) addObject(customDataToSave,
+				validateObjectToPublish);
+		return result;
 	}
 
 	/**
@@ -114,13 +116,13 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String setCustomDataFromXML(String customDataXml)
+	public String setCustomDataFromXML(final String customDataXml)
 			throws AlKhwarizmixException {
 		getLogger().trace("setCustomDataFromXML");
 
-		CustomData newCustomData = (CustomData) unmarshalObjectFromXML(customDataXml);
-		setCustomData(newCustomData);
-		String result = marshalObjectToXML(newCustomData);
+		final CustomData newCustomData = (CustomData) unmarshalObjectFromXML(customDataXml);
+		final CustomData addedCustomData = setCustomData(newCustomData, true);
+		final String result = marshalObjectToXML(addedCustomData);
 		return result;
 	}
 
@@ -129,15 +131,21 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException {
+			final AbstractAlKhwarizmixDomainObject object,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 
 		CustomData result = null;
-		CustomData customData = (CustomData) object;
+		final CustomData customData = (CustomData) object;
 		customData.setCustomizer(getSessionCustomizer());
 		if (getSessionCustomizer().getId() != null) {
 			result = getCustomDataDAO().getCustomData(customData);
+		}
+
+		if (validateObjectToPublish && (result != null)) {
+			result = (CustomData) result.clone();
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
 		}
 		return result;
 	}
@@ -146,11 +154,12 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CustomData getCustomData(CustomData customData)
-			throws AlKhwarizmixException {
+	public CustomData getCustomData(final CustomData customData,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getCustomData");
 
-		CustomData result = (CustomData) getObject(customData);
+		final CustomData result = (CustomData) getObject(customData,
+				validateObjectToPublish);
 		/*
 		 * if (result == null) { result = new CustomData();
 		 * result.setCustomDataId(customData.getCustomDataId());
@@ -160,21 +169,14 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	}
 
 	/**
-	 * @private
-	 */
-	private void setDefaultCustomDataValue(CustomData customData) {
-		customData.setCustomDataValue("Default");
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCustomDataAsXML(CustomData customData)
+	public String getCustomDataAsXML(final CustomData customData)
 			throws AlKhwarizmixException {
 		getLogger().trace("getCustomDataAsXML 1");
 
-		String result = getObjectAsXML(customData);
+		final String result = getObjectAsXML(customData);
 		return result;
 	}
 
@@ -182,11 +184,11 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCustomDataAsXML(String customDataXml)
+	public String getCustomDataAsXML(final String customDataXml)
 			throws AlKhwarizmixException {
 		getLogger().trace("getCustomDataAsXML 2");
 
-		String result = getObjectAsXML(customDataXml);
+		final String result = getObjectAsXML(customDataXml);
 		return result;
 	}
 
@@ -211,7 +213,7 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 		return customDataDAO;
 	}
 
-	final void setCustomDataDAO(ICustomDataDAO value) {
+	final void setCustomDataDAO(final ICustomDataDAO value) {
 		customDataDAO = value;
 	}
 
@@ -224,7 +226,7 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	// clientValidator
 	// ----------------------------------
 
-	protected void setServiceValidator(ICustomizerServiceValidator value) {
+	protected void setServiceValidator(final ICustomizerServiceValidator value) {
 		customDataValidator = value;
 	}
 
@@ -243,7 +245,7 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 	}
 
 	@Override
-	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
+	protected void setJaxb2Marshaller(final Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}
 

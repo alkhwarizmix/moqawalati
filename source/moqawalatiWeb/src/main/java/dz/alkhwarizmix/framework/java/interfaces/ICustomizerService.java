@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -18,7 +18,7 @@ import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٩ محرم ١٤٣٥ (November 13, 2013)
  */
@@ -26,7 +26,8 @@ public interface ICustomizerService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public void setCustomData(CustomData customData) throws AlKhwarizmixException;
+	public CustomData setCustomData(CustomData customData,
+			boolean validateObjectToPublish) throws AlKhwarizmixException;
 
 	/**
 	 */
@@ -35,8 +36,8 @@ public interface ICustomizerService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public CustomData getCustomData(CustomData customData)
-			throws AlKhwarizmixException;
+	public CustomData getCustomData(CustomData customData,
+			boolean validateObjectToPublish) throws AlKhwarizmixException;
 
 	/**
 	 */

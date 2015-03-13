@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -39,7 +39,7 @@ import dz.alkhwarizmix.framework.java.utils.XMLUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -86,22 +86,32 @@ public abstract class AbstractAlKhwarizmixService implements
 	 * add the object
 	 */
 	@Override
-	public void addObject(AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException {
+	public AbstractAlKhwarizmixDomainObject addObject(
+			final AbstractAlKhwarizmixDomainObject object,
+			final boolean validateForPublishing) throws AlKhwarizmixException {
 		getServiceValidator().validateObjectToAdd(object, getSessionOwner());
 		getServiceDAO().saveOrUpdate(object);
+		AbstractAlKhwarizmixDomainObject result = object;
+		if (validateForPublishing) {
+			result = (AbstractAlKhwarizmixDomainObject) result.clone();
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
+
+		getLogger().trace("addObject: result={}", result);
+		return result;
 	}
 
 	/**
 	 * TODO: Javadoc
 	 */
 	@Override
-	public String addObject(String objectXml) throws AlKhwarizmixException {
-		AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
-		addObject(newObject);
-		getServiceValidator().validateObjectToPublish(newObject,
-				getSessionOwner());
-		return marshalObjectToXML(newObject);
+	public String addObject(final String objectXml)
+			throws AlKhwarizmixException {
+		final AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
+		final AbstractAlKhwarizmixDomainObject result = addObject(newObject,
+				true);
+		return marshalObjectToXML(result);
 	}
 
 	/**
@@ -109,22 +119,20 @@ public abstract class AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public abstract AbstractAlKhwarizmixDomainObject getObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException;
+			AbstractAlKhwarizmixDomainObject object,
+			boolean validateForPublishing) throws AlKhwarizmixException;
 
 	/**
 	 * TODO: Javadoc
 	 */
 	@Override
-	public String getObjectAsXML(AbstractAlKhwarizmixDomainObject object)
+	public String getObjectAsXML(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		String result = "";
-		AbstractAlKhwarizmixDomainObject foundObject = getObject(object);
-		if (foundObject != null) {
-			getServiceValidator().validateObjectToPublish(foundObject,
-					getSessionOwner());
+		final AbstractAlKhwarizmixDomainObject foundObject = getObject(object,
+				true);
+		if (foundObject != null)
 			result = marshalObjectToXML(foundObject);
-		}
 		return result;
 	}
 
@@ -132,9 +140,10 @@ public abstract class AbstractAlKhwarizmixService implements
 	 * TODO: Javadoc
 	 */
 	@Override
-	public String getObjectAsXML(String objectXml) throws AlKhwarizmixException {
-		AbstractAlKhwarizmixDomainObject newObject = (AbstractAlKhwarizmixDomainObject) unmarshalObjectFromXML(objectXml);
-		String result = getObjectAsXML(newObject);
+	public String getObjectAsXML(final String objectXml)
+			throws AlKhwarizmixException {
+		final AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
+		final String result = getObjectAsXML(newObject);
 		return result;
 	}
 
@@ -142,15 +151,13 @@ public abstract class AbstractAlKhwarizmixService implements
 	 * TODO: Javadoc
 	 */
 	@Override
-	public String getObjectAsJSON(AbstractAlKhwarizmixDomainObject object)
+	public String getObjectAsJSON(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		String result = "";
-		AbstractAlKhwarizmixDomainObject foundObject = getObject(object);
-		if (foundObject != null) {
-			getServiceValidator().validateObjectToPublish(foundObject,
-					getSessionOwner());
+		final AbstractAlKhwarizmixDomainObject foundObject = getObject(object,
+				true);
+		if (foundObject != null)
 			result = marshalObjectToJSON(foundObject);
-		}
 		return result;
 	}
 
@@ -160,26 +167,39 @@ public abstract class AbstractAlKhwarizmixService implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getObjectList(
-			DetachedCriteria criteria, int firstResult, int maxResult)
+			final DetachedCriteria criteria, final int firstResult,
+			final int maxResult, final boolean validateForPublishing)
 			throws AlKhwarizmixException {
 		getLogger().trace("getObjectList({}, {}, {})", criteria, firstResult,
 				maxResult);
 
 		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
-		List<AbstractAlKhwarizmixDomainObject> selectedList = getServiceDAO()
+		final List<AbstractAlKhwarizmixDomainObject> selectedList = getServiceDAO()
 				.getList(criteria, firstResult, maxResult);
-		for (AbstractAlKhwarizmixDomainObject obj : selectedList) {
+		if (validateForPublishing)
+			validateObjectListToPublish(result, selectedList);
+		else
+			result = selectedList;
+
+		return result;
+	}
+
+	/**
+	 */
+	private void validateObjectListToPublish(
+			final List<AbstractAlKhwarizmixDomainObject> result,
+			final List<AbstractAlKhwarizmixDomainObject> selectedList) {
+		for (final AbstractAlKhwarizmixDomainObject obj : selectedList) {
 			try {
 				getServiceValidator().validateObjectToPublish(obj,
 						getSessionOwner());
 				result.add(obj);
-			} catch (AlKhwarizmixException e) {
-				getLogger().warn("getObjectList: Validation failure for {}",
-						obj);
+			} catch (final AlKhwarizmixException e) {
+				getLogger()
+						.warn("validateObjectListToPublish: Validation failure for {}",
+								obj);
 			}
 		}
-
-		return result;
 	}
 
 	/**
@@ -187,30 +207,40 @@ public abstract class AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject updateObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException {
+			final AbstractAlKhwarizmixDomainObject object,
+			final boolean validateForPublishing) throws AlKhwarizmixException {
 		getLogger().trace("updateObject({})", object);
 
 		getServiceValidator().validateObjectToUpdate(object, getSessionOwner());
-		AbstractAlKhwarizmixDomainObject foundObject = getObject(object);
+		final AbstractAlKhwarizmixDomainObject foundObject = getObject(object,
+				false);
 		if (foundObject != null) {
 			foundObject.updateFrom(object);
 			getServiceDAO().saveOrUpdate(foundObject);
 		} else {
 			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.INVALID_DATA);
 		}
-		return foundObject;
+		AbstractAlKhwarizmixDomainObject result = foundObject;
+		if (validateForPublishing) {
+			result = (AbstractAlKhwarizmixDomainObject) result.clone();
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
+		getLogger().trace("updateObject: result={}", result);
+		return result;
 	}
 
 	/**
 	 * TODO: Javadoc
 	 */
 	@Override
-	public String updateObject(String objectXml) throws AlKhwarizmixException {
+	public String updateObject(final String objectXml)
+			throws AlKhwarizmixException {
 		getLogger().trace("updateObject({})", objectXml);
 
-		AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
-		AbstractAlKhwarizmixDomainObject result = updateObject(newObject);
+		final AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
+		final AbstractAlKhwarizmixDomainObject result = updateObject(newObject,
+				true);
 		return marshalObjectToXML(result);
 	}
 
@@ -219,10 +249,10 @@ public abstract class AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public String objectListToJSON(
-			List<AbstractAlKhwarizmixDomainObject> objectList) {
+			final List<AbstractAlKhwarizmixDomainObject> objectList) {
 		getLogger().trace("objectListToJSON(objectList)");
 
-		StringWriter stringWriter = new StringWriter();
+		final StringWriter stringWriter = new StringWriter();
 		// XMLResult xmlResult = new XMLResult(stringWriter);
 		// for (AlKhwarizmixDomainObjectAbstract object : objectList) {
 		// getJaxb2Marshaller().marshal(object, xmlResult);
@@ -235,7 +265,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public String objectListToXML(
-			List<AbstractAlKhwarizmixDomainObject> objectList) {
+			final List<AbstractAlKhwarizmixDomainObject> objectList) {
 		getLogger().trace("objectListToXML(objectList)");
 
 		return new XMLUtil(getJaxb2Marshaller()).objectListToXML(objectList);
@@ -246,11 +276,11 @@ public abstract class AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public final String marshalObjectToXML(
-			AbstractAlKhwarizmixDomainObject object)
+			final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("marshalObjectToXML({})", object);
 
-		String result = new XMLUtil(getJaxb2Marshaller())
+		final String result = new XMLUtil(getJaxb2Marshaller())
 				.marshalObjectToXML(object);
 		return result;
 	}
@@ -260,7 +290,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
-			String xmlValue) throws AlKhwarizmixException {
+			final String xmlValue) throws AlKhwarizmixException {
 		getLogger().trace("unmarshalObjectFromXML({})", xmlValue);
 
 		return new XMLUtil(getJaxb2Marshaller())
@@ -271,19 +301,20 @@ public abstract class AbstractAlKhwarizmixService implements
 	 * TODO: Javadoc
 	 */
 	@Override
-	public String marshalObjectToJSON(AbstractAlKhwarizmixDomainObject object)
+	public String marshalObjectToJSON(
+			final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 
-		ObjectMapper mapper = new ObjectMapper();
+		final ObjectMapper mapper = new ObjectMapper();
 		try {
 			return mapper.writeValueAsString(object);
-		} catch (JsonGenerationException exception) {
+		} catch (final JsonGenerationException exception) {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, exception);
-		} catch (JsonMappingException exception) {
+		} catch (final JsonMappingException exception) {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, exception);
-		} catch (IOException exception) {
+		} catch (final IOException exception) {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, exception);
 		}
@@ -291,15 +322,15 @@ public abstract class AbstractAlKhwarizmixService implements
 
 	/**
 	 * TODO: Javadoc
-	 * 
+	 *
 	 * @throws AlKhwarizmixException
 	 */
 	protected final void updateObjectFromExtendedDataXML(
-			AbstractAlKhwarizmixDomainObjectExtendable object)
+			final AbstractAlKhwarizmixDomainObjectExtendable object)
 			throws AlKhwarizmixException {
 
 		if (object != null) {
-			String extendedData = object.getExtendedDataValue();
+			final String extendedData = object.getExtendedDataValue();
 			if (extendedData.length() > 0)
 				object.updateFrom(unmarshalObjectFromXML(extendedData));
 		}
@@ -307,11 +338,11 @@ public abstract class AbstractAlKhwarizmixService implements
 
 	/**
 	 * TODO: Javadoc
-	 * 
+	 *
 	 * @throws AlKhwarizmixException
 	 */
 	protected final void setupObjectExtendedDataXMLValue(
-			AbstractAlKhwarizmixDomainObjectExtendable object)
+			final AbstractAlKhwarizmixDomainObjectExtendable object)
 			throws AlKhwarizmixException {
 		if (object != null) {
 			object.setExtendedDataValue(marshalObjectToXML(object));
@@ -356,7 +387,7 @@ public abstract class AbstractAlKhwarizmixService implements
 		return sessionData;
 	}
 
-	protected final void setSessionData(AlKhwarizmixSessionData value) {
+	protected final void setSessionData(final AlKhwarizmixSessionData value) {
 		sessionData = value;
 	}
 

@@ -11,6 +11,7 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -30,7 +31,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IEMailService;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٦ جمادى الأولى ١٤٣٦ (March 07, 2015)
  */
@@ -80,13 +81,14 @@ public class EMailServiceSendWorkerTest {
 	public void test04_scheduledSendEMail_should_call_emailService_getEMail()
 			throws AlKhwarizmixException {
 		// TEST
-		Mockito.when(mockEMailService.getPendingEMail()).thenReturn(mockEMail);
+		Mockito.when(mockEMailService.getPendingEMail(false)).thenReturn(
+				mockEMail);
 		// TEST
 		utEMailServiceSendWorker.scheduledSendEMail();
 		// ASSERT
 		verify(mockEMailService, times(1)).sendEMail(mockEMail);
 		// verify(mockEMail, times(1)).setSentAt(any(Date.class));
-		verify(mockEMailService, times(1)).updateEMail(mockEMail);
+		verify(mockEMailService, times(1)).updateEMail(mockEMail, eq(false));
 	}
 
 } // Class

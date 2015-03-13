@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -38,7 +38,7 @@ import dz.alkhwarizmix.framework.java.utils.XMLUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ ذو الحجة ١٤٣٥ (October 06, 2014)
  */
@@ -101,26 +101,33 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public void commitRecordList(RecordList recordList)
-			throws AlKhwarizmixException {
+	public RecordList commitRecordList(final RecordList recordList,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("commitRecordList");
 
-		for (AbstractAlKhwarizmixDomainObject record : recordList.getList())
-			commitRecord((Record) record);
+		final RecordList result = new RecordList();
+		for (final AbstractAlKhwarizmixDomainObject record : recordList
+				.getList()) {
+			final Record commitedRecord = commitRecord((Record) record,
+					validateObjectToPublish);
+			result.getList().add(commitedRecord);
+		}
+		return result;
 	}
 
 	/**
 	 */
-	private Record commitRecord(Record record) throws AlKhwarizmixException {
+	private Record commitRecord(final Record record,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		if (record.getAction() == null)
 			throw new AlKhwarizmixException("Wrong action");
 		switch (record.getAction()) {
 		case Record.INSERT_ACTION:
-			return insertRecord(record);
+			return insertRecord(record, validateObjectToPublish);
 		case Record.UPDATE_ACTION:
-			return updateRecord(record);
+			return updateRecord(record, validateObjectToPublish);
 		case Record.DELETE_ACTION:
-			return deleteRecord(record);
+			return deleteRecord(record, validateObjectToPublish);
 		default:
 			throw new AlKhwarizmixException("Wrong action");
 		}
@@ -128,22 +135,27 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 
 	/**
 	 */
-	private Record insertRecord(Record record) throws AlKhwarizmixException {
+	private Record insertRecord(final Record record,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		record.setOwner(getSessionOwner());
-		addObject(record);
-		return record;
+		final Record result = (Record) addObject(record,
+				validateObjectToPublish);
+		return result;
 	}
 
 	/**
 	 */
-	private Record updateRecord(Record record) throws AlKhwarizmixException {
-		updateObject(record);
-		return record;
+	private Record updateRecord(final Record record,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
+		final Record result = (Record) updateObject(record,
+				validateObjectToPublish);
+		return result;
 	}
 
 	/**
 	 */
-	private Record deleteRecord(Record record) throws AlKhwarizmixException {
+	private Record deleteRecord(final Record record,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		// deleteObject(record);
 		return null;
 	}
@@ -153,12 +165,13 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public String commitRecordListFromXML(String recordListXml)
+	public String commitRecordListFromXML(final String recordListXml)
 			throws AlKhwarizmixException {
 		getLogger().trace("commitRecordListFromXML");
-		RecordList newRecordList = xmlToRecordList(recordListXml);
-		commitRecordList(newRecordList);
-		String result = recordListToXML(newRecordList);
+		final RecordList newRecordList = xmlToRecordList(recordListXml);
+		final RecordList commitedRecordList = commitRecordList(newRecordList,
+				true);
+		final String result = recordListToXML(commitedRecordList);
 		return result;
 	}
 
@@ -167,10 +180,15 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public AbstractAlKhwarizmixDomainObject getObject(
-			AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixException {
+			final AbstractAlKhwarizmixDomainObject object,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getObject");
 		Record result = getRecordDAO().getRecord((Record) object);
+		if (validateObjectToPublish && (result != null)) {
+			result = (Record) result.clone();
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
 		updateObjectFromExtendedDataXML(result);
 		return result;
 	}
@@ -179,31 +197,26 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Record getRecord(Record record) throws AlKhwarizmixException {
+	public Record getRecord(final Record record,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getRecord");
-		Record result = internal_getRecord(record);
-		getServiceValidator()
-				.validateObjectToPublish(result, getSessionOwner());
+		Record result = (Record) getObject(record, validateObjectToPublish);
+		if (validateObjectToPublish && (result != null)) {
+			result = (Record) result.clone();
+			getServiceValidator().validateObjectToPublish(result,
+					getSessionOwner());
+		}
 		return result;
 	}
 
 	/**
-	 * TODO: JAVADOC
+	 * {@inheritDoc}
 	 */
-	protected Record internal_getRecord(Record record)
+	@Override
+	public String getRecordAsXML(final Record record)
 			throws AlKhwarizmixException {
-		getLogger().trace("internal_getRecord");
-		Record result = (Record) getObject(record);
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getRecordAsXML(Record record) throws AlKhwarizmixException {
 		getLogger().trace("getRecordAsXML 1");
-		String result = getObjectAsXML(record);
+		final String result = getObjectAsXML(record);
 		return result;
 	}
 
@@ -211,9 +224,10 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getRecordAsXML(String recordXml) throws AlKhwarizmixException {
+	public String getRecordAsXML(final String recordXml)
+			throws AlKhwarizmixException {
 		getLogger().trace("getRecordAsXML 2");
-		String result = getObjectAsXML(recordXml);
+		final String result = getObjectAsXML(recordXml);
 		return result;
 	}
 
@@ -221,11 +235,11 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RecordList getRecordList(String schema, String table,
-			DetachedCriteria criteriaToUse, int firstResult, int maxResult)
+	public RecordList getRecordList(final String schema, final String table,
+			DetachedCriteria criteriaToUse, final int firstResult,
+			final int maxResult, final boolean validateObjectToPublish)
 			throws AlKhwarizmixException {
 		getLogger().trace("getRecordList");
-
 		List<Record> listOfRecords = null;
 		Record tableRecord = new Record(null, schema, table).getTableRecord();
 		tableRecord = getRecordDAO().getRecord(tableRecord);
@@ -237,7 +251,8 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 			criteriaToUse.add(Restrictions.eq(Record.PARENT_ID,
 					tableRecord.getId()));
 			listOfRecords = (List<Record>) (List<?>) getObjectList(
-					criteriaToUse, firstResult, maxResult);
+					criteriaToUse, firstResult, maxResult,
+					validateObjectToPublish);
 		}
 		return new RecordList(listOfRecords);
 	}
@@ -246,24 +261,24 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getRecordListAsXML(String schema, String table,
-			DetachedCriteria criteria, int firstResult, int maxResult)
-			throws AlKhwarizmixException {
+	public String getRecordListAsXML(final String schema, final String table,
+			final DetachedCriteria criteria, final int firstResult,
+			final int maxResult) throws AlKhwarizmixException {
 		getLogger().trace("getRecordListAsXML");
-		String result = recordListToXML(getRecordList(schema, table, criteria,
-				firstResult, maxResult));
+		final String result = recordListToXML(getRecordList(schema, table,
+				criteria, firstResult, maxResult, true));
 		return result;
 	}
 
 	/**
 	 * TODO: JAVADOC
 	 */
-	protected String recordListToXML(RecordList recordList) {
+	protected String recordListToXML(final RecordList recordList) {
 		String result = null;
 		try {
 			result = new XMLUtil(getJaxb2Marshaller())
 					.marshalObjectListToXML(recordList);
-		} catch (AlKhwarizmixException exception) {
+		} catch (final AlKhwarizmixException exception) {
 			getLogger().error("recordListToXML(): exception {}", exception);
 			throw new RuntimeException();
 		}
@@ -274,12 +289,12 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	/**
 	 * TODO: JAVADOC
 	 */
-	protected RecordList xmlToRecordList(String recordListXml) {
+	protected RecordList xmlToRecordList(final String recordListXml) {
 		RecordList result = null;
 		try {
 			result = (RecordList) new XMLUtil(getJaxb2Marshaller())
 					.unmarshalObjectListFromXML(recordListXml);
-		} catch (AlKhwarizmixException exception) {
+		} catch (final AlKhwarizmixException exception) {
 			getLogger().error("recordListToXML(): exception {}", exception);
 			throw new RuntimeException();
 		}
@@ -301,7 +316,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 		return recordDAO;
 	}
 
-	protected final void setRecordDAO(IRecordDAO value) {
+	protected final void setRecordDAO(final IRecordDAO value) {
 		recordDAO = value;
 	}
 
@@ -314,7 +329,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	// recordValidator
 	// ----------------------------------
 
-	protected final void setRecordValidator(IRecordServiceValidator value) {
+	protected final void setRecordValidator(final IRecordServiceValidator value) {
 		recordValidator = value;
 	}
 
@@ -333,7 +348,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	}
 
 	@Override
-	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
+	protected void setJaxb2Marshaller(final Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}
 
