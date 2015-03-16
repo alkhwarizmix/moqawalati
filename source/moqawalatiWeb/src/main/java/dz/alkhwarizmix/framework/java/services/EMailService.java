@@ -203,7 +203,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 			helper.setTo(simpleMailMessage.getTo());
 			helper.setSubject(simpleMailMessage.getSubject());
 			helper.setText(simpleMailMessage.getText());
-			// mailSender.send(mimeMessage);
+			mailSender.send(mimeMessage);
 		} catch (final MessagingException ex) {
 			getLogger().warn("sendEmail: {}", ex.getMessage());
 			throw new AlKhwarizmixException(

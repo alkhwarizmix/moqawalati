@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -34,7 +34,7 @@ import dz.alkhwarizmix.framework.java.utils.XMLUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٧ شعبان ١٤٣٥ (June 05, 2014)
  */
@@ -62,20 +62,20 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	/**
 	 */
 	@Override
-	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
+	public void saveOrUpdate(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
 		try {
-			for (AbstractAlKhwarizmixDomainObject cursor : object
+			for (final AbstractAlKhwarizmixDomainObject cursor : object
 					.getDaoObjectList()) {
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
 			}
-		} catch (ConcurrencyFailureException e) {
+		} catch (final ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
-		} catch (DataAccessException e) {
+		} catch (final DataAccessException e) {
 			throw getDAOExceptionForDataAccess(e);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw getDAOException(e);
 		}
 	}
@@ -91,7 +91,7 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	 */
 	@Override
 	public final String marshalObjectToXML(
-			AbstractAlKhwarizmixDomainObject object)
+			final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
 		getLogger().trace("marshalObjectToXML()");
 
@@ -103,7 +103,7 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	 */
 	@Override
 	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
-			String xmlValue) throws AlKhwarizmixException {
+			final String xmlValue) throws AlKhwarizmixException {
 		getLogger().trace("unmarshalObjectFromXML()");
 
 		return new XMLUtil(getJaxb2Marshaller())
@@ -120,9 +120,10 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 			return null;
 
 		try {
-			Criteria criteria = getHibernateTemplate().getSessionFactory()
-					.getCurrentSession().createCriteria(ExtendedData.class);
-			Criterion criter1 = Restrictions.eq(ExtendedData.ID,
+			final Criteria criteria = getHibernateTemplate()
+					.getSessionFactory().getCurrentSession()
+					.createCriteria(ExtendedData.class);
+			final Criterion criter1 = Restrictions.eq(ExtendedData.ID,
 					extendedDataToGet.getId());
 			criteria.add(criter1);
 			extendedDataToGet = (ExtendedData) criteria.uniqueResult();
@@ -133,8 +134,8 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 			}
 
 			return extendedDataToGet;
-		} catch (DataAccessException e) {
-			AlKhwarizmixException ex = new AlKhwarizmixException(
+		} catch (final DataAccessException e) {
+			final AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
 		}
@@ -143,13 +144,13 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	/**
 	 */
 	private List<ExtendedDataPart> getExtendedDataParts(
-			ExtendedData extendedData) {
+			final ExtendedData extendedData) {
 
-		Criteria criteria = getHibernateTemplate().getSessionFactory()
+		final Criteria criteria = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(ExtendedDataPart.class);
 		criteria.createCriteria(ExtendedDataPart.EXTENDEDDATA).add(
 				Restrictions.eq(ExtendedData.ID, extendedData.getId()));
-		List<ExtendedDataPart> extendedDataParts = criteria.list();
+		final List<ExtendedDataPart> extendedDataParts = criteria.list();
 
 		getLogger().debug("getExtendedDataParts: extendedDataParts.size {}",
 				(extendedDataParts == null)
@@ -174,7 +175,7 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 	}
 
 	@Override
-	protected void setHibernateTemplate(HibernateTemplate value) {
+	protected void setHibernateTemplate(final HibernateTemplate value) {
 		hibernateTemplate = value;
 	}
 
@@ -186,7 +187,7 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 		return jaxb2Marshaller;
 	}
 
-	protected void setJaxb2Marshaller(Jaxb2Marshaller value) {
+	protected void setJaxb2Marshaller(final Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
 	}
 

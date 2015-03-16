@@ -11,10 +11,13 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.Date;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +29,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.interfaces.IEMailService;
+import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
  * <p>
@@ -54,6 +59,15 @@ public class EMailServiceSendWorkerTest {
 	@Mock
 	private EMail mockEMail;
 
+	@Mock
+	private AlKhwarizmixSessionData mockSessionData;
+
+	@Mock
+	private DateUtil mockDateUtil;
+
+	@Mock
+	private Date mockDate;
+
 	@Before
 	public void setUp() {
 		setupUtEMailServiceSendWorker();
@@ -61,6 +75,9 @@ public class EMailServiceSendWorkerTest {
 
 	private void setupUtEMailServiceSendWorker() {
 		utEMailServiceSendWorker.setEMailService(mockEMailService);
+		utEMailServiceSendWorker.setSessionData(mockSessionData);
+		when(mockDateUtil.newDate()).thenReturn(mockDate);
+		utEMailServiceSendWorker.setDateUtil(mockDateUtil);
 	}
 
 	// --------------------------------------------------------------------------
@@ -87,8 +104,8 @@ public class EMailServiceSendWorkerTest {
 		utEMailServiceSendWorker.scheduledSendEMail();
 		// ASSERT
 		verify(mockEMailService, times(1)).sendEMail(mockEMail);
-		// verify(mockEMail, times(1)).setSentAt(any(Date.class));
-		verify(mockEMailService, times(1)).updateEMail(mockEMail, eq(false));
+		Assert.assertEquals(mockDate, mockEMail.getSentAt());
+		verify(mockEMailService, times(1)).updateEMail(mockEMail, false);
 	}
 
 } // Class

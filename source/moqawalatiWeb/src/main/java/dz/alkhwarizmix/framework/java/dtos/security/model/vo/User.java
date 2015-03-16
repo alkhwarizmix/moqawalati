@@ -216,6 +216,10 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 			domainObject = new AlKhwarizmixDomainObject();
 	}
 
+	public boolean isJMeterTestUser() {
+		return (getUserId().matches("UTEST\\S+@dz.alkhwarizmix.com"));
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Getters & Setters

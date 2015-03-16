@@ -98,6 +98,7 @@ public class EMailServiceTest {
 		Assert.assertTrue(false);
 	}
 
+	@Ignore("TODO: TDD")
 	@Test
 	public void test04_A_getPendingEMail_should_return_first_added_email()
 			throws AlKhwarizmixException {
@@ -111,6 +112,7 @@ public class EMailServiceTest {
 		Assert.assertEquals(email1, result);
 	}
 
+	@Ignore("TODO: TDD")
 	@Test
 	public void test04_B_getPendingEMail_should_not_return_sent_email()
 			throws AlKhwarizmixException {

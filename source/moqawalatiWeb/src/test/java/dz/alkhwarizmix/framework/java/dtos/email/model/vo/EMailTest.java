@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -31,7 +31,7 @@ import dz.alkhwarizmix.framework.java.utils.DateUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ ربيع الثاني ١٤٣٦ (February 01, 2015)
  */
@@ -50,7 +50,7 @@ public class EMailTest {
 
 	@BeforeClass
 	static public void setUp() {
-		DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
+		final DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
 		Mockito.when(mockDateUtil.newDate()).thenReturn(new Date(1234));
 		AbstractAlKhwarizmixDomainObject.dateUtil = mockDateUtil;
 	}
@@ -66,7 +66,7 @@ public class EMailTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private void setDataForEMailWithId(EMail email, int id) {
+	private void setDataForEMailWithId(final EMail email, final int id) {
 		email.setId(new Long(id));
 		email.setSender(new User("Sender" + id));
 		email.getSender().setId(new Long(id + 1));
@@ -76,8 +76,8 @@ public class EMailTest {
 		email.setSentAt(new Date(65748 + id));
 	}
 
-	private void assertEqualEMails(EMail expectedEMail, EMail cloneEMail,
-			boolean testDeep) {
+	private void assertEqualEMails(final EMail expectedEMail,
+			final EMail cloneEMail, final boolean testDeep) {
 		Assert.assertEquals("sender", expectedEMail.getSender(),
 				cloneEMail.getSender());
 		Assert.assertEquals("receiver", expectedEMail.getReceiver(),
@@ -107,21 +107,21 @@ public class EMailTest {
 
 	@Test
 	public void test01_sender_setAndGet() {
-		User valueToSet = new User("senderId1");
+		final User valueToSet = new User("senderId1");
 		utEMail.setSender(valueToSet);
 		Assert.assertEquals(valueToSet, utEMail.getSender());
 	}
 
 	@Test
 	public void test02_receiver_setAndGet() {
-		User valueToSet = new User("receiverId1");
+		final User valueToSet = new User("receiverId1");
 		utEMail.setReceiver(valueToSet);
 		Assert.assertEquals(valueToSet, utEMail.getReceiver());
 	}
 
 	@Test
 	public void test03_body_setAndGet() {
-		String valueToSet = "Body";
+		final String valueToSet = "Body";
 		utEMail.setBody(valueToSet);
 		Assert.assertEquals(valueToSet, utEMail.getBody());
 	}
@@ -129,10 +129,10 @@ public class EMailTest {
 	@Test
 	public void test04_A_clone_null_properties() {
 		// SetUp
-		EMail expectedEMail = new EMail();
+		final EMail expectedEMail = new EMail();
 		utEMail = new EMail();
 		// Test
-		EMail cloneEMail = (EMail) utEMail.clone();
+		final EMail cloneEMail = (EMail) utEMail.clone();
 		// Others
 		setDataForEMailWithId(utEMail, 1567);
 		// Asserts
@@ -142,11 +142,11 @@ public class EMailTest {
 	@Test
 	public void test04_B_clone() {
 		// SetUp
-		EMail expectedEMail = new EMail();
+		final EMail expectedEMail = new EMail();
 		setDataForEMailWithId(expectedEMail, 7651);
 		setDataForEMailWithId(utEMail, 7651);
 		// Test
-		EMail cloneEMail = (EMail) utEMail.clone();
+		final EMail cloneEMail = (EMail) utEMail.clone();
 		// Others
 		setDataForEMailWithId(utEMail, 1569);
 		// Asserts

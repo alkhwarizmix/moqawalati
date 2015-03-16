@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.framework.java.dtos.security.model.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -52,6 +56,7 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 	private static final long serialVersionUID = 8137825263607988935L;
 
 	public static final String PASSWORD = "password";
+	public static final String USERID = "user.id";
 
 	// --------------------------------------------------------------------------
 	//
@@ -63,12 +68,18 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 		super();
 	}
 
+	public Password(final User user) {
+		this();
+		setUser(user);
+	}
+
 	protected Password(final Password other) {
 		super(other);
 		if (other != null) {
 			encryption = (Encryption) ObjectUtils.clone(other.encryption);
 			password = other.password;
 			user = (User) ObjectUtils.clone(other.user);
+			lastUse = (Date) ObjectUtils.clone(other.lastUse);
 		}
 	}
 
@@ -78,18 +89,22 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(targetEntity = Encryption.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(targetEntity = Encryption.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "fEncryption", nullable = false)
+	@JoinColumn(name = "fEncryption", nullable = true, updatable = false)
 	private Encryption encryption;
 
-	@Column(name = "fPassword", nullable = false, length = 127)
+	@Column(name = "fPassword", nullable = false, length = 127, updatable = false)
 	private String password;
 
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "fUser", nullable = false)
+	@JoinColumn(name = "fUser", nullable = false, updatable = false)
 	private User user;
+
+	@Column(name = "fLastUse", nullable = true, updatable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUse;
 
 	// --------------------------------------------------------------------------
 	//
@@ -149,6 +164,10 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 	// encryption
 	// ----------------------------------
 
+	static {
+		ignoreBlazeDSProperty(Password.class, "encryption");
+	}
+
 	public Encryption getEncryption() {
 		return encryption;
 	}
@@ -165,6 +184,7 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 		ignoreBlazeDSProperty(Password.class, "password");
 	}
 
+	@XmlTransient
 	public String getPassword() {
 		return password;
 	}
@@ -183,6 +203,18 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 
 	public void setUser(final User value) {
 		user = value;
+	}
+
+	// ----------------------------------
+	// lastUse
+	// ----------------------------------
+
+	public Date getLastUse() {
+		return lastUse;
+	}
+
+	public void setLastUse(final Date value) {
+		lastUse = value;
 	}
 
 } // Class

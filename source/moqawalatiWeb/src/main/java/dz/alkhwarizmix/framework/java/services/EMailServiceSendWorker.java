@@ -11,8 +11,6 @@
 
 package dz.alkhwarizmix.framework.java.services;
 
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.interfaces.IEMailService;
 import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
  * <p>
@@ -35,13 +34,10 @@ public class EMailServiceSendWorker {
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public EMailServiceSendWorker() {
 		// NOOP
 	}
@@ -71,6 +67,8 @@ public class EMailServiceSendWorker {
 
 	@Autowired
 	private AlKhwarizmixSessionData sessionData;
+
+	private DateUtil dateUtil = null;
 
 	// --------------------------------------------------------------------------
 	//
@@ -108,7 +106,7 @@ public class EMailServiceSendWorker {
 
 	private void updateEMailSentAt(final EMail emailToSend)
 			throws AlKhwarizmixException {
-		emailToSend.setSentAt(new Date());
+		emailToSend.setSentAt(getDateUtil().newDate());
 		getEMailService().updateEMail(emailToSend, false);
 	}
 
@@ -117,6 +115,20 @@ public class EMailServiceSendWorker {
 	// Getters & Setters
 	//
 	// --------------------------------------------------------------------------
+
+	// ----------------------------------
+	// dateUtil
+	// ----------------------------------
+
+	protected final DateUtil getDateUtil() {
+		if (dateUtil == null)
+			dateUtil = new DateUtil();
+		return dateUtil;
+	}
+
+	protected final void setDateUtil(final DateUtil value) {
+		dateUtil = value;
+	}
 
 	// ----------------------------------
 	// emailService

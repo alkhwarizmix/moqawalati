@@ -27,6 +27,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Password;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
@@ -34,6 +35,7 @@ import dz.alkhwarizmix.framework.java.interfaces.IEMailService;
 import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IUserService;
 import dz.alkhwarizmix.framework.java.interfaces.IUserServiceValidator;
+import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
  * <p>
@@ -50,20 +52,14 @@ public class UserService extends AbstractAlKhwarizmixService implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public UserService() {
 		super();
 	}
 
-	/**
-	 * constructor
-	 */
 	protected UserService(final Logger theLogger) {
 		this();
 		logger = theLogger;
@@ -142,7 +138,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 			final AbstractAlKhwarizmixDomainObject object,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getObject");
-		User result = getMoqawalatiDAO().getUser((User) object);
+		User result = getUserDAO().getUser((User) object);
 		if (validateObjectToPublish && (result != null)) {
 			result = (User) result.clone();
 			getServiceValidator().validateObjectToPublish(result,
@@ -356,9 +352,14 @@ public class UserService extends AbstractAlKhwarizmixService implements
 			throw getErrorLoginException("subscribe4.");
 
 		subscribedUser = addUser(user, false);
+		Password generatedPassword = new Password(subscribedUser);
+		generatedPassword.setPassword("Mohamed"
+				+ new DateUtil().newDate().getTime());
+		generatedPassword = (Password) addObject(generatedPassword, false);
+
 		getSessionData().setLoggedUser(subscribedUser);
 		getSessionData().setSessionOwner(subscribedUser.getDomainObject());
-		sendEmailToAddedUser(subscribedUser);
+		sendEmailToAddedUser(subscribedUser, generatedPassword);
 
 		if (validateObjectToPublish && (subscribedUser != null)) {
 			subscribedUser = (User) subscribedUser.clone();
@@ -446,15 +447,33 @@ public class UserService extends AbstractAlKhwarizmixService implements
 
 	/**
 	 */
-	private void validateUserPassword(final User user, final String password,
-			final AlKhwarizmixException exception) throws AlKhwarizmixException {
-		if (!("Mohamed").equals(password))
-			throw exception;
+	private Password validateUserPassword(final User user,
+			final String password, final AlKhwarizmixException exception)
+			throws AlKhwarizmixException {
+		if (validateUserPasswordForJMeter(user, password))
+			return null;
+
+		for (final Password result : getUserDAO().getUserPasswords(user)) {
+			if (result.getPassword().equals(password))
+				return result;
+		}
+		throw exception;
 	}
 
 	/**
 	 */
-	private void sendEmailToAddedUser(final User user)
+	protected boolean validateUserPasswordForJMeter(final User user,
+			final String password) throws AlKhwarizmixException {
+		boolean result = false;
+		if (user.isJMeterTestUser() && ("Mohamed".equals(password))) {
+			result = true;
+		}
+		return result;
+	}
+
+	/**
+	 */
+	private void sendEmailToAddedUser(final User user, final Password password)
 			throws AlKhwarizmixException {
 		final User infoUser = getUser(new User("fares@dz.moqawalati.com"),
 				false);
@@ -463,7 +482,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		email.setReceiver(user);
 		email.setBody("Dear " + user.getName()
 				+ ", thank you for your subscription. Your password is "
-				+ "Mohamed");
+				+ password.getPassword());
 		getEmailService().addEMail(email, false);
 	}
 
@@ -499,7 +518,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	// userDAO
 	// ----------------------------------
 
-	private final IUserDAO getMoqawalatiDAO() {
+	private final IUserDAO getUserDAO() {
 		return userDAO;
 	}
 

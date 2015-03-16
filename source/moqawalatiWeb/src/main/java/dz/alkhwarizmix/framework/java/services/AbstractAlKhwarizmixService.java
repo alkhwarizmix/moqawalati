@@ -89,6 +89,8 @@ public abstract class AbstractAlKhwarizmixService implements
 	public AbstractAlKhwarizmixDomainObject addObject(
 			final AbstractAlKhwarizmixDomainObject object,
 			final boolean validateForPublishing) throws AlKhwarizmixException {
+		getLogger().trace("addObject: {}, {}", object, validateForPublishing);
+
 		getServiceValidator().validateObjectToAdd(object, getSessionOwner());
 		getServiceDAO().saveOrUpdate(object);
 		AbstractAlKhwarizmixDomainObject result = object;
@@ -98,7 +100,7 @@ public abstract class AbstractAlKhwarizmixService implements
 					getSessionOwner());
 		}
 
-		getLogger().trace("addObject: result={}", result);
+		getLogger().trace("addObject: return {}", result);
 		return result;
 	}
 
@@ -108,10 +110,15 @@ public abstract class AbstractAlKhwarizmixService implements
 	@Override
 	public String addObject(final String objectXml)
 			throws AlKhwarizmixException {
+		getLogger().trace("addObject: {}", objectXml);
+
 		final AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
-		final AbstractAlKhwarizmixDomainObject result = addObject(newObject,
-				true);
-		return marshalObjectToXML(result);
+		final AbstractAlKhwarizmixDomainObject addedObject = addObject(
+				newObject, true);
+		final String result = marshalObjectToXML(addedObject);
+
+		getLogger().trace("addObject: return {}", result);
+		return result;
 	}
 
 	/**
@@ -128,11 +135,15 @@ public abstract class AbstractAlKhwarizmixService implements
 	@Override
 	public String getObjectAsXML(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
+		getLogger().trace("getObjectAsXML: {}", object);
+
 		String result = "";
 		final AbstractAlKhwarizmixDomainObject foundObject = getObject(object,
 				true);
 		if (foundObject != null)
 			result = marshalObjectToXML(foundObject);
+
+		getLogger().trace("getObjectAsXML: return {}", result);
 		return result;
 	}
 
@@ -142,8 +153,12 @@ public abstract class AbstractAlKhwarizmixService implements
 	@Override
 	public String getObjectAsXML(final String objectXml)
 			throws AlKhwarizmixException {
+		getLogger().trace("getObjectAsXML: {}", objectXml);
+
 		final AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
 		final String result = getObjectAsXML(newObject);
+
+		getLogger().trace("getObjectAsXML: return {}", result);
 		return result;
 	}
 
@@ -170,8 +185,9 @@ public abstract class AbstractAlKhwarizmixService implements
 			final DetachedCriteria criteria, final int firstResult,
 			final int maxResult, final boolean validateForPublishing)
 			throws AlKhwarizmixException {
-		getLogger().trace("getObjectList({}, {}, {})", criteria, firstResult,
-				maxResult);
+		final String methodName = "getObjectList";
+		getLogger().trace("{}({}, {}, {}, {})", methodName, criteria,
+				firstResult, maxResult, validateForPublishing);
 
 		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		final List<AbstractAlKhwarizmixDomainObject> selectedList = getServiceDAO()
@@ -181,6 +197,7 @@ public abstract class AbstractAlKhwarizmixService implements
 		else
 			result = selectedList;
 
+		getLogger().trace("{} return {}", methodName, result);
 		return result;
 	}
 
@@ -195,9 +212,9 @@ public abstract class AbstractAlKhwarizmixService implements
 						getSessionOwner());
 				result.add(obj);
 			} catch (final AlKhwarizmixException e) {
-				getLogger()
-						.warn("validateObjectListToPublish: Validation failure for {}",
-								obj);
+				final String methodName = "validateObjectListToPublish";
+				getLogger().warn("{}: Validation failure for {}", methodName,
+						obj);
 			}
 		}
 	}

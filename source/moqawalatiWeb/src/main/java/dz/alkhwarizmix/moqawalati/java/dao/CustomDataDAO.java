@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -29,7 +29,7 @@ import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
@@ -77,11 +77,12 @@ public class CustomDataDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 			throws AlKhwarizmixException {
 		getLogger().trace("getCustomData()");
 		try {
-			Criteria criteria = getHibernateTemplate().getSessionFactory()
-					.getCurrentSession().createCriteria(CustomData.class);
-			Criterion criter1 = Restrictions.eq(CustomData.CUSTOMDATAID,
+			final Criteria criteria = getHibernateTemplate()
+					.getSessionFactory().getCurrentSession()
+					.createCriteria(CustomData.class);
+			final Criterion criter1 = Restrictions.eq(CustomData.CUSTOMDATAID,
 					customDataToGet.getCustomDataId());
-			Criterion criter2 = Restrictions.eq(CustomData.CUSTOMIZER,
+			final Criterion criter2 = Restrictions.eq(CustomData.CUSTOMIZER,
 					customDataToGet.getCustomizer().getId());
 			criteria.add(Restrictions.and(criter1, criter2));
 			customDataToGet = (CustomData) criteria.uniqueResult();
@@ -90,8 +91,8 @@ public class CustomDataDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 						.getExtendedData()));
 			}
 			return customDataToGet;
-		} catch (DataAccessException e) {
-			AlKhwarizmixException ex = new AlKhwarizmixException(
+		} catch (final DataAccessException e) {
+			final AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
 		}
