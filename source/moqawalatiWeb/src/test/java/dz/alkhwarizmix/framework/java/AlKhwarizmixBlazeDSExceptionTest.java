@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -21,10 +21,10 @@ import org.junit.Test;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ٢٤ جمادى الأولى ١٤٣٦ (March 15, 2015)
  */
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AlKhwarizmixExceptionTest {
+public class AlKhwarizmixBlazeDSExceptionTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -32,15 +32,15 @@ public class AlKhwarizmixExceptionTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private AlKhwarizmixException utAlKhwarizmixException;
+	private AlKhwarizmixBlazeDSException utAlKhwarizmixBlazeDSException;
 
 	@Before
 	public void setUp() {
-		utAlKhwarizmixException = newAlKhwarizmixException();
+		utAlKhwarizmixBlazeDSException = newAlKhwarizmixBlazeDSException();
 	}
 
-	private AlKhwarizmixException newAlKhwarizmixException() {
-		return new AlKhwarizmixException("");
+	private AlKhwarizmixBlazeDSException newAlKhwarizmixBlazeDSException() {
+		return new AlKhwarizmixBlazeDSException("");
 	}
 
 	// --------------------------------------------------------------------------
@@ -58,8 +58,8 @@ public class AlKhwarizmixExceptionTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test00_constructor1() throws AlKhwarizmixException {
-		Assert.assertNotNull(utAlKhwarizmixException);
+	public void test00_constructor1() throws AlKhwarizmixBlazeDSException {
+		Assert.assertNotNull(utAlKhwarizmixBlazeDSException);
 	}
 
 } // Class

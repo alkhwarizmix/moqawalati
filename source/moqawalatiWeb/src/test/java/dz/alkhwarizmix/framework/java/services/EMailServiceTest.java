@@ -80,6 +80,11 @@ public class EMailServiceTest {
 	//
 	// --------------------------------------------------------------------------
 
+	@Test
+	public void test00_constructor() {
+		Assert.assertNotNull(utEMailService);
+	}
+
 	@Ignore("TODO: TDD")
 	@Test
 	public void test01_addEMail() {

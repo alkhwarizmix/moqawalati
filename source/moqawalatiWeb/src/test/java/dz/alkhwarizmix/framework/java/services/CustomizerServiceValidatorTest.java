@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,11 +9,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java;
+package dz.alkhwarizmix.framework.java.services;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
  * <p>
@@ -21,10 +26,11 @@ import org.junit.Test;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ٢٤ جمادى الأولى ١٤٣٦ (March 15, 2015)
  */
+@RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AlKhwarizmixExceptionTest {
+public class CustomizerServiceValidatorTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -32,24 +38,8 @@ public class AlKhwarizmixExceptionTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private AlKhwarizmixException utAlKhwarizmixException;
-
-	@Before
-	public void setUp() {
-		utAlKhwarizmixException = newAlKhwarizmixException();
-	}
-
-	private AlKhwarizmixException newAlKhwarizmixException() {
-		return new AlKhwarizmixException("");
-	}
-
-	// --------------------------------------------------------------------------
-	//
-	// Helpers
-	//
-	// --------------------------------------------------------------------------
-
-	// EMPTY
+	@InjectMocks
+	private CustomizerServiceValidator utCustomizerServiceValidator;
 
 	// --------------------------------------------------------------------------
 	//
@@ -58,8 +48,14 @@ public class AlKhwarizmixExceptionTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test00_constructor1() throws AlKhwarizmixException {
-		Assert.assertNotNull(utAlKhwarizmixException);
+	public void test00_constructor() {
+		Assert.assertNotNull(utCustomizerServiceValidator);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test00() throws AlKhwarizmixException {
+		Assert.assertTrue(false);
 	}
 
 } // Class

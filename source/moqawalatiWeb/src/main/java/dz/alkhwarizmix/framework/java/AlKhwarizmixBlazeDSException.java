@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -15,7 +15,7 @@ package dz.alkhwarizmix.framework.java;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٩ جمادى الأولى ١٤٣٦ (February 28, 2015)
  */
@@ -25,17 +25,17 @@ public class AlKhwarizmixBlazeDSException extends AlKhwarizmixException {
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param message
 	 *            {@link String} the exception's description
 	 */
-	public AlKhwarizmixBlazeDSException(String message) {
+	public AlKhwarizmixBlazeDSException(final String message) {
 		super(message);
 	}
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param message
 	 *            {@link String} the exception's description
 	 * @param nested
@@ -48,7 +48,7 @@ public class AlKhwarizmixBlazeDSException extends AlKhwarizmixException {
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param message
 	 *            {@link String} the exception's description
 	 * @param errorCode
@@ -63,7 +63,7 @@ public class AlKhwarizmixBlazeDSException extends AlKhwarizmixException {
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param message
 	 *            {@link String} the exception's description
 	 * @param errorCode
@@ -76,24 +76,24 @@ public class AlKhwarizmixBlazeDSException extends AlKhwarizmixException {
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param errorCode
 	 *            {@link AlKhwarizmixErrorCode} the code for the exception
 	 */
-	public AlKhwarizmixBlazeDSException(AlKhwarizmixErrorCode errorCode) {
+	public AlKhwarizmixBlazeDSException(final AlKhwarizmixErrorCode errorCode) {
 		super(errorCode);
 	}
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param errorCode
 	 *            {@link AlKhwarizmixErrorCode} the code for the exception
 	 * @param nested
 	 *            {@link Exception} the exception's cause
 	 */
-	public AlKhwarizmixBlazeDSException(AlKhwarizmixErrorCode errorCode,
-			Exception nested) {
+	public AlKhwarizmixBlazeDSException(final AlKhwarizmixErrorCode errorCode,
+			final Exception nested) {
 		super(errorCode, nested);
 	}
 
