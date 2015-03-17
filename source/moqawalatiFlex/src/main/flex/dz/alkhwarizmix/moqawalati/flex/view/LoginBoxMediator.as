@@ -151,6 +151,8 @@ public class LoginBoxMediator extends MoqawalatiMediator
 	
 	private function addEventListenersToLoginBox():void
 	{
+		loginBox.addEventListener(LoginBoxEvent.CONNECT, loginBox_connectHandler);
+		loginBox.addEventListener(LoginBoxEvent.SUBSCRIBE, loginBox_subscribeHandler);
 		loginBox.addEventListener(LoginBoxEvent.LOGIN, loginBox_loginHandler);
 		loginBox.addEventListener(LoginBoxEvent.LOGOUT, loginBox_logoutHandler);
 	}
@@ -174,7 +176,24 @@ public class LoginBoxMediator extends MoqawalatiMediator
 	{
 		logger.debug("handleLoginUserProxyChanged");
 		
-		loginBox.loggedUser = appLoginUserProxy.user;
+		switch (loginBox.btnSend.labelResKey)
+		{
+			case "CONNECT":
+			{
+				loginBox.loggedUser = null;
+				loginBox.connectedUser = appLoginUserProxy.user;
+				break;
+			}
+			
+			case "SUBSCRIBE":
+			case "LOGIN":
+			case "LOGOUT":
+			{
+				loginBox.loggedUser = appLoginUserProxy.user;
+				break;
+			}
+			
+		}
 	}
 	
 	//--------------------------------------------------------------------------
@@ -186,16 +205,31 @@ public class LoginBoxMediator extends MoqawalatiMediator
 	/**
 	 * @private
 	 */
+	private function loginBox_connectHandler(event:MoqawalatiEvent):void
+	{
+		logger.debug("loginBox_connectHandler");
+		
+		var userToConnect:UserVO = new UserVO();
+		userToConnect.userId = loginBox.textUserId.text;
+		sendNotification(MoqawalatiConstants.CONNECT,
+			{
+				operationParams : [userToConnect]
+			});
+	}
+	
+	/**
+	 * @private
+	 */
 	private function loginBox_loginHandler(event:MoqawalatiEvent):void
 	{
 		logger.debug("loginBox_loginHandler");
 		
 		var userToLogin:UserVO = new UserVO();
-		userToLogin.name = loginBox.textUserName.text;
-		userToLogin.userId = loginBox.textUserName.text;
+		userToLogin.userId = loginBox.textUserId.text;
+		var password:String = loginBox.textPassword.text;
 		sendNotification(MoqawalatiConstants.LOGIN,
 			{
-				operationParams : [userToLogin]
+				operationParams : [userToLogin, password]
 			});
 	}
 	
@@ -209,6 +243,22 @@ public class LoginBoxMediator extends MoqawalatiMediator
 		sendNotification(MoqawalatiConstants.LOGOUT,
 			{
 				operationParams : [loginBox.loggedUser]
+			});
+	}
+	
+	/**
+	 * @private
+	 */
+	private function loginBox_subscribeHandler(event:MoqawalatiEvent):void
+	{
+		logger.debug("loginBox_subscribeHandler");
+		
+		var userToSubscribe:UserVO = new UserVO();
+		userToSubscribe.userId = loginBox.textUserId.text;
+		userToSubscribe.name = loginBox.textUserName.text;
+		sendNotification(MoqawalatiConstants.SUBSCRIBE,
+			{
+				operationParams : [userToSubscribe]
 			});
 	}
 	

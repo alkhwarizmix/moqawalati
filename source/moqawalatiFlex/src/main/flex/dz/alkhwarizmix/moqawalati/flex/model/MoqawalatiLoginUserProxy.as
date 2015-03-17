@@ -12,11 +12,11 @@
 package dz.alkhwarizmix.moqawalati.flex.model
 {
 
+import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
-import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
 
 /**
@@ -63,10 +63,14 @@ public class MoqawalatiLoginUserProxy extends MoqawalatiProxy
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MoqawalatiLoginUserProxy);
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MoqawalatiLoginUserProxy);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//
@@ -89,7 +93,7 @@ public class MoqawalatiLoginUserProxy extends MoqawalatiProxy
 	//--------------------------------------------------------------------------
 	
 	//----------------------------------
-	//  configDico
+	//  user
 	//----------------------------------
 	
 	public function get user():UserVO

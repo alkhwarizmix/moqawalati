@@ -34,9 +34,10 @@
 	
 	<fx:Script>
 	<![CDATA[
+		import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-		import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
+		import dz.alkhwarizmix.moqawalati.flex.errors.MoqawalatiError;
 		
 		//--------------------------------------------------------------------------
 		//
@@ -50,16 +51,58 @@
 		//
 		//--------------------------------------------------------------------------
 		
-		private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-			getLogger(LoginBox);
 		
-		override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		override protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(LoginBox);
+			return LOG;
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Variables
+		//
+		//--------------------------------------------------------------------------
+		
+		private var invalidateUserFlag:Boolean = true;
+		
+		private var btnEventToSend:String = LoginBoxEvent.CONNECT;
 		
 		//--------------------------------------------------------------------------
 		//
 		//  Properties
 		//
 		//--------------------------------------------------------------------------
+		
+		//----------------------------------
+		//  connectedUser
+		//----------------------------------
+		
+		private var _connectedUser:UserVO = null;
+		public function get connectedUser():UserVO { return _connectedUser; }
+		
+		public function set connectedUser(value:UserVO):void
+		{
+			if (_connectedUser == value)
+				return;
+			_connectedUser = value;
+			invalidateUser();
+		}
+		
+		private function get isUserConnected():Boolean
+		{
+			return (connectedUser != null);
+		}
+		
+		private function get isConnectedUserNew():Boolean
+		{
+			if (!isUserConnected)
+				throw new MoqawalatiError("User should be connected!");
+			return (!connectedUser.name);
+		}
 		
 		//----------------------------------
 		//  loggedUser
@@ -73,20 +116,9 @@
 			if (_loggedUser == value)
 				return;
 			_loggedUser = value;
-			invalidateLoggedUser();
+			invalidateUser();
 		}
-		
-		private var invalidateLoggedUserFlag:Boolean = true;
-		private function invalidateLoggedUser():void
-		{
-			if (!invalidateLoggedUserFlag)
-			{
-				invalidateLoggedUserFlag = true;
-				invalidateProperties();
-				invalidateDisplayList();
-			}
-		}
-		
+				
 		private function get isUserLogged():Boolean
 		{
 			return (loggedUser != null);
@@ -105,58 +137,89 @@
 		{
 			super.validateDisplayList();
 			
-			validateLoggedUser();
+			validateUser();
 		}
 		
 		/**
 		 * @private
 		 */
-		private function validateLoggedUser():void
+		private function validateUser():void
 		{
-			if (invalidateLoggedUserFlag)
+			if (invalidateUserFlag)
 			{
-				updateLabelUserName();
-				updateTextUserName();
-				updateTextPassword();
+				hideComponent(labelUserName);
+				showComponent(textUserId);
+				hideComponent(textUserName);
+				hideComponent(textPassword);
 				
-				// btnLogInOrOut
-				btnLogInOrOut.labelResKey = isUserLogged ? "LOGOUT" : "LOGIN";
-				
-				invalidateLoggedUserFlag = false;
+				if (isUserLogged)
+					updateDisplayListToLogout();
+				else if (!isUserConnected)
+					updateDisplayListToConnect();
+				else if (isConnectedUserNew)
+					updateDisplayListToSuscribe();
+				else 
+					updateDisplayListToLogin();
+				invalidateUserFlag = false;
 			}
 		}
 		
 		/**
 		 * @private
 		 */
-		private function updateLabelUserName():void
+		private function updateDisplayListToLogout():void
 		{
-			labelUserName.setVisible(isUserLogged);
-			labelUserName.includeInLayout = isUserLogged;
-			if (isUserLogged)
-				labelUserName.text = loggedUser.name;	
+			btnEventToSend = LoginBoxEvent.LOGOUT;
+			btnSend.labelResKey = "LOGOUT";
+			showComponent(labelUserName);
+			labelUserName.text = loggedUser.name;
+			
+			hideComponent(textUserId);
 		}
 		
 		/**
 		 * @private
 		 */
-		private function updateTextUserName():void
+		private function updateDisplayListToConnect():void
 		{
-			textUserName.setVisible(!isUserLogged);
-			textUserName.includeInLayout = !isUserLogged;
-			if (isUserLogged)
-				textUserName.text = "";
+			btnEventToSend = LoginBoxEvent.CONNECT;
+			btnSend.labelResKey = "CONNECT";
 		}
 		
 		/**
 		 * @private
 		 */
-		private function updateTextPassword():void
+		private function updateDisplayListToSuscribe():void
 		{
-			textPassword.setVisible(!isUserLogged);
-			textPassword.includeInLayout = !isUserLogged;
-			if (isUserLogged)
-				textPassword.text = "";
+			btnEventToSend = LoginBoxEvent.SUBSCRIBE;
+			btnSend.labelResKey = "SUBSCRIBE";
+			showComponent(textUserName);
+		}
+		
+		/**
+		 * @private
+		 */
+		private function updateDisplayListToLogin():void
+		{
+			btnEventToSend = LoginBoxEvent.LOGIN;
+			btnSend.labelResKey = "LOGIN";
+			showComponent(textPassword);
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		//  Methods
+		//
+		//--------------------------------------------------------------------------
+		
+		private function invalidateUser():void
+		{
+			if (!invalidateUserFlag)
+			{
+				invalidateUserFlag = true;
+				invalidateProperties();
+				invalidateDisplayList();
+			}
 		}
 		
 		//--------------------------------------------------------------------------
@@ -168,22 +231,22 @@
 		/**
 		 * @private
 		 */
-		private function btnLogInOrOut_clickHandler(event:MouseEvent):void
+		private function btnSend_clickHandler(event:MouseEvent):void
 		{
-			sendEvent(!isUserLogged ? LoginBoxEvent.LOGIN : LoginBoxEvent.LOGOUT,
-				LoginBoxEvent);
+			sendEvent(btnEventToSend, LoginBoxEvent);
 		}
 		
 	]]>
 	</fx:Script>
 	
 	<controls:MoqawalatiLabel id="labelUserName"/>
+	<controls:MoqawalatiTextInput id="textUserId"
+		promptResKey="USER_ID"/>
 	<controls:MoqawalatiTextInput id="textUserName"
 		promptResKey="USER_NAME"/>
 	<controls:MoqawalatiTextInput id="textPassword"
 		promptResKey="PASSWORD"
 		displayAsPassword="true"/>
-	<controls:MoqawalatiButton id="btnLogInOrOut"
-		click="btnLogInOrOut_clickHandler(event)"/>
-	
+	<controls:MoqawalatiButton id="btnSend"
+		click="btnSend_clickHandler(event)"/>	
 </containers:MoqawalatiHBox>

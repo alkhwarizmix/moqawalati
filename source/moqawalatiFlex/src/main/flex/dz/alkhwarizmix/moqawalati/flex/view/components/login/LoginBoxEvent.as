@@ -31,6 +31,8 @@ public class LoginBoxEvent extends MoqawalatiEvent
 	//--------------------------------------------------------------------------
 	
 	// EVENTS
+	public static const CONNECT:String = "LoginBoxEvent_connect";
+	public static const SUBSCRIBE:String = "LoginBoxEvent_subscribe";
 	public static const LOGIN:String = "LoginBoxEvent_login";
 	public static const LOGOUT:String = "LoginBoxEvent_logout";
 	

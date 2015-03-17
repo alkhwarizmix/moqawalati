@@ -53,6 +53,8 @@ public class MoqawalatiConstants
 	public static const CUSTOMDATA_PROXY_CHANGED:String = "Moqawalati_customdata_proxy_changed";
 	public static const LOGINUSER_PROXY_CHANGED:String = "Moqawalati_loginuser_proxy_changed";
 	
+	public static const CONNECT:String = "Moqawalati_connect";
+	public static const SUBSCRIBE:String = "Moqawalati_subscribe";
 	public static const LOGIN:String = "Moqawalati_login";
 	public static const LOGOUT:String = "Moqawalati_logout";
 	

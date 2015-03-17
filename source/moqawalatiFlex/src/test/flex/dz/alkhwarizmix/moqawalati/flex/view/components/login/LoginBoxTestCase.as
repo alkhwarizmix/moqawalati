@@ -90,7 +90,7 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 	}
 	
 	[Test]
-	public function test03_click_btnLogInOrOut_should_dispatch_LOGIN_event_if_not_loggedUser():void
+	public function test03_click_btnSend_should_dispatch_LOGIN_event_if_not_loggedUser():void
 	{
 		utLoginBox.loggedUser = null;
 		assert_should_dispatchedEvent(utLoginBox,
@@ -98,13 +98,13 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 			LoginBoxEvent,
 			function ():void
 			{
-				utLoginBox.btnLogInOrOut.dispatchEvent(
+				utLoginBox.btnSend.dispatchEvent(
 					new MouseEvent(MouseEvent.CLICK));
 			});
 	}
 	
 	[Test]
-	public function test04_click_btnLogInOrOut_should_dispatch_LOGOUT_event_if_loggedUser():void
+	public function test04_click_btnSend_should_dispatch_LOGOUT_event_if_loggedUser():void
 	{
 		utLoginBox.loggedUser = userFaresBelhaouas;
 		assert_should_dispatchedEvent(utLoginBox,
@@ -112,7 +112,7 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 			LoginBoxEvent,
 			function ():void
 			{
-				utLoginBox.btnLogInOrOut.dispatchEvent(
+				utLoginBox.btnSend.dispatchEvent(
 					new MouseEvent(MouseEvent.CLICK));
 			});
 	}
