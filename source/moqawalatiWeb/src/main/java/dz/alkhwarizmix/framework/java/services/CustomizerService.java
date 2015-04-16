@@ -138,9 +138,8 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 		CustomData result = null;
 		final CustomData customData = (CustomData) object;
 		customData.setCustomizer(getSessionCustomizer());
-		if (getSessionCustomizer().getId() != null) {
+		if (getSessionCustomizer().getId() != null)
 			result = getCustomDataDAO().getCustomData(customData);
-		}
 
 		if (validateObjectToPublish && (result != null)) {
 			result = (CustomData) result.clone();

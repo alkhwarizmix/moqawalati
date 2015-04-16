@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -13,24 +13,20 @@ package dz.alkhwarizmix.framework.java.model;
 
 import java.io.Serializable;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixSessionData;
 
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٧ محرم ١٤٣٥ (November 21, 2013)
  */
-@Component
-@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AlKhwarizmixSessionData implements Serializable {
+public class AlKhwarizmixSessionData implements IAlKhwarizmixSessionData,
+		Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -52,7 +48,7 @@ public class AlKhwarizmixSessionData implements Serializable {
 	 * constructor
 	 */
 	public AlKhwarizmixSessionData() {
-		// resetCustomizer();
+		// NOOP
 	}
 
 	// --------------------------------------------------------------------------
@@ -77,11 +73,13 @@ public class AlKhwarizmixSessionData implements Serializable {
 	// connectedUser
 	// ----------------------------------
 
+	@Override
 	public final User getConnectedUser() {
 		return connectedUser;
 	}
 
-	public final void setConnectedUser(User value) {
+	@Override
+	public final void setConnectedUser(final User value) {
 		connectedUser = value;
 	}
 
@@ -89,11 +87,13 @@ public class AlKhwarizmixSessionData implements Serializable {
 	// loggedUser
 	// ----------------------------------
 
+	@Override
 	public final User getLoggedUser() {
 		return loggedUser;
 	}
 
-	public final void setLoggedUser(User value) {
+	@Override
+	public final void setLoggedUser(final User value) {
 		loggedUser = value;
 	}
 
@@ -101,13 +101,15 @@ public class AlKhwarizmixSessionData implements Serializable {
 	// sessionOwner
 	// ----------------------------------
 
+	@Override
 	public final AlKhwarizmixDomainObject getSessionOwner() {
 		if (sessionOwner == null)
 			sessionOwner = new AlKhwarizmixDomainObject();
 		return sessionOwner;
 	}
 
-	public final void setSessionOwner(AlKhwarizmixDomainObject value) {
+	@Override
+	public final void setSessionOwner(final AlKhwarizmixDomainObject value) {
 		sessionOwner = value;
 	}
 
@@ -117,14 +119,17 @@ public class AlKhwarizmixSessionData implements Serializable {
 	//
 	// --------------------------------------------------------------------------
 
+	@Override
 	public final void resetConnectedUser() {
 		setConnectedUser(null);
 	}
 
+	@Override
 	public final void resetLoggedUser() {
 		setLoggedUser(null);
 	}
 
+	@Override
 	public final void resetSessionOwner() {
 		setSessionOwner(null);
 	}

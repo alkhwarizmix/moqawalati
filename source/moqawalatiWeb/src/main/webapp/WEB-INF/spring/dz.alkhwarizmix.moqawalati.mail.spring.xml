@@ -43,9 +43,10 @@
 	<!-- this is a template message that we can pre-load with default state -->
 	<bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
 		<property name="from" value="fares@dz.moqawalati.com" />
-		<property name="subject" value="Your order" />
+		<property name="subject" value="Your subscription" />
 	</bean>
 
+	<!-- -->
 	<bean id="emailServiceSendWorker"
 		class="dz.alkhwarizmix.framework.java.services.EMailServiceSendWorker">
 	</bean>
@@ -54,5 +55,6 @@
 		<task:scheduled ref="emailServiceSendWorker" method="scheduledSendEMail"
 			fixed-delay="5000" />
 	</task:scheduled-tasks>
+	<!-- -->
 
 </beans>

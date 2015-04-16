@@ -220,7 +220,7 @@ public class ClientService extends AbstractAlKhwarizmixService implements
 		try {
 			setupObjectExtendedDataXMLValue(client);
 			final Client result = (Client) updateObject(client,
-					validateObjectToPublish);
+					getSessionOwner(), validateObjectToPublish);
 			getLogger().trace("updateClient: return {}", result);
 			return result;
 		} catch (final AlKhwarizmixException e) {

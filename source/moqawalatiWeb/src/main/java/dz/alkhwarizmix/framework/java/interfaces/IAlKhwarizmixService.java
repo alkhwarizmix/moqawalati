@@ -17,6 +17,7 @@ import org.hibernate.criterion.DetachedCriteria;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -68,7 +69,8 @@ public interface IAlKhwarizmixService {
 	 */
 	public AbstractAlKhwarizmixDomainObject updateObject(
 			AbstractAlKhwarizmixDomainObject object,
-			boolean validateForPublishing) throws AlKhwarizmixException;
+			AlKhwarizmixDomainObject objectOwner, boolean validateForPublishing)
+			throws AlKhwarizmixException;
 
 	/**
 	 */

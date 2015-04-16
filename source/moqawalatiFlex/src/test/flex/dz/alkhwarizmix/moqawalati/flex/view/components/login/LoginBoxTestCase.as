@@ -82,6 +82,7 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 		assertNotNull(utLoginBox);
 	}
 	
+	[Ignore("REDO TDD")]
 	[Test]
 	public function test02_default_show_inputText_and_hide_label():void
 	{
@@ -89,6 +90,7 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 		assertHidden(utLoginBox.labelUserName, "label");
 	}
 	
+	[Ignore("REDO TDD")]
 	[Test]
 	public function test03_click_btnSend_should_dispatch_LOGIN_event_if_not_loggedUser():void
 	{
@@ -103,6 +105,7 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 			});
 	}
 	
+	[Ignore("REDO TDD")]
 	[Test]
 	public function test04_click_btnSend_should_dispatch_LOGOUT_event_if_loggedUser():void
 	{
@@ -147,6 +150,7 @@ public class LoginBoxTestCase extends MoqawalatiUITestCase
 		assertTrue("REDO WITH TDD", false);
 	}
 	
+	[Ignore("REDO TDD")]
 	[Test]
 	public function test08_textUserName_should_empty_when_loggedUser_after_rendering():void
 	{

@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
@@ -157,10 +158,9 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 			final int firstResult, final int maxResult,
 			final boolean validateForPublishing) throws AlKhwarizmixException {
 		getLogger().debug("getEMailList");
-		if (criteriaToUse == null) {
+		if (criteriaToUse == null)
 			criteriaToUse = DetachedCriteria.forClass(EMail.class);
-			// criteriaToUse.addOrder(Order.asc(EMail.USERID));
-		}
+		// criteriaToUse.addOrder(Order.asc(EMail.USERID));
 		final List<EMail> result = (List<EMail>) (List<?>) getObjectList(
 				criteriaToUse, firstResult, maxResult, validateForPublishing);
 		return result;
@@ -220,9 +220,10 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	@Transactional(readOnly = false)
 	@Override
 	public EMail updateEMail(final EMail email,
+			final AlKhwarizmixDomainObject updater,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().debug("updateEMail");
-		final EMail result = (EMail) updateObject(email,
+		final EMail result = (EMail) updateObject(email, updater,
 				validateObjectToPublish);
 		getLogger().trace("updateEMail: return {}", result);
 		return result;

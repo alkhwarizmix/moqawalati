@@ -32,7 +32,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixServiceValidator;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.utils.XMLUtil;
 
 /**
@@ -74,7 +74,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private AlKhwarizmixSessionData sessionData;
+	private IAlKhwarizmixSessionData sessionData;
 
 	// --------------------------------------------------------------------------
 	//
@@ -206,7 +206,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	private void validateObjectListToPublish(
 			final List<AbstractAlKhwarizmixDomainObject> result,
 			final List<AbstractAlKhwarizmixDomainObject> selectedList) {
-		for (final AbstractAlKhwarizmixDomainObject obj : selectedList) {
+		for (final AbstractAlKhwarizmixDomainObject obj : selectedList)
 			try {
 				getServiceValidator().validateObjectToPublish(obj,
 						getSessionOwner());
@@ -216,7 +216,6 @@ public abstract class AbstractAlKhwarizmixService implements
 				getLogger().warn("{}: Validation failure for {}", methodName,
 						obj);
 			}
-		}
 	}
 
 	/**
@@ -225,23 +224,24 @@ public abstract class AbstractAlKhwarizmixService implements
 	@Override
 	public AbstractAlKhwarizmixDomainObject updateObject(
 			final AbstractAlKhwarizmixDomainObject object,
+			AlKhwarizmixDomainObject objectOwner,
 			final boolean validateForPublishing) throws AlKhwarizmixException {
 		getLogger().trace("updateObject({})", object);
 
-		getServiceValidator().validateObjectToUpdate(object, getSessionOwner());
+		if (objectOwner == null)
+			objectOwner = getSessionOwner();
+		getServiceValidator().validateObjectToUpdate(object, objectOwner);
 		final AbstractAlKhwarizmixDomainObject foundObject = getObject(object,
 				false);
 		if (foundObject != null) {
 			foundObject.updateFrom(object);
 			getServiceDAO().saveOrUpdate(foundObject);
-		} else {
+		} else
 			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.INVALID_DATA);
-		}
 		AbstractAlKhwarizmixDomainObject result = foundObject;
 		if (validateForPublishing) {
 			result = (AbstractAlKhwarizmixDomainObject) result.clone();
-			getServiceValidator().validateObjectToPublish(result,
-					getSessionOwner());
+			getServiceValidator().validateObjectToPublish(result, objectOwner);
 		}
 		getLogger().trace("updateObject: result={}", result);
 		return result;
@@ -257,7 +257,7 @@ public abstract class AbstractAlKhwarizmixService implements
 
 		final AbstractAlKhwarizmixDomainObject newObject = unmarshalObjectFromXML(objectXml);
 		final AbstractAlKhwarizmixDomainObject result = updateObject(newObject,
-				true);
+				getSessionOwner(), true);
 		return marshalObjectToXML(result);
 	}
 
@@ -361,9 +361,8 @@ public abstract class AbstractAlKhwarizmixService implements
 	protected final void setupObjectExtendedDataXMLValue(
 			final AbstractAlKhwarizmixDomainObjectExtendable object)
 			throws AlKhwarizmixException {
-		if (object != null) {
+		if (object != null)
 			object.setExtendedDataValue(marshalObjectToXML(object));
-		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -400,11 +399,11 @@ public abstract class AbstractAlKhwarizmixService implements
 	// sessionData
 	// ----------------------------------
 
-	protected final AlKhwarizmixSessionData getSessionData() {
+	protected final IAlKhwarizmixSessionData getSessionData() {
 		return sessionData;
 	}
 
-	protected final void setSessionData(final AlKhwarizmixSessionData value) {
+	protected final void setSessionData(final IAlKhwarizmixSessionData value) {
 		sessionData = value;
 	}
 

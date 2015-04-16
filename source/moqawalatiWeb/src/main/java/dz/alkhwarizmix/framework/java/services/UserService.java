@@ -187,7 +187,8 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	public User updateUser(final User user,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().debug("updateUser");
-		final User result = (User) updateObject(user, validateObjectToPublish);
+		final User result = (User) updateObject(user, getSessionOwner(),
+				validateObjectToPublish);
 		return result;
 	}
 
@@ -389,9 +390,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public void logout(final User user) throws AlKhwarizmixException {
 		getLogger().debug("logout");
-		final User loggedUser = getUser(user, false);
-		if (loggedUser == null)
-			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
+		// final User loggedUser = getUser(user, false);
+		// if (loggedUser == null)
+		// throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
 
 		getSessionData().resetLoggedUser();
 		getSessionData().resetConnectedUser();
@@ -453,10 +454,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		if (validateUserPasswordForJMeter(user, password))
 			return null;
 
-		for (final Password result : getUserDAO().getUserPasswords(user)) {
+		for (final Password result : getUserDAO().getUserPasswords(user))
 			if (result.getPassword().equals(password))
 				return result;
-		}
 		throw exception;
 	}
 
@@ -465,9 +465,8 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	protected boolean validateUserPasswordForJMeter(final User user,
 			final String password) throws AlKhwarizmixException {
 		boolean result = false;
-		if (user.isJMeterTestUser() && ("Mohamed".equals(password))) {
+		if (user.isJMeterTestUser() && ("Mohamed".equals(password)))
 			result = true;
-		}
 		return result;
 	}
 

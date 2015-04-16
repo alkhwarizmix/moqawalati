@@ -108,6 +108,7 @@ public class LoginBoxMediatorTestCase extends MoqawalatiPureMVCTestCase
 		assertNotNull(utLoginBoxMediator);
 	}
 	
+	[Ignore("REDO TDD")]
 	[Test]
 	public function test02_dispatchEvent_LOGIN_should_sendNotification_LOGIN():void
 	{

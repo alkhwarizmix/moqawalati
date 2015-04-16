@@ -19,7 +19,6 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.interfaces.IEMailService;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
@@ -65,9 +64,6 @@ public class EMailServiceSendWorker {
 	@Autowired
 	private IEMailService emailService;
 
-	@Autowired
-	private AlKhwarizmixSessionData sessionData;
-
 	private DateUtil dateUtil = null;
 
 	// --------------------------------------------------------------------------
@@ -82,7 +78,6 @@ public class EMailServiceSendWorker {
 	public void scheduledSendEMail() {
 		getLogger().trace("scheduledSendEMail");
 		try {
-			setupSessionOwner();
 			final EMail emailToSend = getEMailService().getPendingEMail(false);
 			if (emailToSend != null) {
 				getLogger().trace("scheduledSendEMail: emailToSend={}",
@@ -94,20 +89,15 @@ public class EMailServiceSendWorker {
 			getLogger().warn("scheduledSendEMail 1: {}", e);
 		} catch (final Exception e) {
 			getLogger().warn("scheduledSendEMail 2: {}", e);
-		} finally {
-			getSessionData().resetSessionOwner();
 		}
-	}
-
-	private void setupSessionOwner() {
-		getSessionData().setSessionOwner(new AlKhwarizmixDomainObject());
-		getSessionData().getSessionOwner().setId(-1L);
 	}
 
 	private void updateEMailSentAt(final EMail emailToSend)
 			throws AlKhwarizmixException {
 		emailToSend.setSentAt(getDateUtil().newDate());
-		getEMailService().updateEMail(emailToSend, false);
+		final AlKhwarizmixDomainObject emailUpdater = new AlKhwarizmixDomainObject();
+		emailUpdater.setId(-1L);
+		getEMailService().updateEMail(emailToSend, emailUpdater, false);
 	}
 
 	// --------------------------------------------------------------------------
@@ -140,18 +130,6 @@ public class EMailServiceSendWorker {
 
 	protected final IEMailService getEMailService() {
 		return emailService;
-	}
-
-	// ----------------------------------
-	// sessionData
-	// ----------------------------------
-
-	protected final AlKhwarizmixSessionData getSessionData() {
-		return sessionData;
-	}
-
-	protected final void setSessionData(final AlKhwarizmixSessionData value) {
-		sessionData = value;
 	}
 
 } // Class

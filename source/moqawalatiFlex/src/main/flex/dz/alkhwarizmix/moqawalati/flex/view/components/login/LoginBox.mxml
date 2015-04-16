@@ -118,7 +118,7 @@
 			_loggedUser = value;
 			invalidateUser();
 		}
-				
+		
 		private function get isUserLogged():Boolean
 		{
 			return (loggedUser != null);
@@ -151,6 +151,7 @@
 				showComponent(textUserId);
 				hideComponent(textUserName);
 				hideComponent(textPassword);
+				hideComponent(btnCancel);
 				
 				if (isUserLogged)
 					updateDisplayListToLogout();
@@ -184,6 +185,7 @@
 		{
 			btnEventToSend = LoginBoxEvent.CONNECT;
 			btnSend.labelResKey = "CONNECT";
+			textUserId.text = "";
 		}
 		
 		/**
@@ -194,6 +196,8 @@
 			btnEventToSend = LoginBoxEvent.SUBSCRIBE;
 			btnSend.labelResKey = "SUBSCRIBE";
 			showComponent(textUserName);
+			showComponent(btnCancel);
+			textUserName.text = "";	
 		}
 		
 		/**
@@ -204,6 +208,8 @@
 			btnEventToSend = LoginBoxEvent.LOGIN;
 			btnSend.labelResKey = "LOGIN";
 			showComponent(textPassword);
+			showComponent(btnCancel);
+			textPassword.text = "";
 		}
 		
 		//--------------------------------------------------------------------------
@@ -236,6 +242,14 @@
 			sendEvent(btnEventToSend, LoginBoxEvent);
 		}
 		
+		/**
+		 * @private
+		 */
+		private function btnCancel_clickHandler(event:MouseEvent):void
+		{
+			sendEvent(LoginBoxEvent.LOGOUT, LoginBoxEvent);
+		}
+		
 	]]>
 	</fx:Script>
 	
@@ -248,5 +262,8 @@
 		promptResKey="PASSWORD"
 		displayAsPassword="true"/>
 	<controls:MoqawalatiButton id="btnSend"
-		click="btnSend_clickHandler(event)"/>	
+		click="btnSend_clickHandler(event)"/>
+	<controls:MoqawalatiButton id="btnCancel"
+		labelResKey="CANCEL"
+		click="btnCancel_clickHandler(event)"/>	
 </containers:MoqawalatiHBox>

@@ -189,10 +189,10 @@ public class LoginBoxMediator extends MoqawalatiMediator
 			case "LOGIN":
 			case "LOGOUT":
 			{
+				loginBox.connectedUser = appLoginUserProxy.user;
 				loginBox.loggedUser = appLoginUserProxy.user;
 				break;
 			}
-			
 		}
 	}
 	

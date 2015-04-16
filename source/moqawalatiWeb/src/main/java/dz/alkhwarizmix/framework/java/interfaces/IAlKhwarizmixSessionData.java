@@ -11,9 +11,8 @@
 
 package dz.alkhwarizmix.framework.java.interfaces;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
  * <p>
@@ -21,32 +20,44 @@ import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٧ ربيع الثاني ١٤٣٦ (January 27, 2015)
+ * @since ٢٦ جمادى الثانية ١٤٣٦ (April 16, 2015)
  */
-public interface IEMailService extends IAlKhwarizmixService {
+public interface IAlKhwarizmixSessionData {
 
 	/**
 	 */
-	public EMail addEMail(EMail email, boolean validateObjectToPublish)
-			throws AlKhwarizmixException;
+	public User getConnectedUser();
 
 	/**
 	 */
-	public EMail getEMail(EMail email, boolean validateObjectToPublish)
-			throws AlKhwarizmixException;
+	public void setConnectedUser(final User value);
 
 	/**
 	 */
-	public EMail getPendingEMail(boolean validateObjectToPublish)
-			throws AlKhwarizmixException;
+	public User getLoggedUser();
 
 	/**
 	 */
-	public void sendEMail(EMail email) throws AlKhwarizmixException;
+	public void setLoggedUser(final User value);
 
 	/**
 	 */
-	public EMail updateEMail(EMail email, AlKhwarizmixDomainObject updater,
-			boolean validateObjectToPublish) throws AlKhwarizmixException;
+	public AlKhwarizmixDomainObject getSessionOwner();
+
+	/**
+	 */
+	public void setSessionOwner(final AlKhwarizmixDomainObject value);
+
+	/**
+	 */
+	public void resetConnectedUser();
+
+	/**
+	 */
+	public void resetLoggedUser();
+
+	/**
+	 */
+	public void resetSessionOwner();
 
 } // Interface

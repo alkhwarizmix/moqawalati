@@ -147,7 +147,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 */
 	private Record updateRecord(final Record record,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
-		final Record result = (Record) updateObject(record,
+		final Record result = (Record) updateObject(record, getSessionOwner(),
 				validateObjectToPublish);
 		return result;
 	}
