@@ -9,9 +9,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.interfaces;
+package dz.alkhwarizmix.framework.java.services;
 
-import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 
 /**
  * <p>
@@ -21,7 +20,8 @@ import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٩ صفر ١٤٣٦ (December 21, 2014)
  */
-public interface IClientServiceValidator extends IAlKhwarizmixServiceValidator {
+public interface ICustomizerServiceValidator extends
+		IAlKhwarizmixServiceValidator {
 
 	// EMPTY
 

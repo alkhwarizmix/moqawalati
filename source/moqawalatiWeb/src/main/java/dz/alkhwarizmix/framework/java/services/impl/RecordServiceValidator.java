@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.services;
+package dz.alkhwarizmix.framework.java.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.services.impl.AbstractAlKhwarizmixServiceValidator;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
+import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
+import dz.alkhwarizmix.framework.java.services.IRecordServiceValidator;
 
 /**
  * <p>
@@ -30,8 +30,8 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
  * @since ٢٩ صفر ١٤٣٦ (December 21, 2014)
  */
 @Component
-public class ClientServiceValidator extends
-		AbstractAlKhwarizmixServiceValidator implements IClientServiceValidator {
+public class RecordServiceValidator extends
+		AbstractAlKhwarizmixServiceValidator implements IRecordServiceValidator {
 
 	// --------------------------------------------------------------------------
 	//
@@ -42,7 +42,7 @@ public class ClientServiceValidator extends
 	/**
 	 * constructor
 	 */
-	public ClientServiceValidator() {
+	public RecordServiceValidator() {
 		super();
 	}
 
@@ -57,7 +57,7 @@ public class ClientServiceValidator extends
 	@Override
 	protected Logger getLogger() {
 		if (logger == null)
-			logger = LoggerFactory.getLogger(ClientServiceValidator.class);
+			logger = LoggerFactory.getLogger(RecordServiceValidator.class);
 		return logger;
 	}
 
@@ -74,6 +74,9 @@ public class ClientServiceValidator extends
 	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
 		super.validateObjectToAdd(object, objectOwner);
+		Record record = (Record) object;
+		if (record != null)
+			nullifyPropertiesForRecordToAdd(record);
 	}
 
 	/**
@@ -83,6 +86,9 @@ public class ClientServiceValidator extends
 	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
 		super.validateObjectToUpdate(object, objectOwner);
+		Record record = (Record) object;
+		if (record != null)
+			nullifyPropertiesForRecordToUpdate(record);
 	}
 
 	/**
@@ -93,6 +99,31 @@ public class ClientServiceValidator extends
 			AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
 		super.validateObjectToPublish(object, objectOwner);
+
+		Record record = (Record) object;
+		if (record != null)
+			nullifyPropertiesForRecordToPublish(record);
+	}
+
+	/**
+	 */
+	private void nullifyPropertiesForRecordToAdd(Record record) {
+		record.setOwner(null);
+		record.setGroup(null);
+	}
+
+	/**
+	 */
+	private void nullifyPropertiesForRecordToUpdate(Record record) {
+		record.setOwner(null);
+		record.setGroup(null);
+	}
+
+	/**
+	 */
+	private void nullifyPropertiesForRecordToPublish(Record record) {
+		record.setOwner(null);
+		record.setGroup(null);
 	}
 
 } // Class

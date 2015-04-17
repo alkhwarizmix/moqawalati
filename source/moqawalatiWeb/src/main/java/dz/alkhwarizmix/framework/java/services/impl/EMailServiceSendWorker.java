@@ -9,17 +9,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webservices;
+package dz.alkhwarizmix.framework.java.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
-import dz.alkhwarizmix.framework.java.interfaces.ICustomizerWebServiceForBlazeDS;
-import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.services.ICustomizerService;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
+import dz.alkhwarizmix.framework.java.services.IEMailService;
+import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
  * <p>
@@ -27,22 +27,18 @@ import dz.alkhwarizmix.framework.java.services.ICustomizerService;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ١٤ ربيع الثاني ١٤٣٦ (February 03, 2015)
+ * @since ١٥ جمادى الأولى ١٤٣٦ (March 06, 2015)
  */
-public class CustomizerWebServiceForBlazeDS implements
-		ICustomizerWebServiceForBlazeDS {
+public class EMailServiceSendWorker {
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
-	public CustomizerWebServiceForBlazeDS() {
-		super();
+	public EMailServiceSendWorker() {
+		// NOOP
 	}
 
 	// --------------------------------------------------------------------------
@@ -51,11 +47,12 @@ public class CustomizerWebServiceForBlazeDS implements
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomizerWebServiceForBlazeDS.class);
+	private static Logger logger = null;
 
-	protected Logger getLogger() {
-		return LOG;
+	private Logger getLogger() {
+		if (logger == null)
+			logger = LoggerFactory.getLogger(EMailServiceSendWorker.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -65,7 +62,9 @@ public class CustomizerWebServiceForBlazeDS implements
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private ICustomizerService customizerService;
+	private IEMailService emailService;
+
+	private DateUtil dateUtil = null;
 
 	// --------------------------------------------------------------------------
 	//
@@ -74,21 +73,31 @@ public class CustomizerWebServiceForBlazeDS implements
 	// --------------------------------------------------------------------------
 
 	/**
+	 *
 	 */
-	@Override
-	public void setCustomData(final CustomData customData)
-			throws AlKhwarizmixException {
-		getLogger().debug("setCustomData({})", customData);
-		getCustomizerService().setCustomData(customData, true);
+	public void scheduledSendEMail() {
+		getLogger().trace("scheduledSendEMail");
+		try {
+			final EMail emailToSend = getEMailService().getPendingEMail(false);
+			if (emailToSend != null) {
+				getLogger().trace("scheduledSendEMail: emailToSend={}",
+						emailToSend);
+				getEMailService().sendEMail(emailToSend);
+				updateEMailSentAt(emailToSend);
+			}
+		} catch (final AlKhwarizmixException e) {
+			getLogger().warn("scheduledSendEMail 1: {}", e);
+		} catch (final Exception e) {
+			getLogger().warn("scheduledSendEMail 2: {}", e);
+		}
 	}
 
-	/**
-	 */
-	@Override
-	public CustomData getCustomData(final CustomData customData)
+	private void updateEMailSentAt(final EMail emailToSend)
 			throws AlKhwarizmixException {
-		getLogger().debug("getCustomData({})", customData);
-		return getCustomizerService().getCustomData(customData, true);
+		emailToSend.setSentAt(getDateUtil().newDate());
+		final AlKhwarizmixDomainObject emailUpdater = new AlKhwarizmixDomainObject();
+		emailUpdater.setId(-1L);
+		getEMailService().updateEMail(emailToSend, emailUpdater, false);
 	}
 
 	// --------------------------------------------------------------------------
@@ -98,23 +107,29 @@ public class CustomizerWebServiceForBlazeDS implements
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// customizerService
+	// dateUtil
 	// ----------------------------------
 
-	protected ICustomizerService getCustomizerService() {
-		return customizerService;
+	protected final DateUtil getDateUtil() {
+		if (dateUtil == null)
+			dateUtil = new DateUtil();
+		return dateUtil;
 	}
 
-	protected void setCustomizerService(final ICustomizerService value) {
-		customizerService = value;
+	protected final void setDateUtil(final DateUtil value) {
+		dateUtil = value;
 	}
 
 	// ----------------------------------
-	// service
+	// emailService
 	// ----------------------------------
 
-	protected IAlKhwarizmixService getService() {
-		return customizerService;
+	protected final void setEMailService(final IEMailService value) {
+		emailService = value;
+	}
+
+	protected final IEMailService getEMailService() {
+		return emailService;
 	}
 
 } // Class

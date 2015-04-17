@@ -9,17 +9,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.services;
+package dz.alkhwarizmix.framework.java.services.impl;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.services.impl.AbstractAlKhwarizmixServiceValidator;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
+import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 
 /**
  * <p>
@@ -29,9 +27,8 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٩ صفر ١٤٣٦ (December 21, 2014)
  */
-@Component
-public class ClientServiceValidator extends
-		AbstractAlKhwarizmixServiceValidator implements IClientServiceValidator {
+public abstract class AbstractAlKhwarizmixServiceValidator implements
+		IAlKhwarizmixServiceValidator {
 
 	// --------------------------------------------------------------------------
 	//
@@ -42,8 +39,8 @@ public class ClientServiceValidator extends
 	/**
 	 * constructor
 	 */
-	public ClientServiceValidator() {
-		super();
+	public AbstractAlKhwarizmixServiceValidator() {
+		getLogger().trace("Constructor");
 	}
 
 	// --------------------------------------------------------------------------
@@ -52,14 +49,7 @@ public class ClientServiceValidator extends
 	//
 	// --------------------------------------------------------------------------
 
-	private static Logger logger = null;
-
-	@Override
-	protected Logger getLogger() {
-		if (logger == null)
-			logger = LoggerFactory.getLogger(ClientServiceValidator.class);
-		return logger;
-	}
+	protected abstract Logger getLogger();
 
 	// --------------------------------------------------------------------------
 	//
@@ -73,7 +63,7 @@ public class ClientServiceValidator extends
 	@Override
 	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
-		super.validateObjectToAdd(object, objectOwner);
+		validateObjectOwner(objectOwner);
 	}
 
 	/**
@@ -82,7 +72,7 @@ public class ClientServiceValidator extends
 	@Override
 	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
-		super.validateObjectToUpdate(object, objectOwner);
+		validateObjectOwner(objectOwner);
 	}
 
 	/**
@@ -92,7 +82,27 @@ public class ClientServiceValidator extends
 	public void validateObjectToPublish(
 			AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
-		super.validateObjectToPublish(object, objectOwner);
+		validateObjectOwner(objectOwner);
+		nullifyObjectId(object);
+	}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	private void validateObjectOwner(AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
+		if (objectOwner == null || objectOwner.getId() == null) {
+			throw new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.ERROR_UNAUTHORIZED);
+		}
+	}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	private void nullifyObjectId(AbstractAlKhwarizmixDomainObject object) {
+		if (object != null)
+			object.setId(null);
 	}
 
 } // Class

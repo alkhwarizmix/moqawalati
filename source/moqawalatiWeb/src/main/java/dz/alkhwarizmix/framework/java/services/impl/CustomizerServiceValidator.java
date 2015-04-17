@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.services;
+package dz.alkhwarizmix.framework.java.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,7 @@ import org.springframework.stereotype.Component;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.services.impl.AbstractAlKhwarizmixServiceValidator;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
+import dz.alkhwarizmix.framework.java.services.ICustomizerServiceValidator;
 
 /**
  * <p>
@@ -30,8 +29,9 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
  * @since ٢٩ صفر ١٤٣٦ (December 21, 2014)
  */
 @Component
-public class ClientServiceValidator extends
-		AbstractAlKhwarizmixServiceValidator implements IClientServiceValidator {
+public class CustomizerServiceValidator extends
+		AbstractAlKhwarizmixServiceValidator implements
+		ICustomizerServiceValidator {
 
 	// --------------------------------------------------------------------------
 	//
@@ -42,7 +42,7 @@ public class ClientServiceValidator extends
 	/**
 	 * constructor
 	 */
-	public ClientServiceValidator() {
+	public CustomizerServiceValidator() {
 		super();
 	}
 
@@ -57,7 +57,7 @@ public class ClientServiceValidator extends
 	@Override
 	protected Logger getLogger() {
 		if (logger == null)
-			logger = LoggerFactory.getLogger(ClientServiceValidator.class);
+			logger = LoggerFactory.getLogger(CustomizerServiceValidator.class);
 		return logger;
 	}
 

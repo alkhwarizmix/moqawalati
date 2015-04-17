@@ -15,7 +15,7 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 

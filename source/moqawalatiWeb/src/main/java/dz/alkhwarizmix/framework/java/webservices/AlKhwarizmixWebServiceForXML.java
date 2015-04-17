@@ -21,7 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.ResponseStatus;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 
 /**
  * <p>

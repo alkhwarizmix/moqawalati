@@ -9,8 +9,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.services;
+package dz.alkhwarizmix.framework.java.services.impl;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,8 @@ import org.springframework.stereotype.Component;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.services.impl.AbstractAlKhwarizmixServiceValidator;
-import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
+import dz.alkhwarizmix.framework.java.services.IUserServiceValidator;
 
 /**
  * <p>
@@ -30,8 +31,8 @@ import dz.alkhwarizmix.moqawalati.java.interfaces.IClientServiceValidator;
  * @since ٢٩ صفر ١٤٣٦ (December 21, 2014)
  */
 @Component
-public class ClientServiceValidator extends
-		AbstractAlKhwarizmixServiceValidator implements IClientServiceValidator {
+public class UserServiceValidator extends AbstractAlKhwarizmixServiceValidator
+		implements IUserServiceValidator {
 
 	// --------------------------------------------------------------------------
 	//
@@ -42,7 +43,7 @@ public class ClientServiceValidator extends
 	/**
 	 * constructor
 	 */
-	public ClientServiceValidator() {
+	public UserServiceValidator() {
 		super();
 	}
 
@@ -57,7 +58,7 @@ public class ClientServiceValidator extends
 	@Override
 	protected Logger getLogger() {
 		if (logger == null)
-			logger = LoggerFactory.getLogger(ClientServiceValidator.class);
+			logger = LoggerFactory.getLogger(UserServiceValidator.class);
 		return logger;
 	}
 
@@ -66,6 +67,16 @@ public class ClientServiceValidator extends
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isValidUserId(User user) {
+		return (user != null)
+				? EmailValidator.getInstance().isValid(user.getUserId())
+				: false;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -83,6 +94,7 @@ public class ClientServiceValidator extends
 	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
 		super.validateObjectToUpdate(object, objectOwner);
+
 	}
 
 	/**
@@ -93,6 +105,17 @@ public class ClientServiceValidator extends
 			AbstractAlKhwarizmixDomainObject object,
 			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
 		super.validateObjectToPublish(object, objectOwner);
+		nullifyUserDomainObject(object);
+	}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	private void nullifyUserDomainObject(AbstractAlKhwarizmixDomainObject object) {
+		User user = (User) object;
+		if (user != null) {
+			user.setDomainObject(null);
+		}
 	}
 
 } // Class

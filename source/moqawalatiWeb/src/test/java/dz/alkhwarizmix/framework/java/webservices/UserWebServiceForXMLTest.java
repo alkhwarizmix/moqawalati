@@ -28,7 +28,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.interfaces.IUserService;
+import dz.alkhwarizmix.framework.java.services.IUserService;
 
 /**
  * <p>

@@ -48,7 +48,7 @@
 
 	<!-- -->
 	<bean id="emailServiceSendWorker"
-		class="dz.alkhwarizmix.framework.java.services.EMailServiceSendWorker">
+		class="dz.alkhwarizmix.framework.java.services.impl.EMailServiceSendWorker">
 	</bean>
 
 	<task:scheduled-tasks>

@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.interfaces.IRecordService;
+import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.services.IRecordService;
 
 /**
  * <p>

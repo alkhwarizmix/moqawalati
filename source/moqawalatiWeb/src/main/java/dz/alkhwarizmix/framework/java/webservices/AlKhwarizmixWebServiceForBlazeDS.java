@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixBlazeDSException;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 
 /**
  * <p>

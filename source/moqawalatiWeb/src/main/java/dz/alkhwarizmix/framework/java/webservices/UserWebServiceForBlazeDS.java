@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixBlazeDSException;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.interfaces.IUserService;
 import dz.alkhwarizmix.framework.java.interfaces.IUserWebServiceForBlazeDS;
+import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
+import dz.alkhwarizmix.framework.java.services.IUserService;
 
 /**
  * <p>
