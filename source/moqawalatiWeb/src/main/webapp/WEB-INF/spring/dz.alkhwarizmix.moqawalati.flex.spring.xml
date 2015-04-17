@@ -27,11 +27,11 @@
 	>
 <beans>
 	<bean id="beanRecordWebServiceForBlazeDS"
-		class="dz.alkhwarizmix.framework.java.webservices.RecordWebServiceForBlazeDS" />
+		class="dz.alkhwarizmix.framework.java.webservices.impl.RecordWebServiceForBlazeDS" />
 	<bean id="beanClientWebServiceForBlazeDS"
-		class="dz.alkhwarizmix.moqawalati.java.webservices.ClientWebServiceForBlazeDS" />
+		class="dz.alkhwarizmix.moqawalati.java.webservices.impl.ClientWebServiceForBlazeDS" />
 	<bean id="beanUserWebServiceForBlazeDS"
-		class="dz.alkhwarizmix.framework.java.webservices.UserWebServiceForBlazeDS" />
+		class="dz.alkhwarizmix.framework.java.webservices.impl.UserWebServiceForBlazeDS" />
 	<bean id="beanCustomizerWebServiceForBlazeDS"
-		class="dz.alkhwarizmix.framework.java.webservices.CustomizerWebServiceForBlazeDS" />
+		class="dz.alkhwarizmix.framework.java.webservices.impl.CustomizerWebServiceForBlazeDS" />
 </beans>

@@ -31,13 +31,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.IRecordDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.RecordList;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
-import dz.alkhwarizmix.framework.java.interfaces.IRecordDAO;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.model.impl.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.services.impl.RecordService;
 import dz.alkhwarizmix.framework.java.services.impl.RecordServiceValidator;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;

@@ -24,13 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.dao.IUserDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Password;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.interfaces.IUserDAO;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.IEMailService;
 import dz.alkhwarizmix.framework.java.services.IUserService;

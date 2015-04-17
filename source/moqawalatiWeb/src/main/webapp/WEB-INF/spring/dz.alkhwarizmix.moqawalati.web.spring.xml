@@ -41,7 +41,7 @@
 		</property>
 	</bean>
 	<bean id="moqawalatiInterceptor"
-		class="dz.alkhwarizmix.moqawalati.java.webservices.MoqawalatiInterceptor" />
+		class="dz.alkhwarizmix.moqawalati.java.webservices.impl.MoqawalatiInterceptor" />
 
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">

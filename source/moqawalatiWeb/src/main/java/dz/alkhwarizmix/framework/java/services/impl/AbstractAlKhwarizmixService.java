@@ -26,11 +26,11 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendable;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.model.IAlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.utils.XMLUtil;

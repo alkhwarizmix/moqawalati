@@ -24,11 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.dao.IRecordDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.RecordList;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.interfaces.IRecordDAO;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.IRecordService;
 import dz.alkhwarizmix.framework.java.services.IRecordServiceValidator;

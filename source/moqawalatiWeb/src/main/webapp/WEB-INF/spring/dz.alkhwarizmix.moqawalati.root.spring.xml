@@ -49,7 +49,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="dz.alkhwarizmix"/>
 
-	<bean id="sessionData" class="dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData" scope="session">
+	<bean id="sessionData" class="dz.alkhwarizmix.framework.java.model.impl.AlKhwarizmixSessionData" scope="session">
 	   <aop:scoped-proxy proxy-target-class="false" />
 	</bean>
 

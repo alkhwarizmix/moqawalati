@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.dao.ICustomDataDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDAO;
-import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.ICustomizerService;
 import dz.alkhwarizmix.framework.java.services.ICustomizerServiceValidator;

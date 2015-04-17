@@ -21,10 +21,10 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.ICustomDataDAO;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.interfaces.ICustomDataDAO;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.model.impl.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.services.impl.CustomizerService;
 
 /**

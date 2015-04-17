@@ -23,9 +23,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.IEMailDAO;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
-import dz.alkhwarizmix.framework.java.interfaces.IEMailDAO;
-import dz.alkhwarizmix.framework.java.model.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.model.impl.AlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.services.impl.EMailService;
 import dz.alkhwarizmix.framework.java.services.impl.EMailServiceValidator;
 
