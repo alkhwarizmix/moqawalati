@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IUserDAO;
-import dz.alkhwarizmix.framework.java.dao.impl.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Password;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 

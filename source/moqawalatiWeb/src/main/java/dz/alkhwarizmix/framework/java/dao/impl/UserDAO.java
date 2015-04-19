@@ -22,7 +22,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -38,7 +37,6 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
-@Repository
 public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 		IUserDAO {
 
@@ -51,27 +49,26 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	/**
 	 * constructor
 	 */
-	public UserDAO() {
+	public UserDAO(final List<User> defaultUserList) {
 		super();
+		this.defaultUserList = defaultUserList;
 	}
 
 	@PostConstruct
 	private void createDefaultUsers() {
-		createDefaultUser("fbelhaouas@icloud.com", "فارس بلحواس");
-		createDefaultUser("fares@dz.moqawalati.com", "Fares @ Moqawalati");
-		createDefaultUser("jmeter@dz.alkhwarizmix.com", "JMeter Test User");
+		for (final User user : defaultUserList)
+			createDefaultUser(user);
 	}
 
-	private void createDefaultUser(final String userId, final String userName) {
-		final User defaultUser = new User(userId, userName);
+	private void createDefaultUser(final User user) {
 		try {
-			saveOrUpdate(defaultUser);
+			saveOrUpdate(user);
 			getLogger().info("createDefaultUser: Created default user <{}>",
-					defaultUser.getName());
+					user.getName());
 		} catch (final AlKhwarizmixDAOException e) {
 			getLogger().warn(
 					"createDefaultUser: default user <{}> already existing",
-					defaultUser.getName());
+					user.getName());
 		}
 	}
 
@@ -87,6 +84,14 @@ public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	protected Logger getLogger() {
 		return LOG;
 	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Properties
+	//
+	// --------------------------------------------------------------------------
+
+	private final List<User> defaultUserList;
 
 	// --------------------------------------------------------------------------
 	//

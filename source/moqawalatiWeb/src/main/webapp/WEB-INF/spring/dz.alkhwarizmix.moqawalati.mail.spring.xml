@@ -23,13 +23,15 @@
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
 
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/task 
-		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd"
+		>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="localhost" />
@@ -46,7 +48,6 @@
 		<property name="subject" value="Your subscription" />
 	</bean>
 
-	<!-- -->
 	<bean id="emailServiceSendWorker"
 		class="dz.alkhwarizmix.framework.java.services.impl.EMailServiceSendWorker">
 	</bean>
@@ -55,6 +56,4 @@
 		<task:scheduled ref="emailServiceSendWorker" method="scheduledSendEMail"
 			fixed-delay="5000" />
 	</task:scheduled-tasks>
-	<!-- -->
-
 </beans>

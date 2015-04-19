@@ -97,4 +97,26 @@
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
+	<bean id="utUserDAO" class="dz.alkhwarizmix.framework.java.dao.impl.UserDAO">
+		<constructor-arg>
+			<list>
+				<ref bean="defaultUser1" />
+				<ref bean="defaultUser2" />
+				<ref bean="defaultUser3" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="defaultUser1" class="dz.alkhwarizmix.framework.java.dtos.security.model.vo.User">
+		<constructor-arg><value>fbelhaouas@icloud.com</value></constructor-arg> 
+		<constructor-arg index="1"><value>فارس بلحواس</value></constructor-arg> 
+	</bean>
+	<bean id="defaultUser2" class="dz.alkhwarizmix.framework.java.dtos.security.model.vo.User">
+		<constructor-arg><value>fares@dz.moqawalati.com</value></constructor-arg> 
+		<constructor-arg index="1"><value>Fares @ Moqawalati</value></constructor-arg> 
+	</bean>
+	<bean id="defaultUser3" class="dz.alkhwarizmix.framework.java.dtos.security.model.vo.User">
+		<constructor-arg><value>jmeter@dz.alkhwarizmix.com</value></constructor-arg> 
+		<constructor-arg index="1"><value>JMeter Test User</value></constructor-arg> 
+	</bean>
 </beans>

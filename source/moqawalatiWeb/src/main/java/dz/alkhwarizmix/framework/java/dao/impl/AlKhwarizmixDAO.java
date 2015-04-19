@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -13,6 +13,7 @@ package dz.alkhwarizmix.framework.java.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
@@ -28,10 +29,10 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
- * 
+ *
  * @see http://community.jboss.org/wiki/GenericDataAccessObjects
  */
 public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
@@ -52,17 +53,17 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 
 	/**
 	 */
-	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
+	@Override
+	public void saveOrUpdate(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
 
 		try {
 			getHibernateCurrentSession().saveOrUpdate(object);
-		} catch (ConcurrencyFailureException e) {
+		} catch (final ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
-		} catch (DataAccessException e) {
-			// FBEL: TODO: CHECK THIS
-			getHibernateCurrentSession().clear();
+		} catch (final DataAccessException e) {
+			clearHibernateCurrentSession();
 			throw new AlKhwarizmixDAOException(e);
 		}
 	}
@@ -70,12 +71,12 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	protected final AlKhwarizmixDAOException getDAOExceptionForConcurrencyFailure(
-			ConcurrencyFailureException concurrencyFailureException) {
+			final ConcurrencyFailureException concurrencyFailureException) {
 		getLogger().error("getDAOExceptionForConcurrencyFailure({})",
 				concurrencyFailureException);
 
-		getHibernateCurrentSession().clear();
-		AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
+		clearHibernateCurrentSession();
+		final AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
 				"Database error, " + "Concurrency problem",
 				concurrencyFailureException);
 		ex.setRecoverable(true);
@@ -85,20 +86,21 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	protected final AlKhwarizmixDAOException getDAOExceptionForDataAccess(
-			DataAccessException dataAccessException) {
+			final DataAccessException dataAccessException) {
 		getLogger().error("getDAOExceptionForDataAccess({})",
 				dataAccessException);
 
-		getHibernateCurrentSession().clear();
+		clearHibernateCurrentSession();
 		return new AlKhwarizmixDAOException(dataAccessException);
 	}
 
 	/**
 	 */
-	protected final AlKhwarizmixDAOException getDAOException(Exception exception) {
+	protected final AlKhwarizmixDAOException getDAOException(
+			final Exception exception) {
 		getLogger().error("getDAOException({})", exception);
 
-		getHibernateCurrentSession().clear();
+		clearHibernateCurrentSession();
 		return new AlKhwarizmixDAOException(exception);
 	}
 
@@ -106,13 +108,13 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	 */
 	@Override
 	public final AbstractAlKhwarizmixDomainObject get(
-			Class<? extends AbstractAlKhwarizmixDomainObject> clazz, Long id)
-			throws AlKhwarizmixDAOException {
+			final Class<? extends AbstractAlKhwarizmixDomainObject> clazz,
+			final Long id) throws AlKhwarizmixDAOException {
 		getLogger().trace("get({}, {})", clazz.getSimpleName(), id);
 
 		try {
 			return getHibernateTemplate().get(clazz, id);
-		} catch (DataAccessException e) {
+		} catch (final DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
 	}
@@ -120,14 +122,15 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public final List getList(DetachedCriteria criteria, int firstResult,
-			int maxResult) throws AlKhwarizmixDAOException {
+	public final List getList(final DetachedCriteria criteria,
+			final int firstResult, final int maxResult)
+			throws AlKhwarizmixDAOException {
 		getLogger().trace("getList({})", criteria);
 
 		try {
 			return getHibernateTemplate().findByCriteria(criteria, firstResult,
 					maxResult);
-		} catch (DataAccessException e) {
+		} catch (final DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
 	}
@@ -136,15 +139,15 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	 */
 	@Override
 	public final AbstractAlKhwarizmixDomainObject load(
-			Class<? extends AbstractAlKhwarizmixDomainObject> clazz, Long id)
-			throws AlKhwarizmixDAOException {
+			final Class<? extends AbstractAlKhwarizmixDomainObject> clazz,
+			final Long id) throws AlKhwarizmixDAOException {
 		getLogger().trace("load({}, {})", clazz.getSimpleName(), id);
 
 		try {
-			AbstractAlKhwarizmixDomainObject result = get(clazz, id);
+			final AbstractAlKhwarizmixDomainObject result = get(clazz, id);
 
 			if (result == null) {
-				AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
+				final AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
 						"Unable to find the " + clazz.getSimpleName()
 								+ " with id " + id);
 				ex.setErrorCode(AlKhwarizmixErrorCode.ERROR_DATABASE);
@@ -152,7 +155,7 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 			}
 
 			return result;
-		} catch (DataAccessException e) {
+		} catch (final DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
 	}
@@ -160,20 +163,20 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public final void merge(AbstractAlKhwarizmixDomainObject object)
+	public final void merge(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("merge({})", object);
 
 		try {
 			getHibernateCurrentSession().merge(object);
-		} catch (ConcurrencyFailureException e) {
-			AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
+		} catch (final ConcurrencyFailureException e) {
+			final AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(
 					"Database error, Concurrency problem", e);
 			ex.setErrorCode(AlKhwarizmixErrorCode.ERROR_DATABASE);
 			ex.setRecoverable(true);
 			throw ex;
-		} catch (DataAccessException e) {
-			AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(e);
+		} catch (final DataAccessException e) {
+			final AlKhwarizmixDAOException ex = new AlKhwarizmixDAOException(e);
 			throw ex;
 		}
 	}
@@ -181,13 +184,13 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	@Override
-	public final void delete(AbstractAlKhwarizmixDomainObject object)
+	public final void delete(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("delete({})", object);
 
 		try {
 			getHibernateCurrentSession().delete(object);
-		} catch (DataAccessException e) {
+		} catch (final DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
 	}
@@ -211,7 +214,19 @@ public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	/**
 	 */
 	protected final Session getHibernateCurrentSession() {
-		return getHibernateTemplate().getSessionFactory().getCurrentSession();
+		try {
+			return getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+		} catch (final HibernateException e) {
+			getLogger().warn("getHibernateCurrentSession: No current session");
+		}
+		return null;
+	}
+
+	private void clearHibernateCurrentSession() {
+		final Session s = getHibernateCurrentSession();
+		if (s != null)
+			s.clear();
 	}
 
 	// --------------------------------------------------------------------------
