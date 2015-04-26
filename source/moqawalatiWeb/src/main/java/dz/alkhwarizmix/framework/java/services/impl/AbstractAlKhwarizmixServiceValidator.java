@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -23,7 +23,7 @@ import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٩ صفر ١٤٣٦ (December 21, 2014)
  */
@@ -61,8 +61,10 @@ public abstract class AbstractAlKhwarizmixServiceValidator implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
-			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+	public void validateObjectToAdd(
+			final AbstractAlKhwarizmixDomainObject object,
+			final AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
 		validateObjectOwner(objectOwner);
 	}
 
@@ -70,8 +72,10 @@ public abstract class AbstractAlKhwarizmixServiceValidator implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
-			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+	public void validateObjectToUpdate(
+			final AbstractAlKhwarizmixDomainObject object,
+			final AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
 		validateObjectOwner(objectOwner);
 	}
 
@@ -80,8 +84,9 @@ public abstract class AbstractAlKhwarizmixServiceValidator implements
 	 */
 	@Override
 	public void validateObjectToPublish(
-			AbstractAlKhwarizmixDomainObject object,
-			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+			final AbstractAlKhwarizmixDomainObject object,
+			final AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
 		validateObjectOwner(objectOwner);
 		nullifyObjectId(object);
 	}
@@ -89,18 +94,18 @@ public abstract class AbstractAlKhwarizmixServiceValidator implements
 	/**
 	 * TODO: Javadoc
 	 */
-	private void validateObjectOwner(AlKhwarizmixDomainObject objectOwner)
+	private void validateObjectOwner(
+			final AlKhwarizmixDomainObject objectOwner)
 			throws AlKhwarizmixException {
-		if (objectOwner == null || objectOwner.getId() == null) {
+		if ((objectOwner == null) || (objectOwner.getId() == null))
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_UNAUTHORIZED);
-		}
 	}
 
 	/**
 	 * TODO: Javadoc
 	 */
-	private void nullifyObjectId(AbstractAlKhwarizmixDomainObject object) {
+	private void nullifyObjectId(final AbstractAlKhwarizmixDomainObject object) {
 		if (object != null)
 			object.setId(null);
 	}

@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -54,7 +53,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
 @XmlRootElement(name = "Record")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Record extends
-AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
+		AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
 		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
@@ -92,7 +91,8 @@ AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
 		setSchemaName(theSchemaName);
 	}
 
-	public Record(final String theRecordId, final String theSchemaName, final String theTableName) {
+	public Record(final String theRecordId, final String theSchemaName,
+			final String theTableName) {
 		this(theRecordId, theSchemaName);
 		setTableName(theTableName);
 	}
@@ -128,7 +128,7 @@ AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
 	@Column(name = "fRecordId", unique = false, nullable = false, updatable = false, length = 63)
 	private String recordId;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fParent", nullable = true, updatable = false)
 	private Record parent;
@@ -159,7 +159,8 @@ AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
 	 */
 	@Override
 	protected ToStringBuilder toStringBuilder() {
-		return super.toStringBuilder();
+		return super.toStringBuilder().append("schemaName", schemaName)
+				.append("tableName", tableName);
 	}
 
 	/*
@@ -189,43 +190,43 @@ AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
 				&& (getObjectAsThisClass(other) != null)
 				&& ObjectUtils.equals(action,
 						getObjectAsThisClass(other).action)
-						&& ObjectUtils.equals(recordId,
-								getObjectAsThisClass(other).recordId)
-								&& ObjectUtils.equals(schemaName,
-										getObjectAsThisClass(other).schemaName)
-										&& ObjectUtils.equals(tableName,
-												getObjectAsThisClass(other).tableName)
-												&& ObjectUtils.equals(parent,
-														getObjectAsThisClass(other).parent);
+				&& ObjectUtils.equals(recordId,
+						getObjectAsThisClass(other).recordId)
+				&& ObjectUtils.equals(schemaName,
+						getObjectAsThisClass(other).schemaName)
+				&& ObjectUtils.equals(tableName,
+						getObjectAsThisClass(other).tableName)
+				&& ObjectUtils.equals(parent,
+						getObjectAsThisClass(other).parent);
 		return result;
 	}
 
 	private Record getObjectAsThisClass(final Object other) {
 		return (other instanceof Record)
 				? (Record) other
-						: null;
+				: null;
 	}
 
 	/**
 	 */
 	@Override
-	public void updateFrom(final Object sourceObject) throws AlKhwarizmixException {
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
 		final Record sourceRecord = (Record) sourceObject;
 		if ((sourceRecord != null)
 				&& getRecordId().equals(sourceRecord.getRecordId())) {
-			if (sourceRecord.recordId != null) {
+			if (sourceRecord.recordId != null)
 				recordId = sourceRecord.recordId;
-			}
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(final AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
@@ -279,7 +280,7 @@ AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
 		final String result = getExtendedDataValue();
 		return (result == ""
 				? null
-						: result);
+				: result);
 	}
 
 	public void setData(final String value) {

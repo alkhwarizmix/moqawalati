@@ -130,7 +130,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	private Long id;
 
 	@Version
-	@Column(nullable = false)
+	@Column(name = "version", nullable = false)
 	private Integer version;
 
 	@Column(name = "created", nullable = false, updatable = false)
@@ -194,13 +194,13 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	@Override
 	public boolean equals(final Object other) {
 		boolean result = true;
-		if (this == other) {
+		if (this == other)
 			result = true;
-		} else if (other == null) {
+		else if (other == null)
 			result = false;
-		} else if (getObjectAsThisClass(other) == null) {
+		else if (getObjectAsThisClass(other) == null)
 			result = false;
-		} else {
+		else
 			result = ObjectUtils.equals(created,
 					getObjectAsThisClass(other).created)
 					&& ObjectUtils.equals(id, getObjectAsThisClass(other).id)
@@ -208,7 +208,6 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 							getObjectAsThisClass(other).modified)
 					&& ObjectUtils.equals(version,
 							getObjectAsThisClass(other).version);
-		}
 		return result;
 	}
 

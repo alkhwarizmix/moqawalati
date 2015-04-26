@@ -120,7 +120,7 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	@Column(name = "fName", nullable = false, length = 127)
 	private String name;
 
-	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY, optional = true)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fGroup", nullable = true)
 	private Group group;
@@ -198,13 +198,11 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 			throws AlKhwarizmixException {
 		final User sourceUser = (User) sourceObject;
 		if ((sourceUser != null) && getUserId().equals(sourceUser.getUserId())) {
-			if (sourceUser.name != null) {
+			if (sourceUser.name != null)
 				name = sourceUser.name;
-			}
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	/**

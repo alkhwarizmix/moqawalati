@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
@@ -25,7 +26,7 @@ import dz.alkhwarizmix.framework.java.services.IRecordServiceValidator;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٩ صفر ١٤٣٦ (December 21, 2014)
  */
@@ -71,22 +72,28 @@ public class RecordServiceValidator extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToAdd(AbstractAlKhwarizmixDomainObject object,
-			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+	public void validateObjectToAdd(
+			final AbstractAlKhwarizmixDomainObject object,
+			final AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
 		super.validateObjectToAdd(object, objectOwner);
-		Record record = (Record) object;
-		if (record != null)
+		final Record record = (Record) object;
+		if (record != null) {
 			nullifyPropertiesForRecordToAdd(record);
+			record.setOwner(objectOwner);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateObjectToUpdate(AbstractAlKhwarizmixDomainObject object,
-			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+	public void validateObjectToUpdate(
+			final AbstractAlKhwarizmixDomainObject object,
+			final AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
 		super.validateObjectToUpdate(object, objectOwner);
-		Record record = (Record) object;
+		final Record record = (Record) object;
 		if (record != null)
 			nullifyPropertiesForRecordToUpdate(record);
 	}
@@ -96,34 +103,48 @@ public class RecordServiceValidator extends
 	 */
 	@Override
 	public void validateObjectToPublish(
-			AbstractAlKhwarizmixDomainObject object,
-			AlKhwarizmixDomainObject objectOwner) throws AlKhwarizmixException {
+			final AbstractAlKhwarizmixDomainObject object,
+			final AlKhwarizmixDomainObject objectOwner)
+			throws AlKhwarizmixException {
 		super.validateObjectToPublish(object, objectOwner);
 
-		Record record = (Record) object;
-		if (record != null)
+		final Record record = (Record) object;
+		if (record != null) {
+			validateRecordOwner(record, objectOwner);
 			nullifyPropertiesForRecordToPublish(record);
+		}
 	}
 
 	/**
 	 */
-	private void nullifyPropertiesForRecordToAdd(Record record) {
+	private void nullifyPropertiesForRecordToAdd(final Record record) {
 		record.setOwner(null);
 		record.setGroup(null);
 	}
 
 	/**
 	 */
-	private void nullifyPropertiesForRecordToUpdate(Record record) {
+	private void nullifyPropertiesForRecordToUpdate(final Record record) {
 		record.setOwner(null);
 		record.setGroup(null);
 	}
 
 	/**
 	 */
-	private void nullifyPropertiesForRecordToPublish(Record record) {
+	private void nullifyPropertiesForRecordToPublish(final Record record) {
 		record.setOwner(null);
 		record.setGroup(null);
+	}
+
+	/**
+	 * TODO: Javadoc
+	 */
+	private void validateRecordOwner(final Record record,
+			final AlKhwarizmixDomainObject recordOwner)
+			throws AlKhwarizmixException {
+		if (!recordOwner.equals(record.getOwner()))
+			throw new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.ERROR_UNAUTHORIZED);
 	}
 
 } // Class

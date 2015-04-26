@@ -137,7 +137,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 */
 	private Record insertRecord(final Record record,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
-		record.setOwner(getSessionOwner());
+		// record.setOwner(getSessionOwner());
 		final Record result = (Record) addObject(record,
 				validateObjectToPublish);
 		return result;
@@ -200,12 +200,8 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	public Record getRecord(final Record record,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("getRecord");
-		Record result = (Record) getObject(record, validateObjectToPublish);
-		if (validateObjectToPublish && (result != null)) {
-			result = (Record) result.clone();
-			getServiceValidator().validateObjectToPublish(result,
-					getSessionOwner());
-		}
+		final Record result = (Record) getObject(record,
+				validateObjectToPublish);
 		return result;
 	}
 
@@ -248,13 +244,28 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 				criteriaToUse = DetachedCriteria.forClass(Record.class);
 				criteriaToUse.addOrder(Order.asc(Record.RECORDID));
 			}
+			addHaveAccessCriteria(criteriaToUse);
 			criteriaToUse.add(Restrictions.eq(Record.PARENT_ID,
 					tableRecord.getId()));
-			listOfRecords = (List<Record>) (List<?>) getObjectList(
-					criteriaToUse, firstResult, maxResult,
+			listOfRecords = extracted(criteriaToUse, firstResult, maxResult,
 					validateObjectToPublish);
 		}
 		return new RecordList(listOfRecords);
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<Record> extracted(final DetachedCriteria criteriaToUse,
+			final int firstResult, final int maxResult,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
+		return (List<Record>) (List<?>) getObjectList(criteriaToUse,
+				firstResult, maxResult, validateObjectToPublish);
+	}
+
+	/**
+	 */
+	private void addHaveAccessCriteria(final DetachedCriteria criteria) {
+		criteria.add(Restrictions
+				.eq(Record.OWNER_ID, getSessionOwner().getId()));
 	}
 
 	/**

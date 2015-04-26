@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -24,7 +24,7 @@ import dz.alkhwarizmix.framework.java.webservices.impl.AlKhwarizmixInterceptor;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -52,24 +52,28 @@ public class MoqawalatiInterceptor extends AlKhwarizmixInterceptor {
 
 	/**
 	 */
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+	@Override
+	public boolean preHandle(final HttpServletRequest request,
+			final HttpServletResponse response, final Object handler)
+			throws Exception {
 		return super.preHandle(request, response, handler);
 	}
 
 	/**
 	 */
-	public void postHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+	@Override
+	public void postHandle(final HttpServletRequest request,
+			final HttpServletResponse response, final Object handler,
+			final ModelAndView modelAndView) throws Exception {
 		super.postHandle(request, response, handler, modelAndView);
 	}
 
 	/**
 	 */
-	public void afterCompletion(HttpServletRequest request,
-			HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
+	@Override
+	public void afterCompletion(final HttpServletRequest request,
+			final HttpServletResponse response, final Object handler,
+			final Exception ex) throws Exception {
 		super.afterCompletion(request, response, handler, ex);
 	}
 

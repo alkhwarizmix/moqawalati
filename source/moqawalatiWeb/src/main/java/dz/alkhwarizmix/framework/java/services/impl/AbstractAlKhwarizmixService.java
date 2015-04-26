@@ -231,8 +231,10 @@ public abstract class AbstractAlKhwarizmixService implements
 		if (objectOwner == null)
 			objectOwner = getSessionOwner();
 		getServiceValidator().validateObjectToUpdate(object, objectOwner);
-		final AbstractAlKhwarizmixDomainObject foundObject = getObject(object,
-				false);
+		final AbstractAlKhwarizmixDomainObject foundObject = (object
+				.getVersion() == null)
+				? getObject(object, false)
+				: object;
 		if (foundObject != null) {
 			foundObject.updateFrom(object);
 			getServiceDAO().saveOrUpdate(foundObject);

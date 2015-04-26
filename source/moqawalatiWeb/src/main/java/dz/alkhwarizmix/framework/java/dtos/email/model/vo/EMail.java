@@ -14,7 +14,6 @@ package dz.alkhwarizmix.framework.java.dtos.email.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -87,12 +86,12 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, optional = false)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fSender", nullable = false, updatable = false)
 	private User sender;
 
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, optional = false)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fReceiver", nullable = false, updatable = false)
 	private User receiver;
@@ -147,36 +146,37 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 				&& (getObjectAsThisClass(other) != null)
 				&& ObjectUtils.equals(sender,
 						getObjectAsThisClass(other).sender)
-						&& ObjectUtils.equals(receiver,
-								getObjectAsThisClass(other).receiver)
-								&& ObjectUtils.equals(sentAt,
-										getObjectAsThisClass(other).sentAt);
+				&& ObjectUtils.equals(receiver,
+						getObjectAsThisClass(other).receiver)
+				&& ObjectUtils.equals(sentAt,
+						getObjectAsThisClass(other).sentAt);
 		return result;
 	}
 
 	private EMail getObjectAsThisClass(final Object other) {
 		return (other instanceof EMail)
 				? (EMail) other
-						: null;
+				: null;
 	}
 
 	/**
 	 */
 	@Override
-	public void updateFrom(final Object sourceObject) throws AlKhwarizmixException {
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
 		final EMail sourceEMail = (EMail) sourceObject;
 		if (sourceEMail != null) {
 			// NOOP
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(final AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
@@ -194,7 +194,7 @@ public class EMail extends AbstractAlKhwarizmixDomainObjectExtendable implements
 		final String result = getExtendedDataValue();
 		return (result == ""
 				? null
-						: result);
+				: result);
 	}
 
 	public final void setBody(final String value) {

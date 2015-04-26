@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -29,7 +29,7 @@ import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
@@ -72,13 +72,13 @@ public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	/**
 	 */
 	@Override
-	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
+	public void saveOrUpdate(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		if (object instanceof Record) {
-			Record record = (Record) object;
+			final Record record = (Record) object;
 			try {
 				setupTableAndSchema(record);
-			} catch (AlKhwarizmixException e) {
+			} catch (final AlKhwarizmixException e) {
 				throw getDAOException(e);
 			}
 		}
@@ -87,19 +87,16 @@ public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 
 	private void setupTableAndSchema(final Record record)
 			throws AlKhwarizmixException {
-		if (record.isSchemaRecord()) {
+		if (record.isSchemaRecord())
 			getLogger().warn("setupTableAndSchema: record.isSchemaRecord()");
-		} else if (record.isTableRecord()) {
+		else if (record.isTableRecord())
 			// record is Table
 			getLogger().warn("setupTableAndSchema: record.isTableRecord()");
-		} else {
-			// record is Table row
-			if (record.getParent() == null) {
-				getRecord_internal(record);
-			} else if (record.getParent().getParent() == null) {
-				getRecord_internal(record);
-			}
-		}
+		else // record is Table row
+		if (record.getParent() == null)
+			getRecord_internal(record);
+		else if (record.getParent().getParent() == null)
+			getRecord_internal(record);
 	}
 
 	/**
@@ -108,7 +105,7 @@ public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	public Record getRecord(final Record recordToGet)
 			throws AlKhwarizmixException {
 		getLogger().trace("getRecord()");
-		Record result = getRecord_internal((Record) recordToGet.clone());
+		final Record result = getRecord_internal((Record) recordToGet.clone());
 		return ((result == null) || (result.getId() == null)
 				? null
 				: result);
@@ -118,28 +115,26 @@ public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 			throws AlKhwarizmixException {
 		Record result = null;
 		Record tableRecord = null;
-		Record schemaRecord = getSchemaRecord(recordToGet);
-		if (schemaRecord != null) {
-			if (recordToGet.isSchemaRecord()) {
+		final Record schemaRecord = getSchemaRecord(recordToGet);
+		if (schemaRecord != null)
+			if (recordToGet.isSchemaRecord())
 				result = schemaRecord;
-			} else {
+			else
 				tableRecord = getTableRecord(recordToGet, schemaRecord);
-			}
-		}
-		if (tableRecord != null) {
-			if (recordToGet.isTableRecord()) {
+		if (tableRecord != null)
+			if (recordToGet.isTableRecord())
 				result = tableRecord;
-			} else {
+			else {
 				recordToGet.setParent(tableRecord);
 				result = getRecordFromHibernate(recordToGet);
 			}
-		}
 		return result;
 	}
 
 	private Record getSchemaRecord(final Record record)
 			throws AlKhwarizmixException {
-		Record existingRecord = getRecordFromHibernate(record.getSchemaRecord());
+		final Record existingRecord = getRecordFromHibernate(record
+				.getSchemaRecord());
 		return (existingRecord != null
 				? existingRecord
 				: record.getSchemaRecord());
@@ -147,9 +142,9 @@ public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 
 	private Record getTableRecord(final Record record, final Record schemaRecord)
 			throws AlKhwarizmixException {
-		Record recordToFind = record.getTableRecord();
+		final Record recordToFind = record.getTableRecord();
 		recordToFind.setParent(schemaRecord);
-		Record existingRecord = getRecordFromHibernate(recordToFind);
+		final Record existingRecord = getRecordFromHibernate(recordToFind);
 		return (existingRecord != null
 				? existingRecord
 				: recordToFind);
@@ -159,20 +154,17 @@ public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 			throws AlKhwarizmixException {
 		try {
 			Record result = null;
-			Criteria criteria = getHibernateTemplate().getSessionFactory()
-					.getCurrentSession().createCriteria(Record.class);
+			final Criteria criteria = getHibernateTemplate()
+					.getSessionFactory().getCurrentSession()
+					.createCriteria(Record.class);
 			// List<Record> allRecords = criteria.list();
 			criteria.add(Restrictions.and(
 					getEqualsRecordIdCriterion(recordToGet),
 					getEqualsParentCriterion(recordToGet)));
 			result = (Record) criteria.uniqueResult();
-			if (result != null) {
-				result.setParent(recordToGet.getParent());
-				result.setExtendedData(getExtendedData(result.getExtendedData()));
-			}
 			return result;
-		} catch (DataAccessException e) {
-			AlKhwarizmixException ex = new AlKhwarizmixException(
+		} catch (final DataAccessException e) {
+			final AlKhwarizmixException ex = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
 		}

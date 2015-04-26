@@ -14,13 +14,13 @@ package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -50,6 +50,8 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 
 	private static final long serialVersionUID = 5808134939227056239L;
 
+	public static final String OWNER_ID = "owner.id";
+
 	// --------------------------------------------------------------------------
 	//
 	// Constructors
@@ -76,17 +78,17 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fOwner", nullable = true)
 	private AlKhwarizmixDomainObject owner;
 
-	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fGroup", nullable = true)
 	private Group group;
 
-	@ManyToOne(targetEntity = Encryption.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Encryption.class, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fEncryption", nullable = true)
 	private Encryption encryption;
@@ -96,6 +98,13 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("owner", owner);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -138,7 +147,6 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
 	 */
 	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
-
 		final List<AbstractAlKhwarizmixDomainObject> result = super
 				.getDaoObjectList();
 		return result;

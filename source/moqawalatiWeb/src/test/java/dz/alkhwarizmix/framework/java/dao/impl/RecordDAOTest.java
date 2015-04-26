@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -11,8 +11,13 @@
 
 package dz.alkhwarizmix.framework.java.dao.impl;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,13 +28,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IRecordDAO;
+import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
@@ -78,9 +84,46 @@ public class RecordDAOTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private Record newRecord() {
-		Record record = new Record("recordId", schema1Name, table1Name);
+	private Record newRecord(final int id, final AlKhwarizmixDomainObject owner) {
+		final Record record = new Record("recordId" + id, schema1Name,
+				table1Name);
+		record.setOwner(owner);
 		return record;
+	}
+
+	private Record newRecord() {
+		return newRecord(0, null);
+	}
+
+	private AlKhwarizmixDomainObject insertNewOwner()
+			throws AlKhwarizmixException {
+		final AlKhwarizmixDomainObject newOwner = new AlKhwarizmixDomainObject();
+		utRecordDAO.saveOrUpdate(newOwner);
+		return newOwner;
+	}
+
+	private Record insertNewRecord(final int id,
+			final AlKhwarizmixDomainObject owner, final String data)
+			throws AlKhwarizmixException {
+		final Record newRecord = newRecord(id, owner);
+		newRecord.setData(data);
+		utRecordDAO.saveOrUpdate(newRecord);
+		return newRecord;
+	}
+
+	private Record newRecordS1T1() {
+		return new Record("recordId", schema1Name, table1Name);
+	}
+
+	private Record newRecordS1T2() {
+		return new Record("recordId", schema1Name, table2Name);
+	}
+
+	private String getStringOfSize(final int size) {
+		String result = "123456789A_ADD";
+		while (result.length() < size)
+			result += result;
+		return result;
 	}
 
 	// --------------------------------------------------------------------------
@@ -141,17 +184,17 @@ public class RecordDAOTest {
 	@Test
 	public void test02_A_add_record_should_add_schema_and_table()
 			throws AlKhwarizmixException {
-		Record record = new Record("recordId", schema1Name, table1Name);
+		final Record record = newRecordS1T1();
 		// Test
 		utRecordDAO.saveOrUpdate(record);
 		// Asserts
-		Record tableRecord = record.getParent();
+		final Record tableRecord = record.getParent();
 		Assert.assertNotNull(tableRecord);
 		Assert.assertNotNull(tableRecord.getId());
 		Assert.assertEquals(schema1Name, tableRecord.getSchemaName());
 		Assert.assertEquals(table1Name, tableRecord.getTableName());
 		Assert.assertEquals(table1RecordId, tableRecord.getRecordId());
-		Record schemaRecord = tableRecord.getParent();
+		final Record schemaRecord = tableRecord.getParent();
 		Assert.assertNotNull(schemaRecord);
 		Assert.assertNotNull(schemaRecord.getId());
 		Assert.assertEquals(schema1Name, schemaRecord.getSchemaName());
@@ -162,12 +205,12 @@ public class RecordDAOTest {
 	@Test
 	public void test02_B_add_record_should_add_schema_and_table()
 			throws AlKhwarizmixException {
-		Record schemaRecord1 = new Record(schema1RecordId, schema1Name);
-		Record tableRecord1 = new Record(table1RecordId, schema1Name,
+		final Record schemaRecord1 = new Record(schema1RecordId, schema1Name);
+		final Record tableRecord1 = new Record(table1RecordId, schema1Name,
 				table1Name);
 		Assert.assertNull(utRecordDAO.getRecord(schemaRecord1));
 		Assert.assertNull(utRecordDAO.getRecord(tableRecord1));
-		Record record = new Record("recordId", schema1Name, table1Name);
+		final Record record = newRecordS1T1();
 		Assert.assertNull(utRecordDAO.getRecord(record));
 		// Test
 		utRecordDAO.saveOrUpdate(record);
@@ -183,8 +226,8 @@ public class RecordDAOTest {
 	public void test03_add_record_when_schema_exists()
 			throws AlKhwarizmixException {
 		// Setup
-		Record record1 = new Record("recordId1", schema1Name, table1Name);
-		Record record2 = new Record("recordId2", schema1Name, table2Name);
+		final Record record1 = new Record("recordId1", schema1Name, table1Name);
+		final Record record2 = new Record("recordId2", schema1Name, table2Name);
 		utRecordDAO.saveOrUpdate(record1);
 		// Test
 		utRecordDAO.saveOrUpdate(record2);
@@ -198,8 +241,8 @@ public class RecordDAOTest {
 	public void test04_add_record_when_schema_and_table_exist()
 			throws AlKhwarizmixException {
 		// Setup
-		Record record1 = new Record("recordId1", schema1Name, table1Name);
-		Record record2 = new Record("recordId2", schema1Name, table1Name);
+		final Record record1 = new Record("recordId1", schema1Name, table1Name);
+		final Record record2 = new Record("recordId2", schema1Name, table1Name);
 		utRecordDAO.saveOrUpdate(record1);
 		// Test
 		utRecordDAO.saveOrUpdate(record2);
@@ -213,8 +256,8 @@ public class RecordDAOTest {
 	public void test05_should_be_able_to_add_same_recordId_for_different_tables()
 			throws AlKhwarizmixException {
 		// Setup
-		Record record1 = new Record("recordId", schema1Name, table1Name);
-		Record record2 = new Record("recordId", schema1Name, table2Name);
+		final Record record1 = newRecordS1T1();
+		final Record record2 = newRecordS1T2();
 		utRecordDAO.saveOrUpdate(record1);
 		// Test
 		utRecordDAO.saveOrUpdate(record2);
@@ -228,13 +271,42 @@ public class RecordDAOTest {
 	public void test06_should_be_able_to_add_same_recordId_for_different_schemas()
 			throws AlKhwarizmixException {
 		// Setup
-		Record record1 = new Record("recordId", schema1Name, table1Name);
-		Record record2 = new Record("recordId", schema2Name, table1Name);
+		final Record record1 = newRecordS1T1();
+		final Record record2 = new Record("recordId", schema2Name, table1Name);
 		utRecordDAO.saveOrUpdate(record1);
 		// Test
 		utRecordDAO.saveOrUpdate(record2);
 		// Asserts
 		Assert.assertNotNull(utRecordDAO.getRecord(record2));
+	}
+
+	// ----- -----
+
+	@Test
+	public void test07_getList() throws AlKhwarizmixException {
+		// Setup
+		final String data1 = getStringOfSize(128 * 3);
+		final AlKhwarizmixDomainObject owner1 = insertNewOwner();
+		final Record record1 = insertNewRecord(1, owner1, data1);
+		insertNewRecord(2, insertNewOwner(), getStringOfSize(128 * 5));
+		// Setup Criteria
+		final Record tableRecord = utRecordDAO.getRecord(record1
+				.getTableRecord());
+		final DetachedCriteria criteria = DetachedCriteria
+				.forClass(Record.class);
+		criteria.addOrder(Order.asc(Record.RECORDID));
+		criteria.add(Restrictions.eq(Record.PARENT_ID, tableRecord.getId()));
+		criteria.add(Restrictions.eq(Record.OWNER_ID, owner1.getId()));
+		// Test
+		@SuppressWarnings("unchecked")
+		final List<Record> listOfRecords = utRecordDAO.getList(criteria, 0,
+				1000);
+		// Asserts
+		Assert.assertNotNull(listOfRecords);
+		Assert.assertEquals(1, listOfRecords.size());
+		Assert.assertEquals(record1.getRecordId(), listOfRecords.get(0)
+				.getRecordId());
+		Assert.assertEquals(data1, listOfRecords.get(0).getData());
 	}
 
 } // Class

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -35,21 +35,22 @@ public class EntityInterceptor extends EmptyInterceptor {
 
 	// TODO: Add tests on this class!!
 	@Override
-	public boolean onSave(Object entity, Serializable id, Object[] state,
-			String[] propertyNames, Type[] types) {
+	public boolean onSave(final Object entity, final Serializable id,
+			final Object[] state, final String[] propertyNames,
+			final Type[] types) {
 		return prePersist(state, propertyNames, types);
 	}
 
 	@Override
-	public boolean onFlushDirty(Object entity, Serializable id,
-			Object[] currentState, Object[] previousState,
-			String[] propertyNames, Type[] types) {
+	public boolean onFlushDirty(final Object entity, final Serializable id,
+			final Object[] currentState, final Object[] previousState,
+			final String[] propertyNames, final Type[] types) {
 		return prePersist(currentState, propertyNames, types);
 	}
 
 	/**
 	 * update the modified date of entities
-	 * 
+	 *
 	 * @param currentState
 	 *            {@link Object} the entity properties values
 	 * @param propertyNames
@@ -58,15 +59,14 @@ public class EntityInterceptor extends EmptyInterceptor {
 	 *            {@link Type} the entity property types
 	 * @return {@link Boolean}
 	 */
-	private boolean prePersist(Object[] currentState, String[] propertyNames,
-			Type[] types) {
-		for (int i = 0; i < propertyNames.length; i++) {
+	private boolean prePersist(final Object[] currentState,
+			final String[] propertyNames, final Type[] types) {
+		for (int i = 0; i < propertyNames.length; i++)
 			if ("modified".equals(propertyNames[i])
-					&& (types[i] instanceof TimestampType || types[i] instanceof DateType)) {
+					&& ((types[i] instanceof TimestampType) || (types[i] instanceof DateType))) {
 				currentState[i] = new Date();
 				return true;
 			}
-		}
 		return false;
 	}
 

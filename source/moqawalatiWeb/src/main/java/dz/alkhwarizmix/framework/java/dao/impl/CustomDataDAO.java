@@ -85,10 +85,6 @@ public class CustomDataDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 					customDataToGet.getCustomizer().getId());
 			criteria.add(Restrictions.and(criter1, criter2));
 			customDataToGet = (CustomData) criteria.uniqueResult();
-			if (customDataToGet != null) {
-				customDataToGet.setExtendedData(getExtendedData(customDataToGet
-						.getExtendedData()));
-			}
 			return customDataToGet;
 		} catch (final DataAccessException e) {
 			final AlKhwarizmixException ex = new AlKhwarizmixException(

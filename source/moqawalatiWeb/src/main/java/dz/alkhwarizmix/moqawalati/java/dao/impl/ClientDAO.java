@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -21,7 +21,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.impl.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dao.IClientDAO;
@@ -31,7 +30,7 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
@@ -54,14 +53,14 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 
 	@PostConstruct
 	private void createDefaultClients() {
-		Client defaultUser = new Client("fares.belhaouas", "فارس بلحواس");
+		final Client defaultUser = new Client("fares.belhaouas", "فارس بلحواس");
 
 		try {
 			saveOrUpdate(defaultUser);
 			getLogger().info(
 					"createDefaultClients: Created default client <{}>",
 					defaultUser.getName());
-		} catch (AlKhwarizmixDAOException e) {
+		} catch (final AlKhwarizmixDAOException e) {
 			getLogger()
 					.warn("createDefaultClients: default client <{}> already existing",
 							defaultUser.getName());
@@ -94,23 +93,17 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 		getLogger().trace("getClient()");
 
 		try {
-			String clientId = clientToGet.getClientId();
-			Criteria criteria = getHibernateTemplate().getSessionFactory()
-					.getCurrentSession().createCriteria(Client.class);
+			final String clientId = clientToGet.getClientId();
+			final Criteria criteria = getHibernateTemplate()
+					.getSessionFactory().getCurrentSession()
+					.createCriteria(Client.class);
 			criteria.add(Restrictions.eq(Client.CLIENTID, clientId));
 			clientToGet = (Client) criteria.uniqueResult();
-
-			if (clientToGet != null)
-				clientToGet.setExtendedData(getExtendedData(clientToGet
-						.getExtendedData()));
-
 			return clientToGet;
-		} catch (DataAccessException e) {
-			MoqawalatiException ex = new MoqawalatiException(
+		} catch (final DataAccessException e) {
+			final MoqawalatiException ex = new MoqawalatiException(
 					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
 			throw ex;
-		} catch (AlKhwarizmixException e) {
-			throw new MoqawalatiException(e);
 		}
 	}
 

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -29,7 +29,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
@@ -50,6 +50,13 @@ public class CustomDataDAOTest {
 	@Autowired
 	private ICustomDataDAO utCustomDataDAO;
 
+	private String getStringOfSize(final int size) {
+		String result = "123456789A_ADD";
+		while (result.length() < size)
+			result += result;
+		return result;
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Tests
@@ -59,10 +66,9 @@ public class CustomDataDAOTest {
 	// ----- -----
 
 	@Test
-	public void test01_add_get_then_update_get_CustomData()
+	public void test01_A_add_get_then_update_get_CustomData()
 			throws AlKhwarizmixException {
-
-		AlKhwarizmixDomainObject customizer = new AlKhwarizmixDomainObject();
+		final AlKhwarizmixDomainObject customizer = new AlKhwarizmixDomainObject();
 
 		addCustomData(customizer, "123456789A_ADD");
 		CustomData customDataToGet = getCustomData(customizer);
@@ -75,33 +81,76 @@ public class CustomDataDAOTest {
 				customDataToGet.getCustomDataValue());
 	}
 
-	private CustomData addCustomData(AlKhwarizmixDomainObject customizer,
-			String value) throws AlKhwarizmixException {
-
-		CustomData customDataToAdd = new CustomData();
+	private CustomData addCustomData(final AlKhwarizmixDomainObject customizer,
+			final String value) throws AlKhwarizmixException {
+		final CustomData customDataToAdd = new CustomData();
 		customDataToAdd.setCustomizer(customizer);
 		customDataToAdd.setCustomDataId(CUSTOM_DATA_ID);
 		customDataToAdd.setCustomDataValue(value);
 		utCustomDataDAO.saveOrUpdate(customDataToAdd);
+		final String s = customDataToAdd.getCustomDataValue();
+		customDataToAdd.setCustomDataValue(s);
 		return customDataToAdd;
 	}
 
-	private CustomData getCustomData(AlKhwarizmixDomainObject customizer)
+	private CustomData getCustomData(final AlKhwarizmixDomainObject customizer)
 			throws AlKhwarizmixException {
-
 		CustomData customDataToGet = new CustomData();
 		customDataToGet.setCustomizer(customizer);
 		customDataToGet.setCustomDataId(CUSTOM_DATA_ID);
 		customDataToGet = utCustomDataDAO.getCustomData(customDataToGet);
+		final String s = customDataToGet.getCustomDataValue();
+		customDataToGet.setCustomDataValue(s);
 		return customDataToGet;
 	}
 
-	private CustomData updateCustomData(CustomData customDataToUpdate,
-			String value) throws AlKhwarizmixException {
-
+	private CustomData updateCustomData(final CustomData customDataToUpdate,
+			final String value) throws AlKhwarizmixException {
 		customDataToUpdate.setCustomDataValue(value);
 		utCustomDataDAO.saveOrUpdate(customDataToUpdate);
 		return customDataToUpdate;
+	}
+
+	// ----- -----
+
+	@Test
+	public void test01_B_add_get_then_update_get_CustomData_for_huge_data()
+			throws AlKhwarizmixException {
+		final AlKhwarizmixDomainObject customizer = new AlKhwarizmixDomainObject();
+
+		String expected = getStringOfSize(128 * 3);
+
+		addCustomData(customizer, expected);
+		CustomData customDataToGet = getCustomData(customizer);
+		String result = customDataToGet.getCustomDataValue();
+		Assert.assertEquals(expected, result);
+
+		expected = "123456789A_UPDATE";
+		updateCustomData(customDataToGet, expected);
+		customDataToGet = getCustomData(customizer);
+		result = customDataToGet.getCustomDataValue();
+		Assert.assertEquals(expected, result);
+	}
+
+	// ----- -----
+
+	@Test
+	public void test01_C_add_get_then_update_get_CustomData_with_final_value_is_empty_string()
+			throws AlKhwarizmixException {
+		final AlKhwarizmixDomainObject customizer = new AlKhwarizmixDomainObject();
+
+		String expected = getStringOfSize(128 * 5);
+
+		addCustomData(customizer, expected);
+		CustomData customDataToGet = getCustomData(customizer);
+		String result = customDataToGet.getCustomDataValue();
+		Assert.assertEquals(expected, result);
+
+		expected = "";
+		updateCustomData(customDataToGet, expected);
+		customDataToGet = getCustomData(customizer);
+		result = customDataToGet.getCustomDataValue();
+		Assert.assertEquals(expected, result);
 	}
 
 } // Class

@@ -100,12 +100,12 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 	@Column(name = "fEncryptionId", unique = true, nullable = false, length = 63)
 	private String encryptionId;
 
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fUser", nullable = false)
 	private User user;
 
-	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fDomainObject", nullable = false)
 	private AlKhwarizmixDomainObject domainObject;
@@ -139,10 +139,9 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 		if ((sourceEncryption != null)
 				&& getEncryptionId().equals(sourceEncryption.getEncryptionId())) {
 			// NOOP
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	/**

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -27,7 +27,7 @@ import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -57,11 +57,11 @@ public abstract class AlKhwarizmixWebServiceForXML {
 
 	/**
 	 * get the remote ip address, usefull to control add and update
-	 * 
+	 *
 	 * @return {@link String} the current request remote ip address
 	 */
 	public String getCurrentRequestRemoteAddress() {
-		String result = (getServletRequestAttributes() != null)
+		final String result = (getServletRequestAttributes() != null)
 				? getServletRequestAttributes().getRequest().getRemoteAddr()
 				: null;
 		return result;
@@ -69,11 +69,11 @@ public abstract class AlKhwarizmixWebServiceForXML {
 
 	/**
 	 * get the response headers
-	 * 
+	 *
 	 * @return {@link HttpHeaders}
 	 */
 	public HttpHeaders getHttpHeadersForXML() {
-		HttpHeaders responseHeaders = new HttpHeaders();
+		final HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("Content-Type", "application/xml; charset=UTF-8");
 		responseHeaders.setPragma("no-cache");
 		responseHeaders.setCacheControl("no-cache");
@@ -84,21 +84,21 @@ public abstract class AlKhwarizmixWebServiceForXML {
 
 	/**
 	 */
-	public void buildResponseErrorAsXML(StringBuilder sBuilder) {
+	public void buildResponseErrorAsXML(final StringBuilder sBuilder) {
 		buildResponseStatusAsXML(sBuilder, ResponseStatus.ERROR);
 	}
 
 	/**
 	 */
-	public void buildResponseSuccessAsXML(StringBuilder sBuilder) {
+	public void buildResponseSuccessAsXML(final StringBuilder sBuilder) {
 		buildResponseStatusAsXML(sBuilder, ResponseStatus.SUCCESSFUL);
 	}
 
 	/**
 	 */
-	public void buildResponseStatusAsXML(StringBuilder builder,
-			ResponseStatus response) {
-		StringBuilder responseHead = new StringBuilder(
+	public void buildResponseStatusAsXML(final StringBuilder builder,
+			final ResponseStatus response) {
+		final StringBuilder responseHead = new StringBuilder(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
 		responseHead.append("<response status=\"").append(response)
 				.append("\">");
@@ -109,13 +109,13 @@ public abstract class AlKhwarizmixWebServiceForXML {
 	/**
 	 */
 	public ResponseEntity<String> errorResponseForXML(
-			AlKhwarizmixErrorCode errorCode) {
-		StringBuilder sBuilder = new StringBuilder("<error code=\"").append(
-				errorCode.getId()).append("\"/>");
+			final AlKhwarizmixErrorCode errorCode) {
+		final StringBuilder sBuilder = new StringBuilder("<error code=\"")
+				.append(errorCode.getId()).append("\"/>");
 
 		buildResponseErrorAsXML(sBuilder);
 
-		HttpHeaders responseHeaders = getHttpHeadersForXML();
+		final HttpHeaders responseHeaders = getHttpHeadersForXML();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
 				errorCode.getHttpStatus());
@@ -124,7 +124,7 @@ public abstract class AlKhwarizmixWebServiceForXML {
 	/**
 	 */
 	protected final ResponseEntity<String> errorResponseForXML(
-			AlKhwarizmixException ex) {
+			final AlKhwarizmixException ex) {
 		getLogger().error("{}: {}", ex.getLocalizedMessage(),
 				ex.getStackTrace());
 		return errorResponseForXML(ex.getErrorCode());
@@ -133,30 +133,30 @@ public abstract class AlKhwarizmixWebServiceForXML {
 	/**
 	 */
 	protected final ResponseEntity<String> errorResponseForXML(
-			Exception exception) {
+			final Exception exception) {
 		return errorResponseForXML(getAlKhwarizmixException(exception));
 	}
 
 	/**
 	 */
 	protected final AlKhwarizmixException getAlKhwarizmixException(
-			Exception exception) {
+			final Exception exception) {
 		AlKhwarizmixException result = null;
-		if (exception instanceof AlKhwarizmixException) {
+		if (exception instanceof AlKhwarizmixException)
 			result = (AlKhwarizmixException) exception;
-		} else {
+		else
 			result = new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR);
-		}
 		return result;
 	}
 
 	/**
 	 */
-	public ResponseEntity<String> successResponseForXML(StringBuilder sBuilder) {
+	public ResponseEntity<String> successResponseForXML(
+			final StringBuilder sBuilder) {
 		buildResponseSuccessAsXML(sBuilder);
 
-		HttpHeaders responseHeaders = getHttpHeadersForXML();
+		final HttpHeaders responseHeaders = getHttpHeadersForXML();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
 				HttpStatus.OK);
@@ -184,7 +184,7 @@ public abstract class AlKhwarizmixWebServiceForXML {
 						.currentRequestAttributes());
 	}
 
-	public void setServletRequestAttributes(ServletRequestAttributes value) {
+	public void setServletRequestAttributes(final ServletRequestAttributes value) {
 		servletRequestAttributes = value;
 	}
 

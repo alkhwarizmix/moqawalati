@@ -89,7 +89,7 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(targetEntity = Encryption.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(targetEntity = Encryption.class, fetch = FetchType.EAGER, optional = true)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fEncryption", nullable = true, updatable = false)
 	private Encryption encryption;
@@ -133,13 +133,11 @@ public class Password extends AbstractAlKhwarizmixDomainObject implements
 			throws AlKhwarizmixException {
 		final Password sourceUser = (Password) sourceObject;
 		if (sourceUser != null) {
-			if (sourceUser.password != null) {
+			if (sourceUser.password != null)
 				password = sourceUser.password;
-			}
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	/**

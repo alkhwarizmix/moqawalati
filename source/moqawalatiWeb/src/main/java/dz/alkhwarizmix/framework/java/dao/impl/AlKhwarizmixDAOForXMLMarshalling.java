@@ -11,23 +11,15 @@
 
 package dz.alkhwarizmix.framework.java.dao.impl;
 
-import java.util.List;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAOForXMLMarshalling;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedData;
-import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedDataPart;
 import dz.alkhwarizmix.framework.java.utils.XMLUtil;
 
 /**
@@ -68,6 +60,7 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 		try {
 			for (final AbstractAlKhwarizmixDomainObject cursor : object
 					.getDaoObjectList()) {
+				getLogger().trace("saveOrUpdate(cursor={})", cursor);
 				object.beforeDaoSaveOrUpdate(cursor);
 				getHibernateTemplate().saveOrUpdate(cursor);
 			}
@@ -108,55 +101,6 @@ public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
 
 		return new XMLUtil(getJaxb2Marshaller())
 				.unmarshalObjectFromXML(xmlValue);
-	}
-
-	/**
-	 */
-	protected final ExtendedData getExtendedData(ExtendedData extendedDataToGet)
-			throws AlKhwarizmixException {
-		getLogger().trace("getExtendedData()");
-
-		if (extendedDataToGet == null)
-			return null;
-
-		try {
-			final Criteria criteria = getHibernateTemplate()
-					.getSessionFactory().getCurrentSession()
-					.createCriteria(ExtendedData.class);
-			final Criterion criter1 = Restrictions.eq(ExtendedData.ID,
-					extendedDataToGet.getId());
-			criteria.add(criter1);
-			extendedDataToGet = (ExtendedData) criteria.uniqueResult();
-
-			if (extendedDataToGet != null) {
-				extendedDataToGet
-						.setExtendedDataParts(getExtendedDataParts(extendedDataToGet));
-			}
-
-			return extendedDataToGet;
-		} catch (final DataAccessException e) {
-			final AlKhwarizmixException ex = new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
-			throw ex;
-		}
-	}
-
-	/**
-	 */
-	private List<ExtendedDataPart> getExtendedDataParts(
-			final ExtendedData extendedData) {
-
-		final Criteria criteria = getHibernateTemplate().getSessionFactory()
-				.getCurrentSession().createCriteria(ExtendedDataPart.class);
-		criteria.createCriteria(ExtendedDataPart.EXTENDEDDATA).add(
-				Restrictions.eq(ExtendedData.ID, extendedData.getId()));
-		final List<ExtendedDataPart> extendedDataParts = criteria.list();
-
-		getLogger().debug("getExtendedDataParts: extendedDataParts.size {}",
-				(extendedDataParts == null)
-						? null
-						: extendedDataParts.size());
-		return extendedDataParts;
 	}
 
 	// --------------------------------------------------------------------------

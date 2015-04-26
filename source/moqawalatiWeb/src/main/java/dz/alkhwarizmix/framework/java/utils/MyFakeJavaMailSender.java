@@ -9,17 +9,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.dao.impl;
+package dz.alkhwarizmix.framework.java.utils;
+
+import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
-
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dao.IEMailDAO;
-import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 /**
  * <p>
@@ -27,11 +24,10 @@ import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٧ ربيع الثاني ١٤٣٦ (January 27, 2015)
+ * @since ٢٩ جمادى الثانية ١٤٣٦ (April 19, 2015)
  */
-@Repository
-public class EMailDAO extends AlKhwarizmixDAOForXMLMarshalling implements
-		IEMailDAO {
+public class MyFakeJavaMailSender extends JavaMailSenderImpl implements
+		JavaMailSender {
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,9 +36,9 @@ public class EMailDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	// --------------------------------------------------------------------------
 
 	/**
-	 * constructor
+	 * Constructor.
 	 */
-	public EMailDAO() {
+	public MyFakeJavaMailSender() {
 		super();
 	}
 
@@ -54,10 +50,9 @@ public class EMailDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 
 	private static Logger logger = null;
 
-	@Override
 	protected Logger getLogger() {
 		if (logger == null)
-			logger = LoggerFactory.getLogger(EMailDAO.class);
+			logger = LoggerFactory.getLogger(MyFakeJavaMailSender.class);
 		return logger;
 	}
 
@@ -67,24 +62,9 @@ public class EMailDAO extends AlKhwarizmixDAOForXMLMarshalling implements
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 */
 	@Override
-	public EMail getEMail(final EMail emailToGet) throws AlKhwarizmixException {
-		getLogger().trace("getEMail()");
-
-		try {
-			// String userId = userToGet.getUserId();
-			// Criteria criteria = getHibernateTemplate().getSessionFactory()
-			// .getCurrentSession().createCriteria(User.class);
-			// criteria.add(Restrictions.eq(User.USERID, userId));
-			// emailToGet = (EMail) criteria.uniqueResult();
-			return emailToGet;
-		} catch (final DataAccessException e) {
-			final AlKhwarizmixException ex = new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
-			throw ex;
-		}
+	public void send(final MimeMessage mimeMessage) {
+		getLogger().info("send email");
 	}
 
 } // Class

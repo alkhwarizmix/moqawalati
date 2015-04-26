@@ -33,7 +33,7 @@
 		http://www.springframework.org/schema/task/spring-task-3.1.xsd"
 		>
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<bean id="mailSender" class="${mail.mailSender.clazz}">
 		<property name="host" value="localhost" />
 		<property name="javaMailProperties">
 			<props>
@@ -54,6 +54,6 @@
 
 	<task:scheduled-tasks>
 		<task:scheduled ref="emailServiceSendWorker" method="scheduledSendEMail"
-			fixed-delay="5000" />
+			fixed-delay="${mail.emailServiceSendWorker.fixedDelay}" />
 	</task:scheduled-tasks>
 </beans>

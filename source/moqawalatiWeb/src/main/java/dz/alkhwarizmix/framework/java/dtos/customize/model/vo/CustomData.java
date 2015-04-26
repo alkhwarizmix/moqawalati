@@ -146,12 +146,11 @@ public class CustomData extends
 
 		final CustomData sourceCD = (CustomData) sourceObject;
 		if ((sourceCD != null)
-				&& getCustomDataId().equals(sourceCD.getCustomDataId())) {
+				&& getCustomDataId().equals(sourceCD.getCustomDataId()))
 			setCustomDataValue(sourceCD.getCustomDataValue());
-		} else {
+		else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	// --------------------------------------------------------------------------

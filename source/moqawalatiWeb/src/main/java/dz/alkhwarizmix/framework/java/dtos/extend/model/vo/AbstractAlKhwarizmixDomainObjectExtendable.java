@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
@@ -32,7 +31,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
  */
@@ -59,12 +58,10 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 	}
 
 	protected AbstractAlKhwarizmixDomainObjectExtendable(
-			AbstractAlKhwarizmixDomainObjectExtendable other) {
+			final AbstractAlKhwarizmixDomainObjectExtendable other) {
 		super(other);
-		if (other != null) {
-			this.extendedData = (ExtendedData) ObjectUtils
-					.clone(other.extendedData);
-		}
+		if (other != null)
+			extendedData = (ExtendedData) ObjectUtils.clone(other.extendedData);
 	}
 
 	// --------------------------------------------------------------------------
@@ -73,7 +70,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 	//
 	// --------------------------------------------------------------------------
 
-	@OneToOne(targetEntity = ExtendedData.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = ExtendedData.class, fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fExtendedData", nullable = true)
 	private ExtendedData extendedData;
@@ -86,7 +83,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -98,20 +95,20 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		boolean result = super.equals(other)
+	public boolean equals(final Object other) {
+		final boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.extendedData,
+				&& ObjectUtils.equals(extendedData,
 						getObjectAsThisClass(other).extendedData);
 		return result;
 	}
 
 	private AbstractAlKhwarizmixDomainObjectExtendable getObjectAsThisClass(
-			Object other) {
+			final Object other) {
 		return (other instanceof AbstractAlKhwarizmixDomainObjectExtendable)
 				? (AbstractAlKhwarizmixDomainObjectExtendable) other
 				: null;
@@ -122,7 +119,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
 
-		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
+		final List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		if (extendedData != null)
 			result.addAll(extendedData.getDaoObjectList());
 		result.add(this);
@@ -147,7 +144,7 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 		return result;
 	}
 
-	public final void setExtendedDataValue(String value) {
+	public final void setExtendedDataValue(final String value) {
 		if (extendedData == null)
 			extendedData = new ExtendedData();
 		extendedData.setExtendedDataValue(value);
@@ -162,8 +159,8 @@ public abstract class AbstractAlKhwarizmixDomainObjectExtendable extends
 		return extendedData;
 	}
 
-	public final void setExtendedData(ExtendedData value) {
-		this.extendedData = value;
+	public final void setExtendedData(final ExtendedData value) {
+		extendedData = value;
 	}
 
 } // Class

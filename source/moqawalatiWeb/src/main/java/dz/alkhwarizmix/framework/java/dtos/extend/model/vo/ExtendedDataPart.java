@@ -13,14 +13,13 @@ package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.exception.CloneFailedException;
 import org.hibernate.annotations.NotFound;
@@ -53,6 +52,7 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 
 	public static final String EXTENDEDDATAPARTVALUE = "extendedDataPartValue";
 	public static final String EXTENDEDDATA = "extendedData";
+	public static final String ORDER = "order";
 
 	// --------------------------------------------------------------------------
 	//
@@ -73,13 +73,16 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "fExtendedData", nullable = false)
 	private ExtendedData extendedData;
 
 	@Column(name = "fExtendedDataPartValue", nullable = false, length = 127)
 	private String extendedDataPartValue;
+
+	@Column(name = "fOrder")
+	private Long order;
 
 	// --------------------------------------------------------------------------
 	//
@@ -109,13 +112,11 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 			throws AlKhwarizmixException {
 		final ExtendedDataPart sourceEDP = (ExtendedDataPart) sourceObject;
 		if ((sourceEDP != null) && getId().equals(sourceEDP.getId())) {
-			if (sourceEDP.extendedDataPartValue != null) {
+			if (sourceEDP.extendedDataPartValue != null)
 				extendedDataPartValue = sourceEDP.extendedDataPartValue;
-			}
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -143,6 +144,19 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 
 	public void setExtendedDataPartValue(final String value) {
 		extendedDataPartValue = value;
+	}
+
+	// ----------------------------------
+	// order
+	// ----------------------------------
+
+	@XmlTransient
+	public Long getOrder() {
+		return order;
+	}
+
+	public void setOrder(final Long value) {
+		order = value;
 	}
 
 } // Class
