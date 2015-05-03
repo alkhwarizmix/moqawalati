@@ -36,7 +36,7 @@ import dz.alkhwarizmix.framework.java.services.ICustomizerService;
  */
 @Controller
 @RequestMapping("alkhwarizmix/xml/customize")
-public class CustomizerWebServiceForXML extends AlKhwarizmixWebServiceForXML {
+public class CustomizerWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//

@@ -30,7 +30,7 @@ import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
  * @since ٠٧ ربيع الثاني ١٤٣٦ (January 27, 2015)
  */
 @Repository
-public class EMailDAO extends AlKhwarizmixDAOForXMLMarshalling implements
+public class EMailDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 		IEMailDAO {
 
 	// --------------------------------------------------------------------------

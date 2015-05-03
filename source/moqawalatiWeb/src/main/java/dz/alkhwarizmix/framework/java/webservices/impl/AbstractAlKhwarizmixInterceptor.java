@@ -26,7 +26,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public abstract class AlKhwarizmixInterceptor extends HandlerInterceptorAdapter {
+public abstract class AbstractAlKhwarizmixInterceptor extends HandlerInterceptorAdapter {
 
 	// --------------------------------------------------------------------------
 	//

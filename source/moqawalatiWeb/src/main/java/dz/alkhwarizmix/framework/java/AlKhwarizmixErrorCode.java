@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -48,7 +48,7 @@ public enum AlKhwarizmixErrorCode {
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param id
 	 *            {@link Integer} the error code
 	 * @param description
@@ -56,14 +56,14 @@ public enum AlKhwarizmixErrorCode {
 	 */
 	private AlKhwarizmixErrorCode(final int theId, final String description,
 			final HttpStatus httpStatus) {
-		this.id = theId;
+		id = theId;
 		this.description = description;
 		this.httpStatus = httpStatus;
 	}
 
 	/**
 	 * get an errorCode using it's id
-	 * 
+	 *
 	 * @param errorId
 	 *            {@link Integer} the error code id
 	 * @return {@link ErrorCode}
@@ -72,17 +72,15 @@ public enum AlKhwarizmixErrorCode {
 		AlKhwarizmixErrorCode result = null;
 		final AlKhwarizmixErrorCode[] errorCodes = values();
 
-		for (int i = 0; i < errorCodes.length; i++) {
-			if (errorCodes[i].id == errorId) {
-				result = errorCodes[i];
-			}
-		}
+		for (final AlKhwarizmixErrorCode errorCode : errorCodes)
+			if (errorCode.id == errorId)
+				result = errorCode;
 		return result;
 	}
 
 	/**
 	 * get the id
-	 * 
+	 *
 	 * @return id {@link int} the id
 	 */
 	public int getId() {
@@ -91,7 +89,7 @@ public enum AlKhwarizmixErrorCode {
 
 	/**
 	 * get the error description
-	 * 
+	 *
 	 * @return description {@link String} the error description
 	 */
 	public String getDescription() {
@@ -100,7 +98,7 @@ public enum AlKhwarizmixErrorCode {
 
 	/**
 	 * get the httpStatus
-	 * 
+	 *
 	 * @return httpStatus {@link HttpStatus} the httpStatus
 	 */
 	public HttpStatus getHttpStatus() {

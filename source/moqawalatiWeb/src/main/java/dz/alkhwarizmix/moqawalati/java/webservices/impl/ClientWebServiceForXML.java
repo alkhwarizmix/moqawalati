@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.webservices.impl.AlKhwarizmixWebServiceForXML;
+import dz.alkhwarizmix.framework.java.webservices.impl.AbstractAlKhwarizmixWebServiceForXML;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.services.IClientService;
@@ -37,7 +37,7 @@ import dz.alkhwarizmix.moqawalati.java.webservices.IClientWebServiceForRest;
  */
 @Controller
 @RequestMapping("moqawalati/xml/client")
-public class ClientWebServiceForXML extends AlKhwarizmixWebServiceForXML
+public class ClientWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML
 		implements IClientWebServiceForRest {
 
 	// --------------------------------------------------------------------------

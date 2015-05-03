@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -22,11 +22,11 @@ import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٩ جمادى الأولى ١٤٣٦ (February 28, 2015)
  */
-public abstract class AlKhwarizmixWebServiceForBlazeDS {
+public abstract class AbstractAlKhwarizmixWebServiceForBlazeDS {
 
 	// --------------------------------------------------------------------------
 	//
@@ -45,16 +45,15 @@ public abstract class AlKhwarizmixWebServiceForBlazeDS {
 	/**
 	 */
 	protected final AlKhwarizmixBlazeDSException getAlKhwarizmixBlazeDSException(
-			Exception exception, String message) {
+			final Exception exception, final String message) {
 		getLogger().error("{}: {}", exception.getLocalizedMessage(),
 				exception.getStackTrace());
 		AlKhwarizmixBlazeDSException result = null;
-		if (exception instanceof AlKhwarizmixException) {
+		if (exception instanceof AlKhwarizmixException)
 			result = new AlKhwarizmixBlazeDSException(message, exception);
-		} else {
+		else
 			result = new AlKhwarizmixBlazeDSException(message,
 					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR);
-		}
 		return result;
 	}
 

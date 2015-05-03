@@ -31,7 +31,7 @@ import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public abstract class AlKhwarizmixWebServiceForXML {
+public abstract class AbstractAlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//

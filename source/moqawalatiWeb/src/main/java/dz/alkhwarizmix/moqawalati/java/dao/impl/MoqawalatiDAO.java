@@ -25,7 +25,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.dao.impl.AlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.dao.impl.AbstractAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.dao.impl.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.ExtendedData;
@@ -42,7 +42,7 @@ import dz.alkhwarizmix.moqawalati.java.dao.IMoqawalatiDAO;
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
 @Repository
-public class MoqawalatiDAO extends AlKhwarizmixDAO implements IMoqawalatiDAO {
+public class MoqawalatiDAO extends AbstractAlKhwarizmixDAO implements IMoqawalatiDAO {
 
 	// --------------------------------------------------------------------------
 	//

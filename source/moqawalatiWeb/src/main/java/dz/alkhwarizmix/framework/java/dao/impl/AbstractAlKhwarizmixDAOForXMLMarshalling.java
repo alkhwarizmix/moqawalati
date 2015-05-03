@@ -30,7 +30,7 @@ import dz.alkhwarizmix.framework.java.utils.XMLUtil;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٧ شعبان ١٤٣٥ (June 05, 2014)
  */
-public abstract class AlKhwarizmixDAOForXMLMarshalling extends AlKhwarizmixDAO
+public abstract class AbstractAlKhwarizmixDAOForXMLMarshalling extends AbstractAlKhwarizmixDAO
 		implements IAlKhwarizmixDAOForXMLMarshalling {
 
 	// --------------------------------------------------------------------------

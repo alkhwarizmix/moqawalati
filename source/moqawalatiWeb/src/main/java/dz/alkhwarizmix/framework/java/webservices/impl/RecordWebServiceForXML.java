@@ -36,7 +36,7 @@ import dz.alkhwarizmix.framework.java.services.IRecordService;
  */
 @Controller
 @RequestMapping("alkhwarizmix/xml/record")
-public class RecordWebServiceForXML extends AlKhwarizmixWebServiceForXML {
+public class RecordWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//

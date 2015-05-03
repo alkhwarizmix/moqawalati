@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,18 +9,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.moqawalati.java.webservices.impl;
+package dz.alkhwarizmix.framework.java.blazeds.messaging;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixApplicationContextHolder;
 import dz.alkhwarizmix.framework.java.security.ISecurityManager;
-import dz.alkhwarizmix.framework.java.webservices.impl.AbstractAlKhwarizmixInterceptor;
+import flex.messaging.MessageBrokerServlet;
 
 /**
  * <p>
@@ -28,9 +28,28 @@ import dz.alkhwarizmix.framework.java.webservices.impl.AbstractAlKhwarizmixInter
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
+ * @since ٠٧ رجب ١٤٣٦ (April 26, 2015)
  */
-public class MoqawalatiInterceptor extends AbstractAlKhwarizmixInterceptor {
+@Configurable
+public class AlKhwarizmixMessageBrokerServlet extends MessageBrokerServlet {
+
+	// --------------------------------------------------------------------------
+	//
+	// Constants
+	//
+	// --------------------------------------------------------------------------
+
+	private static final long serialVersionUID = -494420199909554091L;
+
+	// --------------------------------------------------------------------------
+	//
+	// Constructors
+	//
+	// --------------------------------------------------------------------------
+
+	public AlKhwarizmixMessageBrokerServlet() {
+		super();
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,10 +59,10 @@ public class MoqawalatiInterceptor extends AbstractAlKhwarizmixInterceptor {
 
 	private static Logger logger = null;
 
-	@Override
-	protected Logger getLogger() {
+	private Logger getLogger() {
 		if (logger == null)
-			logger = LoggerFactory.getLogger(MoqawalatiInterceptor.class);
+			logger = LoggerFactory
+					.getLogger(AlKhwarizmixMessageBrokerServlet.class);
 		return logger;
 	}
 
@@ -62,40 +81,19 @@ public class MoqawalatiInterceptor extends AbstractAlKhwarizmixInterceptor {
 		return securityManager;
 	}
 
-	// --------------------------------------------------------------------------
+	// --------------------------------------------------------------------
 	//
-	// Others
+	// Methods
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 */
 	@Override
-	public boolean preHandle(final HttpServletRequest req,
-			final HttpServletResponse res, final Object handler)
-			throws Exception {
-		getLogger().trace("preHandle: IP={}", req.getRemoteAddr());
-		return (getSecurityManager().validateAccess(req, res))
-				? super.preHandle(req, res, handler)
-				: false;
-	}
+	public void service(final HttpServletRequest req,
+			final HttpServletResponse res) {
+		getLogger().trace("service: IP={}", req.getRemoteAddr());
 
-	/**
-	 */
-	@Override
-	public void postHandle(final HttpServletRequest req,
-			final HttpServletResponse res, final Object handler,
-			final ModelAndView modelAndView) throws Exception {
-		super.postHandle(req, res, handler, modelAndView);
-	}
-
-	/**
-	 */
-	@Override
-	public void afterCompletion(final HttpServletRequest req,
-			final HttpServletResponse res, final Object handler,
-			final Exception ex) throws Exception {
-		super.afterCompletion(req, res, handler, ex);
+		if (getSecurityManager().validateAccess(req, res))
+			super.service(req, res);
 	}
 
 } // Class

@@ -34,7 +34,7 @@ import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
  * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
 @Repository
-public class RecordDAO extends AlKhwarizmixDAOForXMLMarshalling implements
+public class RecordDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 		IRecordDAO {
 
 	// --------------------------------------------------------------------------

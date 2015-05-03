@@ -33,7 +33,7 @@ import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
 @Repository
-public class CustomDataDAO extends AlKhwarizmixDAOForXMLMarshalling implements
+public class CustomDataDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 		ICustomDataDAO {
 
 	// --------------------------------------------------------------------------

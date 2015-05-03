@@ -39,7 +39,7 @@ public class AlKhwarizmixWebServiceForXMLTest {
 	// --------------------------------------------------------------------------
 
 	@Mock
-	private AlKhwarizmixWebServiceForXML utAlKhwarizmixWebServiceForXML;
+	private AbstractAlKhwarizmixWebServiceForXML utAlKhwarizmixWebServiceForXML;
 
 	// --------------------------------------------------------------------------
 	//

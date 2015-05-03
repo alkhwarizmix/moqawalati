@@ -29,7 +29,7 @@ import dz.alkhwarizmix.framework.java.webservices.IUserWebServiceForBlazeDS;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٤ ربيع الثاني ١٤٣٦ (February 03, 2015)
  */
-public class UserWebServiceForBlazeDS extends AlKhwarizmixWebServiceForBlazeDS
+public class UserWebServiceForBlazeDS extends AbstractAlKhwarizmixWebServiceForBlazeDS
 		implements IUserWebServiceForBlazeDS {
 
 	// --------------------------------------------------------------------------

@@ -35,7 +35,7 @@ import dz.alkhwarizmix.framework.java.services.IUserService;
  */
 @Controller
 @RequestMapping("alkhwarizmix/xml/user")
-public class UserWebServiceForXML extends AlKhwarizmixWebServiceForXML {
+public class UserWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//

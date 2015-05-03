@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import dz.alkhwarizmix.framework.java.dao.impl.AlKhwarizmixDAOForXMLMarshalling;
+import dz.alkhwarizmix.framework.java.dao.impl.AbstractAlKhwarizmixDAOForXMLMarshalling;
 import dz.alkhwarizmix.moqawalati.java.dao.IMoqawalatiDAOForXMLMarshalling;
 
 /**
@@ -28,7 +28,7 @@ import dz.alkhwarizmix.moqawalati.java.dao.IMoqawalatiDAOForXMLMarshalling;
  */
 @Repository
 public class MoqawalatiDAOForXMLMarshalling extends
-		AlKhwarizmixDAOForXMLMarshalling implements
+		AbstractAlKhwarizmixDAOForXMLMarshalling implements
 		IMoqawalatiDAOForXMLMarshalling {
 
 	// --------------------------------------------------------------------------

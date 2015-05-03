@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.dao.impl.AlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.dao.impl.AbstractAlKhwarizmixDAO;
 
 /**
  * <p>
@@ -38,7 +38,7 @@ public class AlKhwarizmixDAOTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private AlKhwarizmixDAO utAlKhwarizmixDAO;
+	private AbstractAlKhwarizmixDAO utAlKhwarizmixDAO;
 
 	// --------------------------------------------------------------------------
 	//
@@ -56,7 +56,7 @@ public class AlKhwarizmixDAOTest {
 
 	@Test
 	public void test00_constructor1() throws AlKhwarizmixException {
-		utAlKhwarizmixDAO = Mockito.mock(AlKhwarizmixDAO.class);
+		utAlKhwarizmixDAO = Mockito.mock(AbstractAlKhwarizmixDAO.class);
 		Assert.assertNotNull(utAlKhwarizmixDAO);
 	}
 

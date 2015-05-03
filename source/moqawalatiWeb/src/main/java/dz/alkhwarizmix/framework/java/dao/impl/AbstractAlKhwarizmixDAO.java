@@ -35,7 +35,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  *
  * @see http://community.jboss.org/wiki/GenericDataAccessObjects
  */
-public abstract class AlKhwarizmixDAO implements IAlKhwarizmixDAO {
+public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 
 	// --------------------------------------------------------------------------
 	//

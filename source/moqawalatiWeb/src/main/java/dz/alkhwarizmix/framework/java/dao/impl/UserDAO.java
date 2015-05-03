@@ -37,7 +37,7 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
-public class UserDAO extends AlKhwarizmixDAOForXMLMarshalling implements
+public class UserDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 		IUserDAO {
 
 	// --------------------------------------------------------------------------
