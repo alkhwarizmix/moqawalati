@@ -75,7 +75,7 @@ public class MoqawalatiInterceptor extends AbstractAlKhwarizmixInterceptor {
 			final HttpServletResponse res, final Object handler)
 			throws Exception {
 		getLogger().trace("preHandle: IP={}", req.getRemoteAddr());
-		return (getSecurityManager().validateAccess(req, res))
+		return (getSecurityManager().validateRemoteAddrRestrictionForRequest(req, res))
 				? super.preHandle(req, res, handler)
 				: false;
 	}

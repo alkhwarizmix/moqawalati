@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dz.alkhwarizmix.framework.java.security.ISecurityManager;
+import dz.alkhwarizmix.framework.java.utils.HTTPUtil;
 
 /**
  * <p>
@@ -43,10 +44,14 @@ public class SecurityManager implements ISecurityManager {
 	/**
 	 * constructor
 	 */
-	public SecurityManager(final int thePermittedReqCount,
-			final int thePermittedMilliseconds) {
-		permittedReqCount = thePermittedReqCount;
-		permittedMilliseconds = thePermittedMilliseconds;
+	public SecurityManager(final int thePermittedReqCountByDelay,
+			final long thePermittedDelayForRequest,
+			final int thePermittedSubscriptionCountByDelay,
+			final long thePermittedDelayForSubscription) {
+		permittedReqCountByDelay = thePermittedReqCountByDelay;
+		permittedDelayForRequest = thePermittedDelayForRequest;
+		permittedSubscriptionCountByDelay = thePermittedSubscriptionCountByDelay;
+		permittedDelayForSubscription = thePermittedDelayForSubscription;
 	}
 
 	// --------------------------------------------------------------------------
@@ -69,11 +74,17 @@ public class SecurityManager implements ISecurityManager {
 	//
 	// --------------------------------------------------------------------------
 
-	private Map<String, HostAccessInfo> ipAddrDico;
+	private final int permittedReqCountByDelay;
 
-	private final int permittedReqCount;
+	private final long permittedDelayForRequest;
 
-	private final int permittedMilliseconds;
+	private final int permittedSubscriptionCountByDelay;
+
+	private final long permittedDelayForSubscription;
+
+	private Map<String, RemoteAddrRestrictedAccessInfo> remoteAddrDico;
+
+	private HTTPUtil httpUtil;
 
 	// --------------------------------------------------------------------------
 	//
@@ -84,19 +95,26 @@ public class SecurityManager implements ISecurityManager {
 	/**
 	 */
 	@Override
-	public boolean validateAccess(final HttpServletRequest req,
-			final HttpServletResponse res) {
-		final int waitingTime = validateAccess_internal(req);
+	public boolean validateRemoteAddrRestrictionForRequest(
+			final HttpServletRequest req, final HttpServletResponse res) {
+		final long waitingTime = validateRemoteAddrRestrictionAccess(
+				req.getRemoteAddr(),
+				RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_REQUEST);
 		boolean didErrorHappen = false;
 		if (waitingTime < 0) {
-			getLogger().warn("service: Stop access");
+			getLogger().warn(
+					"validateRemoteAddrRestrictionForRequest: Stop access");
 			didErrorHappen = true;
 		} else if (waitingTime > 0) {
-			getLogger().trace("service: Wait {}ms please", waitingTime);
+			getLogger()
+					.trace("validateRemoteAddrRestrictionForRequest: Wait {}ms please",
+							waitingTime);
 			try {
 				Thread.sleep(waitingTime);
 			} catch (final InterruptedException ignore) {
-				getLogger().warn("service: ignore {}", ignore);
+				getLogger().warn(
+						"validateRemoteAddrRestrictionForRequest: ignore {}",
+						ignore);
 				didErrorHappen = true;
 			}
 		}
@@ -111,59 +129,149 @@ public class SecurityManager implements ISecurityManager {
 		try {
 			res.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 		} catch (final IOException ignore) {
-			getLogger().warn("service: ignore {}", ignore);
+			getLogger().warn("respondByMethodNotAllowed: ignore {}", ignore);
 		}
 	}
 
 	/**
 	 */
-	synchronized private int validateAccess_internal(
-			final HttpServletRequest req) {
-		final String ipAddr = req.getRemoteAddr();
-		HostAccessInfo hostAccessInfo = null;
+	@Override
+	public boolean validateRemoteAddrRestrictionForSubscription() {
+		final long waitingTime = validateRemoteAddrRestrictionAccess(
+				getHttpUtil().getCurrentRequestRemoteAddress(),
+				RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_SUBSCRIPTION);
+		boolean didErrorHappen = false;
+		if (waitingTime != 0) {
+			getLogger()
+					.warn("validateRemoteAddrRestrictionForSubscription: Stop access");
+			didErrorHappen = true;
+		}
+		return (!didErrorHappen);
+	}
 
-		if (ipAddrDico == null) {
-			getLogger().info("validateAccess: new ipAddrDico");
-			ipAddrDico = new HashMap<String, HostAccessInfo>();
-		} else
-			hostAccessInfo = ipAddrDico.get(ipAddr);
-
+	/**
+	 */
+	synchronized private long validateRemoteAddrRestrictionAccess(
+			final String remoteAddr, final int accessType) {
+		RemoteAddrRestrictedAccessInfo hostAccessInfo = getRemoteAddrDico()
+				.get(remoteAddr);
+		long result = -1L;
 		if (hostAccessInfo == null) {
-			hostAccessInfo = new HostAccessInfo(permittedReqCount,
-					permittedMilliseconds);
-			ipAddrDico.put(ipAddr, hostAccessInfo);
+			getLogger().info("new host IP={}", remoteAddr);
+			hostAccessInfo = new RemoteAddrRestrictedAccessInfo(
+					permittedReqCountByDelay, permittedDelayForRequest,
+					permittedSubscriptionCountByDelay,
+					permittedDelayForSubscription);
+			getRemoteAddrDico().put(remoteAddr, hostAccessInfo);
 		}
 
-		return hostAccessInfo.validateAccess();
+		switch (accessType) {
+		case RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_REQUEST: {
+			result = hostAccessInfo.validateAccessRestrictionForRequest();
+			break;
+		}
+		case RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_SUBSCRIPTION: {
+			result = hostAccessInfo.validateAccessRestrictionForSubscription();
+			break;
+		}
+		}
+
+		return result;
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Getters & Setters
+	//
+	// --------------------------------------------------------------------------
+
+	// ----------------------------------
+	// httpUtil
+	// ----------------------------------
+
+	public HTTPUtil getHttpUtil() {
+		if (httpUtil == null)
+			httpUtil = new HTTPUtil();
+		return httpUtil;
+	}
+
+	public void setHttpUtil(final HTTPUtil value) {
+		httpUtil = value;
+	}
+
+	// ----------------------------------
+	// remoteAddrDico
+	// ----------------------------------
+
+	private Map<String, RemoteAddrRestrictedAccessInfo> getRemoteAddrDico() {
+		if (remoteAddrDico == null) {
+			getLogger().info("getRemoteAddrDico: new remoteAddrDico");
+			remoteAddrDico = new HashMap<String, RemoteAddrRestrictedAccessInfo>();
+		}
+		return remoteAddrDico;
 	}
 
 } // Class
 
-class HostAccessInfo {
-	public HostAccessInfo(final int thePermittedReqCount,
-			final int thePermittedMilliseconds) {
-		initialPermittedReqCount = thePermittedReqCount;
-		permittedMilliseconds = thePermittedMilliseconds;
+// ---------- ---------- ---------- ---------- ---------- ---------- ----------
+
+class RemoteAddrRestrictedAccessInfo {
+	public static final int ACCESS_TYPE_REQUEST = 1;
+	public static final int ACCESS_TYPE_SUBSCRIPTION = 2;
+
+	public RemoteAddrRestrictedAccessInfo(
+			final int thePermittedRequestCountByDelay,
+			final long thePermittedDelayForRequest,
+			final int thePermittedSubscriptionCountByDelay,
+			final long thePermittedDelayForSubscription) {
+		raiForRequest = new RestrictedAccessInfo(
+				thePermittedRequestCountByDelay, thePermittedDelayForRequest);
+		raiForSubscription = new RestrictedAccessInfo(
+				thePermittedSubscriptionCountByDelay,
+				thePermittedDelayForSubscription);
+	}
+
+	private final RestrictedAccessInfo raiForRequest;
+	private final RestrictedAccessInfo raiForSubscription;
+
+	public long validateAccessRestrictionForRequest() {
+		return raiForRequest.validateAccessRestriction();
+	}
+
+	public long validateAccessRestrictionForSubscription() {
+		return raiForSubscription.validateAccessRestriction();
+	}
+
+} // Class
+
+// ---------- ---------- ---------- ---------- ---------- ---------- ----------
+
+class RestrictedAccessInfo {
+	public RestrictedAccessInfo(final int thePermittedAccessCountByDelay,
+			final long thePermittedDelay) {
+		initialPermittedAccessCountByDelay = thePermittedAccessCountByDelay;
+		permittedDelay = thePermittedDelay;
 		limitedAccessUntil = new Date(0);
 	}
 
-	public int validateAccess() {
-		final Date now = new Date();
-		if (now.after(limitedAccessUntil)) {
-			limitedAccessUntil = new Date(now.getTime() + permittedMilliseconds);
-			permittedReqCount = initialPermittedReqCount;
-		}
-		permittedReqCount--;
-		if (permittedReqCount <= 0)
-			return (permittedReqCount == 0
-					? (int) (limitedAccessUntil.getTime() - now.getTime())
-					: -1);
-		return 0;
-	}
-
-	private final int initialPermittedReqCount;
-	private final int permittedMilliseconds;
+	private final int initialPermittedAccessCountByDelay;
+	private final long permittedDelay;
 	public Date limitedAccessUntil;
-	public int permittedReqCount;
+	public int permittedAccessCountByDelay;
+
+	public long validateAccessRestriction() {
+		final Date now = new Date();
+		long result = 0L;
+		if (now.after(limitedAccessUntil)) {
+			limitedAccessUntil = new Date(now.getTime() + permittedDelay);
+			permittedAccessCountByDelay = initialPermittedAccessCountByDelay;
+		}
+		if (permittedAccessCountByDelay <= 0)
+			result = (permittedAccessCountByDelay == 0
+					? limitedAccessUntil.getTime() - now.getTime()
+					: -1L);
+		permittedAccessCountByDelay--;
+		return result;
+	}
 
 } // Class

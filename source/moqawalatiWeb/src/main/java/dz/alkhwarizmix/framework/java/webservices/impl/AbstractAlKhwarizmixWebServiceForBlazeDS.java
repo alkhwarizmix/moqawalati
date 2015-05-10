@@ -45,15 +45,17 @@ public abstract class AbstractAlKhwarizmixWebServiceForBlazeDS {
 	/**
 	 */
 	protected final AlKhwarizmixBlazeDSException getAlKhwarizmixBlazeDSException(
-			final Exception exception, final String message) {
-		getLogger().error("{}: {}", exception.getLocalizedMessage(),
-				exception.getStackTrace());
+			final Exception exception, final String message,
+			final String logMessage, final Object... logMore) {
+		getLogger().error(logMessage, logMore);
+
 		AlKhwarizmixBlazeDSException result = null;
 		if (exception instanceof AlKhwarizmixException)
 			result = new AlKhwarizmixBlazeDSException(message, exception);
 		else
 			result = new AlKhwarizmixBlazeDSException(message,
 					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR);
+
 		return result;
 	}
 

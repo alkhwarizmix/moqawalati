@@ -51,5 +51,11 @@
 		<constructor-arg index="1">
 			<value>1000</value>
 		</constructor-arg>
+		<constructor-arg index="2">
+			<value>3</value> <!-- 3 subscriptions by IP address by week -->
+		</constructor-arg>
+		<constructor-arg index="3">
+			<value>604800000</value> <!-- 1 week -->
+		</constructor-arg>
 	</bean>
 </beans>

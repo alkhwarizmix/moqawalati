@@ -31,6 +31,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Password;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
+import dz.alkhwarizmix.framework.java.security.ISecurityManager;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.IEMailService;
 import dz.alkhwarizmix.framework.java.services.IUserService;
@@ -98,6 +99,9 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
 
+	@Autowired
+	private ISecurityManager securityManager;
+
 	// --------------------------------------------------------------------------
 	//
 	// Methods
@@ -111,7 +115,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public User addUser(final User user, final boolean validateObjectToPublish)
 			throws AlKhwarizmixException {
-		getLogger().debug("addUser");
+		getLogger().trace("addUser");
 		final User result = (User) addObject(user, validateObjectToPublish);
 		return result;
 	}
@@ -153,7 +157,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public User getUser(final User user, final boolean validateObjectToPublish)
 			throws AlKhwarizmixException {
-		getLogger().debug("getUser");
+		getLogger().trace("getUser");
 		final User result = (User) getObject(user, validateObjectToPublish);
 		return result;
 	}
@@ -186,7 +190,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public User updateUser(final User user,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
-		getLogger().debug("updateUser");
+		getLogger().trace("updateUser");
 		final User result = (User) updateObject(user, getSessionOwner(),
 				validateObjectToPublish);
 		return result;
@@ -213,7 +217,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	public List<User> getUserList(DetachedCriteria criteriaToUse,
 			final int firstResult, final int maxResult)
 			throws AlKhwarizmixException {
-		getLogger().debug("getUserList");
+		getLogger().trace("getUserList");
 		if (criteriaToUse == null) {
 			criteriaToUse = DetachedCriteria.forClass(User.class);
 			criteriaToUse.addOrder(Order.asc(User.USERID));
@@ -259,7 +263,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public User connect(final User user, final boolean validateObjectToPublish)
 			throws AlKhwarizmixException {
-		getLogger().debug("connect");
+		getLogger().trace("connect");
 
 		if (getSessionData().getConnectedUser() != null)
 			throw getErrorLoginException("connect1.");
@@ -299,7 +303,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public User login(final User user, final String password,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
-		getLogger().debug("login");
+		getLogger().trace("login");
 		validateUserAndUserId(user, getErrorLoginException("login1."));
 		validateUserIsNotLogged(user, getErrorLoginException("login2."));
 		validateUserIsConnected(user, getErrorLoginException("login3."));
@@ -343,14 +347,15 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	public User subscribe(final User user, final boolean validateObjectToPublish)
 			throws AlKhwarizmixException {
-		getLogger().debug("subscribe");
+		getLogger().trace("subscribe");
 		validateUserAndUserId(user, getErrorLoginException("subscribe1."));
 		validateUserIsNotLogged(user, getErrorLoginException("subscribe2."));
 		validateUserIsConnected(user, getErrorLoginException("subscribe3."));
+		validateRemoteAddrRestriction(getErrorLoginException("subscribe4-1."));
 
 		User subscribedUser = getUser(user, false);
 		if (subscribedUser != null)
-			throw getErrorLoginException("subscribe4.");
+			throw getErrorLoginException("subscribe5-1.");
 
 		subscribedUser = addUser(user, false);
 		Password generatedPassword = new Password(subscribedUser);
@@ -389,7 +394,7 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	@Override
 	public void logout(final User user) throws AlKhwarizmixException {
-		getLogger().debug("logout");
+		getLogger().trace("logout");
 		// final User loggedUser = getUser(user, false);
 		// if (loggedUser == null)
 		// throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_LOGIN);
@@ -424,6 +429,14 @@ public class UserService extends AbstractAlKhwarizmixService implements
 		if (user == null)
 			throw exception;
 		if (!getUserServiceValidator().isValidUserId(user))
+			throw exception;
+	}
+
+	/**
+	 */
+	private void validateRemoteAddrRestriction(
+			final AlKhwarizmixException exception) throws AlKhwarizmixException {
+		if (!securityManager.validateRemoteAddrRestrictionForSubscription())
 			throw exception;
 	}
 
@@ -560,6 +573,14 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	@Override
 	protected void setJaxb2Marshaller(final Jaxb2Marshaller value) {
 		jaxb2Marshaller = value;
+	}
+
+	// ----------------------------------
+	// securityManager
+	// ----------------------------------
+
+	protected final void setSecurityManager(final ISecurityManager value) {
+		securityManager = value;
 	}
 
 } // Class

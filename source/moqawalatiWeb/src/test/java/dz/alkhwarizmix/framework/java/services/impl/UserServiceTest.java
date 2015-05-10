@@ -47,9 +47,8 @@ import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Group;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Password;
 import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 import dz.alkhwarizmix.framework.java.model.impl.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.security.ISecurityManager;
 import dz.alkhwarizmix.framework.java.services.IEMailService;
-import dz.alkhwarizmix.framework.java.services.impl.UserService;
-import dz.alkhwarizmix.framework.java.services.impl.UserServiceValidator;
 import dz.alkhwarizmix.moqawalati.java.testutils.HelperTestUtil;
 
 /**
@@ -94,12 +93,17 @@ public class UserServiceTest {
 	@Mock
 	private IEMailService mockEmailService;
 
+	@Mock
+	private ISecurityManager mockSecurityManager;
+
 	@Before
 	public void setUp() throws AlKhwarizmixException {
 		setupUtUserService();
 		setupMockJaxb2Marshaller();
 		setupMockUserService();
 		when(mockUserValidator.isValidUserId(any(User.class))).thenReturn(true);
+		when(mockSecurityManager.validateRemoteAddrRestrictionForSubscription())
+				.thenReturn(true);
 	}
 
 	private void setupUtUserService() {
@@ -473,6 +477,7 @@ public class UserServiceTest {
 				.thenReturn(userToSuscribe);
 		sessionData.setConnectedUser(new User("u1@dz.alkhwarizmix.com"));
 		mockUserService.setEmailService(mockEmailService);
+		mockUserService.setSecurityManager(mockSecurityManager);
 		when(mockUserService.addObject(any(Password.class), eq(false)))
 				.thenReturn(new Password());
 		// TEST
@@ -487,6 +492,13 @@ public class UserServiceTest {
 	@Ignore("TODO: TDD")
 	@Test
 	public void test11_B_suscribe_TDD() throws AlKhwarizmixException {
+		Assert.assertTrue(false);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test11_C_suscribe_should_validateRemoteAddrRestriction_TDD()
+			throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 

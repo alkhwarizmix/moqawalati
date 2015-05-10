@@ -92,7 +92,7 @@ public class AlKhwarizmixMessageBrokerServlet extends MessageBrokerServlet {
 			final HttpServletResponse res) {
 		getLogger().trace("service: IP={}", req.getRemoteAddr());
 
-		if (getSecurityManager().validateAccess(req, res))
+		if (getSecurityManager().validateRemoteAddrRestrictionForRequest(req, res))
 			super.service(req, res);
 	}
 

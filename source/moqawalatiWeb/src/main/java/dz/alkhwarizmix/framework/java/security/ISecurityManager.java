@@ -26,7 +26,11 @@ public interface ISecurityManager {
 
 	/**
 	 */
-	boolean validateAccess(final HttpServletRequest req,
-			final HttpServletResponse res);
+	boolean validateRemoteAddrRestrictionForRequest(
+			final HttpServletRequest req, final HttpServletResponse res);
+
+	/**
+	 */
+	boolean validateRemoteAddrRestrictionForSubscription();
 
 } // Class
