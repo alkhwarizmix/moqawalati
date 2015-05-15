@@ -304,27 +304,32 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	public User login(final User user, final String password,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
 		getLogger().trace("login");
-		validateUserAndUserId(user, getErrorLoginException("login1."));
-		validateUserIsNotLogged(user, getErrorLoginException("login2."));
-		validateUserIsConnected(user, getErrorLoginException("login3."));
+		try {
+			validateUserAndUserId(user, getErrorLoginException("login1."));
+			validateUserIsNotLogged(user, getErrorLoginException("login2."));
+			validateUserIsConnected(user, getErrorLoginException("login3."));
 
-		final User userToLogin = getUser(user, false);
-		if (userToLogin != null)
-			validateUserPassword(user, password,
-					getErrorLoginException("login4."));
-		else
-			throw getErrorLoginException("login5.");
+			final User userToLogin = getUser(user, false);
+			if (userToLogin != null)
+				validateUserPassword(user, password,
+						getErrorLoginException("login4."));
+			else
+				throw getErrorLoginException("login5.");
 
-		getSessionData().setLoggedUser(userToLogin);
-		getSessionData().setSessionOwner(userToLogin.getDomainObject());
+			getSessionData().setLoggedUser(userToLogin);
+			getSessionData().setSessionOwner(userToLogin.getDomainObject());
 
-		User result = userToLogin;
-		if (validateObjectToPublish && (result != null)) {
-			result = (User) result.clone();
-			getUserServiceValidator().validateObjectToPublish(result,
-					getSessionOwner());
+			User result = userToLogin;
+			if (validateObjectToPublish && (result != null)) {
+				result = (User) result.clone();
+				getUserServiceValidator().validateObjectToPublish(result,
+						getSessionOwner());
+			}
+			return result;
+		} catch (final AlKhwarizmixException e) {
+			getSecurityManager().validateRemoteAddrRestrictionForWrongLogin();
+			throw e;
 		}
-		return result;
 	}
 
 	/**
@@ -436,7 +441,8 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	 */
 	private void validateRemoteAddrRestriction(
 			final AlKhwarizmixException exception) throws AlKhwarizmixException {
-		if (!securityManager.validateRemoteAddrRestrictionForSubscription())
+		if (!getSecurityManager()
+				.validateRemoteAddrRestrictionForSubscription())
 			throw exception;
 	}
 
@@ -578,6 +584,10 @@ public class UserService extends AbstractAlKhwarizmixService implements
 	// ----------------------------------
 	// securityManager
 	// ----------------------------------
+
+	private ISecurityManager getSecurityManager() {
+		return securityManager;
+	}
 
 	protected final void setSecurityManager(final ISecurityManager value) {
 		securityManager = value;

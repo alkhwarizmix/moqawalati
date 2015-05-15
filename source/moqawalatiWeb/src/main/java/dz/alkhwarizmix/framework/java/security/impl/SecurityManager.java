@@ -47,11 +47,15 @@ public class SecurityManager implements ISecurityManager {
 	public SecurityManager(final int thePermittedReqCountByDelay,
 			final long thePermittedDelayForRequest,
 			final int thePermittedSubscriptionCountByDelay,
-			final long thePermittedDelayForSubscription) {
+			final long thePermittedDelayForSubscription,
+			final int thePermittedWrongLoginCountByDelay,
+			final long thePermittedDelayForWrongLogin) {
 		permittedReqCountByDelay = thePermittedReqCountByDelay;
 		permittedDelayForRequest = thePermittedDelayForRequest;
 		permittedSubscriptionCountByDelay = thePermittedSubscriptionCountByDelay;
 		permittedDelayForSubscription = thePermittedDelayForSubscription;
+		permittedWrongLoginCountByDelay = thePermittedWrongLoginCountByDelay;
+		permittedDelayForWrongLogin = thePermittedDelayForWrongLogin;
 	}
 
 	// --------------------------------------------------------------------------
@@ -82,6 +86,10 @@ public class SecurityManager implements ISecurityManager {
 
 	private final long permittedDelayForSubscription;
 
+	private final int permittedWrongLoginCountByDelay;
+
+	private final long permittedDelayForWrongLogin;
+
 	private Map<String, RemoteAddrRestrictedAccessInfo> remoteAddrDico;
 
 	private HTTPUtil httpUtil;
@@ -102,13 +110,11 @@ public class SecurityManager implements ISecurityManager {
 				RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_REQUEST);
 		boolean didErrorHappen = false;
 		if (waitingTime < 0) {
-			getLogger().warn(
-					"validateRemoteAddrRestrictionForRequest: Stop access");
+			getLogger().trace("Stop access to {} until {}",
+					req.getRemoteAddr(), new Date(-waitingTime));
 			didErrorHappen = true;
 		} else if (waitingTime > 0) {
-			getLogger()
-					.trace("validateRemoteAddrRestrictionForRequest: Wait {}ms please",
-							waitingTime);
+			getLogger().trace("Wait {}ms please", waitingTime);
 			try {
 				Thread.sleep(waitingTime);
 			} catch (final InterruptedException ignore) {
@@ -137,16 +143,52 @@ public class SecurityManager implements ISecurityManager {
 	 */
 	@Override
 	public boolean validateRemoteAddrRestrictionForSubscription() {
+		final String remoteAddress = getHttpUtil()
+				.getCurrentRequestRemoteAddress();
 		final long waitingTime = validateRemoteAddrRestrictionAccess(
-				getHttpUtil().getCurrentRequestRemoteAddress(),
+				remoteAddress,
 				RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_SUBSCRIPTION);
 		boolean didErrorHappen = false;
 		if (waitingTime != 0) {
-			getLogger()
-					.warn("validateRemoteAddrRestrictionForSubscription: Stop access");
+			logStopSubscriptions(waitingTime, remoteAddress);
 			didErrorHappen = true;
 		}
 		return (!didErrorHappen);
+	}
+
+	private void logStopSubscriptions(final long waitingTime,
+			final String remoteAddress) {
+		final String message = "Stop subscriptions for {}";
+		if (waitingTime > 0)
+			getLogger().warn(message, remoteAddress);
+		else
+			getLogger().trace(message, remoteAddress);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean validateRemoteAddrRestrictionForWrongLogin() {
+		final String remoteAddress = getHttpUtil()
+				.getCurrentRequestRemoteAddress();
+		final long waitingTime = validateRemoteAddrRestrictionAccess(
+				remoteAddress,
+				RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_WRONG_LOGIN);
+		boolean didErrorHappen = false;
+		if (waitingTime != 0) {
+			logTooManyWrongLogins(waitingTime, remoteAddress);
+			didErrorHappen = true;
+		}
+		return (!didErrorHappen);
+	}
+
+	private void logTooManyWrongLogins(final long waitingTime,
+			final String remoteAddress) {
+		final String message = "Too many wrong logins for {}";
+		if (waitingTime > 0)
+			getLogger().warn(message, remoteAddress);
+		else
+			getLogger().trace(message, remoteAddress);
 	}
 
 	/**
@@ -161,7 +203,9 @@ public class SecurityManager implements ISecurityManager {
 			hostAccessInfo = new RemoteAddrRestrictedAccessInfo(
 					permittedReqCountByDelay, permittedDelayForRequest,
 					permittedSubscriptionCountByDelay,
-					permittedDelayForSubscription);
+					permittedDelayForSubscription,
+					permittedWrongLoginCountByDelay,
+					permittedDelayForWrongLogin);
 			getRemoteAddrDico().put(remoteAddr, hostAccessInfo);
 		}
 
@@ -172,6 +216,12 @@ public class SecurityManager implements ISecurityManager {
 		}
 		case RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_SUBSCRIPTION: {
 			result = hostAccessInfo.validateAccessRestrictionForSubscription();
+			break;
+		}
+		case RemoteAddrRestrictedAccessInfo.ACCESS_TYPE_WRONG_LOGIN: {
+			result = hostAccessInfo.validateAccessRestrictionForWrongLogin();
+			if (result != 0)
+				hostAccessInfo.blockRequestAccessUntilRaiForWrongLoginPermits();
 			break;
 		}
 		}
@@ -218,21 +268,28 @@ public class SecurityManager implements ISecurityManager {
 class RemoteAddrRestrictedAccessInfo {
 	public static final int ACCESS_TYPE_REQUEST = 1;
 	public static final int ACCESS_TYPE_SUBSCRIPTION = 2;
+	public static final int ACCESS_TYPE_WRONG_LOGIN = 3;
 
 	public RemoteAddrRestrictedAccessInfo(
 			final int thePermittedRequestCountByDelay,
 			final long thePermittedDelayForRequest,
 			final int thePermittedSubscriptionCountByDelay,
-			final long thePermittedDelayForSubscription) {
+			final long thePermittedDelayForSubscription,
+			final int thePermittedWrongLoginCountByDelay,
+			final long thePermittedDelayForWrongLogin) {
 		raiForRequest = new RestrictedAccessInfo(
 				thePermittedRequestCountByDelay, thePermittedDelayForRequest);
 		raiForSubscription = new RestrictedAccessInfo(
 				thePermittedSubscriptionCountByDelay,
 				thePermittedDelayForSubscription);
+		raiForWrongLogin = new RestrictedAccessInfo(
+				thePermittedWrongLoginCountByDelay,
+				thePermittedDelayForWrongLogin);
 	}
 
 	private final RestrictedAccessInfo raiForRequest;
 	private final RestrictedAccessInfo raiForSubscription;
+	private final RestrictedAccessInfo raiForWrongLogin;
 
 	public long validateAccessRestrictionForRequest() {
 		return raiForRequest.validateAccessRestriction();
@@ -242,6 +299,15 @@ class RemoteAddrRestrictedAccessInfo {
 		return raiForSubscription.validateAccessRestriction();
 	}
 
+	public long validateAccessRestrictionForWrongLogin() {
+		return raiForWrongLogin.validateAccessRestriction();
+	}
+
+	public void blockRequestAccessUntilRaiForWrongLoginPermits() {
+		raiForRequest.setAccessParameters(-1,
+				raiForWrongLogin.getLimitedAccessUntil());
+	}
+
 } // Class
 
 // ---------- ---------- ---------- ---------- ---------- ---------- ----------
@@ -249,29 +315,46 @@ class RemoteAddrRestrictedAccessInfo {
 class RestrictedAccessInfo {
 	public RestrictedAccessInfo(final int thePermittedAccessCountByDelay,
 			final long thePermittedDelay) {
-		initialPermittedAccessCountByDelay = thePermittedAccessCountByDelay;
+		permittedAccessCountByDelay = thePermittedAccessCountByDelay;
 		permittedDelay = thePermittedDelay;
-		limitedAccessUntil = new Date(0);
+		setAccessParameters(0, new Date(0));
 	}
 
-	private final int initialPermittedAccessCountByDelay;
+	private final int permittedAccessCountByDelay;
 	private final long permittedDelay;
-	public Date limitedAccessUntil;
-	public int permittedAccessCountByDelay;
 
+	private Date limitedAccessUntil;
+	private int limitedAccessCount;
+
+	/**
+	 */
 	public long validateAccessRestriction() {
 		final Date now = new Date();
 		long result = 0L;
-		if (now.after(limitedAccessUntil)) {
-			limitedAccessUntil = new Date(now.getTime() + permittedDelay);
-			permittedAccessCountByDelay = initialPermittedAccessCountByDelay;
-		}
-		if (permittedAccessCountByDelay <= 0)
-			result = (permittedAccessCountByDelay == 0
+		if (now.after(limitedAccessUntil))
+			setAccessParameters(permittedAccessCountByDelay,
+					new Date(now.getTime() + permittedDelay));
+
+		if (limitedAccessCount <= 0)
+			result = (limitedAccessCount == 0
 					? limitedAccessUntil.getTime() - now.getTime()
-					: -1L);
-		permittedAccessCountByDelay--;
+					: -limitedAccessUntil.getTime());
+		limitedAccessCount--;
 		return result;
+	}
+
+	/**
+	 */
+	public void setAccessParameters(final int thePermittedAccessCount,
+			final Date theLimitedAccessUntil) {
+		limitedAccessUntil = theLimitedAccessUntil;
+		limitedAccessCount = thePermittedAccessCount;
+	}
+
+	/**
+	 */
+	public Date getLimitedAccessUntil() {
+		return limitedAccessUntil;
 	}
 
 } // Class

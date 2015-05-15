@@ -111,6 +111,7 @@ public class UserServiceTest {
 		utUserService.setUserServiceValidator(userValidator);
 		utUserService.setSessionData(sessionData);
 		utUserService.setJaxb2Marshaller(mockJaxb2Marshaller);
+		utUserService.setSecurityManager(mockSecurityManager);
 	}
 
 	private void setupMockJaxb2Marshaller() {

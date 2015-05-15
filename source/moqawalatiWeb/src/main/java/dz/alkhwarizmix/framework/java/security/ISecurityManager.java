@@ -33,4 +33,8 @@ public interface ISecurityManager {
 	 */
 	boolean validateRemoteAddrRestrictionForSubscription();
 
+	/**
+	 */
+	boolean validateRemoteAddrRestrictionForWrongLogin();
+
 } // Class
