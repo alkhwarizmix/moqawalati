@@ -30,7 +30,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.services.IEMailService;
-import dz.alkhwarizmix.framework.java.services.impl.EMailServiceSendWorker;
 import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
@@ -90,6 +89,11 @@ public class EMailServiceSendWorkerTest {
 	// Tests
 	//
 	// --------------------------------------------------------------------------
+
+	@Test
+	public void test00_constructor1() throws AlKhwarizmixException {
+		Assert.assertNotNull(utEMailServiceSendWorker);
+	}
 
 	@Ignore("REDO TDD")
 	@Test

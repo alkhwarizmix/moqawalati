@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.framework.java.blazeds.messaging;
 
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -37,7 +37,16 @@ public class AlKhwarizmixMessageBrokerServletTest {
 	//
 	// --------------------------------------------------------------------------
 
-	// EMPTY
+	private AlKhwarizmixMessageBrokerServlet utAlKhwarizmixMessageBrokerServlet;
+
+	@Before
+	public void setUp() {
+		utAlKhwarizmixMessageBrokerServlet = newAlKhwarizmixMessageBrokerServlet();
+	}
+
+	private AlKhwarizmixMessageBrokerServlet newAlKhwarizmixMessageBrokerServlet() {
+		return new AlKhwarizmixMessageBrokerServlet();
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -53,10 +62,9 @@ public class AlKhwarizmixMessageBrokerServletTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Ignore("TODO: TDD")
 	@Test
-	public void test00() throws AlKhwarizmixException {
-		Assert.assertTrue(false);
+	public void test00_constructor1() throws AlKhwarizmixException {
+		Assert.assertNotNull(utAlKhwarizmixMessageBrokerServlet);
 	}
 
 } // Class

@@ -9,13 +9,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.security.impl;
+package dz.alkhwarizmix.framework.java.utils;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
@@ -25,11 +23,10 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٨ رجب ١٤٣٦ (April 27, 2015)
+ * @since ٢٧ رجب ١٤٣٦ (May 15, 2015)
  */
-@RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class SecurityManagerTest {
+public class MyFakeJavaMailSenderTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -37,15 +34,15 @@ public class SecurityManagerTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private SecurityManager utSecurityManager;
+	private MyFakeJavaMailSender utMyFakeJavaMailSender;
 
 	@Before
 	public void setUp() {
-		utSecurityManager = newSecurityManager();
+		utMyFakeJavaMailSender = newMyFakeJavaMailSender();
 	}
 
-	private SecurityManager newSecurityManager() {
-		return new SecurityManager(1, 1, 1, 1, 1, 1);
+	private MyFakeJavaMailSender newMyFakeJavaMailSender() {
+		return new MyFakeJavaMailSender();
 	}
 
 	// --------------------------------------------------------------------------
@@ -64,7 +61,7 @@ public class SecurityManagerTest {
 
 	@Test
 	public void test00_constructor1() throws AlKhwarizmixException {
-		Assert.assertNotNull(utSecurityManager);
+		Assert.assertNotNull(utMyFakeJavaMailSender);
 	}
 
 } // Class
