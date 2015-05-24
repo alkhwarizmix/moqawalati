@@ -287,7 +287,7 @@ public abstract class AbstractAlKhwarizmixService implements
 			final List<AbstractAlKhwarizmixDomainObject> objectList) {
 		getLogger().trace("objectListToXML(objectList)");
 
-		return new XMLUtil(getJaxb2Marshaller()).objectListToXML(objectList);
+		return getXMLUtil().objectListToXML(objectList);
 	}
 
 	/**
@@ -299,9 +299,12 @@ public abstract class AbstractAlKhwarizmixService implements
 			throws AlKhwarizmixException {
 		getLogger().trace("marshalObjectToXML({})", object);
 
-		final String result = new XMLUtil(getJaxb2Marshaller())
-				.marshalObjectToXML(object);
+		final String result = getXMLUtil().marshalObjectToXML(object);
 		return result;
+	}
+
+	protected XMLUtil getXMLUtil() {
+		return new XMLUtil(getJaxb2Marshaller());
 	}
 
 	/**
@@ -312,8 +315,7 @@ public abstract class AbstractAlKhwarizmixService implements
 			final String xmlValue) throws AlKhwarizmixException {
 		getLogger().trace("unmarshalObjectFromXML({})", xmlValue);
 
-		return new XMLUtil(getJaxb2Marshaller())
-				.unmarshalObjectFromXML(xmlValue);
+		return getXMLUtil().unmarshalObjectFromXML(xmlValue);
 	}
 
 	/**
