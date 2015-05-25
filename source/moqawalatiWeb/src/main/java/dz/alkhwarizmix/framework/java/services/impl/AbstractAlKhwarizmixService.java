@@ -213,7 +213,7 @@ public abstract class AbstractAlKhwarizmixService implements
 				result.add(obj);
 			} catch (final AlKhwarizmixException e) {
 				final String methodName = "validateObjectListToPublish";
-				getLogger().warn("{}: Validation failure for {}", methodName,
+				getLogger().trace("{}: Validation failure for {}", methodName,
 						obj);
 			}
 	}
@@ -239,7 +239,8 @@ public abstract class AbstractAlKhwarizmixService implements
 			foundObject.updateFrom(object);
 			getServiceDAO().saveOrUpdate(foundObject);
 		} else
-			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.INVALID_DATA);
+			throw new AlKhwarizmixException("update1.",
+					AlKhwarizmixErrorCode.INVALID_DATA);
 		AbstractAlKhwarizmixDomainObject result = foundObject;
 		if (validateForPublishing) {
 			result = (AbstractAlKhwarizmixDomainObject) result.clone();

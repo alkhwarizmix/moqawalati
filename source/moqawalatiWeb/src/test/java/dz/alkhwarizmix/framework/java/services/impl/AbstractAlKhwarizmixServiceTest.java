@@ -14,10 +14,12 @@ package dz.alkhwarizmix.framework.java.services.impl;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -25,9 +27,12 @@ import junit.framework.Assert;
 import org.hibernate.criterion.DetachedCriteria;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
@@ -99,21 +104,24 @@ public class AbstractAlKhwarizmixServiceTest {
 	//
 	// --------------------------------------------------------------------------
 
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+
 	private void setUpForTest01_addObject() throws AlKhwarizmixException {
 		when(
 				mockAlKhwarizmixService.addObject(
 						any(AbstractAlKhwarizmixDomainObject.class),
-						any(boolean.class))).thenCallRealMethod();
+						anyBoolean())).thenCallRealMethod();
 	}
 
 	@Test
 	public void test01_A_addObject_should_validateObjectToAdd()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest01_addObject();
-		// Test
+		// TEST
 		mockAlKhwarizmixService.addObject(mockDomainObject1, true);
-		// Asserts
+		// ASSERTS
 		verify(mockServiceValidator, times(1)).validateObjectToAdd(
 				mockDomainObject1, mockSessionOwner);
 	}
@@ -121,23 +129,23 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test01_B_addObject_should_saveOrUpdate()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest01_addObject();
-		// Test
+		// TEST
 		mockAlKhwarizmixService.addObject(mockDomainObject1, true);
-		// Asserts
+		// ASSERTS
 		verify(mockServiceDAO, times(1)).saveOrUpdate(mockDomainObject1);
 	}
 
 	@Test
 	public void test01_C_addObject_should_validateObjectToPublish()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest01_addObject();
-		// Test
+		// TEST
 		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
 				.addObject(mockDomainObject1, true);
-		// Asserts
+		// ASSERTS
 		Assert.assertEquals(mockDomainObject2, result);
 		verify(mockDomainObject1, times(1)).clone();
 		verify(mockServiceValidator, times(1)).validateObjectToPublish(
@@ -147,12 +155,12 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test01_D_addObject_should_NOT_validateObjectToPublish()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest01_addObject();
-		// Test
+		// TEST
 		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
 				.addObject(mockDomainObject1, false);
-		// Asserts
+		// ASSERTS
 		Assert.assertEquals(mockDomainObject1, result);
 		verify(mockDomainObject1, times(0)).clone();
 		verify(mockServiceValidator, times(0)).validateObjectToPublish(
@@ -171,28 +179,28 @@ public class AbstractAlKhwarizmixServiceTest {
 		when(
 				mockAlKhwarizmixService.addObject(
 						any(AbstractAlKhwarizmixDomainObject.class),
-						any(boolean.class))).thenReturn(mockDomainObject2);
+						anyBoolean())).thenReturn(mockDomainObject2);
 	}
 
 	@Test
 	public void test02_A_addObject_should_unmarshalObjectFromXML()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest02_addObject();
-		// Test
+		// TEST
 		mockAlKhwarizmixService.addObject("XML1");
-		// Asserts
+		// ASSERTS
 		verify(mockXMLUtil, times(1)).unmarshalObjectFromXML("XML1");
 	}
 
 	@Test
 	public void test02_B_addObject_should_addObject()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest02_addObject();
-		// Test
+		// TEST
 		mockAlKhwarizmixService.addObject("XML");
-		// Asserts
+		// ASSERTS
 		verify(mockAlKhwarizmixService, times(1)).addObject(mockDomainObject1,
 				true);
 	}
@@ -200,13 +208,13 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test02_C_addObject_should_marshalObjectToXML()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest02_addObject();
 		when(mockXMLUtil.marshalObjectToXML(mockDomainObject2)).thenReturn(
 				"XML2");
-		// Test
+		// TEST
 		final String result = mockAlKhwarizmixService.addObject("XML");
-		// Asserts
+		// ASSERTS
 		Assert.assertEquals("XML2", result);
 		verify(mockXMLUtil, times(1)).marshalObjectToXML(mockDomainObject2);
 	}
@@ -224,12 +232,12 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test03_A_getObjectAsXML_should_getObject()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest03_getObjectAsXML();
-		// Test
+		// TEST
 		final String result = mockAlKhwarizmixService
 				.getObjectAsXML(mockDomainObject1);
-		// Asserts
+		// ASSERTS
 		Assert.assertEquals("", result);
 		verify(mockAlKhwarizmixService, times(1)).getObject(mockDomainObject1,
 				true);
@@ -240,16 +248,16 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test03_B_getObjectAsXML_should_marshalObjectToXML_if_foundObject()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest03_getObjectAsXML();
 		when(mockAlKhwarizmixService.getObject(mockDomainObject1, true))
 				.thenReturn(mockDomainObject2);
 		when(mockXMLUtil.marshalObjectToXML(mockDomainObject2)).thenReturn(
 				"XML2");
-		// Test
+		// TEST
 		final String result = mockAlKhwarizmixService
 				.getObjectAsXML(mockDomainObject1);
-		// Asserts
+		// ASSERTS
 		Assert.assertEquals("XML2", result);
 		verify(mockXMLUtil, times(1)).marshalObjectToXML(mockDomainObject2);
 	}
@@ -271,11 +279,11 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test04_A_getObjectAsXML_should_unmarshalObjectFromXML()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest04_getObjectAsXML();
-		// Test
+		// TEST
 		final String result = mockAlKhwarizmixService.getObjectAsXML("XML1");
-		// Asserts
+		// ASSERTS
 		Assert.assertEquals("XML2", result);
 		verify(mockXMLUtil, times(1)).unmarshalObjectFromXML("XML1");
 	}
@@ -283,11 +291,11 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test04_B_getObjectAsXML_should_getObjectAsXML()
 			throws AlKhwarizmixException {
-		// Setup
+		// SETUP
 		setUpForTest04_getObjectAsXML();
-		// Test
+		// TEST
 		final String result = mockAlKhwarizmixService.getObjectAsXML("XML");
-		// Asserts
+		// ASSERTS
 		Assert.assertEquals("XML2", result);
 		verify(mockAlKhwarizmixService, times(1)).getObjectAsXML(
 				mockDomainObject1);
@@ -318,19 +326,253 @@ public class AbstractAlKhwarizmixServiceTest {
 				mockAlKhwarizmixService.getObjectList(
 						any(DetachedCriteria.class), anyInt(), anyInt(),
 						anyBoolean())).thenCallRealMethod();
-		final List resultList;
+		final List<AbstractAlKhwarizmixDomainObject> resultList = new ArrayList<AbstractAlKhwarizmixDomainObject>();
+		resultList.add(mockDomainObject1);
+		resultList.add(mockDomainObject2);
 		when(mockServiceDAO.getList(mockCriteria, 1, 50))
 				.thenReturn(resultList);
+		doThrow(new AlKhwarizmixException("mockDomainObject1 not valid "))
+				.when(mockServiceValidator).validateObjectToPublish(
+						mockDomainObject1, mockSessionOwner);
 	}
 
 	@Test
-	public void test06_getObjectList_should_call_dao_getList()
+	public void test06_A_getObjectList_should_call_dao_getList()
 			throws AlKhwarizmixException {
+		// SETUP
 		setUpForTest06_getObjectList();
+		// TEST
 		final List<AbstractAlKhwarizmixDomainObject> result = mockAlKhwarizmixService
 				.getObjectList(mockCriteria, 1, 50, false);
-		Assert.assertEquals("JSON", result);
+		// ASSERTS
+		Assert.assertEquals(2, result.size());
+		Assert.assertEquals(mockDomainObject1, result.get(0));
 		verify(mockServiceDAO, times(1)).getList(mockCriteria, 1, 50);
+		verify(mockServiceValidator, times(0)).validateObjectToPublish(
+				mockDomainObject1, mockSessionOwner);
+	}
+
+	@Test
+	public void test06_B_getObjectList_should_validateForPublishing()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest06_getObjectList();
+		// TEST
+		final List<AbstractAlKhwarizmixDomainObject> result = mockAlKhwarizmixService
+				.getObjectList(mockCriteria, 1, 50, true);
+		// ASSERTS
+		Assert.assertEquals(1, result.size());
+		Assert.assertEquals(mockDomainObject2, result.get(0));
+		verify(mockServiceDAO, times(1)).getList(mockCriteria, 1, 50);
+		verify(mockServiceValidator, times(1)).validateObjectToPublish(
+				mockDomainObject1, mockSessionOwner);
+		verify(mockServiceValidator, times(1)).validateObjectToPublish(
+				mockDomainObject2, mockSessionOwner);
+	}
+
+	// --------------------------------------------------------------------------
+
+	private void setUpForTest07_updateObject() throws AlKhwarizmixException {
+		when(
+				mockAlKhwarizmixService.updateObject(
+						any(AbstractAlKhwarizmixDomainObject.class),
+						any(AlKhwarizmixDomainObject.class), anyBoolean()))
+				.thenCallRealMethod();
+		when(mockAlKhwarizmixService.getObject(mockDomainObject1, false))
+				.thenReturn(mockDomainObject2);
+	}
+
+	@Test
+	public void test07_A_updateObject_should_call_getSessionOwner_if_objectOwner_is_null()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest07_updateObject();
+		// TEST
+		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
+				.updateObject(mockDomainObject1, null, false);
+		// ASSERTS
+		Assert.assertEquals(mockDomainObject2, result);
+		verify(mockAlKhwarizmixService, times(1)).getSessionOwner();
+		verify(mockServiceValidator, times(1)).validateObjectToUpdate(
+				mockDomainObject1, mockSessionOwner);
+	}
+
+	@Test
+	public void test07_B_updateObject_should_call_validateObjectToUpdate()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest07_updateObject();
+		final AlKhwarizmixDomainObject mockSessionOwner2 = Mockito
+				.mock(AlKhwarizmixDomainObject.class);
+		// TEST
+		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
+				.updateObject(mockDomainObject1, mockSessionOwner2, false);
+		// ASSERTS
+		Assert.assertEquals(mockDomainObject2, result);
+		verify(mockServiceValidator, times(1)).validateObjectToUpdate(
+				mockDomainObject1, mockSessionOwner2);
+	}
+
+	@Test
+	public void test07_C_updateObject_should_use_object_if_version_is_set()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest07_updateObject();
+		final AbstractAlKhwarizmixDomainObject mockDomainObjectWithVersion = getDomainObjectWithVersion();
+		// TEST
+		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
+				.updateObject(mockDomainObjectWithVersion, mockSessionOwner,
+						false);
+		// ASSERTS
+		Assert.assertEquals(mockDomainObjectWithVersion, result);
+		verify(mockAlKhwarizmixService, times(0)).getObject(
+				mockDomainObjectWithVersion, false);
+	}
+
+	@SuppressWarnings("serial")
+	private AbstractAlKhwarizmixDomainObject getDomainObjectWithVersion() {
+		class MyAbstractAlKhwarizmixDomainObject extends
+				AbstractAlKhwarizmixDomainObject {
+
+			public MyAbstractAlKhwarizmixDomainObject() {
+				super(Long.MIN_VALUE, Integer.MIN_VALUE, null, null);
+			}
+
+			@Override
+			public Object clone() {
+				return null;
+			}
+
+			@Override
+			public void beforeDaoSaveOrUpdate(
+					final AbstractAlKhwarizmixDomainObject object) {
+			}
+
+			@Override
+			public void updateFrom(final Object sourceObject)
+					throws AlKhwarizmixException {
+			}
+		}
+		return new MyAbstractAlKhwarizmixDomainObject();
+	}
+
+	@Test
+	public void test07_D_updateObject_foundObject_should_updateFrom_object()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest07_updateObject();
+		// TEST
+		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
+				.updateObject(mockDomainObject1, mockSessionOwner, false);
+		// ASSERTS
+		Assert.assertEquals(mockDomainObject2, result);
+		verify(mockDomainObject2, times(1)).updateFrom(mockDomainObject1);
+	}
+
+	@Test
+	public void test07_E_updateObject_should_saveOrUpdate_if_foundObject()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest07_updateObject();
+		// TEST
+		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
+				.updateObject(mockDomainObject1, mockSessionOwner, false);
+		// ASSERTS
+		Assert.assertEquals(mockDomainObject2, result);
+		verify(mockServiceDAO, times(1)).saveOrUpdate(mockDomainObject2);
+	}
+
+	@Test
+	public void test07_F_updateObject_should_throw_exception_if_not_foundObject()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest07_updateObject();
+		when(mockAlKhwarizmixService.getObject(mockDomainObject1, false))
+				.thenReturn(null);
+		// EXPECTED EXCEPTION
+		thrown.expect(AlKhwarizmixException.class);
+		thrown.expectMessage("update1.");
+		// TEST
+		mockAlKhwarizmixService.updateObject(mockDomainObject1,
+				mockSessionOwner, false);
+	}
+
+	@Test
+	public void test07_G_updateObject_should_validateForPublishing_if_needed()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest07_updateObject();
+		final AbstractAlKhwarizmixDomainObject mockDomainObject2Clone = Mockito
+				.mock(AbstractAlKhwarizmixDomainObject.class);
+		when(mockDomainObject2.clone()).thenReturn(mockDomainObject2Clone);
+		// TEST
+		final AbstractAlKhwarizmixDomainObject result = mockAlKhwarizmixService
+				.updateObject(mockDomainObject1, mockSessionOwner, true);
+		// ASSERTS
+		Assert.assertEquals(mockDomainObject2Clone, result);
+		verify(mockServiceValidator, times(1)).validateObjectToPublish(
+				mockDomainObject2Clone, mockSessionOwner);
+	}
+
+	// --------------------------------------------------------------------------
+
+	private void setUpForTest08_updateObject() throws AlKhwarizmixException {
+		when(mockAlKhwarizmixService.updateObject(any(String.class)))
+				.thenCallRealMethod();
+		when(mockAlKhwarizmixService.getXMLUtil()).thenReturn(mockXMLUtil);
+		when(mockXMLUtil.unmarshalObjectFromXML(any(String.class))).thenReturn(
+				mockDomainObject1);
+		when(
+				mockAlKhwarizmixService.updateObject(
+						any(AbstractAlKhwarizmixDomainObject.class),
+						any(AlKhwarizmixDomainObject.class), anyBoolean()))
+				.thenReturn(mockDomainObject2);
+	}
+
+	@Test
+	public void test08_A_updateObject_should_unmarshalObjectFromXML()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest08_updateObject();
+		// TEST
+		mockAlKhwarizmixService.updateObject("XML1");
+		// ASSERTS
+		verify(mockXMLUtil, times(1)).unmarshalObjectFromXML("XML1");
+	}
+
+	@Test
+	public void test08_B_updateObject_should_updateObject()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest08_updateObject();
+		// TEST
+		mockAlKhwarizmixService.updateObject("XML");
+		// ASSERTS
+		verify(mockAlKhwarizmixService, times(1)).updateObject(
+				mockDomainObject1, mockSessionOwner, true);
+	}
+
+	@Test
+	public void test08_C_updateObject_should_marshalObjectToXML()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest08_updateObject();
+		when(mockXMLUtil.marshalObjectToXML(mockDomainObject2)).thenReturn(
+				"XML2");
+		// TEST
+		final String result = mockAlKhwarizmixService.updateObject("XML");
+		// ASSERTS
+		Assert.assertEquals("XML2", result);
+		verify(mockXMLUtil, times(1)).marshalObjectToXML(mockDomainObject2);
+	}
+
+	// --------------------------------------------------------------------------
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test09_objectListToJSON() throws AlKhwarizmixException {
+		final String result = mockAlKhwarizmixService.objectListToJSON(null);
+		Assert.assertEquals("JSON", result);
 	}
 
 	// --------------------------------------------------------------------------
