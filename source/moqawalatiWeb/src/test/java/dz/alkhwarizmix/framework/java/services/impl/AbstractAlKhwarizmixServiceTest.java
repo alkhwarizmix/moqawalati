@@ -14,6 +14,7 @@ package dz.alkhwarizmix.framework.java.services.impl;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -40,8 +41,10 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixDomainObjectExtendable;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
-import dz.alkhwarizmix.framework.java.utils.XMLUtil;
+import dz.alkhwarizmix.framework.java.utils.IXMLUtil;
+import dz.alkhwarizmix.framework.java.utils.impl.XMLUtil;
 
 /**
  * <p>
@@ -81,10 +84,13 @@ public class AbstractAlKhwarizmixServiceTest {
 	private IAlKhwarizmixDAO mockServiceDAO;
 
 	@Mock
-	private XMLUtil mockXMLUtil;
+	private IXMLUtil mockXMLUtil;
 
 	@Mock
 	private DetachedCriteria mockCriteria;
+
+	@Mock
+	private AbstractAlKhwarizmixDomainObjectExtendable mockExtendableObject;
 
 	@Before
 	public void setUp() {
@@ -573,6 +579,75 @@ public class AbstractAlKhwarizmixServiceTest {
 	public void test09_objectListToJSON() throws AlKhwarizmixException {
 		final String result = mockAlKhwarizmixService.objectListToJSON(null);
 		Assert.assertEquals("JSON", result);
+	}
+
+	// --------------------------------------------------------------------------
+
+	private void setUpForTest10_objectListToXML() throws AlKhwarizmixException {
+		when(
+				mockAlKhwarizmixService
+						.objectListToXML(anyListOf(AbstractAlKhwarizmixDomainObject.class)))
+				.thenCallRealMethod();
+		when(mockAlKhwarizmixService.getXMLUtil()).thenReturn(mockXMLUtil);
+		when(
+				mockXMLUtil
+						.objectListToXML(anyListOf(AbstractAlKhwarizmixDomainObject.class)))
+				.thenReturn("XMLLIST");
+	}
+
+	@Test
+	public void test10_objectListToXML() throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest10_objectListToXML();
+		final List<AbstractAlKhwarizmixDomainObject> objectList = new ArrayList<AbstractAlKhwarizmixDomainObject>();
+		// TEST
+		final String result = mockAlKhwarizmixService
+				.objectListToXML(objectList);
+		// ASSERTS
+		Assert.assertEquals("XMLLIST", result);
+	}
+
+	// --------------------------------------------------------------------------
+
+	@Test
+	public void test11_getXMLUtil() throws AlKhwarizmixException {
+		// SETUP
+		when(mockAlKhwarizmixService.getXMLUtil()).thenCallRealMethod();
+		// TEST
+		final IXMLUtil result = mockAlKhwarizmixService.getXMLUtil();
+		// ASSERTS
+		Assert.assertTrue(result instanceof XMLUtil);
+	}
+
+	// --------------------------------------------------------------------------
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test12_marshalObjectToJSON() throws AlKhwarizmixException {
+		final String result = mockAlKhwarizmixService.marshalObjectToJSON(null);
+		Assert.assertEquals("JSON", result);
+	}
+
+	// --------------------------------------------------------------------------
+
+	private void setUpForTest13_updateObjectFromExtendedDataXML()
+			throws AlKhwarizmixException {
+		when(mockAlKhwarizmixService.getXMLUtil()).thenReturn(mockXMLUtil);
+		when(mockXMLUtil.unmarshalObjectFromXML("StringValue")).thenReturn(
+				mockDomainObject1);
+	}
+
+	@Test
+	public void test13_updateObjectFromExtendedDataXML_should_updateFrom_extendedData()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest13_updateObjectFromExtendedDataXML();
+		mockExtendableObject.setExtendedDataValue("StringValue");
+		// TEST
+		mockAlKhwarizmixService
+				.updateObjectFromExtendedDataXML(mockExtendableObject);
+		// ASSERTS
+		verify(mockExtendableObject, times(1)).updateFrom(mockDomainObject1);
 	}
 
 	// --------------------------------------------------------------------------

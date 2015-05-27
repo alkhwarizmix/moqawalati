@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.utils;
+package dz.alkhwarizmix.framework.java.utils.impl;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٥ شعبان ١٤٣٥ (June 03, 2014)
  */

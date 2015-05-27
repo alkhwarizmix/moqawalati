@@ -33,7 +33,8 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
 import dz.alkhwarizmix.framework.java.model.IAlKhwarizmixSessionData;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
-import dz.alkhwarizmix.framework.java.utils.XMLUtil;
+import dz.alkhwarizmix.framework.java.utils.IXMLUtil;
+import dz.alkhwarizmix.framework.java.utils.impl.XMLUtil;
 
 /**
  * <p>
@@ -304,7 +305,7 @@ public abstract class AbstractAlKhwarizmixService implements
 		return result;
 	}
 
-	protected XMLUtil getXMLUtil() {
+	protected IXMLUtil getXMLUtil() {
 		return new XMLUtil(getJaxb2Marshaller());
 	}
 

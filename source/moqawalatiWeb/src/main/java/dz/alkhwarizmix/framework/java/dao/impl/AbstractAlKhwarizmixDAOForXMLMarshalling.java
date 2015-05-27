@@ -20,7 +20,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAOForXMLMarshalling;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.utils.XMLUtil;
+import dz.alkhwarizmix.framework.java.utils.impl.XMLUtil;
 
 /**
  * <p>

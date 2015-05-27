@@ -101,4 +101,4 @@ public interface IAlKhwarizmixService {
 	public String marshalObjectToJSON(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException;
 
-} // Class
+} // Interface

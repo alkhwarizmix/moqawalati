@@ -32,7 +32,7 @@ import dz.alkhwarizmix.framework.java.dtos.record.model.vo.RecordList;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.IRecordService;
 import dz.alkhwarizmix.framework.java.services.IRecordServiceValidator;
-import dz.alkhwarizmix.framework.java.utils.XMLUtil;
+import dz.alkhwarizmix.framework.java.utils.impl.XMLUtil;
 
 /**
  * <p>

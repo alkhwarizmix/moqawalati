@@ -9,8 +9,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.services;
+package dz.alkhwarizmix.framework.java.utils;
 
+import java.util.List;
+
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -18,10 +22,24 @@ package dz.alkhwarizmix.framework.java.services;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٧ ربيع الثاني ١٤٣٦ (January 27, 2015)
+ * @since ٠٨ شعبان ١٤٣٦ (May 26, 2015)
  */
-public interface IEMailServiceValidator extends IAlKhwarizmixServiceValidator {
+public interface IXMLUtil {
 
-	// EMPTY
+	/**
+	 */
+	public String objectListToXML(
+			final List<AbstractAlKhwarizmixDomainObject> objectList);
+
+	/**
+	 */
+	public String marshalObjectToXML(
+			final AbstractAlKhwarizmixDomainObject object)
+			throws AlKhwarizmixException;
+
+	/**
+	 */
+	public AbstractAlKhwarizmixDomainObject unmarshalObjectFromXML(
+			final String xmlValue) throws AlKhwarizmixException;
 
 } // Interface

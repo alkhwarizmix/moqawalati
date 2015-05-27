@@ -49,4 +49,4 @@ public interface ICustomizerService extends IAlKhwarizmixService {
 	public String getCustomDataAsXML(String partialXml)
 			throws AlKhwarizmixException;
 
-} // Class
+} // Interface
