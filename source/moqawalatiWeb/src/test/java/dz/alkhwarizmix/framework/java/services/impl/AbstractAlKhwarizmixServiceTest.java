@@ -578,6 +578,7 @@ public class AbstractAlKhwarizmixServiceTest {
 	@Test
 	public void test09_objectListToJSON() throws AlKhwarizmixException {
 		final String result = mockAlKhwarizmixService.objectListToJSON(null);
+		// ASSERTS
 		Assert.assertEquals("JSON", result);
 	}
 
@@ -633,7 +634,7 @@ public class AbstractAlKhwarizmixServiceTest {
 	private void setUpForTest13_updateObjectFromExtendedDataXML()
 			throws AlKhwarizmixException {
 		when(mockAlKhwarizmixService.getXMLUtil()).thenReturn(mockXMLUtil);
-		when(mockXMLUtil.unmarshalObjectFromXML("StringValue")).thenReturn(
+		when(mockXMLUtil.unmarshalObjectFromXML("XMLTest13")).thenReturn(
 				mockDomainObject1);
 	}
 
@@ -642,12 +643,47 @@ public class AbstractAlKhwarizmixServiceTest {
 			throws AlKhwarizmixException {
 		// SETUP
 		setUpForTest13_updateObjectFromExtendedDataXML();
-		mockExtendableObject.setExtendedDataValue("StringValue");
+		mockExtendableObject.setExtendedDataValue("XMLTest13");
 		// TEST
 		mockAlKhwarizmixService
 				.updateObjectFromExtendedDataXML(mockExtendableObject);
 		// ASSERTS
 		verify(mockExtendableObject, times(1)).updateFrom(mockDomainObject1);
+		verify(mockXMLUtil, times(1)).unmarshalObjectFromXML("XMLTest13");
+	}
+
+	// --------------------------------------------------------------------------
+
+	private void setUpForTest14_setupObjectExtendedDataXMLValue()
+			throws AlKhwarizmixException {
+		when(mockAlKhwarizmixService.getXMLUtil()).thenReturn(mockXMLUtil);
+		when(mockXMLUtil.marshalObjectToXML(mockExtendableObject)).thenReturn(
+				"XMLTest14");
+	}
+
+	@Test
+	public void test14_A_setupObjectExtendedDataXMLValue_should_setupObjectExtendedDataXMLValue()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest14_setupObjectExtendedDataXMLValue();
+		// TEST
+		mockAlKhwarizmixService
+				.setupObjectExtendedDataXMLValue(mockExtendableObject);
+		// ASSERTS
+		Assert.assertEquals("XMLTest14",
+				mockExtendableObject.getExtendedDataValue());
+		verify(mockXMLUtil, times(1)).marshalObjectToXML(mockExtendableObject);
+	}
+
+	@Test
+	public void test14_B_setupObjectExtendedDataXMLValue_should_NOT_process_null_param()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest14_setupObjectExtendedDataXMLValue();
+		// TEST
+		mockAlKhwarizmixService.setupObjectExtendedDataXMLValue(null);
+		// ASSERTS
+		verify(mockXMLUtil, times(0)).marshalObjectToXML(mockExtendableObject);
 	}
 
 	// --------------------------------------------------------------------------
