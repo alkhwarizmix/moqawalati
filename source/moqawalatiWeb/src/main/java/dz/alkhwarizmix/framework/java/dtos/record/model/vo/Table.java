@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -18,11 +18,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ ذو الحجة ١٤٣٥ (October 06, 2014)
  */
@@ -54,7 +56,7 @@ public class Table extends Record implements Serializable {
 	/**
 	 * constructor
 	 */
-	public Table(String theTableId) {
+	public Table(final String theTableId) {
 		super(theTableId);
 	}
 
@@ -66,9 +68,9 @@ public class Table extends Record implements Serializable {
 
 	/**
 	 */
-	public String toString() {
-		return super.toStringBuilder(this).append("tableId", getTableId())
-				.toString();
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("tableId", getTableId());
 	}
 
 	// --------------------------------------------------------------------------
@@ -86,8 +88,8 @@ public class Table extends Record implements Serializable {
 		return getRecordId();
 	}
 
-	public void setTableId(String value) {
-		this.setRecordId(value);
+	public void setTableId(final String value) {
+		setRecordId(value);
 	}
 
 } // Class

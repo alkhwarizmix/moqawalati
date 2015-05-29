@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -19,6 +19,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
@@ -29,14 +31,14 @@ import dz.alkhwarizmix.moqawalati.java.model.vo.AbstractMoqawalatiDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٦ ذو الحجة ١٤٣٤ (October 10, 2013)
  */
 @XmlRootElement(name = "Address")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Address extends AbstractMoqawalatiDomainObject implements
-		Serializable {
+		Cloneable, Serializable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -65,9 +67,18 @@ public class Address extends AbstractMoqawalatiDomainObject implements
 	/**
 	 * constructor
 	 */
-	public Address(String theAddressId) {
+	public Address(final String theAddressId) {
 		super();
 		setAddressId(theAddressId);
+	}
+
+	protected Address(final Address other) {
+		// super(other);
+		if (other != null) {
+			addressId = other.addressId;
+			street = other.street;
+			// address = (Address) ObjectUtils.clone(other.address);
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -89,25 +100,35 @@ public class Address extends AbstractMoqawalatiDomainObject implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public Object clone() {
+		return new Address(this);
+	}
+
+	/**
+	 */
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("addressId", addressId);
+	}
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
 	/**
 	 */
-	public String toString() {
-		return super.toStringBuilder(this).append("addressId", addressId)
-				.toString();
-	}
-
-	/**
-	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
 		final Address sourceAddress = (Address) sourceObject;
-		if (sourceAddress != null
+		if ((sourceAddress != null)
 				&& getAddressId().equals(sourceAddress.getAddressId())) {
 			if (sourceAddress.street != null) {
-				this.street = sourceAddress.street;
+				street = sourceAddress.street;
 			}
 		} else {
 			throw new MoqawalatiException(
@@ -130,8 +151,8 @@ public class Address extends AbstractMoqawalatiDomainObject implements
 		return addressId;
 	}
 
-	public void setAddressId(String value) {
-		this.addressId = value;
+	public void setAddressId(final String value) {
+		addressId = value;
 	}
 
 	// ----------------------------------
@@ -143,8 +164,8 @@ public class Address extends AbstractMoqawalatiDomainObject implements
 		return street;
 	}
 
-	public void setStreet(String value) {
-		this.street = value;
+	public void setStreet(final String value) {
+		street = value;
 	}
 
 } // Class

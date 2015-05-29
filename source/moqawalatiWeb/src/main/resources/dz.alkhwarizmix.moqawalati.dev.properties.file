@@ -39,3 +39,8 @@ jdbc.connectionUrl=jdbc:hsqldb:mem:moqawalati_db
 
 jdbc.username=sa
 jdbc.password=
+
+####
+#### dz.alkhwarizmix.moqawalati.mail.spring.xml
+mail.mailSender.clazz=dz.alkhwarizmix.framework.java.utils.MyFakeJavaMailSender
+mail.emailServiceSendWorker.fixedDelay=30000

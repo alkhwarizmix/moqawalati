@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.2.8</version>
+		<version>1.2.9</version>
 	</parent>
 
 	<artifactId>moqawalatiFlex</artifactId>
@@ -158,20 +158,20 @@
 
 					<policyFileUrls>
 						<!--- cross domain policy for each RSL entry -->
-						<url>http://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
-						<url>http://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
-						<url>http://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
+						<url>https://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
+						<url>https://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
+						<url>https://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
 					</policyFileUrls>
 
 					<rslUrls>
 						<!-- URL for most Flex framework RSLs -->
-						<url>http://fpdownload.adobe.com/pub/{extension}/flex/${flex.sdk.swz.version}/{artifactId}_${flex.sdk.swz.version}.{extension}</url>
+						<url>https://fpdownload.adobe.com/pub/{extension}/flex/${flex.sdk.swz.version}/{artifactId}_${flex.sdk.swz.version}.{extension}</url>
 
 						<!-- Special URL for Text Layout Framework -->
-						<url>http://fpdownload.adobe.com/pub/{extension}/tlf/${flex.tlf.swz.version}/{artifactId}_${flex.tlf.swz.version}.{extension}</url>
+						<url>https://fpdownload.adobe.com/pub/{extension}/tlf/${flex.tlf.swz.version}/{artifactId}_${flex.tlf.swz.version}.{extension}</url>
 
 						<!-- Special URL for OSMF RSL -->
-						<url>http://fpdownload.adobe.com/pub/{extension}/flex/${flex.sdk.swz.version}/{artifactId}_${flex.osmf.swz.version}.{extension}</url>
+						<url>https://fpdownload.adobe.com/pub/{extension}/flex/${flex.sdk.swz.version}/{artifactId}_${flex.osmf.swz.version}.{extension}</url>
 					</rslUrls>
 
 					<modules>

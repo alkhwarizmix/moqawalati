@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.2.8</version>
+		<version>1.2.9</version>
 	</parent>
 
 	<artifactId>moqawalatiWeb</artifactId>
@@ -210,11 +210,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate-core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
 			<version>${hibernate-annotations.version}</version>
 		</dependency>
@@ -306,7 +301,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j-api.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -383,6 +378,24 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>1.9.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>maven-jetty-plugin</artifactId>
+			<version>6.1.25</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.4.1</version>
 		</dependency>
 	</dependencies>
 
@@ -557,7 +570,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.26</version>
+				<version>6.1.25</version>
 				<configuration>
 					<webAppSourceDirectory>
 						${basedir}/target/${project.build.finalName}

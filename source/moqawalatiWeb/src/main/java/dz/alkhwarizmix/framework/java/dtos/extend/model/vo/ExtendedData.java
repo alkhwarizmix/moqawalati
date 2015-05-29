@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -17,10 +17,10 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -32,7 +32,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
  */
@@ -59,12 +59,10 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 		super();
 	}
 
-	private ExtendedData(ExtendedData other) {
+	private ExtendedData(final ExtendedData other) {
 		super(other);
-		if (other != null) {
-			this.extendedDataParts = (List<ExtendedDataPart>) ObjectUtils
-					.clone(other.extendedDataParts);
-		}
+		if (other != null)
+			setExtendedDataValue(other.getExtendedDataValue());
 	}
 
 	// --------------------------------------------------------------------------
@@ -73,7 +71,7 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
-	@OneToMany(mappedBy = "extendedData", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "extendedData", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ExtendedDataPart> extendedDataParts = null;
 
@@ -95,7 +93,7 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
 
-		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
+		final List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		result.add(this);
 		result.addAll(getExtendedDataParts());
 		return result;
@@ -104,20 +102,22 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// DO NOTHING
 	}
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
 		final ExtendedData source = (ExtendedData) sourceObject;
-		if (source != null && getId().equals(source.getId())) {
+		if ((source != null) && getId().equals(source.getId()))
 			setExtendedDataValue(source.getExtendedDataValue());
-		} else {
+		else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -132,26 +132,26 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 
 	public String getExtendedDataValue() {
 		String extendedDataValue = "";
-		for (ExtendedDataPart extendedDataPart : getExtendedDataParts()) {
+		for (final ExtendedDataPart extendedDataPart : getExtendedDataParts())
 			extendedDataValue += extendedDataPart.getExtendedDataPartValue();
-		}
 		return extendedDataValue;
 	}
 
-	public void setExtendedDataValue(String value) {
-		int extendedDataPartValueMaxLen = 127;
+	public void setExtendedDataValue(final String value) {
+		final int extendedDataPartValueMaxLen = 127;
 		ExtendedDataPart extendedDataPart = null;
 		int startIndex = 0;
 		int i = 0;
 		for (; startIndex < value.length(); i++) {
-			if (getExtendedDataParts().size() > i) {
+			if (getExtendedDataParts().size() > i)
 				extendedDataPart = getExtendedDataParts().get(i);
-			} else {
+			else {
 				extendedDataPart = newExtendedDataPart();
 				addExtendedDataPart(extendedDataPart);
 			}
-			int endIndex = Math.min(startIndex + extendedDataPartValueMaxLen,
-					value.length());
+			extendedDataPart.setOrder(Long.valueOf(i));
+			final int endIndex = Math.min(startIndex
+					+ extendedDataPartValueMaxLen, value.length());
 			extendedDataPart.setExtendedDataPartValue(value.substring(
 					startIndex, endIndex));
 			startIndex = endIndex;
@@ -159,16 +159,17 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 
 		for (; i < getExtendedDataParts().size(); i++) {
 			extendedDataPart = getExtendedDataParts().get(i);
+			extendedDataPart.setOrder(Long.valueOf(i));
 			extendedDataPart.setExtendedDataPartValue("");
 		}
 	}
 
 	private ExtendedDataPart newExtendedDataPart() {
-		ExtendedDataPart result = new ExtendedDataPart();
+		final ExtendedDataPart result = new ExtendedDataPart();
 		return result;
 	}
 
-	private void addExtendedDataPart(ExtendedDataPart extendedDataPart) {
+	private void addExtendedDataPart(final ExtendedDataPart extendedDataPart) {
 		extendedDataPart.setExtendedData(this);
 		getExtendedDataParts().add(extendedDataPart);
 	}
@@ -183,7 +184,7 @@ public class ExtendedData extends AbstractAlKhwarizmixDomainObject implements
 		return extendedDataParts;
 	}
 
-	public void setExtendedDataParts(List<ExtendedDataPart> value) {
+	public void setExtendedDataParts(final List<ExtendedDataPart> value) {
 		extendedDataParts = value;
 	}
 

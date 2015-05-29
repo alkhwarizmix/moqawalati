@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -28,8 +28,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.validator.constraints.Email;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -40,7 +42,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
@@ -49,7 +51,7 @@ import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObj
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class User extends AbstractAlKhwarizmixDomainObject implements
-		Serializable {
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -78,7 +80,7 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	public User(String theUserId) {
+	public User(final String theUserId) {
 		this();
 		setUserId(theUserId);
 	}
@@ -86,7 +88,7 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	public User(String theUserId, String theName) {
+	public User(final String theUserId, final String theName) {
 		this(theUserId);
 		setName(theName);
 	}
@@ -94,13 +96,13 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	/**
 	 * constructor
 	 */
-	protected User(User other) {
+	protected User(final User other) {
 		super(other);
 		if (other != null) {
-			this.userId = other.userId;
-			this.name = other.name;
-			this.group = (Group) ObjectUtils.clone(other.group);
-			this.domainObject = (AlKhwarizmixDomainObject) ObjectUtils
+			userId = other.userId;
+			name = other.name;
+			group = (Group) ObjectUtils.clone(other.group);
+			domainObject = (AlKhwarizmixDomainObject) ObjectUtils
 					.clone(other.domainObject);
 		}
 	}
@@ -111,20 +113,21 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "userId", unique = true, nullable = false, length = 63)
+	@Email
+	@Column(name = "fUserId", unique = true, nullable = false, length = 63)
 	private String userId;
 
-	@Column(name = "name", nullable = false, length = 127)
+	@Column(name = "fName", nullable = false, length = 127)
 	private String name;
 
-	@ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY, optional = true)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "gruop", nullable = true)
+	@JoinColumn(name = "fGroup", nullable = true)
 	private Group group;
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "domainObject", nullable = false)
+	@JoinColumn(name = "fDomainObject", nullable = false)
 	private AlKhwarizmixDomainObject domainObject;
 
 	// --------------------------------------------------------------------------
@@ -135,30 +138,84 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 
 	/**
 	 */
-	public String toString() {
-		return super.toStringBuilder(this).append("userId", userId).toString();
-	}
-
-	/**
-	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		User sourceUser = (User) sourceObject;
-		if (sourceUser != null && getUserId().equals(sourceUser.getUserId())) {
-			if (sourceUser.name != null) {
-				this.name = sourceUser.name;
-			}
-		} else {
-			throw new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
+	@Override
+	public Object clone() {
+		return new User(this);
 	}
 
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = continueHashCode(result, userId);
+		result = continueHashCode(result, name);
+		result = continueHashCode(result, group);
+		result = continueHashCode(result, domainObject);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object other) {
+		final boolean result = super.equals(other)
+				&& (getObjectAsThisClass(other) != null)
+				&& ObjectUtils.equals(userId,
+						getObjectAsThisClass(other).userId)
+				&& ObjectUtils.equals(name, getObjectAsThisClass(other).name)
+				&& ObjectUtils.equals(group, getObjectAsThisClass(other).group)
+				&& ObjectUtils.equals(domainObject,
+						getObjectAsThisClass(other).domainObject);
+		return result;
+	}
+
+	/**
+	 */
+	private User getObjectAsThisClass(final Object other) {
+		return (other instanceof User)
+				? (User) other
+				: null;
+	}
+
+	/**
+	 */
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
+		final User sourceUser = (User) sourceObject;
+		if ((sourceUser != null) && getUserId().equals(sourceUser.getUserId())) {
+			if (sourceUser.name != null)
+				name = sourceUser.name;
+		} else
+			throw new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
+	}
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		if (domainObject == null)
 			domainObject = new AlKhwarizmixDomainObject();
+	}
+
+	public boolean isJMeterTestUser() {
+		return (getUserId().matches("UTEST\\S+@dz.alkhwarizmix.com"));
 	}
 
 	// --------------------------------------------------------------------------
@@ -177,11 +234,13 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	//
 	@XmlAttribute(name = "id")
 	public String getUserId() {
+		if (userId == null)
+			userId = "";
 		return userId;
 	}
 
-	public void setUserId(String value) {
-		this.userId = value;
+	public void setUserId(final String value) {
+		userId = value;
 	}
 
 	// ----------------------------------
@@ -193,8 +252,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 		return name;
 	}
 
-	public void setName(String value) {
-		this.name = value;
+	public void setName(final String value) {
+		name = value;
 	}
 
 	// ----------------------------------
@@ -206,8 +265,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 		return group;
 	}
 
-	public void setGroup(Group value) {
-		this.group = value;
+	public void setGroup(final Group value) {
+		group = value;
 	}
 
 	// ----------------------------------
@@ -223,8 +282,8 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 		return domainObject;
 	}
 
-	public void setDomainObject(AlKhwarizmixDomainObject value) {
-		this.domainObject = value;
+	public void setDomainObject(final AlKhwarizmixDomainObject value) {
+		domainObject = value;
 	}
 
 } // Class

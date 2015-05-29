@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang.ObjectUtils;
 
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
-import dz.alkhwarizmix.framework.java.interfaces.IAlKhwarizmixDomainObjectList;
+import dz.alkhwarizmix.framework.java.dtos.IAlKhwarizmixDomainObjectList;
 
 /**
  * <p>

@@ -86,10 +86,20 @@ public class MDICanvasMediator extends MoqawalatiMediator
 	//
 	//--------------------------------------------------------------------------
 	
-	private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-		getLogger(MDICanvasMediator);
+	/**
+	 * The Logger
+	 */
+	private static var LOG:IAlKhwarizmixLogger = null;
 	
-	override protected function get logger():IAlKhwarizmixLogger { return LOG; }
+	/**
+	 *  @inheritDoc
+	 */
+	override protected function get logger():IAlKhwarizmixLogger
+	{
+		if (!LOG)
+			LOG = AlKhwarizmixLog.getLogger(MDICanvasMediator);
+		return LOG;
+	}
 	
 	//--------------------------------------------------------------------------
 	//

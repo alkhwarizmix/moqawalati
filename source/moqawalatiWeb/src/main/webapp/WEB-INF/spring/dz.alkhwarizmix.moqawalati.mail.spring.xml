@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٦ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)  
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO:
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since  ٢٨ ربيع الأول ١٤٣٦ (January 18, 2015)
+ */
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd"
+		>
+
+	<bean id="mailSender" class="${mail.mailSender.clazz}">
+		<property name="host" value="localhost" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- this is a template message that we can pre-load with default state -->
+	<bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="fares@dz.moqawalati.com" />
+		<property name="subject" value="Your subscription" />
+	</bean>
+
+	<bean id="emailServiceSendWorker"
+		class="dz.alkhwarizmix.framework.java.services.impl.EMailServiceSendWorker">
+	</bean>
+
+	<task:scheduled-tasks>
+		<task:scheduled ref="emailServiceSendWorker" method="scheduledSendEMail"
+			fixed-delay="${mail.emailServiceSendWorker.fixedDelay}" />
+	</task:scheduled-tasks>
+</beans>

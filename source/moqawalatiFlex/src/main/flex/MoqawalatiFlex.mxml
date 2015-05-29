@@ -43,6 +43,8 @@
 		import mx.events.FlexEvent;
 		import mx.logging.LogEventLevel;
 		import mx.logging.targets.TraceTarget;
+		import mx.managers.BrowserManager;
+		import mx.managers.IBrowserManager;
 		
 		import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 		import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
@@ -98,6 +100,16 @@
 			resourceManager.localeChain = [checkBox1.selected ? "en_US" : "fr_FR"];
 			setStyle("direction", direction);
 			setStyle("layoutDirection", direction);
+			changeApplicationTitle(resourceManager.getString("MoqawalatiFlex", "APPLICATION_TITLE"));
+		}
+		
+		/**
+		 * @private
+		 */
+		private function changeApplicationTitle(title:String):void
+		{
+			var browser:IBrowserManager = BrowserManager.getInstance();
+			browser.setTitle(title);
 		}
 		
 		//--------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -28,6 +28,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -41,7 +43,7 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٧ محرم ١٤٣٥ (November 11, 2013)
  */
@@ -49,8 +51,9 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
 @Table(name = "TCustomData")
 @XmlRootElement(name = "CustomData")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSecurity
-		implements Serializable {
+public class CustomData extends
+		AbstractAlKhwarizmixDomainObjectExtendableWithSecurity implements
+		Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -65,15 +68,21 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public CustomData() {
 		super();
+	}
+
+	protected CustomData(final CustomData other) {
+		super(other);
+		if (other != null) {
+			customDataId = other.customDataId;
+			customizer = (AlKhwarizmixDomainObject) ObjectUtils
+					.clone(other.customizer);
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -82,12 +91,12 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "customDataId", unique = false, nullable = false, length = 63)
+	@Column(name = "fCustomDataId", unique = false, nullable = false, length = 63)
 	private String customDataId;
 
 	@ManyToOne(targetEntity = AlKhwarizmixDomainObject.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "customizer", nullable = false)
+	@JoinColumn(name = "fCustomizer", nullable = false)
 	private AlKhwarizmixDomainObject customizer;
 
 	// --------------------------------------------------------------------------
@@ -99,8 +108,22 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 	/**
 	 */
 	@Override
+	public Object clone() {
+		return new CustomData(this);
+	}
+
+	/**
+	 */
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("customDataId", customDataId);
+	}
+
+	/**
+	 */
+	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
-		List<AbstractAlKhwarizmixDomainObject> result = super
+		final List<AbstractAlKhwarizmixDomainObject> result = super
 				.getDaoObjectList();
 		if (getCustomizer().getId() == null)
 			result.add(0, getCustomizer());
@@ -110,22 +133,24 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
 
 		final CustomData sourceCD = (CustomData) sourceObject;
-		if (sourceCD != null
-				&& getCustomDataId().equals(sourceCD.getCustomDataId())) {
+		if ((sourceCD != null)
+				&& getCustomDataId().equals(sourceCD.getCustomDataId()))
 			setCustomDataValue(sourceCD.getCustomDataValue());
-		} else {
+		else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -143,8 +168,8 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 		return customDataId;
 	}
 
-	public void setCustomDataId(String value) {
-		this.customDataId = value;
+	public void setCustomDataId(final String value) {
+		customDataId = value;
 	}
 
 	// ----------------------------------
@@ -156,7 +181,7 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 		return getExtendedDataValue();
 	}
 
-	public void setCustomDataValue(String value) {
+	public void setCustomDataValue(final String value) {
 		setExtendedDataValue(value);
 	}
 
@@ -169,8 +194,8 @@ public class CustomData extends AbstractAlKhwarizmixDomainObjectExtendableWithSe
 		return customizer;
 	}
 
-	public void setCustomizer(AlKhwarizmixDomainObject value) {
-		this.customizer = value;
+	public void setCustomizer(final AlKhwarizmixDomainObject value) {
+		customizer = value;
 	}
 
 } // Class

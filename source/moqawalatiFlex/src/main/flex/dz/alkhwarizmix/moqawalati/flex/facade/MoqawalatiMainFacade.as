@@ -21,11 +21,13 @@ import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiConnectCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSubscribeCommand;
 import dz.alkhwarizmix.moqawalati.flex.dtos.MoqawalatiDTOsToInclude;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiApplication;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiFacade;
@@ -121,6 +123,10 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 			MoqawalatiGetCustomizedDataCommand);
 		addCommandToRegister(MoqawalatiConstants.SET_CUSTOMDATA,
 			MoqawalatiSetCustomizedDataCommand);
+		addCommandToRegister(MoqawalatiConstants.CONNECT,
+			MoqawalatiConnectCommand);
+		addCommandToRegister(MoqawalatiConstants.SUBSCRIBE,
+			MoqawalatiSubscribeCommand);
 		addCommandToRegister(MoqawalatiConstants.LOGIN,
 			MoqawalatiLoginCommand);
 		addCommandToRegister(MoqawalatiConstants.LOGOUT,

@@ -40,24 +40,24 @@
 		</layout>
 	</appender>
 
-	<!-- Use this for test if needed -->
+	<!-- Use this for test if needed - ->
 	<logger name="org.hibernate.SQL">
 		<level value="debug" />
 	</logger>
 	<logger name="org.hibernate.type">
 		<level value="debug" />
 	</logger>
-	<!-- -->
+	<!- - -->
 
 	<logger name="dz.alkhwarizmix">
-		<level value="trace" />
+		<level value="info" />
 	</logger>
 
-	<!-- Use this for test if needed -->
+	<!-- Use this for test if needed - ->
 	<logger name="org.springframework.web">
 		<level value="debug" />
 	</logger>
-	<!-- -->
+	<!- - -->
 
 	<root>
 		<priority value="info" />

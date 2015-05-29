@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -43,13 +43,13 @@ import dz.alkhwarizmix.framework.java.dtos.extend.model.vo.AbstractAlKhwarizmixD
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
 @Entity
 @Table(name = "TRecord", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"recordId", "parent" }))
+		"fRecordId", "fParent" }))
 @XmlRootElement(name = "Record")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Record extends
@@ -81,28 +81,30 @@ public class Record extends
 		super();
 	}
 
-	public Record(String theRecordId) {
+	public Record(final String theRecordId) {
 		this();
 		setRecordId(theRecordId);
 	}
 
-	public Record(String theRecordId, String theSchemaName) {
+	public Record(final String theRecordId, final String theSchemaName) {
 		this(theRecordId);
 		setSchemaName(theSchemaName);
 	}
 
-	public Record(String theRecordId, String theSchemaName, String theTableName) {
+	public Record(final String theRecordId, final String theSchemaName,
+			final String theTableName) {
 		this(theRecordId, theSchemaName);
 		setTableName(theTableName);
 	}
 
-	protected Record(Record other) {
+	protected Record(final Record other) {
 		super(other);
 		if (other != null) {
-			this.recordId = other.recordId;
-			this.parent = (Record) ObjectUtils.clone(other.parent);
-			this.schemaName = other.schemaName;
-			this.tableName = other.tableName;
+			recordId = other.recordId;
+			parent = (Record) ObjectUtils.clone(other.parent);
+			schemaName = other.schemaName;
+			tableName = other.tableName;
+			action = other.action;
 		}
 	}
 
@@ -110,7 +112,7 @@ public class Record extends
 	 */
 	@Override
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
-		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
+		final List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		if (getParent() != null)
 			result.addAll(getParent().getDaoObjectList());
 		result.addAll(super.getDaoObjectList());
@@ -123,12 +125,12 @@ public class Record extends
 	//
 	// --------------------------------------------------------------------------
 
-	@Column(name = "recordId", unique = false, nullable = false, length = 63)
+	@Column(name = "fRecordId", unique = false, nullable = false, updatable = false, length = 63)
 	private String recordId;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "parent", nullable = true)
+	@JoinColumn(name = "fParent", nullable = true, updatable = false)
 	private Record parent;
 
 	@Transient
@@ -155,13 +157,15 @@ public class Record extends
 
 	/**
 	 */
-	public String toString() {
-		return super.toString();
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("schemaName", schemaName)
+				.append("tableName", tableName);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -171,30 +175,33 @@ public class Record extends
 		result = continueHashCode(result, parent);
 		result = continueHashCode(result, schemaName);
 		result = continueHashCode(result, tableName);
+		result = continueHashCode(result, action);
 		return result;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		boolean result = super.equals(other)
+	public boolean equals(final Object other) {
+		final boolean result = super.equals(other)
 				&& (getObjectAsThisClass(other) != null)
-				&& ObjectUtils.equals(this.recordId,
+				&& ObjectUtils.equals(action,
+						getObjectAsThisClass(other).action)
+				&& ObjectUtils.equals(recordId,
 						getObjectAsThisClass(other).recordId)
-				&& ObjectUtils.equals(this.parent,
-						getObjectAsThisClass(other).parent)
-				&& ObjectUtils.equals(this.schemaName,
+				&& ObjectUtils.equals(schemaName,
 						getObjectAsThisClass(other).schemaName)
-				&& ObjectUtils.equals(this.tableName,
-						getObjectAsThisClass(other).tableName);
+				&& ObjectUtils.equals(tableName,
+						getObjectAsThisClass(other).tableName)
+				&& ObjectUtils.equals(parent,
+						getObjectAsThisClass(other).parent);
 		return result;
 	}
 
-	private Record getObjectAsThisClass(Object other) {
+	private Record getObjectAsThisClass(final Object other) {
 		return (other instanceof Record)
 				? (Record) other
 				: null;
@@ -202,37 +209,38 @@ public class Record extends
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
 		final Record sourceRecord = (Record) sourceObject;
-		if (sourceRecord != null
+		if ((sourceRecord != null)
 				&& getRecordId().equals(sourceRecord.getRecordId())) {
-			if (sourceRecord.recordId != null) {
+			if (sourceRecord.recordId != null)
 				recordId = sourceRecord.recordId;
-			}
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	/**
 	 */
 	@Override
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
 	/**
 	 */
 	public Record getSchemaRecord() {
-		Record result = new Record(getSchemaRecordId(), getSchemaName());
+		final Record result = new Record(getSchemaRecordId(), getSchemaName());
 		return result;
 	}
 
 	/**
 	 */
 	public Record getTableRecord() {
-		Record result = new Record(getTableRecordId(), getSchemaName(),
+		final Record result = new Record(getTableRecordId(), getSchemaName(),
 				getTableName());
 		result.setParent(getSchemaRecord());
 		return result;
@@ -269,13 +277,13 @@ public class Record extends
 	// ----------------------------------
 
 	public String getData() {
-		String result = getExtendedDataValue();
+		final String result = getExtendedDataValue();
 		return (result == ""
 				? null
 				: result);
 	}
 
-	public void setData(String value) {
+	public void setData(final String value) {
 		setExtendedDataValue(value);
 	}
 
@@ -285,11 +293,11 @@ public class Record extends
 
 	@XmlAttribute(name = "id")
 	public String getRecordId() {
-		return this.recordId;
+		return recordId;
 	}
 
-	public void setRecordId(String value) {
-		this.recordId = value;
+	public void setRecordId(final String value) {
+		recordId = value;
 	}
 
 	// ----------------------------------
@@ -302,11 +310,11 @@ public class Record extends
 
 	@XmlTransient
 	public Record getParent() {
-		return this.parent;
+		return parent;
 	}
 
-	public void setParent(Record value) {
-		this.parent = value;
+	public void setParent(final Record value) {
+		parent = value;
 	}
 
 	// ----------------------------------
@@ -318,8 +326,8 @@ public class Record extends
 		return schemaName;
 	}
 
-	public void setSchemaName(String value) {
-		this.schemaName = value;
+	public void setSchemaName(final String value) {
+		schemaName = value;
 	}
 
 	public String getSchemaRecordId() {
@@ -335,8 +343,8 @@ public class Record extends
 		return tableName;
 	}
 
-	public void setTableName(String value) {
-		this.tableName = value;
+	public void setTableName(final String value) {
+		tableName = value;
 	}
 
 	public String getTableRecordId() {
@@ -352,8 +360,8 @@ public class Record extends
 		return action;
 	}
 
-	public void setAction(Integer value) {
-		this.action = value;
+	public void setAction(final Integer value) {
+		action = value;
 	}
 
 } // Class

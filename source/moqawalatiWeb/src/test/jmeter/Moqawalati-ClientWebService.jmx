@@ -137,7 +137,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -228,7 +227,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-ClientId" enabled="true">
@@ -288,7 +286,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -338,7 +335,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-Name" enabled="true">
@@ -398,7 +394,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
           </hashTree>
@@ -455,7 +450,6 @@
               <boolProp name="XPath.whitespace">false</boolProp>
               <boolProp name="XPath.tolerant">false</boolProp>
               <boolProp name="XPath.namespace">false</boolProp>
-              <stringProp name="TestPlan.comments"></stringProp>
             </XPathAssertion>
             <hashTree/>
             <XPathAssertion guiclass="XPathAssertionGui" testclass="XPathAssertion" testname="XPathAssert-Name" enabled="false">

@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.framework.java.dtos.domain.model.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -36,7 +37,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 @XmlRootElement(name = "AlKhwarizmixDomainObject")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class AlKhwarizmixDomainObject extends AbstractAlKhwarizmixDomainObject
-		implements Serializable {
+		implements Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -50,15 +51,21 @@ public class AlKhwarizmixDomainObject extends AbstractAlKhwarizmixDomainObject
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public AlKhwarizmixDomainObject() {
 		super();
+	}
+
+	protected AlKhwarizmixDomainObject(Long theId, Integer theVersion,
+			Date theCreated, Date theModified) {
+		super(theId, theVersion, theCreated, theModified);
+	}
+
+	protected AlKhwarizmixDomainObject(AlKhwarizmixDomainObject other) {
+		super(other);
 	}
 
 	// --------------------------------------------------------------------------
@@ -74,6 +81,13 @@ public class AlKhwarizmixDomainObject extends AbstractAlKhwarizmixDomainObject
 	// Methods
 	//
 	// --------------------------------------------------------------------------
+
+	/**
+	 */
+	@Override
+	public Object clone() {
+		return new AlKhwarizmixDomainObject(this);
+	}
 
 	/**
 	 */

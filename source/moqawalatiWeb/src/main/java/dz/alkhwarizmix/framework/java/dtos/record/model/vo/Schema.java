@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -18,11 +18,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
@@ -54,7 +56,7 @@ public class Schema extends Record implements Serializable {
 	/**
 	 * constructor
 	 */
-	public Schema(String theSchemaId) {
+	public Schema(final String theSchemaId) {
 		super(theSchemaId);
 	}
 
@@ -66,9 +68,9 @@ public class Schema extends Record implements Serializable {
 
 	/**
 	 */
-	public String toString() {
-		return super.toStringBuilder(this).append("schemaId", getSchemaId())
-				.toString();
+	@Override
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder().append("schemaId", getSchemaId());
 	}
 
 	// --------------------------------------------------------------------------
@@ -86,8 +88,8 @@ public class Schema extends Record implements Serializable {
 		return getRecordId();
 	}
 
-	public void setSchemaId(String value) {
-		this.setRecordId(value);
+	public void setSchemaId(final String value) {
+		setRecordId(value);
 	}
 
 } // Class

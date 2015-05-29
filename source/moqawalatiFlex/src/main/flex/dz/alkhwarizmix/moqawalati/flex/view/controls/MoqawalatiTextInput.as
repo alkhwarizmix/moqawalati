@@ -55,5 +55,23 @@ public class MoqawalatiTextInput extends AlKhwarizmixTextInput
 		return LOG;
 	}
 	
+	//--------------------------------------------------------------------------
+	//
+	//  Overriden properties
+	//
+	//--------------------------------------------------------------------------
+	
+	//----------------------------------
+	//  resourceBundleName
+	//----------------------------------
+	
+	/**
+	 *  @inheritDoc
+	 */
+	override public function get resourceBundleName():String
+	{
+		return "MoqawalatiFlex";
+	}
+	
 } // Class
 } // Package

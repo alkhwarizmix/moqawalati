@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -33,12 +33,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.EntityInterceptor;
+import dz.alkhwarizmix.framework.java.utils.DateUtil;
 
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
@@ -63,17 +64,26 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 
 	// --------------------------------------------------------------------------
 	//
+	// Static Variables
+	//
+	// --------------------------------------------------------------------------
+
+	static public DateUtil dateUtil = null;
+
+	// --------------------------------------------------------------------------
+	//
 	// Static methods
 	//
 	// --------------------------------------------------------------------------
 
-	protected static void ignoreBlazeDSProperties(Class<?> clazz,
-			String[] properties) {
-		for (String property : properties)
+	protected static void ignoreBlazeDSProperties(final Class<?> clazz,
+			final String[] properties) {
+		for (final String property : properties)
 			ignoreBlazeDSProperty(clazz, property);
 	}
 
-	protected static void ignoreBlazeDSProperty(Class<?> clazz, String property) {
+	protected static void ignoreBlazeDSProperty(final Class<?> clazz,
+			final String property) {
 		flex.messaging.io.BeanProxy.addIgnoreProperty(clazz, property);
 	}
 
@@ -84,16 +94,27 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// --------------------------------------------------------------------------
 
 	public AbstractAlKhwarizmixDomainObject() {
-		created = new Date();
+		if (dateUtil == null)
+			dateUtil = new DateUtil();
+		created = dateUtil.newDate();
+	}
+
+	protected AbstractAlKhwarizmixDomainObject(final Long theId,
+			final Integer theVersion, final Date theCreated,
+			final Date theModified) {
+		id = theId;
+		version = theVersion;
+		created = theCreated;
+		modified = theModified;
 	}
 
 	protected AbstractAlKhwarizmixDomainObject(
-			AbstractAlKhwarizmixDomainObject other) {
+			final AbstractAlKhwarizmixDomainObject other) {
 		if (other != null) {
-			this.id = (Long) ObjectUtils.clone(other.id);
-			this.version = (Integer) ObjectUtils.clone(other.version);
-			this.created = (Date) ObjectUtils.clone(other.created);
-			this.modified = (Date) ObjectUtils.clone(other.modified);
+			id = other.id;
+			version = other.version;
+			created = (Date) ObjectUtils.clone(other.created);
+			modified = (Date) ObjectUtils.clone(other.modified);
 		}
 	}
 
@@ -109,7 +130,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	private Long id;
 
 	@Version
-	@Column(nullable = false)
+	@Column(name = "version", nullable = false)
 	private Integer version;
 
 	@Column(name = "created", nullable = false, updatable = false)
@@ -128,24 +149,27 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	//
 	// --------------------------------------------------------------------------
 
+	@Override
+	abstract public Object clone();
+
 	/**
 	 */
 	@Override
 	public String toString() {
-		return toStringBuilder(this).toString();
+		return toStringBuilder().toString();
 	}
 
 	/**
 	 */
-	protected ToStringBuilder toStringBuilder(Object obj) {
-		return new ToStringBuilder(obj).append("id", id)
+	protected ToStringBuilder toStringBuilder() {
+		return new ToStringBuilder(this).append("id", id)
 				.append("version", version).append("created", created)
-				.append("last modified", modified);
+				.append("modified", modified);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -158,38 +182,37 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 		return result;
 	}
 
-	protected final int continueHashCode(int result, Object field) {
-		return PRIME * result + ObjectUtils.hashCode(field);
+	protected final int continueHashCode(final int result, final Object field) {
+		return (PRIME * result) + ObjectUtils.hashCode(field);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
+	public boolean equals(final Object other) {
 		boolean result = true;
-		if (this == other) {
+		if (this == other)
 			result = true;
-		} else if (other == null) {
+		else if (other == null)
 			result = false;
-		} else if (getObjectAsThisClass(other) == null) {
+		else if (getObjectAsThisClass(other) == null)
 			result = false;
-		} else {
-			result = ObjectUtils.equals(this.created,
+		else
+			result = ObjectUtils.equals(created,
 					getObjectAsThisClass(other).created)
-					&& ObjectUtils.equals(this.id,
-							getObjectAsThisClass(other).id)
-					&& ObjectUtils.equals(this.modified,
+					&& ObjectUtils.equals(id, getObjectAsThisClass(other).id)
+					&& ObjectUtils.equals(modified,
 							getObjectAsThisClass(other).modified)
-					&& ObjectUtils.equals(this.version,
+					&& ObjectUtils.equals(version,
 							getObjectAsThisClass(other).version);
-		}
 		return result;
 	}
 
-	private AbstractAlKhwarizmixDomainObject getObjectAsThisClass(Object other) {
+	private AbstractAlKhwarizmixDomainObject getObjectAsThisClass(
+			final Object other) {
 		return (other instanceof AbstractAlKhwarizmixDomainObject)
 				? (AbstractAlKhwarizmixDomainObject) other
 				: null;
@@ -198,7 +221,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	/**
 	 */
 	public List<AbstractAlKhwarizmixDomainObject> getDaoObjectList() {
-		List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
+		final List<AbstractAlKhwarizmixDomainObject> result = new ArrayList<AbstractAlKhwarizmixDomainObject>();
 		result.add(this);
 		return result;
 	}
@@ -228,7 +251,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 		return id;
 	}
 
-	public void setId(Long value) {
+	public void setId(final Long value) {
 		id = value;
 	}
 
@@ -236,7 +259,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// version
 	// ----------------------------------
 
-	public Integer getVersion() {
+	public final Integer getVersion() {
 		return version;
 	}
 
@@ -244,7 +267,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// created
 	// ----------------------------------
 
-	public Date getCreated() {
+	public final Date getCreated() {
 		return created;
 	}
 
@@ -252,7 +275,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	// modified
 	// ----------------------------------
 
-	public Date getModified() {
+	public final Date getModified() {
 		return modified;
 	}
 

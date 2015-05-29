@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2104 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2104 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -13,15 +13,15 @@ package dz.alkhwarizmix.framework.java.dtos.extend.model.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+import org.apache.commons.lang.exception.CloneFailedException;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -33,7 +33,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠١ شعبان ١٤٣٥ (May 30, 2014)
  */
@@ -52,6 +52,7 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 
 	public static final String EXTENDEDDATAPARTVALUE = "extendedDataPartValue";
 	public static final String EXTENDEDDATA = "extendedData";
+	public static final String ORDER = "order";
 
 	// --------------------------------------------------------------------------
 	//
@@ -72,13 +73,16 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 	//
 	// --------------------------------------------------------------------------
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "extendedData", nullable = false)
+	@JoinColumn(name = "fExtendedData", nullable = false)
 	private ExtendedData extendedData;
 
-	@Column(name = "extendedDataPartValue", nullable = false, length = 127)
+	@Column(name = "fExtendedDataPartValue", nullable = false, length = 127)
 	private String extendedDataPartValue;
+
+	@Column(name = "fOrder")
+	private Long order;
 
 	// --------------------------------------------------------------------------
 	//
@@ -88,22 +92,31 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 
 	/**
 	 */
-	public void beforeDaoSaveOrUpdate(AbstractAlKhwarizmixDomainObject object) {
+	@Override
+	public Object clone() {
+		throw new CloneFailedException("");
+	}
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
 		// NOOP
 	}
 
 	/**
 	 */
-	public void updateFrom(Object sourceObject) throws AlKhwarizmixException {
-		ExtendedDataPart sourceEDP = (ExtendedDataPart) sourceObject;
-		if (sourceEDP != null && getId().equals(sourceEDP.getId())) {
-			if (sourceEDP.extendedDataPartValue != null) {
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
+		final ExtendedDataPart sourceEDP = (ExtendedDataPart) sourceObject;
+		if ((sourceEDP != null) && getId().equals(sourceEDP.getId())) {
+			if (sourceEDP.extendedDataPartValue != null)
 				extendedDataPartValue = sourceEDP.extendedDataPartValue;
-			}
-		} else {
+		} else
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.UPDATE_DATA_ERROR);
-		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -116,8 +129,8 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 	// extendedData
 	// ----------------------------------
 
-	public void setExtendedData(ExtendedData value) {
-		this.extendedData = value;
+	public void setExtendedData(final ExtendedData value) {
+		extendedData = value;
 	}
 
 	// ----------------------------------
@@ -129,8 +142,21 @@ public class ExtendedDataPart extends AbstractAlKhwarizmixDomainObject
 		return extendedDataPartValue;
 	}
 
-	public void setExtendedDataPartValue(String value) {
-		this.extendedDataPartValue = value;
+	public void setExtendedDataPartValue(final String value) {
+		extendedDataPartValue = value;
+	}
+
+	// ----------------------------------
+	// order
+	// ----------------------------------
+
+	@XmlTransient
+	public Long getOrder() {
+		return order;
+	}
+
+	public void setOrder(final Long value) {
+		order = value;
 	}
 
 } // Class

@@ -15,12 +15,14 @@ package dz.alkhwarizmix.moqawalati.flex.facade
 import dz.alkhwarizmix.framework.flex.AlKhwarizmixConstants;
 import dz.alkhwarizmix.moqawalati.flex.MoqawalatiConstants;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiCommitRecordListCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiConnectCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiGetRecordListCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLoginCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiLogoutCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSetCustomizedDataCommand;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiStartupCommand;
+import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSubscribeCommand;
 import dz.alkhwarizmix.moqawalati.flex.testutils.MoqawalatiPureMVCTestCase;
 
 import org.flexunit.asserts.assertFalse;
@@ -95,6 +97,10 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiPureMVCTestCase
 			MoqawalatiConstants.LOGIN) is MoqawalatiLoginCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
 			MoqawalatiConstants.LOGOUT) is MoqawalatiLogoutCommand);
+		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
+			MoqawalatiConstants.CONNECT) is MoqawalatiConnectCommand);
+		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
+			MoqawalatiConstants.SUBSCRIBE) is MoqawalatiSubscribeCommand);
 	}
 	
 	[Ignore("TODO")]

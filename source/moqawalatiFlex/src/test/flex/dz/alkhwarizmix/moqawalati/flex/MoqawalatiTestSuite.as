@@ -40,6 +40,7 @@ import dz.alkhwarizmix.moqawalati.flex.view.MDICanvasMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.MainCanvasMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.MainControlBarMediatorTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.MoqawalatiModuleMediatorTestCase;
+import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataEditFormCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiDataListCanvasTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.MoqawalatiImageTestCase;
 import dz.alkhwarizmix.moqawalati.flex.view.components.login.LoginBoxEventTestCase;
@@ -66,6 +67,7 @@ import dz.alkhwarizmix.moqawalati.flex.view.controls.MoqawalatiTextInputTestCase
 [RunWith("org.flexunit.runners.Suite")]
 public class MoqawalatiTestSuite
 {
+	public var mMoqawalatiFlexTestCase:MoqawalatiFlexTestCase;
 	public var moqawalatiConstantsTestCase:MoqawalatiConstantsTestCase;
 	public var moqawalatiErrorTestCase:MoqawalatiErrorTestCase;
 	
@@ -122,6 +124,7 @@ public class MoqawalatiTestSuite
 	public var moqawalatiTextAreaTestCase:MoqawalatiTextAreaTestCase;
 	public var mainCanvasMediatorTestCase:MainCanvasMediatorTestCase;
 	public var moqawalatiModuleMediatorTestCase:MoqawalatiModuleMediatorTestCase;
+	public var moqawalatiDataEditFormCanvasTestCase:MoqawalatiDataEditFormCanvasTestCase;
 	
 	// view.components
 	public var loginBoxEventTestCase:LoginBoxEventTestCase;
