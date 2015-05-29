@@ -14,6 +14,7 @@ package dz.alkhwarizmix.framework.java.services.impl;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -23,13 +24,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
-import dz.alkhwarizmix.framework.java.services.impl.EMailServiceValidator;
 
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ ربيع الثاني ١٤٣٦ (February 01, 2015)
  */
@@ -57,6 +57,16 @@ public class EMailServiceValidatorTest {
 	// Tests
 	//
 	// --------------------------------------------------------------------------
+
+	@Test
+	public void test00_constructor() {
+		final EMailServiceValidator utEMailServiceValidator = new EMailServiceValidator();
+		Assert.assertNotNull(utEMailServiceValidator);
+		Assert.assertNotNull(utEMailServiceValidator.getLogger());
+		Assert.assertEquals(
+				"dz.alkhwarizmix.framework.java.services.impl.EMailServiceValidator",
+				utEMailServiceValidator.getLogger().getName());
+	}
 
 	@Test
 	public void test01_validateObjectToPublish_should_nullifyId()

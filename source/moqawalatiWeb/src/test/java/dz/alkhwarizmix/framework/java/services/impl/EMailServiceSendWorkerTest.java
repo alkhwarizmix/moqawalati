@@ -93,6 +93,10 @@ public class EMailServiceSendWorkerTest {
 	@Test
 	public void test00_constructor1() throws AlKhwarizmixException {
 		Assert.assertNotNull(utEMailServiceSendWorker);
+		Assert.assertNotNull(utEMailServiceSendWorker.getLogger());
+		Assert.assertEquals(
+				"dz.alkhwarizmix.framework.java.services.impl.EMailServiceSendWorker",
+				utEMailServiceSendWorker.getLogger().getName());
 	}
 
 	@Ignore("REDO TDD")

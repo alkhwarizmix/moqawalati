@@ -43,15 +43,17 @@ public class CustomizerService extends AbstractAlKhwarizmixService implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public CustomizerService() {
 		super();
+	}
+
+	protected CustomizerService(final Logger theLogger) {
+		this();
+		logger = theLogger;
 	}
 
 	// --------------------------------------------------------------------------

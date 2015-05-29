@@ -26,8 +26,6 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IEMailDAO;
 import dz.alkhwarizmix.framework.java.dtos.email.model.vo.EMail;
 import dz.alkhwarizmix.framework.java.model.impl.AlKhwarizmixSessionData;
-import dz.alkhwarizmix.framework.java.services.impl.EMailService;
-import dz.alkhwarizmix.framework.java.services.impl.EMailServiceValidator;
 
 /**
  * <p>
@@ -85,6 +83,10 @@ public class EMailServiceTest {
 	@Test
 	public void test00_constructor() {
 		Assert.assertNotNull(utEMailService);
+		Assert.assertNotNull(utEMailService.getLogger());
+		Assert.assertEquals(
+				"dz.alkhwarizmix.framework.java.services.impl.EMailService",
+				utEMailService.getLogger().getName());
 	}
 
 	@Ignore("TODO: TDD")

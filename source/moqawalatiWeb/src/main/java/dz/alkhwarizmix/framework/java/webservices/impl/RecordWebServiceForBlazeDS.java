@@ -51,11 +51,12 @@ public class RecordWebServiceForBlazeDS implements IRecordWebServiceForBlazeDS {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(RecordWebServiceForBlazeDS.class);
+	private static Logger logger = null;
 
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(RecordWebServiceForBlazeDS.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------

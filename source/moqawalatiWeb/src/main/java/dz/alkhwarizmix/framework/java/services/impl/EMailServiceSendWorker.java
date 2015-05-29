@@ -49,7 +49,7 @@ public class EMailServiceSendWorker {
 
 	private static Logger logger = null;
 
-	private Logger getLogger() {
+	protected Logger getLogger() {
 		if (logger == null)
 			logger = LoggerFactory.getLogger(EMailServiceSendWorker.class);
 		return logger;

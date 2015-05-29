@@ -55,15 +55,17 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public EMailService() {
 		super();
+	}
+
+	protected EMailService(final Logger theLogger) {
+		this();
+		logger = theLogger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -75,7 +77,7 @@ public class EMailService extends AbstractAlKhwarizmixService implements
 	private static Logger logger = null;
 
 	@Override
-	protected Logger getLogger() {
+	protected final Logger getLogger() {
 		if (logger == null)
 			logger = LoggerFactory.getLogger(EMailService.class);
 		return logger;

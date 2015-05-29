@@ -19,7 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.services.impl.CustomizerServiceValidator;
 
 /**
  * <p>
@@ -51,6 +50,10 @@ public class CustomizerServiceValidatorTest {
 	@Test
 	public void test00_constructor() {
 		Assert.assertNotNull(utCustomizerServiceValidator);
+		Assert.assertNotNull(utCustomizerServiceValidator.getLogger());
+		Assert.assertEquals(
+				"dz.alkhwarizmix.framework.java.services.impl.CustomizerServiceValidator",
+				utCustomizerServiceValidator.getLogger().getName());
 	}
 
 	@Ignore("TODO: TDD")

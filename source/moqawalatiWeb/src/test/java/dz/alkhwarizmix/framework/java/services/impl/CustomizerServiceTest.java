@@ -11,9 +11,18 @@
 
 package dz.alkhwarizmix.framework.java.services.impl;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -26,6 +35,7 @@ import dz.alkhwarizmix.framework.java.dao.ICustomDataDAO;
 import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.model.impl.AlKhwarizmixSessionData;
+import dz.alkhwarizmix.framework.java.utils.IXMLUtil;
 
 /**
  * <p>
@@ -45,8 +55,14 @@ public class CustomizerServiceTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@InjectMocks
-	private CustomizerService utCustomizerService;
+	@Mock
+	private CustomizerService mockCustomizerService;
+
+	@Mock
+	private Logger mockLogger;
+
+	@Mock
+	private IXMLUtil mockXMLUtil;
 
 	@InjectMocks
 	AlKhwarizmixSessionData sessionData;
@@ -58,10 +74,12 @@ public class CustomizerServiceTest {
 	ICustomDataDAO mockCustomDataDAO;
 
 	@Mock
-	private Logger mockLogger;
+	private CustomData mockCustomData1, mockCustomData2, mockCustomData3;
 
-	@Mock
-	private CustomData mockCustomData;
+	@Before
+	public void setUp() {
+		when(mockCustomizerService.getLogger()).thenReturn(mockLogger);
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -71,50 +89,135 @@ public class CustomizerServiceTest {
 
 	@Test
 	public void test00_constructor() {
+		final CustomizerService utCustomizerService = new CustomizerService();
 		Assert.assertNotNull(utCustomizerService);
+		Assert.assertNotNull(utCustomizerService.getLogger());
+		Assert.assertEquals(
+				"dz.alkhwarizmix.framework.java.services.impl.CustomizerService",
+				utCustomizerService.getLogger().getName());
 	}
 
 	// --------------------------------------------------------------------------
 
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+
 	private void setUpForTest01_setCustomData() throws AlKhwarizmixException {
-		/*
-		 * when(mockAlKhwarizmixService.addObject(any(String.class)))
-		 * .thenCallRealMethod();
-		 * when(mockAlKhwarizmixService.getXMLUtil()).thenReturn(mockXMLUtil);
-		 * when
-		 * (mockXMLUtil.unmarshalObjectFromXML(any(String.class))).thenReturn(
-		 * mockDomainObject1); when( mockAlKhwarizmixService.addObject(
-		 * any(AbstractAlKhwarizmixDomainObject.class),
-		 * anyBoolean())).thenReturn(mockDomainObject2);
-		 */
+		when(
+				mockCustomizerService.setCustomData(any(CustomData.class),
+						anyBoolean())).thenCallRealMethod();
 	}
 
-	@Ignore("TODO: TDD")
 	@Test
-	public void test01_A_setCustomData() throws AlKhwarizmixException {
+	public void test01_A_setCustomData_should_getCustomData()
+			throws AlKhwarizmixException {
 		// SETUP
 		setUpForTest01_setCustomData();
 		// TEST
-		utCustomizerService.setCustomData(null, false);
+		mockCustomizerService.setCustomData(mockCustomData1, true);
 		// ASSERTS
-		Assert.assertEquals("", "");
+		verify(mockCustomizerService, times(1)).getCustomData(mockCustomData1,
+				false);
+	}
+
+	@Test
+	public void test01_B_setCustomData_should_updateFrom()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest01_setCustomData();
+		when(mockCustomizerService.getCustomData(mockCustomData1, false))
+				.thenReturn(mockCustomData2);
+		when(mockCustomizerService.addObject(mockCustomData2, true))
+				.thenReturn(mockCustomData3);
+		// TEST
+		final CustomData result = mockCustomizerService.setCustomData(
+				mockCustomData1, true);
+		// ASSERTS
+		Assert.assertEquals(mockCustomData3, result);
+		verify(mockCustomData2, times(1)).updateFrom(mockCustomData1);
+		verify(mockCustomizerService, times(1))
+				.addObject(mockCustomData2, true);
+	}
+
+	@Test
+	public void test01_C_setCustomData_should_validateObjectToPublish()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest01_setCustomData();
+		when(mockCustomizerService.addObject(mockCustomData1, true))
+				.thenReturn(mockCustomData2);
+		// TEST
+		final CustomData result = mockCustomizerService.setCustomData(
+				mockCustomData1, true);
+		// ASSERTS
+		Assert.assertEquals(mockCustomData2, result);
+		verify(mockCustomData2, times(0)).updateFrom(mockCustomData1);
+		verify(mockCustomizerService, times(1))
+				.addObject(mockCustomData1, true);
+	}
+
+	@Test
+	public void test01_D_setCustomData_should_not_validateObjectToPublish()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest01_setCustomData();
+		when(mockCustomizerService.addObject(mockCustomData1, false))
+				.thenReturn(mockCustomData2);
+		mockCustomizerService.setCustomData(mockCustomData1, false);
+		// ASSERTS
+		verify(mockCustomizerService, times(1)).addObject(mockCustomData1,
+				false);
 	}
 
 	// --------------------------------------------------------------------------
 
 	private void setUpForTest02_setCustomDataFromXML()
 			throws AlKhwarizmixException {
+		when(mockCustomizerService.setCustomDataFromXML(any(String.class)))
+				.thenCallRealMethod();
+		when(mockCustomizerService.getXMLUtil()).thenReturn(mockXMLUtil);
+		when(mockXMLUtil.unmarshalObjectFromXML(any(String.class))).thenReturn(
+				mockCustomData1);
+		when(
+				mockCustomizerService.setCustomData(any(CustomData.class),
+						anyBoolean())).thenReturn(mockCustomData2);
 	}
 
-	@Ignore("TODO: TDD")
 	@Test
-	public void test02_A_setCustomDataFromXML() throws AlKhwarizmixException {
+	public void test02_A_setCustomDataFromXML_should_unmarshalObjectFromXML()
+			throws AlKhwarizmixException {
 		// SETUP
 		setUpForTest02_setCustomDataFromXML();
 		// TEST
-		utCustomizerService.setCustomDataFromXML("");
+		mockCustomizerService.setCustomDataFromXML("XML1");
 		// ASSERTS
-		Assert.assertEquals("", "");
+		verify(mockXMLUtil, times(1)).unmarshalObjectFromXML("XML1");
+	}
+
+	@Test
+	public void test02_B_setCustomDataFromXML_should_addObject()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest02_setCustomDataFromXML();
+		// TEST
+		mockCustomizerService.setCustomDataFromXML("XML");
+		// ASSERTS
+		verify(mockCustomizerService, times(1)).setCustomData(mockCustomData1,
+				true);
+	}
+
+	@Test
+	public void test02_C_setCustomDataFromXML_should_marshalObjectToXML()
+			throws AlKhwarizmixException {
+		// SETUP
+		setUpForTest02_setCustomDataFromXML();
+		when(mockXMLUtil.marshalObjectToXML(mockCustomData2))
+				.thenReturn("XML2");
+		// TEST
+		final String result = mockCustomizerService.setCustomDataFromXML("XML");
+		// ASSERTS
+		Assert.assertEquals("XML2", result);
+		verify(mockXMLUtil, times(1)).marshalObjectToXML(mockCustomData2);
 	}
 
 	// --------------------------------------------------------------------------
@@ -128,7 +231,7 @@ public class CustomizerServiceTest {
 		// SETUP
 		setUpForTest03_getObject();
 		// TEST
-		utCustomizerService.getObject(null, false);
+		mockCustomizerService.getObject(null, false);
 		// ASSERTS
 		Assert.assertEquals("", "");
 	}
@@ -137,8 +240,8 @@ public class CustomizerServiceTest {
 
 	private void setUpForTest04_getCustomData() throws AlKhwarizmixException {
 		sessionData.setSessionOwner(mockCustomizer);
-		utCustomizerService.setSessionData(sessionData);
-		utCustomizerService.setCustomDataDAO(mockCustomDataDAO);
+		mockCustomizerService.setSessionData(sessionData);
+		mockCustomizerService.setCustomDataDAO(mockCustomDataDAO);
 	}
 
 	@Ignore("TODO: TDD")
@@ -147,7 +250,7 @@ public class CustomizerServiceTest {
 		// SETUP
 		setUpForTest04_getCustomData();
 		// TEST
-		utCustomizerService.getCustomData(null, false);
+		mockCustomizerService.getCustomData(null, false);
 		// ASSERTS
 		Assert.assertEquals("", "");
 	}
@@ -164,8 +267,8 @@ public class CustomizerServiceTest {
 		final CustomData customData = new CustomData();
 		customData.setCustomDataId("id12345");
 		// TEST
-		final CustomData result = utCustomizerService.getCustomData(customData,
-				true);
+		final CustomData result = mockCustomizerService.getCustomData(
+				customData, true);
 		// ASSERTS
 		Assert.assertEquals("Default", result.getCustomDataValue());
 	}
@@ -182,7 +285,7 @@ public class CustomizerServiceTest {
 		// SETUP
 		setUpForTest05_getCustomDataAsXML();
 		// TEST
-		utCustomizerService.getCustomDataAsXML(mockCustomData);
+		mockCustomizerService.getCustomDataAsXML(mockCustomData1);
 		// ASSERTS
 		Assert.assertEquals("", "");
 	}
@@ -199,21 +302,22 @@ public class CustomizerServiceTest {
 		// SETUP
 		setUpForTest06_getCustomDataAsXML();
 		// TEST
-		utCustomizerService.getCustomDataAsXML("");
+		mockCustomizerService.getCustomDataAsXML("");
 		// ASSERTS
 		Assert.assertEquals("", "");
 	}
 
 	// --------------------------------------------------------------------------
 
+	@Ignore("TODO: TDD")
 	@Test
 	public void test_getSessionOwner_should_return_getSessionData_getSessionOwner()
 			throws AlKhwarizmixException {
 		final AlKhwarizmixDomainObject mockSessionOwner = Mockito
 				.mock(AlKhwarizmixDomainObject.class);
 		sessionData.setSessionOwner(mockSessionOwner);
-		utCustomizerService.setSessionData(sessionData);
-		final AlKhwarizmixDomainObject result = utCustomizerService
+		mockCustomizerService.setSessionData(sessionData);
+		final AlKhwarizmixDomainObject result = mockCustomizerService
 				.getSessionOwner();
 		Assert.assertEquals(mockSessionOwner, result);
 	}

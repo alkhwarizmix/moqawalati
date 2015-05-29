@@ -49,15 +49,17 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * constructor
-	 */
 	public RecordService() {
 		super();
+	}
+
+	protected RecordService(final Logger theLogger) {
+		this();
+		logger = theLogger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -69,7 +71,7 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	private static Logger logger = null;
 
 	@Override
-	protected Logger getLogger() {
+	protected final Logger getLogger() {
 		if (logger == null)
 			logger = LoggerFactory.getLogger(RecordService.class);
 		return logger;

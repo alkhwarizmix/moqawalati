@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -30,13 +30,14 @@ import dz.alkhwarizmix.framework.java.services.ICustomizerService;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٩ محرم ١٤٣٥ (November 13, 2013)
  */
 @Controller
 @RequestMapping("alkhwarizmix/xml/customize")
-public class CustomizerWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML {
+public class CustomizerWebServiceForXML extends
+		AbstractAlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,12 +58,13 @@ public class CustomizerWebServiceForXML extends AbstractAlKhwarizmixWebServiceFo
 	//
 	// --------------------------------------------------------------------------
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomizerWebServiceForXML.class);
+	private static Logger logger = null;
 
 	@Override
 	protected Logger getLogger() {
-		return LOG;
+		if (logger == null)
+			logger = LoggerFactory.getLogger(CustomizerWebServiceForXML.class);
+		return logger;
 	}
 
 	// --------------------------------------------------------------------------
@@ -82,7 +84,7 @@ public class CustomizerWebServiceForXML extends AbstractAlKhwarizmixWebServiceFo
 
 	/**
 	 * add the customData to database
-	 * 
+	 *
 	 * @param xmlValue
 	 *            {@link String} the customData as xml
 	 * @return {@link ResponseEntity}
@@ -90,23 +92,23 @@ public class CustomizerWebServiceForXML extends AbstractAlKhwarizmixWebServiceFo
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> setCustomData(
-			@RequestParam("customData") String xmlValue)
+			@RequestParam("customData") final String xmlValue)
 			throws AlKhwarizmixException {
 		getLogger().trace("addCustomData({})", xmlValue);
 
 		try {
-			String result = getCustomizerService().setCustomDataFromXML(
+			final String result = getCustomizerService().setCustomDataFromXML(
 					xmlValue);
-			StringBuilder sBuilder = new StringBuilder(result);
+			final StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
-		} catch (AlKhwarizmixException e) {
+		} catch (final AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}
 	}
 
 	/**
 	 * get the customData from database
-	 * 
+	 *
 	 * @param customDataId
 	 *            {@link String} customDataId
 	 * @return {@link ResponseEntity}
@@ -114,17 +116,17 @@ public class CustomizerWebServiceForXML extends AbstractAlKhwarizmixWebServiceFo
 	 */
 	@RequestMapping(value = "/{customDataId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getCustomDataById(
-			@PathVariable("customDataId") String customDataId)
+			@PathVariable("customDataId") final String customDataId)
 			throws AlKhwarizmixException {
 		getLogger().debug("getCustomDataById({})", customDataId);
 
 		try {
-			CustomData customDataToGet = new CustomData();
+			final CustomData customDataToGet = new CustomData();
 			customDataToGet.setCustomDataId(customDataId);
-			StringBuilder sBuilder = new StringBuilder(getCustomizerService()
-					.getCustomDataAsXML(customDataToGet));
+			final StringBuilder sBuilder = new StringBuilder(
+					getCustomizerService().getCustomDataAsXML(customDataToGet));
 			return successResponseForXML(sBuilder);
-		} catch (AlKhwarizmixException e) {
+		} catch (final AlKhwarizmixException e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -143,7 +145,7 @@ public class CustomizerWebServiceForXML extends AbstractAlKhwarizmixWebServiceFo
 		return customizerService;
 	}
 
-	protected void setCustomizerService(ICustomizerService value) {
+	protected void setCustomizerService(final ICustomizerService value) {
 		customizerService = value;
 	}
 
