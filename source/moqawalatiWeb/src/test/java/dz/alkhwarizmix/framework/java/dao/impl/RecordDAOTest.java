@@ -13,11 +13,12 @@ package dz.alkhwarizmix.framework.java.dao.impl;
 
 import java.util.List;
 
-import junit.framework.Assert;
-
+import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,8 +67,10 @@ public class RecordDAOTest {
 	String table2Name;
 	String table2RecordId;
 
+	private Transaction transaction;
+
 	@Before
-	public void setUp() {
+	public void setUp() throws AlKhwarizmixDAOException {
 		schema1Name = "schema1";
 		schema1RecordId = "_S_" + schema1Name;
 		schema2Name = "schema2";
@@ -76,6 +79,12 @@ public class RecordDAOTest {
 		table1RecordId = "_T_" + table1Name;
 		table2Name = "table2";
 		table2RecordId = "_T_" + table2Name;
+		transaction = utRecordDAO.beginTransaction();
+	}
+
+	@After
+	public void tearDown() throws AlKhwarizmixDAOException {
+		utRecordDAO.rollbackTransaction(transaction);
 	}
 
 	// --------------------------------------------------------------------------

@@ -72,3 +72,15 @@ Maven Run WAR
 * cd moqawalatiWeb
 * mvn jetty:run-war
 * http://localhost:9787/moqawalati-webapp/index.html
+
+Generate project for Eclipse
+
+* mvn eclipse:clean eclipse:eclipse -Dwtpversion=2.0
+* edit alkhwarizmix/moqawalati/source/moqawalatiWeb/.settings/org.eclipse.wst.common.project.facet.core.xml
+	<?xml version="1.0" encoding="UTF-8"?>
+	<faceted-project>
+	  <fixed facet="jst.java"/>
+	  <fixed facet="jst.web"/>
+	  <installed facet="jst.web" version="2.4"/>
+	  <installed facet="jst.java" version="1.6"/>
+	</faceted-project>

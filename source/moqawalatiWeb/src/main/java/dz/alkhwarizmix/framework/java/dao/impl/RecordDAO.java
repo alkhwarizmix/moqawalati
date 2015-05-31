@@ -34,8 +34,8 @@ import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
  * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
 @Repository
-public class RecordDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
-		IRecordDAO {
+public class RecordDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling
+		implements IRecordDAO {
 
 	// --------------------------------------------------------------------------
 	//
@@ -154,8 +154,7 @@ public class RecordDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implemen
 			throws AlKhwarizmixException {
 		try {
 			Record result = null;
-			final Criteria criteria = getHibernateTemplate()
-					.getSessionFactory().getCurrentSession()
+			final Criteria criteria = getHibernateCurrentSession()
 					.createCriteria(Record.class);
 			// List<Record> allRecords = criteria.list();
 			criteria.add(Restrictions.and(

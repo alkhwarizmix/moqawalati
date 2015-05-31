@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.junit.Before;

@@ -25,7 +25,7 @@ import java.util.List;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Before;
 import org.junit.Ignore;

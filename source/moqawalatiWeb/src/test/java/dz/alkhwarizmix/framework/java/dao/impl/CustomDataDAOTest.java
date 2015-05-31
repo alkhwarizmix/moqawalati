@@ -11,8 +11,10 @@
 
 package dz.alkhwarizmix.framework.java.dao.impl;
 
-import junit.framework.Assert;
-
+import org.hibernate.Transaction;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +47,28 @@ public class CustomDataDAOTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private static final String CUSTOM_DATA_ID = "dz.alkhwarizmix.moqawalati.java.dao.MoqawalatiDAOForXMLMarshallingTest";
+	private static final String CUSTOM_DATA_ID = "dz.alkhwarizmix.moqawalati.MoqawalatiDAOForXMLMarshallingTest";
 
 	@Autowired
 	private ICustomDataDAO utCustomDataDAO;
+
+	private Transaction transaction;
+
+	@Before
+	public void setUp() throws AlKhwarizmixDAOException {
+		transaction = utCustomDataDAO.beginTransaction();
+	}
+
+	@After
+	public void tearDown() throws AlKhwarizmixDAOException {
+		utCustomDataDAO.rollbackTransaction(transaction);
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Helpers
+	//
+	// --------------------------------------------------------------------------
 
 	private String getStringOfSize(final int size) {
 		String result = "123456789A_ADD";

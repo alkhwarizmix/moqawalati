@@ -17,6 +17,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.hibernate.Criteria;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -56,8 +57,15 @@ public class UserDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 
 	@PostConstruct
 	private void createDefaultUsers() {
-		for (final User user : defaultUserList)
-			createDefaultUser(user);
+		Transaction trans = null;
+		try {
+			trans = getHibernateCurrentSession().beginTransaction();
+			for (final User user : defaultUserList)
+				createDefaultUser(user);
+			trans.commit();
+		} catch (final RuntimeException e) {
+			trans.rollback();
+		}
 	}
 
 	private void createDefaultUser(final User user) {
@@ -107,8 +115,7 @@ public class UserDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 
 		try {
 			final String userId = userToGet.getUserId();
-			final Criteria criteria = getHibernateTemplate()
-					.getSessionFactory().getCurrentSession()
+			final Criteria criteria = getHibernateCurrentSession()
 					.createCriteria(User.class);
 			criteria.add(Restrictions.eq(User.USERID, userId));
 			userToGet = (User) criteria.uniqueResult();
@@ -134,8 +141,7 @@ public class UserDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 			final List<Password> result = new ArrayList<Password>();
 			if (user != null) {
 				// TODO: TO ENHANCE
-				final Criteria criteria = getHibernateTemplate()
-						.getSessionFactory().getCurrentSession()
+				final Criteria criteria = getHibernateCurrentSession()
 						.createCriteria(Password.class);
 				criteria.add(Restrictions.eq(Password.USERID, user.getId()));
 				criteria.addOrder(Order.desc(Password.CREATED));

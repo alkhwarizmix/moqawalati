@@ -14,8 +14,10 @@ package dz.alkhwarizmix.framework.java.dao.impl;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.Assert;
-
+import org.hibernate.Transaction;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,18 @@ public class UserDAOTest {
 
 	@Autowired
 	private IUserDAO utUserDAO;
+
+	private Transaction transaction;
+
+	@Before
+	public void setUp() throws AlKhwarizmixDAOException {
+		transaction = utUserDAO.beginTransaction();
+	}
+
+	@After
+	public void tearDown() throws AlKhwarizmixDAOException {
+		utUserDAO.rollbackTransaction(transaction);
+	}
 
 	// --------------------------------------------------------------------------
 	//

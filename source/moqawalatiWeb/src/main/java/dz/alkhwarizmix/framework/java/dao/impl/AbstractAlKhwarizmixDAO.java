@@ -14,12 +14,13 @@ package dz.alkhwarizmix.framework.java.dao.impl;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
@@ -113,7 +114,8 @@ public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 		getLogger().trace("get({}, {})", clazz.getSimpleName(), id);
 
 		try {
-			return getHibernateTemplate().get(clazz, id);
+			return (AbstractAlKhwarizmixDomainObject) getHibernateCurrentSession()
+					.get(clazz, id);
 		} catch (final DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
@@ -128,8 +130,10 @@ public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 		getLogger().trace("getList({})", criteria);
 
 		try {
-			return getHibernateTemplate().findByCriteria(criteria, firstResult,
-					maxResult);
+			return criteria.getExecutableCriteria(getHibernateCurrentSession())
+					.list();
+			// return getHibernateCurrentSession().findByCriteria(criteria,
+			// firstResult, maxResult);
 		} catch (final DataAccessException e) {
 			throw new AlKhwarizmixDAOException(e);
 		}
@@ -200,7 +204,7 @@ public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	@Override
 	public final void clear() throws AlKhwarizmixDAOException {
 		getLogger().trace("clear()");
-		getHibernateTemplate().clear();
+		getHibernateCurrentSession().clear();
 	}
 
 	/**
@@ -208,15 +212,42 @@ public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	@Override
 	public final void flush() throws AlKhwarizmixDAOException {
 		getLogger().trace("flush()");
-		getHibernateTemplate().flush();
+		getHibernateCurrentSession().flush();
+	}
+
+	/**
+	 */
+	@Override
+	public final Transaction beginTransaction() throws AlKhwarizmixDAOException {
+		getLogger().trace("startTransaction()");
+		return getHibernateCurrentSession().beginTransaction();
+	}
+
+	/**
+	 */
+	@Override
+	public final void commitTransaction(final Transaction trans)
+			throws AlKhwarizmixDAOException {
+		getLogger().trace("commitTransaction({})", trans);
+		if (trans != null)
+			trans.commit();
+	}
+
+	/**
+	 */
+	@Override
+	public final void rollbackTransaction(final Transaction trans)
+			throws AlKhwarizmixDAOException {
+		getLogger().trace("rollbackTransaction({})", trans);
+		if (trans != null)
+			trans.rollback();
 	}
 
 	/**
 	 */
 	protected final Session getHibernateCurrentSession() {
 		try {
-			return getHibernateTemplate().getSessionFactory()
-					.getCurrentSession();
+			return getSessionFactory().getCurrentSession();
 		} catch (final HibernateException e) {
 			getLogger().warn("getHibernateCurrentSession: No current session");
 		}
@@ -236,11 +267,11 @@ public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// hibernateTemplate
+	// sessionFactory
 	// ----------------------------------
 
-	protected abstract HibernateTemplate getHibernateTemplate();
+	protected abstract SessionFactory getSessionFactory();
 
-	protected abstract void setHibernateTemplate(HibernateTemplate value);
+	protected abstract void setSessionFactory(SessionFactory value);
 
 } // Class

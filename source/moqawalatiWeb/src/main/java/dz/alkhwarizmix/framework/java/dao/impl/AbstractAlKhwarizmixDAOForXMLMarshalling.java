@@ -11,10 +11,10 @@
 
 package dz.alkhwarizmix.framework.java.dao.impl;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -30,8 +30,8 @@ import dz.alkhwarizmix.framework.java.utils.impl.XMLUtil;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٧ شعبان ١٤٣٥ (June 05, 2014)
  */
-public abstract class AbstractAlKhwarizmixDAOForXMLMarshalling extends AbstractAlKhwarizmixDAO
-		implements IAlKhwarizmixDAOForXMLMarshalling {
+public abstract class AbstractAlKhwarizmixDAOForXMLMarshalling extends
+		AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAOForXMLMarshalling {
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,7 +40,7 @@ public abstract class AbstractAlKhwarizmixDAOForXMLMarshalling extends AbstractA
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private HibernateTemplate hibernateTemplate;
+	private SessionFactory sessionFactory;
 
 	@Autowired
 	private Jaxb2Marshaller jaxb2Marshaller;
@@ -62,7 +62,7 @@ public abstract class AbstractAlKhwarizmixDAOForXMLMarshalling extends AbstractA
 					.getDaoObjectList()) {
 				getLogger().trace("saveOrUpdate(cursor={})", cursor);
 				object.beforeDaoSaveOrUpdate(cursor);
-				getHibernateTemplate().saveOrUpdate(cursor);
+				getHibernateCurrentSession().saveOrUpdate(cursor);
 			}
 		} catch (final ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
@@ -114,13 +114,13 @@ public abstract class AbstractAlKhwarizmixDAOForXMLMarshalling extends AbstractA
 	// ----------------------------------
 
 	@Override
-	protected HibernateTemplate getHibernateTemplate() {
-		return hibernateTemplate;
+	protected SessionFactory getSessionFactory() {
+		return sessionFactory;
 	}
 
 	@Override
-	protected void setHibernateTemplate(final HibernateTemplate value) {
-		hibernateTemplate = value;
+	protected void setSessionFactory(final SessionFactory value) {
+		sessionFactory = value;
 	}
 
 	// ----------------------------------

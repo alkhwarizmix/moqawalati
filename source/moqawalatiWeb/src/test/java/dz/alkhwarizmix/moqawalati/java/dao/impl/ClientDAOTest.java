@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -11,8 +11,10 @@
 
 package dz.alkhwarizmix.moqawalati.java.dao.impl;
 
-import junit.framework.Assert;
-
+import org.hibernate.Transaction;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.impl.AlKhwarizmixDAOException;
 import dz.alkhwarizmix.moqawalati.java.dao.IClientDAO;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 
@@ -28,7 +31,7 @@ import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
@@ -47,6 +50,18 @@ public class ClientDAOTest {
 	@Autowired
 	private IClientDAO utClientDAO;
 
+	private Transaction transaction;
+
+	@Before
+	public void setUp() throws AlKhwarizmixDAOException {
+		transaction = utClientDAO.beginTransaction();
+	}
+
+	@After
+	public void tearDown() throws AlKhwarizmixDAOException {
+		utClientDAO.rollbackTransaction(transaction);
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Helpers
@@ -54,7 +69,7 @@ public class ClientDAOTest {
 	// --------------------------------------------------------------------------
 
 	private Client newClient() {
-		Client client = new Client();
+		final Client client = new Client();
 		client.setClientId("clientId");
 		client.setName("userName");
 		// client.setCreatorId("creatorId");
@@ -123,8 +138,8 @@ public class ClientDAOTest {
 	public void test02_default_client_was_created()
 			throws AlKhwarizmixException {
 
-		Client clientToFind = new Client("fares.belhaouas");
-		Client clientUser = utClientDAO.getClient(clientToFind);
+		final Client clientToFind = new Client("fares.belhaouas");
+		final Client clientUser = utClientDAO.getClient(clientToFind);
 		Assert.assertNotNull(clientUser);
 		Assert.assertEquals("فارس بلحواس", clientUser.getName());
 	}

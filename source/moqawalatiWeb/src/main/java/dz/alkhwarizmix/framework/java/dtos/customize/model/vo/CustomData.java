@@ -169,6 +169,8 @@ public class CustomData extends
 	}
 
 	public void setCustomDataId(final String value) {
+		if ((value != null) && (value.length() > 63))
+			throw new RuntimeException();
 		customDataId = value;
 	}
 
