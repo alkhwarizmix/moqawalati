@@ -147,7 +147,7 @@ public class User extends AbstractAlKhwarizmixDomainObject implements
 	 */
 	@Override
 	protected ToStringBuilder toStringBuilder() {
-		return super.toStringBuilder();
+		return super.toStringBuilder().append("userId", userId);
 	}
 
 	/*

@@ -11,6 +11,7 @@
 
 package dz.alkhwarizmix.framework.java.dao.impl;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.ConcurrencyFailureException;
@@ -54,15 +55,15 @@ public abstract class AbstractAlKhwarizmixDAOForXMLMarshalling extends
 	/**
 	 */
 	@Override
-	public void saveOrUpdate(final AbstractAlKhwarizmixDomainObject object)
-			throws AlKhwarizmixDAOException {
-		getLogger().trace("saveOrUpdate({})", object);
+	public void saveOrUpdate(final AbstractAlKhwarizmixDomainObject object,
+			final Session session) throws AlKhwarizmixDAOException {
+		getLogger().trace("saveOrUpdate({}, {})", object, session);
 		try {
 			for (final AbstractAlKhwarizmixDomainObject cursor : object
 					.getDaoObjectList()) {
 				getLogger().trace("saveOrUpdate(cursor={})", cursor);
 				object.beforeDaoSaveOrUpdate(cursor);
-				getHibernateCurrentSession().saveOrUpdate(cursor);
+				session.saveOrUpdate(cursor);
 			}
 		} catch (final ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);

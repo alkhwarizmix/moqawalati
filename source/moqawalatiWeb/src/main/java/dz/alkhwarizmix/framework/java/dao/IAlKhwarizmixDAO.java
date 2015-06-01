@@ -13,6 +13,7 @@ package dz.alkhwarizmix.framework.java.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 
@@ -33,6 +34,11 @@ public interface IAlKhwarizmixDAO {
 	 */
 	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException;
+
+	/**
+	 */
+	public void saveOrUpdate(AbstractAlKhwarizmixDomainObject object,
+			Session session) throws AlKhwarizmixDAOException;
 
 	/**
 	 */

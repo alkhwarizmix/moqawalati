@@ -58,9 +58,17 @@ public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 	public void saveOrUpdate(final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixDAOException {
 		getLogger().trace("saveOrUpdate({})", object);
+		saveOrUpdate(object, getHibernateCurrentSession());
+	}
 
+	/**
+	 */
+	@Override
+	public void saveOrUpdate(final AbstractAlKhwarizmixDomainObject object,
+			final Session session) throws AlKhwarizmixDAOException {
+		getLogger().trace("saveOrUpdate({}, {})", object, session);
 		try {
-			getHibernateCurrentSession().saveOrUpdate(object);
+			session.saveOrUpdate(object);
 		} catch (final ConcurrencyFailureException e) {
 			throw getDAOExceptionForConcurrencyFailure(e);
 		} catch (final DataAccessException e) {
@@ -130,8 +138,9 @@ public abstract class AbstractAlKhwarizmixDAO implements IAlKhwarizmixDAO {
 		getLogger().trace("getList({})", criteria);
 
 		try {
-			return criteria.getExecutableCriteria(getHibernateCurrentSession())
-					.list();
+			final List result = criteria.getExecutableCriteria(
+					getHibernateCurrentSession()).list();
+			return result;
 			// return getHibernateCurrentSession().findByCriteria(criteria,
 			// firstResult, maxResult);
 		} catch (final DataAccessException e) {

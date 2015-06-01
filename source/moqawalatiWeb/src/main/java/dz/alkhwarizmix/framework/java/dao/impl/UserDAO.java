@@ -17,6 +17,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -57,20 +58,30 @@ public class UserDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
 
 	@PostConstruct
 	private void createDefaultUsers() {
+		Session session = null;
 		Transaction trans = null;
+		boolean isOpenSession = false;
 		try {
-			trans = getHibernateCurrentSession().beginTransaction();
+			session = getHibernateCurrentSession();
+			if (session == null) {
+				session = getSessionFactory().openSession();
+				isOpenSession = true;
+			}
+			trans = session.beginTransaction();
 			for (final User user : defaultUserList)
-				createDefaultUser(user);
+				createDefaultUser(user, session);
 			trans.commit();
 		} catch (final RuntimeException e) {
 			trans.rollback();
+		} finally {
+			if (isOpenSession)
+				session.close();
 		}
 	}
 
-	private void createDefaultUser(final User user) {
+	private void createDefaultUser(final User user, final Session session) {
 		try {
-			saveOrUpdate(user);
+			saveOrUpdate(user, session);
 			getLogger().info("createDefaultUser: Created default user <{}>",
 					user.getName());
 		} catch (final AlKhwarizmixDAOException e) {

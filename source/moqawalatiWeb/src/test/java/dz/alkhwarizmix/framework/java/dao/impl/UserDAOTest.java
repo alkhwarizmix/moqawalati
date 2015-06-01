@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -170,6 +172,9 @@ public class UserDAOTest {
 	public void test02_default_users_were_created()
 			throws AlKhwarizmixException {
 
+		final DetachedCriteria criteriaToUse = DetachedCriteria
+				.forClass(User.class);
+		criteriaToUse.addOrder(Order.asc(User.USERID));
 		assertDefaultUser("fbelhaouas@icloud.com", "فارس بلحواس");
 		assertDefaultUser("fares@dz.moqawalati.com", "Fares @ Moqawalati");
 	}

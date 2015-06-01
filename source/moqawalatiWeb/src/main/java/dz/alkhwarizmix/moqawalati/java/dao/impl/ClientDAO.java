@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.java.dao.impl;
 import javax.annotation.PostConstruct;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -54,20 +55,30 @@ public class ClientDAO extends MoqawalatiDAOForXMLMarshalling implements
 
 	@PostConstruct
 	private void createDefaultClients() {
-		final Client defaultUser = new Client("fares.belhaouas", "فارس بلحواس");
+		final Client defaultClient = new Client("fares.belhaouas", "فارس بلحواس");
+		Session session = null;
 		Transaction trans = null;
+		boolean isOpenSession = false;
 		try {
-			trans = getHibernateCurrentSession().beginTransaction();
-			saveOrUpdate(defaultUser);
+			session = getHibernateCurrentSession();
+			if (session == null) {
+				session = getSessionFactory().openSession();
+				isOpenSession = true;
+			}
+			trans = session.beginTransaction();
+			saveOrUpdate(defaultClient, session);
 			trans.commit();
 			getLogger().info(
 					"createDefaultClients: Created default client <{}>",
-					defaultUser.getName());
+					defaultClient.getName());
 		} catch (final AlKhwarizmixDAOException e) {
 			trans.rollback();
 			getLogger()
 					.warn("createDefaultClients: default client <{}> already existing",
-							defaultUser.getName());
+							defaultClient.getName());
+		} finally {
+			if (isOpenSession)
+				session.close();
 		}
 	}
 
