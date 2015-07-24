@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo
 {
 
+import mx.core.IFactory;
+
 import dz.alkhwarizmix.moqawalati.flex.model.vo.MoqawalatiVO;
 
 /**
@@ -25,6 +27,7 @@ import dz.alkhwarizmix.moqawalati.flex.model.vo.MoqawalatiVO;
 [Bindable]
 [RemoteClass(alias="dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client")]
 public class ClientVO extends MoqawalatiVO
+	implements IFactory
 {
 	//--------------------------------------------------------------------------
 	//
@@ -58,6 +61,17 @@ public class ClientVO extends MoqawalatiVO
 		if (_name == value)
 			return;
 		_name = value;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Methods
+	//
+	//--------------------------------------------------------------------------
+	
+	public function newInstance():*
+	{
+		return new ClientVO();
 	}
 	
 } // Class

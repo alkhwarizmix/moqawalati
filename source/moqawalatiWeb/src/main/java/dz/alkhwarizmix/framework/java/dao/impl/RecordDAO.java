@@ -24,6 +24,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IRecordDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
 
 /**
  * <p>
@@ -156,7 +157,6 @@ public class RecordDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling
 			Record result = null;
 			final Criteria criteria = getHibernateCurrentSession()
 					.createCriteria(Record.class);
-			// List<Record> allRecords = criteria.list();
 			criteria.add(Restrictions.and(
 					getEqualsRecordIdCriterion(recordToGet),
 					getEqualsParentCriterion(recordToGet)));
@@ -177,6 +177,35 @@ public class RecordDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling
 		return (record.getParent() != null)
 				? Restrictions.eq(Record.PARENT_ID, record.getParent().getId())
 				: Restrictions.isNull(Record.PARENT_ID);
+	}
+
+	/**
+	 */
+	@Override
+	public Encryption getEncryption(final Encryption encryptionToGet)
+			throws AlKhwarizmixException {
+		try {
+			Encryption result = null;
+			final Criteria criteria = getHibernateCurrentSession()
+					.createCriteria(Encryption.class);
+			criteria.add(Restrictions.and(
+					getEqualsEncryptionIdCriterion(encryptionToGet),
+					getEqualsUserCriterion(encryptionToGet)));
+			result = (Encryption) criteria.uniqueResult();
+			return result;
+		} catch (final DataAccessException e) {
+			throw new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.ERROR_DATABASE, e);
+		}
+	}
+
+	private Criterion getEqualsEncryptionIdCriterion(final Encryption encryption) {
+		return Restrictions.eq(Encryption.ENCRYPTIONID,
+				encryption.getEncryptionId());
+	}
+
+	private Criterion getEqualsUserCriterion(final Encryption encryption) {
+		return Restrictions.eq(Encryption.USERID, encryption.getUser().getId());
 	}
 
 } // Class

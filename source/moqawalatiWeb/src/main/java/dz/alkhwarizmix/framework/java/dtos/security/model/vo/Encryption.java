@@ -61,6 +61,7 @@ public class Encryption extends AbstractAlKhwarizmixDomainObject implements
 	private static final long serialVersionUID = -3820045814524228203L;
 
 	public static final String ENCRYPTIONID = "encryptionId";
+	public static final String USERID = "user.id";
 	public static final String NAME = "name";
 
 	// --------------------------------------------------------------------------

@@ -12,6 +12,12 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.productModule.model.vo
 {
 
+import flash.utils.IDataInput;
+import flash.utils.IDataOutput;
+import flash.utils.IExternalizable;
+
+import mx.core.IFactory;
+
 import dz.alkhwarizmix.moqawalati.flex.model.vo.MoqawalatiVO;
 
 /**
@@ -24,6 +30,7 @@ import dz.alkhwarizmix.moqawalati.flex.model.vo.MoqawalatiVO;
  */
 [XmlClass(alias="Product")]
 public class ProductVO extends MoqawalatiVO
+	implements IExternalizable, IFactory
 {
 	//--------------------------------------------------------------------------
 	//
@@ -75,6 +82,29 @@ public class ProductVO extends MoqawalatiVO
 		if (_name == value)
 			return;
 		_name = value;
+	}
+	
+	//--------------------------------------------------------------------------
+	//
+	//  Methods
+	//
+	//--------------------------------------------------------------------------
+	
+	public function newInstance():*
+	{
+		return new ProductVO();
+	}
+	
+	public function readExternal(input:IDataInput):void
+	{
+		productId = input.readUTF();
+		name = input.readUTF();
+	}
+	
+	public function writeExternal(output:IDataOutput):void
+	{
+		output.writeUTF(productId);
+		output.writeUTF(name);
 	}
 	
 	//--------------------------------------------------------------------------
