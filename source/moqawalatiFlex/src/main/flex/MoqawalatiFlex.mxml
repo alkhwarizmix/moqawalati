@@ -38,6 +38,10 @@
 		[ResourceBundle("MoqawalatiFlex")]
 	</fx:Metadata>
 	
+	<fx:Declarations>
+		<fx:XML id="menuList" source="../resources/assets/xml/application-mainmenu.xml"/>
+	</fx:Declarations>
+	
 	<fx:Script>
 	<![CDATA[
 		import mx.events.FlexEvent;
@@ -53,17 +57,21 @@
 		
 		import flashx.textLayout.formats.Direction;
 		
+		
 		//--------------------------------------------------------------------------
 		//
-		//  Class constants
+		//  Logger
 		//
 		//--------------------------------------------------------------------------
 		
-		/**
-		 * The Logger
-		 */
-		private static const LOG:IAlKhwarizmixLogger = AlKhwarizmixLog.
-			getLogger(MoqawalatiFlex);
+		private static var LOG:IAlKhwarizmixLogger = null;
+		
+		protected function get logger():IAlKhwarizmixLogger
+		{
+			if (!LOG)
+				LOG = AlKhwarizmixLog.getLogger(MoqawalatiFlex);
+			return LOG;
+		}
 		
 		//--------------------------------------------------------------------------
 		//
@@ -90,7 +98,7 @@
 		/**
 		 * @private
 		 */
-		private function setupLocaleAdnDirection():void
+		private function setupLocaleAndDirection():void
 		{
 			var direction:String = checkBox1.selected
 				? Direction.RTL
@@ -122,7 +130,7 @@
 		private function this_preinitializeHandler(event:FlexEvent):void
 		{
 			AlKhwarizmixLog.initDefault();
-			LOG.debug("this_preinitializeHandler");
+			logger.debug("this_preinitializeHandler");
 		}
 		
 		/**
@@ -130,12 +138,12 @@
 		 */
 		private function this_addedToStageHandler(event:Event):void
 		{
-			LOG.debug("this_addedToStageHandler");
+			logger.debug("this_addedToStageHandler");
 			
 			parameters.appURL = this.stage.loaderInfo.url;
 			MoqawalatiMainFacade.getInstance(
 				MoqawalatiConstants.FACADE_NAME).startup(this);
-			setupLocaleAdnDirection();
+			setupLocaleAndDirection();
 		}
 		
 		/**
@@ -143,7 +151,7 @@
 		 */
 		private function checkBox1_clickHandler(event:MouseEvent):void
 		{
-			setupLocaleAdnDirection();
+			setupLocaleAndDirection();
 		}
 		
 	]]>
@@ -152,7 +160,7 @@
 	<s:controlBarContent>
 		<fx:Array>
 			<containers:MainControlBar id="mainControlBarInternal"
-				width="100%"/>
+				width="100%" menuList="{menuList}"/>
 		</fx:Array>
 	</s:controlBarContent>
 	

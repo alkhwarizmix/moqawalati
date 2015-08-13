@@ -147,7 +147,7 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */  
 	override public function startup(app:*):void
 	{
-		if (!app is IMoqawalatiApplication)
+		if (!(app is IMoqawalatiApplication))
 			throw new AlKhwarizmixTypeError("IMoqawalatiApplication");
 		sendNotification(MoqawalatiConstants.STARTUP, app);
 	}
