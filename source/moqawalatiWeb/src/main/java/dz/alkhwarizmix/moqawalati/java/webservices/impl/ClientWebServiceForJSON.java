@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.webservices.impl.AlKhwarizmixWebServiceForJSON;
+import dz.alkhwarizmix.framework.java.webservices.impl.AbstractAlKhwarizmixWebServiceForJSON;
 import dz.alkhwarizmix.moqawalati.java.MoqawalatiException;
 import dz.alkhwarizmix.moqawalati.java.dtos.modules.clientModule.model.vo.Client;
 import dz.alkhwarizmix.moqawalati.java.services.IClientService;
@@ -31,13 +31,13 @@ import dz.alkhwarizmix.moqawalati.java.webservices.IClientWebServiceForRest;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ صفر ١٤٣٥ (December 10, 2013)
  */
 @Controller
 @RequestMapping("moqawalati/json/client")
-public class ClientWebServiceForJSON extends AlKhwarizmixWebServiceForJSON
+public class ClientWebServiceForJSON extends AbstractAlKhwarizmixWebServiceForJSON
 		implements IClientWebServiceForRest {
 
 	// --------------------------------------------------------------------------
@@ -84,90 +84,94 @@ public class ClientWebServiceForJSON extends AlKhwarizmixWebServiceForJSON
 
 	/**
 	 * add the client to database
-	 * 
+	 *
 	 * @param clientAsJSON
 	 *            {@link String} the client as json
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
+	@Override
 	public ResponseEntity<String> addClient(
-			@RequestParam("client") String clientAsJSON)
+			@RequestParam("client") final String clientAsJSON)
 			throws MoqawalatiException {
 		getLogger().trace("addClient({})", clientAsJSON);
 
 		try {
-			String result = getClientService().addClientFromXML(clientAsJSON,
+			final String result = getClientService().addClientFromXML(clientAsJSON,
 					getCurrentRequestRemoteAddress());
-			StringBuilder sBuilder = new StringBuilder(result);
+			final StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForJSON(sBuilder);
-		} catch (MoqawalatiException exception) {
-			return errorResponseAsJSON(exception);
+		} catch (final MoqawalatiException exception) {
+			return errorResponseForJSON(exception);
 		}
 	}
 
 	/**
 	 * get the client from database
-	 * 
+	 *
 	 * @param clientId
 	 *            {@link Long} clientId
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
+	@Override
 	public ResponseEntity<String> getClientById(
-			@PathVariable("clientId") String clientId)
+			@PathVariable("clientId") final String clientId)
 			throws MoqawalatiException {
 		getLogger().trace("getClientById({})", clientId);
 
 		try {
-			Client clientToGet = new Client();
+			final Client clientToGet = new Client();
 			clientToGet.setClientId(clientId);
-			StringBuilder sBuilder = new StringBuilder(getClientService()
+			final StringBuilder sBuilder = new StringBuilder(getClientService()
 					.getClientAsJSON(clientToGet));
 			return successResponseForJSON(sBuilder);
-		} catch (MoqawalatiException exception) {
-			return errorResponseAsJSON(exception);
+		} catch (final MoqawalatiException exception) {
+			return errorResponseForJSON(exception);
 		}
 	}
 
 	/**
 	 * update the client in database
-	 * 
+	 *
 	 * @param clientAsJSON
 	 *            {@link String} the client as xml
 	 * @return {@link ResponseEntity}
 	 * @throws MoqawalatiException
 	 */
+	@Override
 	public ResponseEntity<String> updateClient(
-			@PathVariable("clientId") String clientId,
-			@RequestParam("client") String clientAsJSON)
+			@PathVariable("clientId") final String clientId,
+			@RequestParam("client") final String clientAsJSON)
 			throws MoqawalatiException {
 		getLogger().trace("updateClient({}, {})", clientId, clientAsJSON);
 
 		try {
-			StringBuilder sBuilder = new StringBuilder(getClientService()
+			final StringBuilder sBuilder = new StringBuilder(getClientService()
 					.updateClientFromXML(clientAsJSON,
 							getCurrentRequestRemoteAddress()));
 			return successResponseForJSON(sBuilder);
-		} catch (MoqawalatiException exception) {
-			return errorResponseAsJSON(exception);
+		} catch (final MoqawalatiException exception) {
+			return errorResponseForJSON(exception);
 		}
 	}
 
 	/**
 	 */
+	@Override
 	public ResponseEntity<String> getClientList(
-			@RequestParam("firstResult") int firstResult,
-			@RequestParam("maxResult") int maxResult) {
+			@RequestParam("firstResult") final int firstResult,
+			@RequestParam("maxResult") final int maxResult) {
 		getLogger().trace("getClientList({}, {})", firstResult, maxResult);
 
-		StringBuilder result = new StringBuilder();
+		final StringBuilder result = new StringBuilder();
 		try {
 			result.append(getClientService().getClientListAsJSON(null,
 					firstResult, maxResult));
 
 			return successResponseForJSON(result);
-		} catch (MoqawalatiException exception) {
-			return errorResponseAsJSON(exception);
+		} catch (final MoqawalatiException exception) {
+			return errorResponseForJSON(exception);
 		}
 	}
 
@@ -185,7 +189,7 @@ public class ClientWebServiceForJSON extends AlKhwarizmixWebServiceForJSON
 		return clientService;
 	}
 
-	protected void setClientService(IClientService value) {
+	protected void setClientService(final IClientService value) {
 		clientService = value;
 	}
 

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -24,13 +24,13 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ٠٨ ربيع الاول ١٤٣٧ (December 19, 2015)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AlKhwarizmixWebServiceForJSONTest {
+public class PrototypeWebServiceForJSONTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -39,7 +39,7 @@ public class AlKhwarizmixWebServiceForJSONTest {
 	// --------------------------------------------------------------------------
 
 	@Mock
-	private AlKhwarizmixWebServiceForJSON utAlKhwarizmixWebServiceForJSON;
+	private PrototypeWebServiceForJSON utPrototypeWebServiceForJSON;
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,7 +57,7 @@ public class AlKhwarizmixWebServiceForJSONTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utAlKhwarizmixWebServiceForJSON);
+		Assert.assertNotNull(utPrototypeWebServiceForJSON);
 	}
 
 	@Ignore("TODO: TDD")

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -27,11 +27,11 @@ import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ صفر ١٤٣٥ (December 10, 2013)
  */
-public abstract class AlKhwarizmixWebServiceForJSON {
+public abstract class AbstractAlKhwarizmixWebServiceForJSON {
 
 	// --------------------------------------------------------------------------
 	//
@@ -49,23 +49,23 @@ public abstract class AlKhwarizmixWebServiceForJSON {
 
 	/**
 	 * get the remote ip address, usefull to control add and update
-	 * 
+	 *
 	 * @return {@link String} the current request remote ip address
 	 */
 	public String getCurrentRequestRemoteAddress() {
-		String result = ((ServletRequestAttributes) RequestContextHolder
+		final String result = ((ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes()).getRequest().getRemoteAddr();
 		return result;
 	}
 
 	/**
 	 * get the response headers
-	 * 
+	 *
 	 * @return {@link HttpHeaders}
 	 */
 	public HttpHeaders getHttpHeadersForJSON() {
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("Content-Type", "application/xml; charset=UTF-8");
+		final HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Type", "application/json; charset=UTF-8");
 		responseHeaders.setPragma("no-cache");
 		responseHeaders.setCacheControl("no-cache");
 		responseHeaders.setExpires(0);
@@ -75,38 +75,37 @@ public abstract class AlKhwarizmixWebServiceForJSON {
 
 	/**
 	 */
-	public void buildResponseErrorAsJSON(StringBuilder sBuilder) {
+	protected final void buildResponseErrorAsJSON(final StringBuilder sBuilder) {
 		buildResponseStatusAsJSON(sBuilder, ResponseStatus.ERROR);
 	}
 
 	/**
 	 */
-	public void buildResponseSuccessAsJSON(StringBuilder sBuilder) {
+	protected final void buildResponseSuccessAsJSON(final StringBuilder sBuilder) {
 		buildResponseStatusAsJSON(sBuilder, ResponseStatus.SUCCESSFUL);
 	}
 
 	/**
 	 */
-	public void buildResponseStatusAsJSON(StringBuilder builder,
-			ResponseStatus response) {
-		StringBuilder responseHead = new StringBuilder(
-				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
-		responseHead.append("<response status=\"").append(response)
-				.append("\">");
+	protected final void buildResponseStatusAsJSON(final StringBuilder builder,
+			final ResponseStatus response) {
+		final StringBuilder responseHead = new StringBuilder("");
+		responseHead.append("{response:{status:'").append(response)
+				.append("',");
 		builder.insert(0, responseHead);
-		builder.append("</response>");
+		builder.append("}}");
 	}
 
 	/**
 	 */
-	public ResponseEntity<String> errorResponseForJSON(
-			AlKhwarizmixErrorCode errorCode) {
-		StringBuilder sBuilder = new StringBuilder("<error code=\"").append(
-				errorCode.getId()).append("\"/>");
+	protected final ResponseEntity<String> errorResponseForJSON(
+			final AlKhwarizmixErrorCode errorCode) {
+		final StringBuilder sBuilder = new StringBuilder("error:{code:'")
+				.append(errorCode.getId()).append("'}");
 
 		buildResponseErrorAsJSON(sBuilder);
 
-		HttpHeaders responseHeaders = getHttpHeadersForJSON();
+		final HttpHeaders responseHeaders = getHttpHeadersForJSON();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
 				HttpStatus.METHOD_FAILURE);
@@ -114,17 +113,20 @@ public abstract class AlKhwarizmixWebServiceForJSON {
 
 	/**
 	 */
-	public ResponseEntity<String> errorResponseAsJSON(
-			AlKhwarizmixException exception) {
+	protected final ResponseEntity<String> errorResponseForJSON(
+			final AlKhwarizmixException exception) {
 		return errorResponseForJSON(exception.getErrorCode());
 	}
 
 	/**
 	 */
-	public ResponseEntity<String> successResponseForJSON(StringBuilder sBuilder) {
+	protected final ResponseEntity<String> successResponseForJSON(
+			final StringBuilder sBuilder) {
+		sBuilder.insert(0, "result:");
+
 		buildResponseSuccessAsJSON(sBuilder);
 
-		HttpHeaders responseHeaders = getHttpHeadersForJSON();
+		final HttpHeaders responseHeaders = getHttpHeadersForJSON();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
 				HttpStatus.OK);

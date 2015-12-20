@@ -9,26 +9,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.utils;
+package dz.alkhwarizmix.framework.java.webservices.impl;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.ResponseEntity;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٩ جمادى الأول ١٤٣٥ (March 30, 2014)
+ * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class HTTPUtilTest {
+public class AbstractAlKhwarizmixWebServiceForJSONTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -36,7 +40,8 @@ public class HTTPUtilTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private HTTPUtil utHTTPUtil;
+	@Mock
+	private AbstractAlKhwarizmixWebServiceForJSON mockAbstractAlKhwarizmixWebServiceForJSON;
 
 	// --------------------------------------------------------------------------
 	//
@@ -53,9 +58,34 @@ public class HTTPUtilTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test00_constructor1() throws AlKhwarizmixException {
-		utHTTPUtil = new HTTPUtil();
-		Assert.assertNotNull(utHTTPUtil);
+	public void test00_constructor() throws AlKhwarizmixException {
+		Assert.assertNotNull(mockAbstractAlKhwarizmixWebServiceForJSON);
+	}
+
+	@Test
+	public void test01_successResponseForJSON_should_return_right_json()
+			throws AlKhwarizmixException {
+		final StringBuilder sBuilder = new StringBuilder("{}");
+		final ResponseEntity<String> result = mockAbstractAlKhwarizmixWebServiceForJSON
+				.successResponseForJSON(sBuilder);
+		Assert.assertEquals("{response:{status:'SUCCESSFUL',result:{}}}",
+				result.getBody());
+	}
+
+	@Test
+	public void test02_errorResponseForJSON_should_return_right_json()
+			throws AlKhwarizmixException {
+		final ResponseEntity<String> result = mockAbstractAlKhwarizmixWebServiceForJSON
+				.errorResponseForJSON(new AlKhwarizmixException(
+						AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR));
+		Assert.assertEquals("{response:{status:'ERROR',error:{code:'40500'}}}",
+				result.getBody());
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test01() throws AlKhwarizmixException {
+		Assert.assertTrue(false);
 	}
 
 } // Class

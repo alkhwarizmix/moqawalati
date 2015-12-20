@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.utils;
+package dz.alkhwarizmix.framework.java.utils.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +44,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
 
 /**
  * <p>
@@ -53,7 +54,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٥ ذو القعدة ١٤٣٤ (October 01, 2013)
  */
-public class HTTPUtil {
+public class HTTPUtil implements IHTTPUtil {
 
 	// --------------------------------------------------------------------------
 	//
@@ -76,7 +77,7 @@ public class HTTPUtil {
 	/**
 	 * Sends an HTTP GET request to a url
 	 *
-	 * @param endpoint
+	 * @param endPoint
 	 *            - The URL of the server. (Example:
 	 *            " http://www.yahoo.com/search")
 	 * @param requestParameters
@@ -85,15 +86,16 @@ public class HTTPUtil {
 	 *            question mark (?) to the request - DO NOT add it yourself
 	 * @return - The response from the end point
 	 */
-	protected final String sendGetRequest(final String endpoint,
+	@Override
+	public final String sendGetRequest(final String endPoint,
 			final String requestParameters) {
 
 		String result = null;
-		if (endpoint.startsWith("http://"))
+		if (endPoint.startsWith("http://") || endPoint.startsWith("https://"))
 			// Send a GET request to the servlet
 			try {
 				// Send data
-				String urlStr = endpoint;
+				String urlStr = endPoint;
 				if ((requestParameters != null)
 						&& (requestParameters.length() > 0))
 					urlStr += "?" + requestParameters;
@@ -304,7 +306,8 @@ public class HTTPUtil {
 	 *
 	 * @return {@link String} the current request remote ip address
 	 */
-	public String getCurrentRequestRemoteAddress() {
+	@Override
+	public final String getCurrentRequestRemoteAddress() {
 		final String result = ((ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes()).getRequest().getRemoteAddr();
 		return result;

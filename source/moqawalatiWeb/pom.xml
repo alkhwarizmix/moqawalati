@@ -392,6 +392,12 @@
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -477,8 +483,6 @@
 				<configuration>
 					<generatePackage>dz.alkhwarizmix.moqawalati.java</generatePackage>
 				</configuration>
-				<!-- <executions> <execution> <goals> <goal>generate</goal> </goals> 
-					</execution> </executions> -->
 			</plugin>
 
 			<plugin>
