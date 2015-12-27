@@ -1,0 +1,21 @@
+{
+  "response": {
+    "status": "SUCCESSFUL",
+    "result": {
+      "vehicules": [
+        {
+          "name": "3140",
+          "distance": 308
+        },
+        {
+          "name": "2984",
+          "distance": 818
+        },
+        {
+          "name": "2618",
+          "distance": 862
+        }
+      ]
+    }
+  }
+}

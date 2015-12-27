@@ -11,6 +11,10 @@
 
 package dz.alkhwarizmix.framework.java.webservices.impl;
 
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -69,7 +73,9 @@ public abstract class AbstractAlKhwarizmixWebServiceForJSON {
 		responseHeaders.setPragma("no-cache");
 		responseHeaders.setCacheControl("no-cache");
 		responseHeaders.setExpires(0);
-
+		final List<Charset> charsets = new ArrayList<Charset>();
+		charsets.add(Charset.forName("UTF-8"));
+		responseHeaders.setAcceptCharset(charsets);
 		return responseHeaders;
 	}
 
@@ -90,8 +96,8 @@ public abstract class AbstractAlKhwarizmixWebServiceForJSON {
 	protected final void buildResponseStatusAsJSON(final StringBuilder builder,
 			final ResponseStatus response) {
 		final StringBuilder responseHead = new StringBuilder("");
-		responseHead.append("{response:{status:'").append(response)
-				.append("',");
+		responseHead.append("{\"response\":{\"status\":\"").append(response)
+				.append("\",");
 		builder.insert(0, responseHead);
 		builder.append("}}");
 	}
@@ -100,8 +106,9 @@ public abstract class AbstractAlKhwarizmixWebServiceForJSON {
 	 */
 	protected final ResponseEntity<String> errorResponseForJSON(
 			final AlKhwarizmixErrorCode errorCode) {
-		final StringBuilder sBuilder = new StringBuilder("error:{code:'")
-				.append(errorCode.getId()).append("'}");
+		final StringBuilder sBuilder = new StringBuilder(
+				"\"error\":{\"code\":\"").append(errorCode.getId()).append(
+				"\"}");
 
 		buildResponseErrorAsJSON(sBuilder);
 
@@ -122,7 +129,7 @@ public abstract class AbstractAlKhwarizmixWebServiceForJSON {
 	 */
 	protected final ResponseEntity<String> successResponseForJSON(
 			final StringBuilder sBuilder) {
-		sBuilder.insert(0, "result:");
+		sBuilder.insert(0, "\"result\":");
 
 		buildResponseSuccessAsJSON(sBuilder);
 

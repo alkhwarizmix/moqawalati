@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,17 +9,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webservices.impl;
+package dz.alkhwarizmix.reservauto.java.model.vo;
+
+import java.util.ArrayList;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.ResponseEntity;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
@@ -28,11 +28,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ١٤ ربيع الاول ١٤٣٧ (December 25, 2015)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AbstractAlKhwarizmixWebServiceForJSONTest {
+public class ReservautoVehiculeListTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,8 +40,12 @@ public class AbstractAlKhwarizmixWebServiceForJSONTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Mock
-	private AbstractAlKhwarizmixWebServiceForJSON mockAbstractAlKhwarizmixWebServiceForJSON;
+	private ReservautoVehiculeList utReservautoVehiculeList;
+
+	@Before
+	public void setUp() {
+		utReservautoVehiculeList = new ReservautoVehiculeList();
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -59,34 +63,22 @@ public class AbstractAlKhwarizmixWebServiceForJSONTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(mockAbstractAlKhwarizmixWebServiceForJSON);
+		Assert.assertNotNull(utReservautoVehiculeList);
 	}
 
 	@Test
-	public void test01_successResponseForJSON_should_return_right_json()
-			throws AlKhwarizmixException {
-		final StringBuilder sBuilder = new StringBuilder("{}");
-		final ResponseEntity<String> result = mockAbstractAlKhwarizmixWebServiceForJSON
-				.successResponseForJSON(sBuilder);
-		Assert.assertEquals(
-				"{\"response\":{\"status\":\"SUCCESSFUL\",\"result\":{}}}",
-				result.getBody());
+	public void test00_B_implements_Cloneable() {
+		Assert.assertNotNull(utReservautoVehiculeList instanceof Cloneable);
 	}
 
 	@Test
-	public void test02_errorResponseForJSON_should_return_right_json()
-			throws AlKhwarizmixException {
-		final ResponseEntity<String> result = mockAbstractAlKhwarizmixWebServiceForJSON
-				.errorResponseForJSON(new AlKhwarizmixException(
-						AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR));
-		Assert.assertEquals(
-				"{\"response\":{\"status\":\"ERROR\",\"error\":{\"code\":\"40500\"}}}",
-				result.getBody());
+	public void test00_C_extends_ArrayList_of_ReservautoVehicule() {
+		Assert.assertNotNull(utReservautoVehiculeList instanceof ArrayList);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void test01() throws AlKhwarizmixException {
+	public void test02_clone() {
 		Assert.assertTrue(false);
 	}
 

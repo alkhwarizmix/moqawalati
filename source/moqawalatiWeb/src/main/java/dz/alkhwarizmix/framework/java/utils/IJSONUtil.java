@@ -40,6 +40,7 @@ public interface IJSONUtil {
 	/**
 	 */
 	public AbstractAlKhwarizmixDomainObject unmarshalObjectFromJSON(
-			final String jsonValue) throws AlKhwarizmixException;
+			final String jsonValue, final Class<?> clazz)
+			throws AlKhwarizmixException;
 
 } // Interface

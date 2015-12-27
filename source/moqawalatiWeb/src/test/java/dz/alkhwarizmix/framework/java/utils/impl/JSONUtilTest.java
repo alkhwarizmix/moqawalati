@@ -15,10 +15,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gson.GsonBuilder;
-
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.utils.IJSONUtil;
 
 /**
  * <p>
@@ -39,15 +38,11 @@ public class JSONUtilTest {
 
 	private final String JSON = "{a: \"aVal\", b: {b1: {}, lat: 2.0, lon: 3.0}, vehicules: []}";
 
-	private JSONUtil utJSONUtil;
+	private IJSONUtil utJSONUtil;
 
 	@Before
 	public void setUp() {
-		utJSONUtil = newJSONUtil();
-	}
-
-	private JSONUtil newJSONUtil() {
-		return new JSONUtil(null);
+		utJSONUtil = new JSONUtil(null);
 	}
 
 	// --------------------------------------------------------------------------
@@ -56,15 +51,27 @@ public class JSONUtilTest {
 	//
 	// --------------------------------------------------------------------------
 
-	public class JsonObject extends AbstractAlKhwarizmixDomainObject {
+	final class JsonObject extends AbstractAlKhwarizmixDomainObject {
 		private static final long serialVersionUID = -2144541830173827403L;
 		private String a;
+
+		public JsonObject() {
+			super(null, null, null, null);
+		}
 
 		/**
 		 * @return the a
 		 */
 		public String getA() {
 			return a;
+		}
+
+		/**
+		 * @param value
+		 *            the a to set
+		 */
+		public void setA(final String value) {
+			a = value;
 		}
 
 		@Override
@@ -96,11 +103,17 @@ public class JSONUtilTest {
 
 	@Test
 	public void test01_unmarshalObjectFromJSON() throws AlKhwarizmixException {
-		final GsonBuilder gson = new GsonBuilder();
-		gson.registerTypeAdapter(JsonObject.class, new JsonObject());
 		final JsonObject result = (JsonObject) utJSONUtil
-				.unmarshalObjectFromJSON(JSON);
+				.unmarshalObjectFromJSON(JSON, JsonObject.class);
 		Assert.assertEquals("aVal", result.getA());
+	}
+
+	@Test
+	public void test02_marshalObjectToJSON() throws AlKhwarizmixException {
+		final JsonObject object = new JsonObject();
+		object.setA("aVal2");
+		final String result = utJSONUtil.marshalObjectToJSON(object);
+		Assert.assertEquals("{\"a\":\"aVal2\"}", result);
 	}
 
 } // Class

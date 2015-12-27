@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.framework.java.services;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoPosition;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ public interface IPrototypeService extends IAlKhwarizmixService {
 
 	/**
 	 */
-	public String position(Double latitude, Double longitude)
+	public String position(ReservautoPosition position, int count)
 			throws AlKhwarizmixException;
 
 } // Interface

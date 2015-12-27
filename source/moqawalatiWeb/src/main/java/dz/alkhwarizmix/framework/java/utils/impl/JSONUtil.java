@@ -46,9 +46,10 @@ public class JSONUtil implements IJSONUtil {
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * Constructor.
-	 */
+	public JSONUtil() {
+		gson = new Gson();
+	}
+
 	public JSONUtil(Gson pGson) {
 		if (pGson == null)
 			pGson = new Gson();
@@ -93,34 +94,30 @@ public class JSONUtil implements IJSONUtil {
 
 	protected String internal_marshalObjectToJSON( // NOPMD
 			final AbstractAlKhwarizmixDomainObject object) {
-		final StringWriter stringWriter = new StringWriter();
-		/*
-		 * final StreamResult streamResult = new StreamResult(stringWriter);
-		 * jaxb2Marshaller.marshal(object, streamResult);
-		 */
-		return stringWriter.toString();
+		return gson.toJson(object);
 	}
 
 	/**
 	 * TODO: Javadoc
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromJSON(
-			final String jsonValue) throws AlKhwarizmixException {
+			final String jsonValue, final Class<?> clazz)
+			throws AlKhwarizmixException {
 		try {
-			return internal_unmarshalObjectFromJSON(jsonValue);
+			return internal_unmarshalObjectFromJSON(jsonValue,
+					(Class<AbstractAlKhwarizmixDomainObject>) clazz);
 		} catch (final Exception e) {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, e);
 		}
 	}
 
-	protected AbstractAlKhwarizmixDomainObject internal_unmarshalObjectFromJSON( // NOPMD
-			final String jsonValue) {
-		final AbstractAlKhwarizmixDomainObjectJsonWrapper wrapper = gson
-				.fromJson("{domainObject:" + jsonValue + "}",
-						AbstractAlKhwarizmixDomainObjectJsonWrapper.class);
-		return wrapper.domainObject;
+	protected AbstractAlKhwarizmixDomainObject internal_unmarshalObjectFromJSON(
+			final String jsonValue,
+			final Class<AbstractAlKhwarizmixDomainObject> clazz) {
+		return gson.fromJson(jsonValue, clazz);
 	}
 
 	/**
@@ -167,17 +164,6 @@ public class JSONUtil implements IJSONUtil {
 					 * .unmarshal(new
 					 * StreamSource(IOUtils.toInputStream(jsonValue)));
 					 */
-	}
-
-	public class AbstractAlKhwarizmixDomainObjectJsonWrapper {
-		private AbstractAlKhwarizmixDomainObject domainObject;
-
-		/**
-		 * @return the domainObject
-		 */
-		public AbstractAlKhwarizmixDomainObject getDomainObject() {
-			return domainObject;
-		}
 	}
 
 } // Class

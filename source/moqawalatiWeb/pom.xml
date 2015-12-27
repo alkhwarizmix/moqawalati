@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.5.13</version>
+		<version>1.5.14.FBEL</version>
 	</parent>
 
 	<artifactId>moqawalatiWeb</artifactId>
@@ -540,6 +540,18 @@
 							<resources>
 								<resource>
 									<directory>${basedir}/../moqawalatiFlex/target</directory>
+									<filtering>false</filtering>
+									<excludes>
+										<exclude>*-configs.xml</exclude>
+										<exclude>*-link-report.xml</exclude>
+										<exclude>*-size-report.xml</exclude>
+										<exclude>site/cobertura/flex/*.*</exclude>
+										<exclude>surefire-reports/*.*</exclude>
+										<exclude>test-classes/*.*</exclude>
+									</excludes>
+								</resource>
+								<resource>
+									<directory>${basedir}/../moqawalatiHtml5/src/main</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>

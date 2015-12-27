@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,17 +9,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webservices.impl;
+package dz.alkhwarizmix.reservauto.java.model.vo;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.ResponseEntity;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
@@ -28,11 +26,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
+ * @since ١٤ ربيع الاول ١٤٣٧ (December 25, 2015)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class AbstractAlKhwarizmixWebServiceForJSONTest {
+public class ReservautoPositionTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,8 +38,8 @@ public class AbstractAlKhwarizmixWebServiceForJSONTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Mock
-	private AbstractAlKhwarizmixWebServiceForJSON mockAbstractAlKhwarizmixWebServiceForJSON;
+	@InjectMocks
+	private ReservautoPosition utReservautoPosition;
 
 	// --------------------------------------------------------------------------
 	//
@@ -59,34 +57,22 @@ public class AbstractAlKhwarizmixWebServiceForJSONTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(mockAbstractAlKhwarizmixWebServiceForJSON);
+		Assert.assertNotNull(utReservautoPosition);
 	}
 
 	@Test
-	public void test01_successResponseForJSON_should_return_right_json()
-			throws AlKhwarizmixException {
-		final StringBuilder sBuilder = new StringBuilder("{}");
-		final ResponseEntity<String> result = mockAbstractAlKhwarizmixWebServiceForJSON
-				.successResponseForJSON(sBuilder);
-		Assert.assertEquals(
-				"{\"response\":{\"status\":\"SUCCESSFUL\",\"result\":{}}}",
-				result.getBody());
-	}
-
-	@Test
-	public void test02_errorResponseForJSON_should_return_right_json()
-			throws AlKhwarizmixException {
-		final ResponseEntity<String> result = mockAbstractAlKhwarizmixWebServiceForJSON
-				.errorResponseForJSON(new AlKhwarizmixException(
-						AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR));
-		Assert.assertEquals(
-				"{\"response\":{\"status\":\"ERROR\",\"error\":{\"code\":\"40500\"}}}",
-				result.getBody());
+	public void test01_distanceTo() throws AlKhwarizmixException {
+		final ReservautoPosition pos1 = new ReservautoPosition(38.898556,
+				-77.037852);
+		final ReservautoPosition pos2 = new ReservautoPosition(38.897147,
+				-77.043934);
+		Assert.assertEquals(549, pos1.distanceTo(pos2), 0);
+		Assert.assertEquals(549, pos2.distanceTo(pos1), 0);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void test01() throws AlKhwarizmixException {
+	public void testXY() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 

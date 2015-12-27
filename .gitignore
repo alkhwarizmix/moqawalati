@@ -7,3 +7,9 @@ source/moqawalatiWeb/.settings/org.eclipse.wst.common.component
 **/logs/**
 
 source/moqawalatiWeb/.pmd
+
+source/moqawalatiHtml5/src/main/html5/prototypes/trouveauto/.idea/**
+
+source/moqawalatiHtml5/src/main/html5/prototypes/trouveauto/node_modules/**
+
+source/moqawalatiHtml5/src/main/html5/prototypes/trouveauto/npm-debug.log

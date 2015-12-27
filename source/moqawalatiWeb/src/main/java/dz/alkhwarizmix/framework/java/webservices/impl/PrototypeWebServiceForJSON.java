@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.services.IPrototypeService;
+import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoPosition;
 
 /**
  * <p>
@@ -117,16 +118,17 @@ public class PrototypeWebServiceForJSON extends
 
 	/**
 	 */
-	@RequestMapping(value = "/p/{latitude}/{longitude}", method = RequestMethod.GET)
+	@RequestMapping(value = "/p/{latitude}/{longitude}/{count}", method = RequestMethod.GET)
 	public ResponseEntity<String> position(
 			@PathVariable("latitude") final Double latitude,
-			@PathVariable("longitude") final Double longitude)
+			@PathVariable("longitude") final Double longitude,
+			@PathVariable("count") final int count)
 			throws AlKhwarizmixException {
-		getLogger().debug("position({}, {})", latitude, longitude);
-
+		getLogger().debug("position({}, {}, {})", latitude, longitude, count);
 		try {
 			final StringBuilder sBuilder = new StringBuilder(
-					getPrototypeService().position(latitude, longitude));
+					getPrototypeService().position(
+							new ReservautoPosition(latitude, longitude), count));
 			return successResponseForJSON(sBuilder);
 		} catch (final AlKhwarizmixException e) {
 			return errorResponseForJSON(e);

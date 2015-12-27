@@ -11,6 +11,9 @@
 
 package dz.alkhwarizmix.framework.java.services.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -23,7 +26,12 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.IPrototypeService;
 import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
+import dz.alkhwarizmix.framework.java.utils.IJSONUtil;
 import dz.alkhwarizmix.framework.java.utils.impl.HTTPUtil;
+import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
+import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoResponse;
+import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoVehicule;
 
 /**
  * <p>
@@ -110,13 +118,60 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String position(final Double latitude, final Double longitude)
+	public String position(final ReservautoPosition position, final int count)
 			throws AlKhwarizmixException {
 		getLogger().trace("position");
+		return position_internal(position, count);
+	}
+
+	private String position_internal(final ReservautoPosition position,
+			final int count) throws AlKhwarizmixException {
+		String result = getReservautoVehicleProposals(position);
+		final ReservautoResponse reservautoResponse = jsonToReservautoResponse(result);
+		final List<ReservautoVehicule> vehicules = getNearest(
+				reservautoResponse, position, count);
+		result = "{\"vehicules\":[";
+		String coma = "";
+		for (final ReservautoVehicule vehicule : vehicules) {
+			result += coma + "{\"name\":\"" + vehicule.getName()
+					+ "\",\"distance\":"
+					+ position.distanceTo(vehicule.getPosition()) + "}";
+			coma = ",";
+		}
+		result += "]}";
+		return result;
+	}
+
+	private IJSONUtil getJsonUtil() {
+		return new JSONUtil();
+	}
+
+	private List<ReservautoVehicule> getNearest(
+			final ReservautoResponse reservautoResponse,
+			final ReservautoPosition position, int count)
+			throws AlKhwarizmixException {
+		final List<ReservautoVehicule> result = new ArrayList<ReservautoVehicule>();
+		for (final ReservautoVehicule vehicule : reservautoResponse
+				.getVehicules()) {
+			if ((count--) == 0)
+				break; // stop for
+			result.add(vehicule);
+		}
+		return result;
+	}
+
+	private ReservautoResponse jsonToReservautoResponse(final String json)
+			throws AlKhwarizmixException {
+		return (ReservautoResponse) getJsonUtil().unmarshalObjectFromJSON(json,
+				ReservautoResponse.class);
+	}
+
+	private String getReservautoVehicleProposals(
+			final ReservautoPosition position) {
 		final String endPoint = "https://www.reservauto.net/WCF/LSI/LSIBookingService.asmx/GetVehicleProposals?Callback=%22%22&CustomerID=%22%22&Latitude="
-				+ latitude + "&Longitude=" + longitude;
+				+ position.getLat() + "&Longitude=" + position.getLon();
 		String result = getHttpUtil().sendGetRequest(endPoint, null);
-		result = result.substring(3, result.length() - 1);
+		result = result.substring(3, result.length() - 2);
 		return result;
 	}
 

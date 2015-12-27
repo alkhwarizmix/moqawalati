@@ -1,0 +1,300 @@
+<!-- html-minifier i.htm -o i.m.htm --remove-comments=true --collapse-whitespace=true --minify-js=true --minify-css=true --keep-closing-slash=true -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trouvauto</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        body {
+            font-size: 1.0em;
+            font-weight: bold;
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            background-color: whitesmoke;
+            display: block;
+            font-size: 1.0em;
+            font-weight: bold;
+            -webkit-margin-after: 0.83em;
+            -webkit-margin-before: 0.83em;
+            -webkit-margin-end: 0px;
+            -webkit-margin-start: 0px;
+            width: 100%;
+        }
+
+        #footer {
+            bottom: 5px;
+            position: fixed;
+            right: 5px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;;
+        }
+    </style>
+    <script type="text/javascript">
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+        // Variables
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+
+        var _PROD_MODE_ = true;
+        var refreshTimeout = 0;
+        var autoRefreshEndTime = 0;
+        var prevNearestVehiculeDistance = Number.MAX_VALUE;
+
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+        // FUNCTIONS
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+
+        // _config_
+        function _config_(p) {
+            return {
+                "_STOP_AUTOREFRESH_AFTER_S_": 300, // seconds
+                "_AUTOREFRESH_DELAY_S_": 30 // seconds
+            }[p];
+        }
+
+        // _i18n_
+        function _i18n_(p) {
+            return {
+                "_DATA_LOAD_TIME_": 'Dernière mise-à-jour ',
+                "DISTANCE_HEADER": 'Distance en mètres',
+                "EMPTY": 'Vide',
+                "ERROR": 'Erreur',
+                "FIND_CARS": 'Recherche de véhicules Automobile...',
+                "FIND_POSITION": 'Recherche de la position GPS...',
+                "GPS_ERROR": 'Erreur de Géolocalisation',
+                "GPS_NOT_SUPPORTED": 'Géolocalisation non supportée',
+                "REFRESH": 'Rafréchir',
+                "VEHICULE_HEADER": 'Véhicule'
+            }[p];
+        }
+
+        // elmnt
+        function elmnt(id) {
+            return document.getElementById(id);
+        }
+
+        // attr
+        function attr(a, v, aArg) {
+            var result = '<' + a + (aArg ? (" " + aArg) : "") + '>' + v + '</' + a + '>';
+            return result;
+        }
+
+        // now
+        function now() {
+            return new Date().getTime();
+        }
+
+        // getVehiculeHTML
+        function getVehiculeHTML(vehicule) {
+            return attr('td', vehicule.name) + attr('td', vehicule.distance + ' m');
+        }
+
+        // getLoc
+        function getLoc(callBack) {
+            out(_i18n_('FIND_POSITION'), false);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                        function getCurrentPosition_success(p) {
+                            callBack(p);
+                        }, function getCurrentPosition_error(e) {
+                            getLoc_error(_i18n_('GPS_ERROR') + ' (' + e.code + ')');
+                        }, {timeout: 10000});
+            } else {
+                getLoc_error(_i18n_('GPS_NOT_SUPPORTED'));
+            }
+        }
+
+        // getLoc_error
+        function getLoc_error(e) {
+            out(e, true);
+        }
+
+        // openCommunauto(pos)
+        function openCommunauto(p) {
+            var url = "https://www.reservauto.net/Scripts/Client/Mobile/ReservationDisponibility.asp?stations=false&Latitude=" + p.coords.latitude + "&Longitude=" + p.coords.longitude;
+            window.open(url, "_self");
+        }
+
+        // showPosition(pos)
+        function showPosition(p) {
+            var s = stringifyPosition(p.coords);
+            out(s, false);
+            out(_i18n_('FIND_CARS'), false);
+            httpGet(getAlkhwarizmixReservauto(p.coords.latitude, p.coords.longitude));
+        }
+
+        // stringifyPosition(coords)
+        function stringifyPosition(c) {
+            var r = ''; // result
+            [
+                'latitude', // The latitude as a decimal number
+                'longitude', // The longitude as a decimal number
+                'accuracy', // The accuracy of position
+                'altitude', // The altitude in meters above the mean sea level
+                'altitudeAccuracy', // The altitude accuracy of position
+                'heading', // The heading as degrees clockwise from North
+                'speed', // The speed in meters per second
+                'timestamp'	// The date/time of the response
+            ].forEach(function (f) { // field
+                r += (c[f] ? c[f] : '') + '|';
+            });
+            return r + new Date().getTime();
+        }
+
+        // httpGet(url)
+        function httpGet(u) {
+            var req = new XMLHttpRequest();
+            req.open("GET", u, true);
+            req.onerror = httpGet_onError;
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    httpGet_success(JSON.parse(req.responseText));
+                }
+            };
+            req.send(null);
+        }
+
+        // httpGet_onError()
+        function httpGet_onError(ev) {
+            outError(ev.target.status);
+        }
+
+        // httpGet_success()
+        function httpGet_success(data) {
+            if (data.response.status === "SUCCESSFUL") {
+                outVehicules(data.response.result.vehicules);
+            }
+            else {
+                outError(-20);
+            }
+        }
+
+        // getAlkhwarizmixReservauto
+        function getAlkhwarizmixReservauto(latitude, longitude) {
+            var context = '/' + (_PROD_MODE_ ? 'fares' : 'moqawalatiWeb');
+            return context + '/alkhwarizmix/json/prototype/p/' + latitude + '/' + longitude + '/' + 3 + '/';
+            // return "json/p.json";
+        }
+
+        // refresh
+        function refresh(startAutoRefresh) {
+            if (startAutoRefresh) {
+                autoRefreshEndTime = now() + _config_('_STOP_AUTOREFRESH_AFTER_S_') * 1000;
+            }
+            setBtnRefreshLabel();
+            clearTimeout(refreshTimeout);
+            getLoc(showPosition);
+        }
+
+        // gotoCommunauto
+        function gotoCommunauto() {
+            clearTimeout(refreshTimeout);
+            getLoc(openCommunauto);
+        }
+
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+        // OUTERS
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+
+        // out
+        function out(s, btnsBarVisibility) {
+            elmnt("result").innerHTML = s;
+            setVisible("btnsBar", btnsBarVisibility);
+        }
+
+        // outError
+        function outError(errorCode) {
+            out(_i18n_('ERROR') + ": " + errorCode, true);
+        }
+
+        // outVehicules
+        function outVehicules(vehicules) {
+            var nearestVehiculeDistance = Number.MAX_VALUE;
+            var vehiculesHTML = _i18n_('EMPTY');
+            if (vehicules.length > 0) {
+                vehiculesHTML = attr('tr', attr('th', _i18n_('VEHICULE_HEADER')) + attr('th', _i18n_('DISTANCE_HEADER')));
+                vehicules.forEach(function (vehicule) {
+                    if (vehicule.distance < nearestVehiculeDistance)
+                        nearestVehiculeDistance = vehicule.distance;
+                    vehiculesHTML += attr('tr', getVehiculeHTML(vehicule));
+                });
+                vehiculesHTML = attr('table', vehiculesHTML, 'border="1" style="width:100%"');
+            }
+            vehiculesHTML += attr('div', _i18n_('_DATA_LOAD_TIME_') + new Date().toLocaleTimeString());
+            out(vehiculesHTML, true);
+            if (now() < autoRefreshEndTime) {
+                setNearestVehiculeDistance(nearestVehiculeDistance);
+                setRefreshTimeout(_config_('_AUTOREFRESH_DELAY_S_'));
+            }
+            else {
+                setNearestVehiculeDistance();
+                setBtnRefreshLabel();
+            }
+        }
+
+        // setNearestVehiculeDistance
+        function setNearestVehiculeDistance(value) {
+            var color = 0;
+            if (value) {
+                var delta = value - prevNearestVehiculeDistance;
+                if (delta > 10)
+                    color = 1;
+                else if (delta < -10)
+                    color = 2;
+                else
+                    color = 3;
+                prevNearestVehiculeDistance = value;
+            }
+            document.body.style.background = [
+                '',
+                'crimson',
+                'darkseagreen',
+                'cornsilk'
+            ][color];
+        }
+
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+        // SETTERS
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+
+        // setBtnRefreshLabel
+        function setBtnRefreshLabel(epilog) {
+            elmnt("btnRefersh").innerHTML = _i18n_('REFRESH') + (epilog ? epilog : "");
+        }
+
+        // setRefreshTimer(delay in seconds)
+        function setRefreshTimeout(delay) {
+            if (delay > 0) {
+                setBtnRefreshLabel(" (dans " + delay + ")");
+                refreshTimeout = setTimeout(function () {
+                    setRefreshTimeout(delay - 1);
+                }, 1000);
+            }
+            else {
+                refresh();
+            }
+        }
+
+        // setVisible
+        function setVisible(id, visible) {
+            elmnt(id).style.visibility = (visible === false) ? "hidden" : "";
+        }
+    </script>
+</head>
+
+<body onload="refresh(true)">
+<div id="result"></div>
+<div id="btnsBar">
+    <button id="btnRefersh" onclick="refresh(true)"></button>
+    <button id="btnGotoCommunauto" onclick="gotoCommunauto()">Allez à Communauto</button>
+</div>
+<div id="footer">version: 0.0.1.10</div>
+</body>
+
+</html>

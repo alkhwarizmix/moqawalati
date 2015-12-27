@@ -1,0 +1,35 @@
+{
+  "name": "trouvauto",
+  "version": "0.0.1",
+  "description": "Initialy created to minify trouvauto Html5App",
+  "author": "Fares Belhaouas <info@alkhwarizmix.com>",
+  "contributors": [
+    {
+      "name": "Fares Belhaouas",
+      "email": "info@alkhwarizmix.com"
+    }
+  ],
+  "scripts": {
+    "minify": "html-minifier i.htm -o i.m.htm --remove-comments=true --collapse-whitespace=true --minify-js=true --minify-css=true --keep-closing-slash=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alkhwarizmix/trouvauto"
+  },
+  "bugs": {
+    "url": "https://github.com/alkhwarizmix/trouvauto/issues"
+  },
+  "keywords": [
+    "trouvauto",
+    "reservauto",
+    "communauto"
+  ],
+  "devDependencies": {
+    "html-minifier": "1.0.1",
+    "html-minifier-cli": "0.1.0"
+  },
+  "preferGlobal": true,
+  "private": true,
+  "analyze": true,
+  "license": "GNU"
+}
