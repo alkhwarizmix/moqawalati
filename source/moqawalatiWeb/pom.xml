@@ -553,6 +553,9 @@
 								<resource>
 									<directory>${basedir}/../moqawalatiHtml5/src/main</directory>
 									<filtering>false</filtering>
+									<includes>
+										<include>html5/prototypes/trouveauto/i.m.htm</include>
+									</includes>
 								</resource>
 							</resources>
 						</configuration>

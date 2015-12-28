@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.reservauto.java.model.vo;
+package dz.alkhwarizmix.trouvauto.java.model.vo;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoExtensionData;
 
 /**
  * <p>
@@ -30,7 +31,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class ReservautoVehiculeTest {
+public class ReservautoExtensionDataTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -39,7 +40,7 @@ public class ReservautoVehiculeTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private ReservautoVehicule utReservautoVehicule;
+	private ReservautoExtensionData utReservautoExtensionData;
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,7 +58,7 @@ public class ReservautoVehiculeTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utReservautoVehicule);
+		Assert.assertNotNull(utReservautoExtensionData);
 	}
 
 	@Ignore("TODO: TDD")

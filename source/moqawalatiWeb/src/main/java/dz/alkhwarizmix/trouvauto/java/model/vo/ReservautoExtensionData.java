@@ -9,9 +9,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.reservauto.java.model.vo;
+package dz.alkhwarizmix.trouvauto.java.model.vo;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 
 /**
  * <p>
@@ -21,8 +26,8 @@ import java.util.ArrayList;
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٤ ربيع الاول ١٤٣٧ (December 25, 2015)
  */
-public class ReservautoVehiculeList extends ArrayList<ReservautoVehicule>
-		implements Cloneable {
+public class ReservautoExtensionData extends AbstractAlKhwarizmixDomainObject
+		implements Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
@@ -30,7 +35,7 @@ public class ReservautoVehiculeList extends ArrayList<ReservautoVehicule>
 	//
 	// --------------------------------------------------------------------------
 
-	private static final long serialVersionUID = 5320448412164231273L;
+	private static final long serialVersionUID = 7079181472718940435L;
 
 	// --------------------------------------------------------------------------
 	//
@@ -38,17 +43,12 @@ public class ReservautoVehiculeList extends ArrayList<ReservautoVehicule>
 	//
 	// --------------------------------------------------------------------------
 
-	public ReservautoVehiculeList() {
+	public ReservautoExtensionData() {
 		super();
 	}
 
-	public ReservautoVehiculeList(final ArrayList<ReservautoVehicule> list) {
-		super();
-		addAll(list);
-	}
-
-	protected ReservautoVehiculeList(final ReservautoVehiculeList other) {
-		this((ArrayList<ReservautoVehicule>) other);
+	protected ReservautoExtensionData(final ReservautoExtensionData other) {
+		super(other);
 	}
 
 	// --------------------------------------------------------------------------
@@ -69,14 +69,14 @@ public class ReservautoVehiculeList extends ArrayList<ReservautoVehicule>
 	 */
 	@Override
 	public Object clone() {
-		return new ReservautoVehiculeList(this);
+		return new ReservautoExtensionData(this);
 	}
 
 	/**
 	 */
 	@Override
-	public String toString() {
-		return null;
+	protected ToStringBuilder toStringBuilder() {
+		return super.toStringBuilder();
 	}
 
 	/*
@@ -86,8 +86,7 @@ public class ReservautoVehiculeList extends ArrayList<ReservautoVehicule>
 	 */
 	@Override
 	public int hashCode() {
-		final int result = 1;
-		// result = continueHashCode(result, list);
+		final int result = super.hashCode();
 		return result;
 	}
 
@@ -98,14 +97,31 @@ public class ReservautoVehiculeList extends ArrayList<ReservautoVehicule>
 	 */
 	@Override
 	public boolean equals(final Object other) {
-		final boolean result = (getObjectAsThisClass(other) != null);
+		final boolean result = super.equals(other)
+				&& (getObjectAsThisClass(other) != null);
 		return result;
 	}
 
-	private ReservautoVehiculeList getObjectAsThisClass(final Object other) {
-		return (other instanceof ReservautoVehiculeList)
-				? (ReservautoVehiculeList) other
+	private ReservautoExtensionData getObjectAsThisClass(final Object other) {
+		return (other instanceof ReservautoExtensionData)
+				? (ReservautoExtensionData) other
 				: null;
+	}
+
+	/**
+	 */
+	@Override
+	public void updateFrom(final Object sourceObject)
+			throws AlKhwarizmixException {
+		// NOOP
+	}
+
+	/**
+	 */
+	@Override
+	public void beforeDaoSaveOrUpdate(
+			final AbstractAlKhwarizmixDomainObject object) {
+		// NOOP
 	}
 
 	// --------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.reservauto.java.model.vo;
+package dz.alkhwarizmix.trouvauto.java.model.vo;
 
 import java.io.Serializable;
 

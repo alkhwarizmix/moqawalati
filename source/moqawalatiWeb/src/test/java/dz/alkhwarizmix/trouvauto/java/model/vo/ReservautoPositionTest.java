@@ -9,18 +9,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.reservauto.java.model.vo;
-
-import java.util.ArrayList;
+package dz.alkhwarizmix.trouvauto.java.model.vo;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
 
 /**
  * <p>
@@ -32,7 +31,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class ReservautoVehiculeListTest {
+public class ReservautoPositionTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -40,12 +39,8 @@ public class ReservautoVehiculeListTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private ReservautoVehiculeList utReservautoVehiculeList;
-
-	@Before
-	public void setUp() {
-		utReservautoVehiculeList = new ReservautoVehiculeList();
-	}
+	@InjectMocks
+	private ReservautoPosition utReservautoPosition;
 
 	// --------------------------------------------------------------------------
 	//
@@ -63,22 +58,22 @@ public class ReservautoVehiculeListTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utReservautoVehiculeList);
+		Assert.assertNotNull(utReservautoPosition);
 	}
 
 	@Test
-	public void test00_B_implements_Cloneable() {
-		Assert.assertNotNull(utReservautoVehiculeList instanceof Cloneable);
-	}
-
-	@Test
-	public void test00_C_extends_ArrayList_of_ReservautoVehicule() {
-		Assert.assertNotNull(utReservautoVehiculeList instanceof ArrayList);
+	public void test01_distanceTo() throws AlKhwarizmixException {
+		final ReservautoPosition pos1 = new ReservautoPosition(38.898556,
+				-77.037852);
+		final ReservautoPosition pos2 = new ReservautoPosition(38.897147,
+				-77.043934);
+		Assert.assertEquals(549, pos1.distanceTo(pos2), 0);
+		Assert.assertEquals(549, pos2.distanceTo(pos1), 0);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void test02_clone() {
+	public void testXY() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 

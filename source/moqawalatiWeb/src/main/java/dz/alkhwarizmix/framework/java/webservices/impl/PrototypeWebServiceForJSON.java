@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.services.IPrototypeService;
-import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
 
 /**
  * <p>

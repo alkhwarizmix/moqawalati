@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.reservauto.java.model.vo;
+package dz.alkhwarizmix.trouvauto.java.model.vo;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehicule;
 
 /**
  * <p>
@@ -30,7 +31,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class ReservautoPositionTest {
+public class ReservautoVehiculeTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -39,7 +40,7 @@ public class ReservautoPositionTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private ReservautoPosition utReservautoPosition;
+	private ReservautoVehicule utReservautoVehicule;
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,22 +58,12 @@ public class ReservautoPositionTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utReservautoPosition);
-	}
-
-	@Test
-	public void test01_distanceTo() throws AlKhwarizmixException {
-		final ReservautoPosition pos1 = new ReservautoPosition(38.898556,
-				-77.037852);
-		final ReservautoPosition pos2 = new ReservautoPosition(38.897147,
-				-77.043934);
-		Assert.assertEquals(549, pos1.distanceTo(pos2), 0);
-		Assert.assertEquals(549, pos2.distanceTo(pos1), 0);
+		Assert.assertNotNull(utReservautoVehicule);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void testXY() throws AlKhwarizmixException {
+	public void test01() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 

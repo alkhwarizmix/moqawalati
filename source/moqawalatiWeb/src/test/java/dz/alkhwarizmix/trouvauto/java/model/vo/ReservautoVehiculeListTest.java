@@ -9,16 +9,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.reservauto.java.model.vo;
+package dz.alkhwarizmix.trouvauto.java.model.vo;
+
+import java.util.ArrayList;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehiculeList;
 
 /**
  * <p>
@@ -30,7 +33,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class ReservautoExtensionDataTest {
+public class ReservautoVehiculeListTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -38,8 +41,12 @@ public class ReservautoExtensionDataTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@InjectMocks
-	private ReservautoExtensionData utReservautoExtensionData;
+	private ReservautoVehiculeList utReservautoVehiculeList;
+
+	@Before
+	public void setUp() {
+		utReservautoVehiculeList = new ReservautoVehiculeList();
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,12 +64,22 @@ public class ReservautoExtensionDataTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utReservautoExtensionData);
+		Assert.assertNotNull(utReservautoVehiculeList);
+	}
+
+	@Test
+	public void test00_B_implements_Cloneable() {
+		Assert.assertNotNull(utReservautoVehiculeList instanceof Cloneable);
+	}
+
+	@Test
+	public void test00_C_extends_ArrayList_of_ReservautoVehicule() {
+		Assert.assertNotNull(utReservautoVehiculeList instanceof ArrayList);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void test01() throws AlKhwarizmixException {
+	public void test02_clone() {
 		Assert.assertTrue(false);
 	}
 

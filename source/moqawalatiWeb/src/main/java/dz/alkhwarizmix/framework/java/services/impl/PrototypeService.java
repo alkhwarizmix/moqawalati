@@ -29,9 +29,9 @@ import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
 import dz.alkhwarizmix.framework.java.utils.IJSONUtil;
 import dz.alkhwarizmix.framework.java.utils.impl.HTTPUtil;
 import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
-import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoPosition;
-import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoResponse;
-import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoVehicule;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoResponse;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehicule;
 
 /**
  * <p>
@@ -127,7 +127,7 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 	private String position_internal(final ReservautoPosition position,
 			final int count) throws AlKhwarizmixException {
 		String result = getReservautoVehicleProposals(position);
-		final ReservautoResponse reservautoResponse = jsonToReservautoResponse(result);
+		final ReservautoResponse reservautoResponse = jsonToTrouvautoResponse(result);
 		final List<ReservautoVehicule> vehicules = getNearest(
 				reservautoResponse, position, count);
 		result = "{\"vehicules\":[";
@@ -160,7 +160,7 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 		return result;
 	}
 
-	private ReservautoResponse jsonToReservautoResponse(final String json)
+	private ReservautoResponse jsonToTrouvautoResponse(final String json)
 			throws AlKhwarizmixException {
 		return (ReservautoResponse) getJsonUtil().unmarshalObjectFromJSON(json,
 				ReservautoResponse.class);

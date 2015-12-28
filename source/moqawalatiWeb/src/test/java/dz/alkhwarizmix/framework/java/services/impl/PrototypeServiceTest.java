@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
-import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
 
 /**
  * <p>

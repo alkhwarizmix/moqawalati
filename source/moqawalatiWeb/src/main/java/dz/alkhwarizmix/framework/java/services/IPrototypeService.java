@@ -12,7 +12,7 @@
 package dz.alkhwarizmix.framework.java.services;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.reservauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
 
 /**
  * <p>

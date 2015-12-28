@@ -1,17 +1,16 @@
-<!-- html-minifier i.htm -o i.m.htm --remove-comments=true --collapse-whitespace=true --minify-js=true --minify-css=true --keep-closing-slash=true -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Trouvauto</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
     <style>
-        .lf {
+        ._largefont_ {
             font-size: 1.0em;
             font-weight: bold;
         }
 
-        .mf {
-            font-size: 0.75em;
+        ._mediumfont_ {
+            font-size: 0.8em;
         }
 
         button {
@@ -26,7 +25,7 @@
             width: 100%;
         }
 
-        .footer {
+        ._footer_ {
             bottom: 5px;
             position: fixed;
             right: 5px;
@@ -43,14 +42,20 @@
         // Variables
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        var _APP_MODE_ = 2; // 0='fares', 1='moqawalatiWeb', 2='p.json'
-        var refreshTimeout = 0;
-        var autoRefreshEndTime = 0;
-        var prevNearestVehiculeDistance = Number.MAX_VALUE;
+        var _NUMBER_MAX_VALUE_ = 10000,
+                _APP_MODE_ = 0, // 0='fares', 1='moqawalatiWeb', 2='p.json'
+                _refreshTimeout_ = 0,
+                _autoRefreshEndTime_ = 0,
+                _prevNearestVehiculeDistance_ = _NUMBER_MAX_VALUE_;
 
         // ---------- ---------- ---------- ---------- ---------- ---------- --
         // COMMON FUNCTIONS
         // ---------- ---------- ---------- ---------- ---------- ---------- --
+
+        // _attr_
+        function _attr_(a, v, aArg) {
+            return '<' + a + (aArg ? ' ' + aArg : '') + '>' + v + '</' + a + '>';
+        }
 
         // _config_
         function _config_(p) {
@@ -60,30 +65,24 @@
             }[p];
         }
 
+        // _elmnt_
+        function _elmnt_(id) {
+            return document.getElementById(id);
+        }
+
         // _i18n_
         function _i18n_(p) {
             return {
                 "_DATA_LOAD_TIME_": 'Dernière mise-à-jour ',
-                "DISTANCE_HEADER": 'Distance en mètres',
-                "EMPTY": 'Vide',
-                "ERROR": 'Erreur',
-                "FIND_CARS": 'Recherche de véhicules Automobile...',
-                "FIND_POSITION": 'Recherche de la position GPS...',
-                "GPS_ERROR": 'Erreur de Géolocalisation',
-                "GPS_NOT_SUPPORTED": 'Géolocalisation non supportée',
-                "REFRESH": 'Rafréchir',
-                "VEHICULE_HEADER": 'Véhicule'
+                "_DISTANCE_HEADER_": 'Distance en mètres',
+                "_ERROR_": 'Erreur',
+                "_FIND_CARS_": 'Recherche de véhicules Automobile...',
+                "_FIND_POSITION_": 'Recherche de la position GPS...',
+                "_GPS_ERROR_": 'Erreur de Géolocalisation',
+                "_GPS_NOT_SUPPORTED_": 'Géolocalisation non supportée',
+                "_REFRESH_": 'Rafréchir',
+                "_VEHICULE_HEADER_": 'Véhicule'
             }[p];
-        }
-
-        // elmnt
-        function elmnt(id) {
-            return document.getElementById(id);
-        }
-
-        // attr
-        function attr(a, v, aArg) {
-            return '<' + a + (aArg ? (" " + aArg) : "") + '>' + v + '</' + a + '>';
         }
 
         // _now_
@@ -110,173 +109,153 @@
         // FUNCTIONS
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        // getVehiculeHTML
-        function getVehiculeHTML(vehicule) {
-            return attr('td', vehicule.name) + attr('td', vehicule.distance + ' m');
+        // _getVehiculeHTML_
+        function _getVehiculeHTML_(vehicule) {
+            return _attr_('td', vehicule.name) + _attr_('td', vehicule.distance + ' m');
         }
 
-        // getLoc
-        function getLoc(callBack) {
-            out(_i18n_('FIND_POSITION'), false);
+        // _getLoc_
+        function _getLoc_(callBack) {
+            _out_(_i18n_('_FIND_POSITION_'), false);
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                         function getCurrentPosition_success(p) {
                             callBack(p);
                         }, function getCurrentPosition_error(e) {
-                            getLoc_error(_i18n_('GPS_ERROR') + ' (' + e.code + ')');
+                            _getLoc_error_(_i18n_('_GPS_ERROR_') + ' (' + e.code + ')');
                         }, {timeout: 10000});
             } else {
-                getLoc_error(_i18n_('GPS_NOT_SUPPORTED'));
+                _getLoc_error_(_i18n_('_GPS_NOT_SUPPORTED_'));
             }
         }
 
-        // getLoc_error
-        function getLoc_error(e) {
-            out(e, true);
+        // _getLoc_error_
+        function _getLoc_error_(e) {
+            _out_(e, true);
         }
 
-        // openCommunauto(pos)
-        function openCommunauto(p) {
+        // _openCommunauto_(pos)
+        function _openCommunauto_(p) {
             var url = "https://www.reservauto.net/Scripts/Client/Mobile/ReservationDisponibility.asp?stations=false&Latitude=" + p.coords.latitude + "&Longitude=" + p.coords.longitude;
             window.open(url, "_self");
         }
 
-        // showPosition(pos)
-        function showPosition(p) {
-            var s = stringifyPosition(p.coords);
-            out(s, false);
-            out(_i18n_('FIND_CARS'), false);
-            httpGet(getAlkhwarizmixReservauto(p.coords.latitude, p.coords.longitude));
+        // _showPosition_(pos)
+        function _showPosition_(p) {
+            _out_(_i18n_('_FIND_CARS_'), false);
+            _httpGet_(_getAlkhwarizmixReservauto_(p.coords.latitude, p.coords.longitude));
         }
 
-        // stringifyPosition(coords)
-        function stringifyPosition(c) {
-            var r = ''; // result
-            [
-                'latitude', // The latitude as a decimal number
-                'longitude', // The longitude as a decimal number
-                'accuracy', // The accuracy of position
-                'altitude', // The altitude in meters above the mean sea level
-                'altitudeAccuracy', // The altitude accuracy of position
-                'heading', // The heading as degrees clockwise from North
-                'speed', // The speed in meters per second
-                'timestamp'	// The date/time of the response
-            ].forEach(function (f) { // field
-                r += (c[f] ? c[f] : '') + '|';
-            });
-            return r + _now_ms_();
-        }
-
-        // httpGet(url)
-        function httpGet(u) {
+        // _httpGet_(url)
+        function _httpGet_(u) {
             var req = new XMLHttpRequest();
             req.open("GET", u, true);
-            req.onerror = httpGet_onError;
+            req.onerror = _httpGet_onError_;
             req.onreadystatechange = function () {
                 if (req.readyState == 4 && req.status == 200) {
-                    httpGet_success(JSON.parse(req.responseText));
+                    _httpGet_success_(JSON.parse(req.responseText));
                 }
             };
             req.send(null);
         }
 
-        // httpGet_onError()
-        function httpGet_onError(ev) {
-            outError(ev.target.status);
+        // _httpGet_onError_()
+        function _httpGet_onError_(ev) {
+            _outError_(ev.target.status);
         }
 
-        // httpGet_success()
-        function httpGet_success(data) {
+        // _httpGet_success_()
+        function _httpGet_success_(data) {
             if (data.response.status === "SUCCESSFUL") {
-                outVehicules(data.response.result.vehicules);
+                _outVehicules_(data.response.result.vehicules);
             }
             else {
-                outError(-20);
+                _outError_(-20);
             }
         }
 
-        // getAlkhwarizmixReservauto
-        function getAlkhwarizmixReservauto(latitude, longitude) {
+        // _getAlkhwarizmixReservauto_
+        function _getAlkhwarizmixReservauto_(latitude, longitude) {
             var context = ['fares', 'moqawalatiWeb', ''][_APP_MODE_];
             return (context
                     ? '/' + context + '/alkhwarizmix/json/prototype/p/' + latitude + '/' + longitude + '/' + 3 + '/'
                     : 'json/p.json')
         }
 
-        // refresh
-        function refresh(startAutoRefresh) {
+        // _refresh_
+        function _refresh_(startAutoRefresh) {
             if (startAutoRefresh) {
-                autoRefreshEndTime = _now_ms_() + _config_('_STOP_AUTOREFRESH_AFTER_S_') * 1000;
+                _autoRefreshEndTime_ = _now_ms_() + _config_('_STOP_AUTOREFRESH_AFTER_S_') * 1000;
+                _setNearestVehiculeDistance_();
             }
-            setBtnRefreshLabel();
-            clearTimeout(refreshTimeout);
-            getLoc(showPosition);
+            _setBtnRefreshLabel_();
+            clearTimeout(_refreshTimeout_);
+            _getLoc_(_showPosition_);
         }
 
-        // gotoCommunauto
-        function gotoCommunauto() {
-            clearTimeout(refreshTimeout);
-            getLoc(openCommunauto);
+        // _gotoCommunauto_
+        function _gotoCommunauto_() {
+            clearTimeout(_refreshTimeout_);
+            _getLoc_(_openCommunauto_);
         }
 
         // ---------- ---------- ---------- ---------- ---------- ---------- --
         // OUTERS
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        // out
-        function out(s, btnsBarVisibility) {
-            elmnt("result").innerHTML = s;
-            setVisible("btnsBar", btnsBarVisibility);
+        // _out_
+        function _out_(s, _btnsBarVisibility_) {
+            _elmnt_("_result_").innerHTML = s;
+            _setVisible_("_btnsBar_", _btnsBarVisibility_);
         }
 
-        // outError
-        function outError(errorCode) {
-            out(_i18n_('ERROR') + ": " + errorCode, true);
+        // _outError_
+        function _outError_(errorCode) {
+            _out_(_i18n_('_ERROR_') + ": " + errorCode, true);
         }
 
-        // outVehicules
-        function outVehicules(vehicules) {
-            var nearestVehiculeDistance = Number.MAX_VALUE;
-            var vehiculesHTML = _i18n_('EMPTY');
+        // _outVehicules_
+        function _outVehicules_(vehicules) {
+            var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
+            var vehiculesHTML = _attr_('div', _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()), 'class="_mediumfont_"');
             if (vehicules.length > 0) {
-                vehiculesHTML = attr('tr', attr('th', _i18n_('VEHICULE_HEADER')) + attr('th', _i18n_('DISTANCE_HEADER')));
+                var tableContent = _attr_('tr', _attr_('th', _i18n_('_VEHICULE_HEADER_')) + _attr_('th', _i18n_('_DISTANCE_HEADER_')));
                 vehicules.forEach(function (vehicule) {
                     if (vehicule.distance < nearestVehiculeDistance)
                         nearestVehiculeDistance = vehicule.distance;
-                    vehiculesHTML += attr('tr', getVehiculeHTML(vehicule));
+                    tableContent += _attr_('tr', _getVehiculeHTML_(vehicule));
                 });
-                vehiculesHTML = attr('table', vehiculesHTML, 'style="width:100%"');
+                vehiculesHTML += _attr_('table', tableContent, 'style="width:100%"');
             }
-            vehiculesHTML += attr('div', _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()), 'class="mf"');
-            out(vehiculesHTML, true);
-            if (_now_ms_() < autoRefreshEndTime) {
-                setNearestVehiculeDistance(nearestVehiculeDistance);
-                setRefreshTimeout(_config_('_AUTOREFRESH_DELAY_S_'));
+            _out_(vehiculesHTML, true);
+            if (_now_ms_() < _autoRefreshEndTime_) {
+                _setNearestVehiculeDistance_(nearestVehiculeDistance);
+                _setRefreshTimeout_(_config_('_AUTOREFRESH_DELAY_S_'));
             }
             else {
-                setNearestVehiculeDistance();
-                setBtnRefreshLabel();
+                _setNearestVehiculeDistance_();
+                _setBtnRefreshLabel_();
             }
         }
 
-        // setNearestVehiculeDistance
-        function setNearestVehiculeDistance(value) {
+        // _setNearestVehiculeDistance_
+        function _setNearestVehiculeDistance_(value) {
             var color = 0;
             if (value) {
-                var delta = value - prevNearestVehiculeDistance;
+                var delta = value - _prevNearestVehiculeDistance_;
                 if (delta > 10)
                     color = 1;
                 else if (delta < -10)
                     color = 2;
                 else
                     color = 3;
-                prevNearestVehiculeDistance = value;
+                _prevNearestVehiculeDistance_ = value;
             }
             document.body.style.background = [
                 '',
-                'crimson',
-                'darkseagreen',
-                'cornsilk'
+                'red',
+                'green',
+                ''
             ][color];
         }
 
@@ -284,38 +263,38 @@
         // SETTERS
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        // setBtnRefreshLabel
-        function setBtnRefreshLabel(epilog) {
-            elmnt("btnRefersh").innerHTML = _i18n_('REFRESH') + (epilog ? epilog : "");
+        // _setBtnRefreshLabel_
+        function _setBtnRefreshLabel_(epilog) {
+            _elmnt_("_btnRefersh_").innerHTML = _i18n_('_REFRESH_') + (epilog ? epilog : "");
         }
 
-        // setRefreshTimer(delay in seconds)
-        function setRefreshTimeout(delay) {
+        // _setRefreshTimeout_(delay in seconds)
+        function _setRefreshTimeout_(delay) {
             if (delay > 0) {
-                setBtnRefreshLabel(" (dans " + delay + ")");
-                refreshTimeout = setTimeout(function () {
-                    setRefreshTimeout(delay - 1);
+                _setBtnRefreshLabel_(" (dans " + delay + ")");
+                _refreshTimeout_ = setTimeout(function () {
+                    _setRefreshTimeout_(delay - 1);
                 }, 1000);
             }
             else {
-                refresh();
+                _refresh_();
             }
         }
 
-        // setVisible
-        function setVisible(id, visible) {
-            elmnt(id).style.visibility = (visible === false) ? "hidden" : "";
+        // _setVisible_
+        function _setVisible_(id, visible) {
+            _elmnt_(id).style.visibility = (visible === false) ? "hidden" : "";
         }
     </script>
 </head>
 
-<body class="lf" onload="refresh(true)">
-<div id="result"></div>
-<div id="btnsBar">
-    <button id="btnRefersh" onclick="refresh(true)"></button>
-    <button id="btnGotoCommunauto" onclick="gotoCommunauto()">Allez à Communauto</button>
+<body class="_largefont_" onload="_refresh_(true)">
+<div id="_result_"></div>
+<div id="_btnsBar_">
+    <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
+    <button onclick="_gotoCommunauto_()">Allez à Communauto</button>
 </div>
-<div class="footer mf">Trouvauto, version 0.0.11</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.12</div>
 </body>
 
 </html>
