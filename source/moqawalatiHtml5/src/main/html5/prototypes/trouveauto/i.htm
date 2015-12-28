@@ -5,11 +5,13 @@
     <title>Trouvauto</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
     <style>
-        body {
+        .lf {
             font-size: 1.0em;
             font-weight: bold;
-            width: 100%;
-            height: 100%;
+        }
+
+        .mf {
+            font-size: 0.75em;
         }
 
         button {
@@ -24,7 +26,7 @@
             width: 100%;
         }
 
-        #footer {
+        .footer {
             bottom: 5px;
             position: fixed;
             right: 5px;
@@ -33,7 +35,7 @@
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
-            text-align: center;;
+            text-align: center;
         }
     </style>
     <script type="text/javascript">
@@ -41,13 +43,13 @@
         // Variables
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        var _PROD_MODE_ = true;
+        var _APP_MODE_ = 2; // 0='fares', 1='moqawalatiWeb', 2='p.json'
         var refreshTimeout = 0;
         var autoRefreshEndTime = 0;
         var prevNearestVehiculeDistance = Number.MAX_VALUE;
 
         // ---------- ---------- ---------- ---------- ---------- ---------- --
-        // FUNCTIONS
+        // COMMON FUNCTIONS
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
         // _config_
@@ -81,14 +83,32 @@
 
         // attr
         function attr(a, v, aArg) {
-            var result = '<' + a + (aArg ? (" " + aArg) : "") + '>' + v + '</' + a + '>';
-            return result;
+            return '<' + a + (aArg ? (" " + aArg) : "") + '>' + v + '</' + a + '>';
         }
 
-        // now
-        function now() {
-            return new Date().getTime();
+        // _now_
+        function _now_() {
+            return new Date();
         }
+
+        // _now_ms_
+        function _now_ms_() {
+            return _now_().getTime();
+        }
+
+        // _timeString_
+        function _time_str_(date) {
+            return _2dig_(date.getHours()) + ":" + _2dig_(date.getMinutes()) + ":" + _2dig_(date.getSeconds());
+        }
+
+        // _2dig_
+        function _2dig_(n) {
+            return (n > 9 ? '' : '0') + n;
+        }
+
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+        // FUNCTIONS
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
 
         // getVehiculeHTML
         function getVehiculeHTML(vehicule) {
@@ -144,7 +164,7 @@
             ].forEach(function (f) { // field
                 r += (c[f] ? c[f] : '') + '|';
             });
-            return r + new Date().getTime();
+            return r + _now_ms_();
         }
 
         // httpGet(url)
@@ -177,15 +197,16 @@
 
         // getAlkhwarizmixReservauto
         function getAlkhwarizmixReservauto(latitude, longitude) {
-            var context = '/' + (_PROD_MODE_ ? 'fares' : 'moqawalatiWeb');
-            return context + '/alkhwarizmix/json/prototype/p/' + latitude + '/' + longitude + '/' + 3 + '/';
-            // return "json/p.json";
+            var context = ['fares', 'moqawalatiWeb', ''][_APP_MODE_];
+            return (context
+                    ? '/' + context + '/alkhwarizmix/json/prototype/p/' + latitude + '/' + longitude + '/' + 3 + '/'
+                    : 'json/p.json')
         }
 
         // refresh
         function refresh(startAutoRefresh) {
             if (startAutoRefresh) {
-                autoRefreshEndTime = now() + _config_('_STOP_AUTOREFRESH_AFTER_S_') * 1000;
+                autoRefreshEndTime = _now_ms_() + _config_('_STOP_AUTOREFRESH_AFTER_S_') * 1000;
             }
             setBtnRefreshLabel();
             clearTimeout(refreshTimeout);
@@ -224,11 +245,11 @@
                         nearestVehiculeDistance = vehicule.distance;
                     vehiculesHTML += attr('tr', getVehiculeHTML(vehicule));
                 });
-                vehiculesHTML = attr('table', vehiculesHTML, 'border="1" style="width:100%"');
+                vehiculesHTML = attr('table', vehiculesHTML, 'style="width:100%"');
             }
-            vehiculesHTML += attr('div', _i18n_('_DATA_LOAD_TIME_') + new Date().toLocaleTimeString());
+            vehiculesHTML += attr('div', _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()), 'class="mf"');
             out(vehiculesHTML, true);
-            if (now() < autoRefreshEndTime) {
+            if (_now_ms_() < autoRefreshEndTime) {
                 setNearestVehiculeDistance(nearestVehiculeDistance);
                 setRefreshTimeout(_config_('_AUTOREFRESH_DELAY_S_'));
             }
@@ -288,13 +309,13 @@
     </script>
 </head>
 
-<body onload="refresh(true)">
+<body class="lf" onload="refresh(true)">
 <div id="result"></div>
 <div id="btnsBar">
     <button id="btnRefersh" onclick="refresh(true)"></button>
     <button id="btnGotoCommunauto" onclick="gotoCommunauto()">Allez à Communauto</button>
 </div>
-<div id="footer">version: 0.0.1.10</div>
+<div class="footer mf">Trouvauto, version 0.0.11</div>
 </body>
 
 </html>
