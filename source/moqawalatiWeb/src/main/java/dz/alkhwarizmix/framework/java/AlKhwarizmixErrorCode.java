@@ -40,7 +40,9 @@ public enum AlKhwarizmixErrorCode {
 			HttpStatus.INTERNAL_SERVER_ERROR),
 
 	SERVER_INTERNAL_ERROR(40500, "Server Internal Error",
-			HttpStatus.INTERNAL_SERVER_ERROR);
+			HttpStatus.INTERNAL_SERVER_ERROR),
+
+	ERROR_WINRAK(50500, "Winrak Error", HttpStatus.INTERNAL_SERVER_ERROR);
 
 	private int id;
 	private String description;

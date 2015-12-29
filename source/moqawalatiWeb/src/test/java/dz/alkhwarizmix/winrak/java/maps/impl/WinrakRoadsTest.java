@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.trouvauto.java.model.vo;
+package dz.alkhwarizmix.winrak.java.maps.impl;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.winrak.java.maps.impl.WinrakRoads;
 
 /**
  * <p>
@@ -26,11 +27,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ١٤ ربيع الاول ١٤٣٧ (December 25, 2015)
+ * @since ١٦ محرم ١٤٣٧ (October 28, 2015)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class ReservautoPositionTest {
+public class WinrakRoadsTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -39,7 +40,7 @@ public class ReservautoPositionTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private ReservautoPosition utReservautoPosition;
+	private WinrakRoads utWinrakRoads;
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,32 +58,12 @@ public class ReservautoPositionTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utReservautoPosition);
-	}
-
-	@Test
-	public void test01_distanceTo() throws AlKhwarizmixException {
-		final ReservautoPosition pos1 = new ReservautoPosition(38.898556,
-				-77.037852);
-		final ReservautoPosition pos2 = new ReservautoPosition(38.897147,
-				-77.043934);
-		Assert.assertEquals(549, pos1.distanceTo(pos2), 0);
-		Assert.assertEquals(549, pos2.distanceTo(pos1), 0);
-	}
-
-	@Test
-	public void test02_directionTo() throws AlKhwarizmixException {
-		final ReservautoPosition pos1 = new ReservautoPosition(38.898556,
-				-77.037852);
-		final ReservautoPosition pos2 = new ReservautoPosition(38.897147,
-				-77.043934);
-		Assert.assertEquals("SW", pos1.directionTo(pos2));
-		Assert.assertEquals("NE", pos2.directionTo(pos1));
+		Assert.assertNotNull(utWinrakRoads);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void testXY() throws AlKhwarizmixException {
+	public void test01() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 

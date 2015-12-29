@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoResponse;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehicule;
+import dz.alkhwarizmix.winrak.java.maps.IWinrakService;
 
 /**
  * <p>
@@ -82,8 +84,8 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 	//
 	// --------------------------------------------------------------------------
 
-	// @Autowired
-	// private IRecordDAO recordDAO;
+	@Autowired
+	private IWinrakService winrakService;
 
 	// @Autowired
 	// private IRecordServiceValidator recordValidator;
@@ -130,16 +132,22 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 		final ReservautoResponse reservautoResponse = jsonToTrouvautoResponse(result);
 		final List<ReservautoVehicule> vehicules = getNearest(
 				reservautoResponse, position, count);
-		result = "{\"vehicules\":[";
+		result = "\"vehicules\":[";
 		String coma = "";
 		for (final ReservautoVehicule vehicule : vehicules) {
 			result += coma + "{\"name\":\"" + vehicule.getName()
 					+ "\",\"distance\":"
-					+ position.distanceTo(vehicule.getPosition()) + "}";
+					+ position.distanceTo(vehicule.getPosition())
+					+ ",\"direction\":\""
+					+ position.directionTo(vehicule.getPosition()) + "\"}";
 			coma = ",";
 		}
-		result += "]}";
-		return result;
+		result += "]";
+		final String address = winrakService.convertPositionToAddress(
+				position.getLat(), position.getLon());
+		if (address != null)
+			result += ",\"address\":\"" + address + "\"";
+		return "{" + result + "}";
 	}
 
 	private IJSONUtil getJsonUtil() {
@@ -231,6 +239,14 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 	@Override
 	protected void setJaxb2Marshaller(final Jaxb2Marshaller value) {
 		// jaxb2Marshaller = value;
+	}
+
+	// ----------------------------------
+	// winrakService
+	// ----------------------------------
+
+	public void setWinrakService(final IWinrakService value) {
+		winrakService = value;
 	}
 
 } // Class

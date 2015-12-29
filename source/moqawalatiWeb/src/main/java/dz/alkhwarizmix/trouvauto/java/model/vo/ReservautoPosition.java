@@ -141,6 +141,23 @@ public class ReservautoPosition extends AbstractAlKhwarizmixDomainObject
 	}
 
 	/**
+	 *
+	 * @param pos2
+	 * @return the direction to take to go to pos2
+	 */
+	public String directionTo(final ReservautoPosition pos2) {
+		return (getLat() < pos2.getLat()
+				? "N"
+				: (getLat() > pos2.getLat()
+						? "S"
+						: "")) + (getLon() < pos2.getLon()
+				? "E"
+				: (getLon() > pos2.getLon()
+						? "W"
+						: ""));
+	}
+
+	/**
 	 * http://www.movable-type.co.uk/scripts/latlong.html
 	 */
 	public int distanceTo(final ReservautoPosition pos2) {

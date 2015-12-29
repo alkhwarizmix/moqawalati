@@ -9,8 +9,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.winrak.java.maps;
+package dz.alkhwarizmix.winrak.java.maps.impl;
 
+import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
  * <p>
@@ -40,8 +41,9 @@ public class WinrakRoads {
 	//
 	// --------------------------------------------------------------------------
 
-	public void func() {
-		// RoadsApi roadsAPI = new RoadsApi();
+	public String func(final Double latitude, final Double longitude)
+			throws AlKhwarizmixException {
+		return "";
 	}
 
 } // Class

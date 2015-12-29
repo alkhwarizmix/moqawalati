@@ -11,6 +11,7 @@
 
 package dz.alkhwarizmix.framework.java.services.impl;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import org.junit.Assert;
@@ -18,7 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.winrak.java.maps.IWinrakService;
 
 /**
  * <p>
@@ -58,13 +59,15 @@ public class PrototypeServiceTest {
 	@Mock
 	private IHTTPUtil mockHttpUtil;
 
+	@Mock
+	private IWinrakService mockWinrakService;
+
 	@Before
-	public void setUp() {
+	public void setUp() throws AlKhwarizmixException {
 		when(spyPrototypeService.getLogger()).thenReturn(mockLogger);
 		when(spyPrototypeService.getHttpUtil()).thenReturn(mockHttpUtil);
-		when(
-				mockHttpUtil.sendGetRequest(Mockito.anyString(),
-						Mockito.anyString())).thenReturn(
+		spyPrototypeService.setWinrakService(mockWinrakService);
+		when(mockHttpUtil.sendGetRequest(anyString(), anyString())).thenReturn(
 				RESERVAUTO_GetVehicleProposals_RESPONSE);
 	}
 
@@ -100,7 +103,8 @@ public class PrototypeServiceTest {
 	public void test01_position_should_return_2_vehicules_for_count_2()
 			throws AlKhwarizmixException {
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"name\":\"2967\",\"distance\":491},{\"name\":\"2797\",\"distance\":682}]}",
+				"{\"vehicules\":[{\"name\":\"2967\",\"distance\":491,\"direction\":\"SE\"},"
+						+ "{\"name\":\"2797\",\"distance\":682,\"direction\":\"NE\"}]}",
 				spyPrototypeService.position(getCurrentPosition(), 2));
 	}
 
@@ -108,7 +112,7 @@ public class PrototypeServiceTest {
 	public void test02_position_should_return_1_vehicule_for_count_1()
 			throws AlKhwarizmixException {
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"name\":\"2967\",\"distance\":491}]}",
+				"{\"vehicules\":[{\"name\":\"2967\",\"distance\":491,\"direction\":\"SE\"}]}",
 				spyPrototypeService.position(getCurrentPosition(), 1));
 	}
 
