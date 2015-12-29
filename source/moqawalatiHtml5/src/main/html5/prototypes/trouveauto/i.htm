@@ -14,7 +14,6 @@
         }
 
         button {
-            background-color: whitesmoke;
             display: block;
             font-size: 1.0em;
             font-weight: bold;
@@ -111,7 +110,7 @@
 
         // _getVehiculeHTML_
         function _getVehiculeHTML_(vehicule) {
-            return _attr_('td', vehicule.name) + _attr_('td', vehicule.distance + ' m');
+            return _attr_('td', vehicule.name) + _attr_('td', vehicule.distance + ' m (' + vehicule.direction + ')');
         }
 
         // _getLoc_
@@ -167,7 +166,7 @@
         // _httpGet_success_()
         function _httpGet_success_(data) {
             if (data.response.status === "SUCCESSFUL") {
-                _outVehicules_(data.response.result.vehicules);
+                _outVehicules_(data.response.result.vehicules, data.response.result.address);
             }
             else {
                 _outError_(-20);
@@ -215,9 +214,9 @@
         }
 
         // _outVehicules_
-        function _outVehicules_(vehicules) {
+        function _outVehicules_(vehicules, address) {
             var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
-            var vehiculesHTML = _attr_('div', _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()), 'class="_mediumfont_"');
+            var vehiculesHTML = _attr_('div', address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
             if (vehicules.length > 0) {
                 var tableContent = _attr_('tr', _attr_('th', _i18n_('_VEHICULE_HEADER_')) + _attr_('th', _i18n_('_DISTANCE_HEADER_')));
                 vehicules.forEach(function (vehicule) {
@@ -294,7 +293,7 @@
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
     <button onclick="_gotoCommunauto_()">Allez à Communauto</button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.12</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.14</div>
 </body>
 
 </html>
