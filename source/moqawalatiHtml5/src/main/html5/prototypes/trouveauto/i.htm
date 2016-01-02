@@ -4,6 +4,17 @@
     <title>Trouvauto</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
     <style>
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            /*
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            */
+            user-select: none;
+        }
+
         ._largefont_ {
             font-size: 1.0em;
             font-weight: bold;
@@ -13,7 +24,7 @@
             font-size: 0.8em;
         }
 
-        button {
+        .button1 {
             display: block;
             font-size: 1.0em;
             font-weight: bold;
@@ -24,17 +35,49 @@
             width: 100%;
         }
 
+        button {
+            /*
+            -moz-border-radius:10px;
+            -webkit-border-radius:10px;
+            border:1px solid #ffcc00;
+            border-style: solid;
+            */
+            background-color: yellow;
+            border-color: #ffcc00;
+            border-width: 1px;
+            border-radius: 10px;
+            font-size: 1.0em;
+            font-weight: bold;
+            text-align: left;
+            -webkit-margin-after: 0.2em;
+            -webkit-margin-before: 0.2em;
+            -webkit-margin-end: 0px;
+            -webkit-margin-start: 0px;
+            width: 100%;
+        }
+
+        button:active {
+            background-color: orange;
+        }
+
+        :focus {
+            outline: none;
+        }
+
+        ::-moz-focus-inner {
+            border: 0;
+        }
+
         ._footer_ {
             bottom: 5px;
             position: fixed;
             right: 5px;
         }
 
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            text-align: center;
+        #_btnsBar_ {
+            -webkit-margin-before: 1.0em;
         }
+
     </style>
     <script type="text/javascript">
         // ---------- ---------- ---------- ---------- ---------- ---------- --
@@ -43,6 +86,7 @@
 
         var _NUMBER_MAX_VALUE_ = 10000,
                 _APP_MODE_ = 0, // 0='fares', 1='moqawalatiWeb', 2='p.json'
+                _IS_PROD_MODE_ = (_APP_MODE_ == 0),
                 _refreshTimeout_ = 0,
                 _autoRefreshEndTime_ = 0,
                 _prevNearestVehiculeDistance_ = _NUMBER_MAX_VALUE_;
@@ -59,7 +103,7 @@
         // _config_
         function _config_(p) {
             return {
-                "_STOP_AUTOREFRESH_AFTER_S_": 300, // seconds
+                "_STOP_AUTOREFRESH_AFTER_S_": (_IS_PROD_MODE_ ? 300 : 0), // seconds
                 "_AUTOREFRESH_DELAY_S_": 30 // seconds
             }[p];
         }
@@ -105,12 +149,14 @@
         }
 
         // ---------- ---------- ---------- ---------- ---------- ---------- --
-        // FUNCTIONS
+        // FUNCTIONS F09F9A98
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
         // _getVehiculeHTML_
         function _getVehiculeHTML_(vehicule) {
-            return _attr_('td', vehicule.name) + _attr_('td', vehicule.distance + ' m (' + vehicule.direction + ')');
+            var btnHTML = _attr_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
+                    _attr_('div', 'Address');
+            return _attr_('button', btnHTML, 'onclick="_gotoCommunauto_()"');
         }
 
         // _getLoc_
@@ -218,13 +264,13 @@
             var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
             var vehiculesHTML = _attr_('div', address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
             if (vehicules.length > 0) {
-                var tableContent = _attr_('tr', _attr_('th', _i18n_('_VEHICULE_HEADER_')) + _attr_('th', _i18n_('_DISTANCE_HEADER_')));
+                var tableContent = '';
                 vehicules.forEach(function (vehicule) {
                     if (vehicule.distance < nearestVehiculeDistance)
                         nearestVehiculeDistance = vehicule.distance;
-                    tableContent += _attr_('tr', _getVehiculeHTML_(vehicule));
+                    tableContent += _attr_('div', _getVehiculeHTML_(vehicule));
                 });
-                vehiculesHTML += _attr_('table', tableContent, 'style="width:100%"');
+                vehiculesHTML += _attr_('div', tableContent, 'style="width:100%"');
             }
             _out_(vehiculesHTML, true);
             if (_now_ms_() < _autoRefreshEndTime_) {
@@ -236,6 +282,10 @@
                 _setBtnRefreshLabel_();
             }
         }
+
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
+        // SETTERS
+        // ---------- ---------- ---------- ---------- ---------- ---------- --
 
         // _setNearestVehiculeDistance_
         function _setNearestVehiculeDistance_(value) {
@@ -257,10 +307,6 @@
                 ''
             ][color];
         }
-
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
-        // SETTERS
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
 
         // _setBtnRefreshLabel_
         function _setBtnRefreshLabel_(epilog) {
@@ -291,9 +337,8 @@
 <div id="_result_"></div>
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
-    <button onclick="_gotoCommunauto_()">Allez à Communauto</button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.14</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.15</div>
 </body>
 
 </html>
