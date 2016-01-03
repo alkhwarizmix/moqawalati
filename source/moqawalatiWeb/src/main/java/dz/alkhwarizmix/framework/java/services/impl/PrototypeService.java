@@ -33,7 +33,8 @@ import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoResponse;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehicule;
-import dz.alkhwarizmix.winrak.java.maps.IWinrakService;
+import dz.alkhwarizmix.winrak.java.services.IWinrakService;
+import dz.alkhwarizmix.winrak.java.services.impl.WinrakPositionWorker;
 
 /**
  * <p>
@@ -128,27 +129,45 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 
 	private String position_internal(final ReservautoPosition position,
 			final int count) throws AlKhwarizmixException {
+		final long timeout_ms = 3000;
+		final WinrakPositionWorker winrakPositionWorker = new WinrakPositionWorker(
+				winrakService);
+		winrakPositionWorker.fillPositionAddress(position, timeout_ms);
 		String result = getReservautoVehicleProposals(position);
 		final ReservautoResponse reservautoResponse = jsonToTrouvautoResponse(result);
 		final List<ReservautoVehicule> vehicules = getNearest(
 				reservautoResponse, position, count);
+
+		for (final ReservautoVehicule vehicule : vehicules)
+			winrakPositionWorker.fillPositionAddress(vehicule.getPosition(),
+					timeout_ms);
+		winrakPositionWorker.waitForAllFillPositionAddress(timeout_ms);
+
 		result = "\"vehicules\":[";
 		String coma = "";
 		for (final ReservautoVehicule vehicule : vehicules) {
-			result += coma + "{\"name\":\"" + vehicule.getName()
-					+ "\",\"distance\":"
-					+ position.distanceTo(vehicule.getPosition())
+			result += coma
+					+ "{\"name\":\"" + vehicule.getName() + "\""
+					+ getAddressField(vehicule.getPosition())
+					+ ",\"distance\":" + position.distanceTo(vehicule.getPosition())
 					+ ",\"direction\":\""
 					+ position.directionTo(vehicule.getPosition()) + "\"}";
 			coma = ",";
 		}
 		result += "]";
-		final String address = winrakService.convertPositionToAddress(
-				position.getLat(), position.getLon());
-		if (address != null)
-			result += ",\"address\":\"" + address + "\"";
+
+		result += getAddressField(position);
 		return "{" + result + "}";
 	}
+
+	private String getAddressField(final ReservautoPosition position) {
+		return (position.getAddress() != null)
+				? ",\"address\":\""
+						+ position.getAddress().replaceFirst(",(.*)", "")
+						+ "\""
+				: "";
+	}
+
 
 	private IJSONUtil getJsonUtil() {
 		return new JSONUtil();

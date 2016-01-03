@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
-import dz.alkhwarizmix.winrak.java.maps.IWinrakService;
+import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
 /**
  * <p>

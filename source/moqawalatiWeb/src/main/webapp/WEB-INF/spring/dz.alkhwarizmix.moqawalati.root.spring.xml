@@ -100,7 +100,7 @@
 		</property>
 	</bean>
 
-	<bean id="winrakService" class="dz.alkhwarizmix.winrak.java.maps.impl.WinrakService">
+	<bean id="winrakService" class="dz.alkhwarizmix.winrak.java.services.impl.WinrakService">
 		<property name="googleAPIKey" value="${winrak.google.api.key}" />
 	</bean>
 </beans>

@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.winrak.java.maps;
+package dz.alkhwarizmix.winrak.java.services;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
@@ -31,6 +31,7 @@ public interface IWinrakService {
 	 * @throws AlKhwarizmixException
 	 */
 	public String convertPositionToAddress(final Double latitude,
-			final Double longitude) throws AlKhwarizmixException;
+			final Double longitude, long timeout_ms)
+			throws AlKhwarizmixException;
 
 } // Class

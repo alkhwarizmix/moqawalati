@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.winrak.java.maps.impl;
+package dz.alkhwarizmix.winrak.java.services.impl;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 

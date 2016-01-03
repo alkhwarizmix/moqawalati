@@ -9,7 +9,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.winrak.java.maps.impl;
+package dz.alkhwarizmix.winrak.java.services.impl;
+
+import java.util.concurrent.TimeUnit;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
@@ -18,7 +20,7 @@ import com.google.maps.model.LatLng;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.winrak.java.maps.IWinrakService;
+import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
 /**
  * <p>
@@ -58,9 +60,11 @@ public class WinrakService implements IWinrakService {
 
 	@Override
 	public String convertPositionToAddress(final Double latitude,
-			final Double longitude) throws AlKhwarizmixException {
+			final Double longitude, final long timeout_ms)
+			throws AlKhwarizmixException {
 		final GeoApiContext context = new GeoApiContext()
 				.setApiKey(googleAPIKey);
+		context.setConnectTimeout(timeout_ms, TimeUnit.MILLISECONDS);
 		GeocodingResult[] results;
 		try {
 			results = GeocodingApi.reverseGeocode(context,

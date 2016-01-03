@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.winrak.java.maps.impl;
+package dz.alkhwarizmix.winrak.java.services.impl;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -26,11 +26,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ١٧ ربيع الاول ١٤٣٧ (December 28, 2015)
+ * @since ١٦ محرم ١٤٣٧ (October 28, 2015)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class WinrakServiceTest {
+public class WinrakRoadsTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -39,7 +39,7 @@ public class WinrakServiceTest {
 	// --------------------------------------------------------------------------
 
 	@InjectMocks
-	private WinrakService utWinrakService;
+	private WinrakRoads utWinrakRoads;
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,7 +57,7 @@ public class WinrakServiceTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utWinrakService);
+		Assert.assertNotNull(utWinrakRoads);
 	}
 
 	@Ignore("TODO: TDD")
