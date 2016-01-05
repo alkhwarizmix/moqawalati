@@ -11,14 +11,8 @@
 
 package dz.alkhwarizmix.winrak.java.services.impl;
 
-import java.util.concurrent.TimeUnit;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.LatLng;
-
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
@@ -38,9 +32,6 @@ public class WinrakService implements IWinrakService {
 	//
 	// --------------------------------------------------------------------------
 
-	/**
-	 * Constructor.
-	 */
 	public WinrakService() {
 	}
 
@@ -50,7 +41,8 @@ public class WinrakService implements IWinrakService {
 	//
 	// --------------------------------------------------------------------------
 
-	private String googleAPIKey;
+	@Autowired
+	private GoogleGeoApiWrapper googleGeoApiWrapper;
 
 	// --------------------------------------------------------------------------
 	//
@@ -62,17 +54,12 @@ public class WinrakService implements IWinrakService {
 	public String convertPositionToAddress(final Double latitude,
 			final Double longitude, final long timeout_ms)
 			throws AlKhwarizmixException {
-		final GeoApiContext context = new GeoApiContext()
-				.setApiKey(googleAPIKey);
-		context.setConnectTimeout(timeout_ms, TimeUnit.MILLISECONDS);
-		GeocodingResult[] results;
-		try {
-			results = GeocodingApi.reverseGeocode(context,
-					new LatLng(latitude, longitude)).await();
-		} catch (final Exception e) {
-			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_WINRAK);
-		}
-		return (results[0].formattedAddress);
+		return googleGeoApiWrapper.convertPositionToAddress(latitude,
+				longitude, timeout_ms);
+	}
+
+	public String findBook(final int isbn) {
+		return String.valueOf(isbn);
 	}
 
 	// --------------------------------------------------------------------------
@@ -81,12 +68,12 @@ public class WinrakService implements IWinrakService {
 	//
 	// --------------------------------------------------------------------------
 
-	// ----------------------------------
-	// googleAPIKey
-	// ----------------------------------
-
-	public void setGoogleAPIKey(final String value) {
-		googleAPIKey = value;
+	/**
+	 * @param value
+	 *            the googleGeoApiWrapper to set
+	 */
+	public void setGoogleGeoApiWrapper(final GoogleGeoApiWrapper value) {
+		googleGeoApiWrapper = value;
 	}
 
 } // Class
