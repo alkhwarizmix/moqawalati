@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO:
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
+ */
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- simple cache manager -->
+	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					p:name="books" />
+			</set>
+		</property>
+	</bean>
+
+	<!-- cache definitions -->
+	<cache:advice id="cacheAdvice" cache-manager="cacheManager">
+		<cache:caching cache="books">
+			<cache:cacheable method="findBook"/>
+		</cache:caching>
+	</cache:advice>
+
+	<!-- apply the cacheable behavior to all BookService interfaces -->
+	<aop:config>
+		<aop:advisor advice-ref="cacheAdvice"
+			pointcut="execution(* dz.alkhwarizmix.winrak.java.services.impl.WinrakService.findBook(..))" />
+	</aop:config>
+
+	<bean id="utWinrakService" class="dz.alkhwarizmix.winrak.java.services.impl.WinrakService" />
+	<bean id="googleGeoApiWrapper"
+		class="dz.alkhwarizmix.winrak.java.services.impl.GoogleGeoApiWrapper">
+		<property name="googleAPIKey" value="${winrak.google.api.key}" />
+	</bean>
+</beans>
