@@ -29,12 +29,12 @@
 	<parent>
 		<groupId>dz.alkhwarizmix</groupId>
 		<artifactId>alkhwarizmix-common</artifactId>
-		<version>1.2.10.FBEL</version>
+		<version>1.3.10.FBEL</version>
 	</parent>
 
 	<groupId>dz.alkhwarizmix.moqawalati</groupId>
 	<artifactId>moqawalati</artifactId>
-	<version>1.5.14.FBEL</version>
+	<version>1.6.14.FBEL</version>
 	<packaging>pom</packaging>
 	
 	<name>moqawalati Maven</name>

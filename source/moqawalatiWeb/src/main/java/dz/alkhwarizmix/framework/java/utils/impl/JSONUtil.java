@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.IAlKhwarizmixJsonObject;
 import dz.alkhwarizmix.framework.java.dtos.IAlKhwarizmixDomainObjectList;
 import dz.alkhwarizmix.framework.java.utils.IJSONUtil;
 
@@ -67,11 +67,11 @@ public class JSONUtil implements IJSONUtil {
 	 */
 	@Override
 	public final String objectListToJSON(
-			final List<AbstractAlKhwarizmixDomainObject> objectList) {
+			final List<IAlKhwarizmixJsonObject> objectList) {
 		final StringWriter stringWriter = new StringWriter();
 		/*
 		 * final JSONResult jsonResult = new JSONResult(stringWriter); for
-		 * (final AbstractAlKhwarizmixDomainObject object : objectList)
+		 * (final IAlKhwarizmixJsonObject object : objectList)
 		 * jaxb2Marshaller.marshal(object, jsonResult);
 		 */
 		return stringWriter.toString();
@@ -81,8 +81,7 @@ public class JSONUtil implements IJSONUtil {
 	 * TODO: Javadoc
 	 */
 	@Override
-	public final String marshalObjectToJSON(
-			final AbstractAlKhwarizmixDomainObject object)
+	public final String marshalObjectToJSON(final IAlKhwarizmixJsonObject object)
 			throws AlKhwarizmixException {
 		try {
 			return internal_marshalObjectToJSON(object);
@@ -93,7 +92,7 @@ public class JSONUtil implements IJSONUtil {
 	}
 
 	protected String internal_marshalObjectToJSON( // NOPMD
-			final AbstractAlKhwarizmixDomainObject object) {
+			final IAlKhwarizmixJsonObject object) {
 		return gson.toJson(object);
 	}
 
@@ -102,21 +101,20 @@ public class JSONUtil implements IJSONUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public final AbstractAlKhwarizmixDomainObject unmarshalObjectFromJSON(
+	public final IAlKhwarizmixJsonObject unmarshalObjectFromJSON(
 			final String jsonValue, final Class<?> clazz)
 			throws AlKhwarizmixException {
 		try {
 			return internal_unmarshalObjectFromJSON(jsonValue,
-					(Class<AbstractAlKhwarizmixDomainObject>) clazz);
+					(Class<IAlKhwarizmixJsonObject>) clazz);
 		} catch (final Exception e) {
 			throw new AlKhwarizmixException(
 					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, e);
 		}
 	}
 
-	protected AbstractAlKhwarizmixDomainObject internal_unmarshalObjectFromJSON(
-			final String jsonValue,
-			final Class<AbstractAlKhwarizmixDomainObject> clazz) {
+	protected IAlKhwarizmixJsonObject internal_unmarshalObjectFromJSON(
+			final String jsonValue, final Class<IAlKhwarizmixJsonObject> clazz) {
 		return gson.fromJson(jsonValue, clazz);
 	}
 

@@ -57,6 +57,7 @@
 	<import resource="dz.alkhwarizmix.moqawalati.flex.spring.xml" />
 	<import resource="dz.alkhwarizmix.moqawalati.security.spring.xml" />
 	<import resource="dz.alkhwarizmix.moqawalati.mail.spring.xml" />
+	<import resource="dz.alkhwarizmix.winrak.winrak.spring.xml" />
 
 	<!-- PROPERTY FILES -->
 	<!-- Placholders to import inherited variables -->
@@ -98,9 +99,5 @@
 				</entry>
 			</map>
 		</property>
-	</bean>
-
-	<bean id="winrakService" class="dz.alkhwarizmix.winrak.java.services.impl.WinrakService">
-		<property name="googleAPIKey" value="${winrak.google.api.key}" />
 	</bean>
 </beans>

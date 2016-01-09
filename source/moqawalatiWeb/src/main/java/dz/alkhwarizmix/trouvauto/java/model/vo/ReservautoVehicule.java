@@ -18,6 +18,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.IAlKhwarizmixJsonObject;
 
 /**
  * <p>
@@ -28,7 +29,7 @@ import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
  * @since ١٤ ربيع الاول ١٤٣٧ (December 25, 2015)
  */
 public class ReservautoVehicule extends AbstractAlKhwarizmixDomainObject
-		implements Serializable, Cloneable {
+		implements IAlKhwarizmixJsonObject, Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//

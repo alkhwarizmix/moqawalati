@@ -24,15 +24,16 @@ import org.springframework.transaction.annotation.Transactional;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.IAlKhwarizmixJsonObject;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.IPrototypeService;
 import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
 import dz.alkhwarizmix.framework.java.utils.IJSONUtil;
 import dz.alkhwarizmix.framework.java.utils.impl.HTTPUtil;
 import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
-import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoResponse;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehicule;
+import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 import dz.alkhwarizmix.winrak.java.services.impl.WinrakPositionWorker;
 
@@ -121,53 +122,40 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String position(final ReservautoPosition position, final int count)
+	public String position(final IWinrakPosition pos, final int count)
 			throws AlKhwarizmixException {
 		getLogger().trace("position");
-		return position_internal(position, count);
+		return position_internal(pos, count);
 	}
 
-	private String position_internal(final ReservautoPosition position,
-			final int count) throws AlKhwarizmixException {
+	private String position_internal(final IWinrakPosition pos, final int count)
+			throws AlKhwarizmixException {
 		final long timeout_ms = 3000;
 		final WinrakPositionWorker winrakPositionWorker = new WinrakPositionWorker(
 				winrakService);
-		winrakPositionWorker.fillPositionAddress(position, timeout_ms);
-		String result = getReservautoVehicleProposals(position);
-		final ReservautoResponse reservautoResponse = jsonToTrouvautoResponse(result);
+		winrakPositionWorker.fillPositionAddress(pos, timeout_ms);
+		final ReservautoResponse reservautoResponse = jsonToTrouvautoResponse(getReservautoVehicleProposals(pos));
 		final List<ReservautoVehicule> vehicules = getNearest(
-				reservautoResponse, position, count);
+				reservautoResponse, pos, count);
 
 		for (final ReservautoVehicule vehicule : vehicules)
 			winrakPositionWorker.fillPositionAddress(vehicule.getPosition(),
 					timeout_ms);
 		winrakPositionWorker.waitForAllFillPositionAddress(timeout_ms);
 
-		result = "\"vehicules\":[";
-		String coma = "";
-		for (final ReservautoVehicule vehicule : vehicules) {
-			result += coma
-					+ "{\"name\":\"" + vehicule.getName() + "\""
-					+ getAddressField(vehicule.getPosition())
-					+ ",\"distance\":" + position.distanceTo(vehicule.getPosition())
-					+ ",\"direction\":\""
-					+ position.directionTo(vehicule.getPosition()) + "\"}";
-			coma = ",";
-		}
-		result += "]";
-
-		result += getAddressField(position);
-		return "{" + result + "}";
+		final TrouvautoResponse response = new TrouvautoResponse(
+				getShortAddress(pos));
+		for (final ReservautoVehicule vehicule : vehicules)
+			response.addVehicule(new TrouvautoVehicule(vehicule, pos));
+		final String result = getJsonUtil().marshalObjectToJSON(response);
+		return result;
 	}
 
-	private String getAddressField(final ReservautoPosition position) {
-		return (position.getAddress() != null)
-				? ",\"address\":\""
-						+ position.getAddress().replaceFirst(",(.*)", "")
-						+ "\""
-				: "";
+	private String getShortAddress(final IWinrakPosition pos) {
+		return (pos.getAddress() != null)
+				? pos.getAddress().replaceFirst(",(.*)", "")
+				: null;
 	}
-
 
 	private IJSONUtil getJsonUtil() {
 		return new JSONUtil();
@@ -175,8 +163,7 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 
 	private List<ReservautoVehicule> getNearest(
 			final ReservautoResponse reservautoResponse,
-			final ReservautoPosition position, int count)
-			throws AlKhwarizmixException {
+			final IWinrakPosition pos, int count) throws AlKhwarizmixException {
 		final List<ReservautoVehicule> result = new ArrayList<ReservautoVehicule>();
 		for (final ReservautoVehicule vehicule : reservautoResponse
 				.getVehicules()) {
@@ -193,10 +180,9 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 				ReservautoResponse.class);
 	}
 
-	private String getReservautoVehicleProposals(
-			final ReservautoPosition position) {
+	private String getReservautoVehicleProposals(final IWinrakPosition pos) {
 		final String endPoint = "https://www.reservauto.net/WCF/LSI/LSIBookingService.asmx/GetVehicleProposals?Callback=%22%22&CustomerID=%22%22&Latitude="
-				+ position.getLat() + "&Longitude=" + position.getLon();
+				+ pos.getLat() + "&Longitude=" + pos.getLon();
 		String result = getHttpUtil().sendGetRequest(endPoint, null);
 		result = result.substring(3, result.length() - 2);
 		return result;
@@ -266,6 +252,44 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 
 	public void setWinrakService(final IWinrakService value) {
 		winrakService = value;
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Internal Classes
+	//
+	// --------------------------------------------------------------------------
+
+	final class TrouvautoResponse implements IAlKhwarizmixJsonObject {
+		public TrouvautoResponse(final String address) {
+			super();
+			this.address = address;
+		}
+
+		protected final String address;
+		private List<TrouvautoVehicule> vehicules;
+
+		public void addVehicule(final TrouvautoVehicule vehicule) {
+			if (vehicules == null)
+				vehicules = new ArrayList<TrouvautoVehicule>();
+			vehicules.add(vehicule);
+		}
+	}
+
+	final class TrouvautoVehicule implements IAlKhwarizmixJsonObject {
+		public TrouvautoVehicule(final ReservautoVehicule vehicule,
+				final IWinrakPosition pos) {
+			super();
+			address = getShortAddress(vehicule.getPosition());
+			name = vehicule.getName();
+			direction = pos.directionTo(vehicule.getPosition());
+			distance = pos.distanceTo(vehicule.getPosition());
+		}
+
+		protected final String address;
+		protected final String name;
+		protected final String direction;
+		protected final int distance;
 	}
 
 } // Class

@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.5.14.FBEL</version>
+		<version>1.6.14.FBEL</version>
 	</parent>
 
 	<artifactId>moqawalatiWeb</artifactId>
@@ -38,9 +38,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework.version>3.2.13.RELEASE</org.springframework.version>
-		<org.springframework.security.version>3.2.7.RELEASE</org.springframework.security.version>
-		<org.springframework.integration.version>3.0.7.RELEASE</org.springframework.integration.version>
+		<org.springframework.version>4.2.4.RELEASE</org.springframework.version>
+		<org.springframework.security.version>4.0.3.RELEASE</org.springframework.security.version>
+		<org.springframework.integration.version>4.2.4.RELEASE</org.springframework.integration.version>
 		<com.adobe.blazeds.version>3.2.0.3978</com.adobe.blazeds.version>
 		<org.codehaus.jackson.version>1.9.10</org.codehaus.jackson.version>
 
@@ -219,13 +219,13 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate-validator.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.maps</groupId>
 			<artifactId>google-maps-services</artifactId>
 			<version>${google-maps-services.version}</version>
 		</dependency>
-		
+
 		<!-- OTHER -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
@@ -298,15 +298,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>aspectj</groupId>
+			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>1.5.3</version>
+			<version>1.8.7</version>
 		</dependency>
 
 		<dependency>
-			<groupId>aspectj</groupId>
+			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.5.3</version>
+			<version>1.8.7</version>
 		</dependency>
 
 		<dependency>
@@ -579,6 +579,18 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<packagingExcludes>
+						WEB-INF/lib/jetty*.jar,
+						WEB-INF/lib/maven*.jar,
+						WEB-INF/lib/mockito*.jar
+					</packagingExcludes>
+				</configuration>
 			</plugin>
 
 			<plugin>

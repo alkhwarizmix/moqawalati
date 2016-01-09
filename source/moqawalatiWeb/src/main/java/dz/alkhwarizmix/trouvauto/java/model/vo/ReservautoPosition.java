@@ -13,6 +13,7 @@ package dz.alkhwarizmix.trouvauto.java.model.vo;
 
 import java.io.Serializable;
 
+import dz.alkhwarizmix.framework.java.domain.IAlKhwarizmixJsonObject;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.model.vo.WinrakPosition;
 
@@ -25,7 +26,7 @@ import dz.alkhwarizmix.winrak.java.model.vo.WinrakPosition;
  * @since ١٤ ربيع الاول ١٤٣٧ (December 25, 2015)
  */
 public class ReservautoPosition extends WinrakPosition implements
-		IWinrakPosition, Serializable, Cloneable {
+		IWinrakPosition, IAlKhwarizmixJsonObject, Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//

@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>dz.alkhwarizmix.moqawalati</groupId>
 		<artifactId>moqawalati</artifactId>
-		<version>1.5.14.FBEL</version>
+		<version>1.6.14.FBEL</version>
 	</parent>
 
 	<artifactId>moqawalatiFlex</artifactId>

@@ -60,6 +60,10 @@
             background-color: orange;
         }
 
+        #_btnRefersh_ {
+            text-align: center;
+        }
+
         :focus {
             outline: none;
         }
@@ -155,7 +159,7 @@
         // _getVehiculeHTML_
         function _getVehiculeHTML_(vehicule) {
             var btnHTML = _attr_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
-                    _attr_('div', 'Address');
+                    _attr_('div', vehicule.address);
             return _attr_('button', btnHTML, 'onclick="_gotoCommunauto_()"');
         }
 
@@ -263,7 +267,7 @@
         function _outVehicules_(vehicules, address) {
             var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
             var vehiculesHTML = _attr_('div', address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
-            if (vehicules.length > 0) {
+            if (vehicules && vehicules.length > 0) {
                 var tableContent = '';
                 vehicules.forEach(function (vehicule) {
                     if (vehicule.distance < nearestVehiculeDistance)
@@ -338,7 +342,7 @@
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.15</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.19</div>
 </body>
 
 </html>

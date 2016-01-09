@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.IAlKhwarizmixJsonObject;
 import dz.alkhwarizmix.framework.java.utils.IJSONUtil;
 
 /**
@@ -51,13 +51,8 @@ public class JSONUtilTest {
 	//
 	// --------------------------------------------------------------------------
 
-	final class JsonObject extends AbstractAlKhwarizmixDomainObject {
-		private static final long serialVersionUID = -2144541830173827403L;
+	final class JsonObject implements IAlKhwarizmixJsonObject {
 		private String a;
-
-		public JsonObject() {
-			super(null, null, null, null);
-		}
 
 		/**
 		 * @return the a
@@ -72,21 +67,6 @@ public class JSONUtilTest {
 		 */
 		public void setA(final String value) {
 			a = value;
-		}
-
-		@Override
-		public Object clone() {
-			return null;
-		}
-
-		@Override
-		public void beforeDaoSaveOrUpdate(
-				final AbstractAlKhwarizmixDomainObject object) {
-		}
-
-		@Override
-		public void updateFrom(final Object sourceObject)
-				throws AlKhwarizmixException {
 		}
 	}
 

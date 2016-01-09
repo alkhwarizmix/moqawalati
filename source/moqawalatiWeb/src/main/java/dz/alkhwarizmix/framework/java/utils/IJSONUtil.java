@@ -14,7 +14,7 @@ package dz.alkhwarizmix.framework.java.utils;
 import java.util.List;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.IAlKhwarizmixJsonObject;
 
 /**
  * <p>
@@ -29,17 +29,16 @@ public interface IJSONUtil {
 	/**
 	 */
 	public String objectListToJSON(
-			final List<AbstractAlKhwarizmixDomainObject> objectList);
+			final List<IAlKhwarizmixJsonObject> objectList);
 
 	/**
 	 */
-	public String marshalObjectToJSON(
-			final AbstractAlKhwarizmixDomainObject object)
+	public String marshalObjectToJSON(final IAlKhwarizmixJsonObject object)
 			throws AlKhwarizmixException;
 
 	/**
 	 */
-	public AbstractAlKhwarizmixDomainObject unmarshalObjectFromJSON(
+	public IAlKhwarizmixJsonObject unmarshalObjectFromJSON(
 			final String jsonValue, final Class<?> clazz)
 			throws AlKhwarizmixException;
 

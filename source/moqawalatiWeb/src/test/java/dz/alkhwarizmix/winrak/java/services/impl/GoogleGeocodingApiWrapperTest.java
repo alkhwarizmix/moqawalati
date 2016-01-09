@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2016 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -12,10 +12,10 @@
 package dz.alkhwarizmix.winrak.java.services.impl;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
@@ -26,11 +26,11 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ١٦ محرم ١٤٣٧ (October 28, 2015)
+ * @since ٢٦ ربيع الاول ١٤٣٧ (January 05, 2016)
  */
 @SuppressWarnings("PMD.MethodNamingConventions")
 @RunWith(MockitoJUnitRunner.class)
-public class WinrakRoadsTest {
+public class GoogleGeocodingApiWrapperTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -38,8 +38,12 @@ public class WinrakRoadsTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@InjectMocks
-	private WinrakRoads utWinrakRoads;
+	private GoogleGeocodingApiWrapper utGoogleGeocodingApiWrapper;
+
+	@Before
+	public void setUp() {
+		utGoogleGeocodingApiWrapper = new GoogleGeocodingApiWrapper();
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -57,12 +61,12 @@ public class WinrakRoadsTest {
 
 	@Test
 	public void test00_constructor() throws AlKhwarizmixException {
-		Assert.assertNotNull(utWinrakRoads);
+		Assert.assertNotNull(utGoogleGeocodingApiWrapper);
 	}
 
 	@Ignore("TODO: TDD")
 	@Test
-	public void test01() throws AlKhwarizmixException {
+	public void testXY() throws AlKhwarizmixException {
 		Assert.assertTrue(false);
 	}
 

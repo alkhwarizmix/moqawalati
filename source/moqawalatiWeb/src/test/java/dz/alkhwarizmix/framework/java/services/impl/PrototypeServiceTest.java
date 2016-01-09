@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
 /**
@@ -103,8 +104,8 @@ public class PrototypeServiceTest {
 	public void test01_position_should_return_2_vehicules_for_count_2()
 			throws AlKhwarizmixException {
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"name\":\"2967\",\"distance\":491,\"direction\":\"SE\"},"
-						+ "{\"name\":\"2797\",\"distance\":682,\"direction\":\"NE\"}]}",
+				"{\"vehicules\":[{\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491},"
+						+ "{\"name\":\"2797\",\"direction\":\"NE\",\"distance\":682}]}",
 				spyPrototypeService.position(getCurrentPosition(), 2));
 	}
 
@@ -112,15 +113,43 @@ public class PrototypeServiceTest {
 	public void test02_position_should_return_1_vehicule_for_count_1()
 			throws AlKhwarizmixException {
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"name\":\"2967\",\"distance\":491,\"direction\":\"SE\"}]}",
+				"{\"vehicules\":[{\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491}]}",
 				spyPrototypeService.position(getCurrentPosition(), 1));
 	}
 
 	@Test
 	public void test03_position_should_return_0_vehicules_for_count_0()
 			throws AlKhwarizmixException {
-		Assert.assertEquals("{\"vehicules\":[]}",
+		Assert.assertEquals("{}",
 				spyPrototypeService.position(getCurrentPosition(), 0));
+	}
+
+	@Test
+	public void test04_position_should_fill_currentPosition_with_address()
+			throws AlKhwarizmixException {
+		final String addressShort = "1234 My Current Address";
+		final String addressLong = addressShort + ", Sidi Bel Abbès, Algérie";
+		when(
+				mockWinrakService.convertPositionToAddress(45.5417145,
+						-73.59598849999999, 3000)).thenReturn(addressLong);
+		final IWinrakPosition myCurrentPosition = getCurrentPosition();
+		final String result = spyPrototypeService
+				.position(myCurrentPosition, 1);
+		Assert.assertTrue(result.contains("\"address\":\"" + addressShort
+				+ "\""));
+		Assert.assertEquals(addressLong, myCurrentPosition.getAddress());
+	}
+
+	@Test
+	public void test05_position_should_return_1_vehicule_with_address()
+			throws AlKhwarizmixException {
+		when(
+				mockWinrakService.convertPositionToAddress(45.5383915,
+						-73.591833666666673, 3000)).thenReturn(
+				"2967 Address, Sidi Bel Abbès, Algérie");
+		final String result = spyPrototypeService.position(
+				getCurrentPosition(), 1);
+		Assert.assertTrue(result.contains("\"address\":\"2967 Address\""));
 	}
 
 } // Class

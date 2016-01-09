@@ -241,8 +241,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	 * @throws AlKhwarizmixException
 	 */
 	public String toJson(final IJSONUtil jsonUtil) throws AlKhwarizmixException {
-		return jsonUtil
-				.marshalObjectToJSON((AbstractAlKhwarizmixDomainObject) clone());
+		return jsonUtil.marshalObjectToJSON((IAlKhwarizmixJsonObject) clone());
 	}
 
 	// --------------------------------------------------------------------------

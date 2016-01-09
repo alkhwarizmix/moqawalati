@@ -18,6 +18,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.domain.IAlKhwarizmixJsonObject;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 
 /**
@@ -29,7 +30,7 @@ import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
  * @since ٢٣ ربيع الاول ١٤٣٧ (January 02, 2016)
  */
 public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
-		IWinrakPosition, Serializable, Cloneable {
+		IWinrakPosition, IAlKhwarizmixJsonObject, Serializable, Cloneable {
 
 	// --------------------------------------------------------------------------
 	//
