@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2016 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,22 +9,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.services.impl;
-
-import static org.mockito.Mockito.when;
+package dz.alkhwarizmix.winrak.java.webservices.impl;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.slf4j.Logger;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
-import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
 /**
  * <p>
@@ -32,11 +26,11 @@ import dz.alkhwarizmix.winrak.java.services.IWinrakService;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٨ ربيع الاول ١٤٣٧ (December 19, 2015)
+ * @since ٣٠ ربيع الاول ١٤٣٧ (January 10, 2016)
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class PrototypeServiceTest {
+public class WinrakWebServiceForJSONTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -44,23 +38,8 @@ public class PrototypeServiceTest {
 	//
 	// --------------------------------------------------------------------------
 
-	@Spy
-	private PrototypeService spyPrototypeService;
-
 	@Mock
-	private Logger mockLogger;
-
-	@Mock
-	private IHTTPUtil mockHttpUtil;
-
-	@Mock
-	private IWinrakService mockWinrakService;
-
-	@Before
-	public void setUp() throws AlKhwarizmixException {
-		when(spyPrototypeService.getLogger()).thenReturn(mockLogger);
-		when(spyPrototypeService.getHttpUtil()).thenReturn(mockHttpUtil);
-	}
+	private WinrakWebServiceForJSON utWinrakWebServiceForJSON;
 
 	// --------------------------------------------------------------------------
 	//
@@ -77,13 +56,14 @@ public class PrototypeServiceTest {
 	// --------------------------------------------------------------------------
 
 	@Test
-	public void test00_constructor() {
-		final PrototypeService utPrototypeService = new PrototypeService();
-		Assert.assertNotNull(utPrototypeService);
-		Assert.assertNotNull(utPrototypeService.getLogger());
-		Assert.assertEquals(
-				"dz.alkhwarizmix.framework.java.services.impl.PrototypeService",
-				utPrototypeService.getLogger().getName());
+	public void test00_constructor() throws AlKhwarizmixException {
+		Assert.assertNotNull(utWinrakWebServiceForJSON);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test01() throws AlKhwarizmixException {
+		Assert.assertTrue(false);
 	}
 
 } // Class

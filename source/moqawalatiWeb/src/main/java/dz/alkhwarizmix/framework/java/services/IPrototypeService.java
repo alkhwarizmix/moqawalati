@@ -12,7 +12,6 @@
 package dz.alkhwarizmix.framework.java.services;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 
 /**
  * <p>
@@ -31,10 +30,5 @@ public interface IPrototypeService extends IAlKhwarizmixService {
 	/**
 	 */
 	public String protoGet(String param1) throws AlKhwarizmixException;
-
-	/**
-	 */
-	public String position(IWinrakPosition position, int count)
-			throws AlKhwarizmixException;
 
 } // Interface

@@ -233,7 +233,7 @@
         function _getAlkhwarizmixReservauto_(latitude, longitude) {
             var context = ['trouvauto', 'moqawalatiWeb', ''][_APP_MODE_];
             return (context
-                    ? '/' + context + '/alkhwarizmix/json/prototype/p/' + latitude + '/' + longitude + '/' + 3 + '/'
+                    ? '/' + context + '/alkhwarizmix/json/winrak/trouvauto/' + latitude + '/' + longitude + '/' + 3 + '/'
                     : 'json/p.json')
         }
 
@@ -350,7 +350,7 @@
         // _getGoogleStaticMap_
         function _getGoogleStaticMap_IMG_(latitude, longitude) {
             var src = _IS_PROD_MODE_
-                    ? 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA&size=320x160&zoom=16&format=jpg&markers=color:green%7C' + latitude + ',' + longitude
+                    ? 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA&size=320x160&zoom=15&format=jpg&markers=color:green%7C' + latitude + ',' + longitude
                     : 'images/staticmap.jpeg';
             return '<img class="_button_map_" src="' + src + '">';
         }
@@ -363,7 +363,7 @@
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.23</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.24</div>
 </body>
 
 </html>

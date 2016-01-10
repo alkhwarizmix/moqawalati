@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2016 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dz.alkhwarizmix.framework.java.webservices.impl;
+package dz.alkhwarizmix.winrak.java.webservices.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +19,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
-import dz.alkhwarizmix.framework.java.services.IPrototypeService;
+import dz.alkhwarizmix.framework.java.webservices.impl.AbstractAlKhwarizmixWebServiceForJSON;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
 /**
  * <p>
@@ -31,11 +32,11 @@ import dz.alkhwarizmix.framework.java.services.IPrototypeService;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٠٨ ربيع الاول ١٤٣٧ (December 19, 2015)
+ * @since ٣٠ ربيع الاول ١٤٣٧ (January 10, 2016)
  */
 @Controller
-@RequestMapping("alkhwarizmix/json/prototype")
-public class PrototypeWebServiceForJSON extends
+@RequestMapping("alkhwarizmix/json/winrak")
+public class WinrakWebServiceForJSON extends
 		AbstractAlKhwarizmixWebServiceForJSON {
 
 	// --------------------------------------------------------------------------
@@ -47,7 +48,7 @@ public class PrototypeWebServiceForJSON extends
 	/**
 	 * constructor
 	 */
-	public PrototypeWebServiceForJSON() {
+	public WinrakWebServiceForJSON() {
 		super();
 	}
 
@@ -62,7 +63,7 @@ public class PrototypeWebServiceForJSON extends
 	@Override
 	protected Logger getLogger() {
 		if (logger == null)
-			logger = LoggerFactory.getLogger(PrototypeWebServiceForJSON.class);
+			logger = LoggerFactory.getLogger(WinrakWebServiceForJSON.class);
 		return logger;
 	}
 
@@ -73,7 +74,7 @@ public class PrototypeWebServiceForJSON extends
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private IPrototypeService prototypeService;
+	private IWinrakService winrakService;
 
 	// --------------------------------------------------------------------------
 	//
@@ -83,32 +84,17 @@ public class PrototypeWebServiceForJSON extends
 
 	/**
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> protoPost(
-			@RequestParam("param1") final String param1)
+	@RequestMapping(value = "/trouvauto/{latitude}/{longitude}/{count}", method = RequestMethod.GET)
+	public ResponseEntity<String> trouvauto(
+			@PathVariable("latitude") final Double latitude,
+			@PathVariable("longitude") final Double longitude,
+			@PathVariable("count") final int count)
 			throws AlKhwarizmixException {
-		getLogger().trace("protoPost({})", param1);
-
+		getLogger().debug("position({}, {}, {})", latitude, longitude, count);
 		try {
-			final String result = getPrototypeService().protoPost(param1);
-			final StringBuilder sBuilder = new StringBuilder(result);
-			return successResponseForJSON(sBuilder);
-		} catch (final AlKhwarizmixException e) {
-			return errorResponseForJSON(e);
-		}
-	}
-
-	/**
-	 */
-	@RequestMapping(value = "/{param1}", method = RequestMethod.GET)
-	public ResponseEntity<String> protoGet(
-			@PathVariable("param1") final String param1)
-			throws AlKhwarizmixException {
-		getLogger().debug("protoGet({})", param1);
-
-		try {
-			final StringBuilder sBuilder = new StringBuilder(
-					getPrototypeService().protoGet(param1));
+			final StringBuilder sBuilder = new StringBuilder(getWinrakService()
+					.trouvauto(new ReservautoPosition(latitude, longitude),
+							count));
 			return successResponseForJSON(sBuilder);
 		} catch (final AlKhwarizmixException e) {
 			return errorResponseForJSON(e);
@@ -122,15 +108,15 @@ public class PrototypeWebServiceForJSON extends
 	// --------------------------------------------------------------------------
 
 	// ----------------------------------
-	// prototypeService
+	// winrakService
 	// ----------------------------------
 
-	protected IPrototypeService getPrototypeService() {
-		return prototypeService;
+	protected IWinrakService getWinrakService() {
+		return winrakService;
 	}
 
-	protected void setPrototypeService(final IPrototypeService value) {
-		prototypeService = value;
+	protected void setWinrakService(final IWinrakService value) {
+		winrakService = value;
 	}
 
 	// ----------------------------------
@@ -139,7 +125,7 @@ public class PrototypeWebServiceForJSON extends
 
 	@Override
 	protected IAlKhwarizmixService getService() {
-		return prototypeService;
+		return winrakService;
 	}
 
 } // Class

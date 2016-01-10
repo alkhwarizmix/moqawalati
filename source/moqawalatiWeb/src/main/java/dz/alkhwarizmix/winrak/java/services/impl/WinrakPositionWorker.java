@@ -139,6 +139,7 @@ public class WinrakPositionWorker {
 			} catch (final AlKhwarizmixException e) {
 				getLogger().warn("WinrakPositionThread run: {}",
 						e.getStackTrace());
+				pos.setAddress("");
 			}
 		}
 	}

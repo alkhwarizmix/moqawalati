@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2015 Fares Belhaouas)
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2016 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -12,7 +12,6 @@
 package dz.alkhwarizmix.winrak.java.services;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
-import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 
 /**
@@ -21,20 +20,9 @@ import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ١٧ ربيع الاول ١٤٣٧ (December 28, 2015)
+ * @since ٣٠ ربيع الاول ١٤٣٧ (January 10, 2016)
  */
-public interface IWinrakService extends IAlKhwarizmixService {
-
-	/**
-	 *
-	 * @param latitude
-	 * @param longitude
-	 * @return
-	 * @throws AlKhwarizmixException
-	 */
-	public String convertPositionToAddress(final Double latitude,
-			final Double longitude, long timeout_ms)
-			throws AlKhwarizmixException;
+public interface ITrouvautoService {
 
 	/**
 	 *
@@ -46,4 +34,4 @@ public interface IWinrakService extends IAlKhwarizmixService {
 	public String trouvauto(IWinrakPosition position, int count)
 			throws AlKhwarizmixException;
 
-} // Class
+} // Interface

@@ -11,10 +11,19 @@
 
 package dz.alkhwarizmix.winrak.java.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
+import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
+import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
+import dz.alkhwarizmix.framework.java.services.impl.AbstractAlKhwarizmixService;
+import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
 /**
@@ -26,15 +35,39 @@ import dz.alkhwarizmix.winrak.java.services.IWinrakService;
  * @since ١٧ ربيع الاول ١٤٣٧ (December 28, 2015)
  */
 @Service
-public class WinrakService implements IWinrakService {
+@Transactional(readOnly = true)
+public class WinrakService extends AbstractAlKhwarizmixService implements
+		IWinrakService {
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Constructors
 	//
 	// --------------------------------------------------------------------------
 
-	// EMPTY
+	public WinrakService() {
+		super();
+	}
+
+	protected WinrakService(final Logger theLogger) {
+		this();
+		logger = theLogger;
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Logger
+	//
+	// --------------------------------------------------------------------------
+
+	private static Logger logger = null;
+
+	@Override
+	protected Logger getLogger() {
+		if (logger == null)
+			logger = LoggerFactory.getLogger(WinrakService.class);
+		return logger;
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -51,6 +84,17 @@ public class WinrakService implements IWinrakService {
 	//
 	// --------------------------------------------------------------------------
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AbstractAlKhwarizmixDomainObject getObject(
+			final AbstractAlKhwarizmixDomainObject object,
+			final boolean validateObjectToPublish) throws AlKhwarizmixException {
+		getLogger().trace("getObject");
+		return null;
+	}
+
 	@Override
 	public String convertPositionToAddress(final Double latitude,
 			final Double longitude, final long timeout_ms)
@@ -65,11 +109,53 @@ public class WinrakService implements IWinrakService {
 		return Math.round(value * factor) / factor;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String trouvauto(final IWinrakPosition pos, final int count)
+			throws AlKhwarizmixException {
+		getLogger().trace("position");
+		return new TrouvautoService(this).trouvauto(pos, count);
+	}
+
 	// --------------------------------------------------------------------------
 	//
 	// Getters & Setters
 	//
 	// --------------------------------------------------------------------------
+
+	// ----------------------------------
+	// DAO
+	// ----------------------------------
+
+	@Override
+	protected IAlKhwarizmixDAO getServiceDAO() {
+		return null;
+	}
+
+	// ----------------------------------
+	// Validator
+	// ----------------------------------
+
+	@Override
+	protected IAlKhwarizmixServiceValidator getServiceValidator() {
+		return null;
+	}
+
+	// ----------------------------------
+	// jaxb2Marshaller
+	// ----------------------------------
+
+	@Override
+	protected Jaxb2Marshaller getJaxb2Marshaller() {
+		return null;
+	}
+
+	@Override
+	protected void setJaxb2Marshaller(final Jaxb2Marshaller value) {
+		// jaxb2Marshaller = value;
+	}
 
 	/**
 	 * @param value
