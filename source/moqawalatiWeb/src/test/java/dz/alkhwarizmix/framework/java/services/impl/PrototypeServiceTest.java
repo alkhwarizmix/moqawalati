@@ -104,8 +104,8 @@ public class PrototypeServiceTest {
 	public void test01_position_should_return_2_vehicules_for_count_2()
 			throws AlKhwarizmixException {
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491},"
-						+ "{\"name\":\"2797\",\"direction\":\"NE\",\"distance\":682}]}",
+				"{\"vehicules\":[{\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491},"
+						+ "{\"lat\":45.54663,\"lng\":-73.59074,\"name\":\"2797\",\"direction\":\"NE\",\"distance\":682}]}",
 				spyPrototypeService.position(getCurrentPosition(), 2));
 	}
 
@@ -113,7 +113,7 @@ public class PrototypeServiceTest {
 	public void test02_position_should_return_1_vehicule_for_count_1()
 			throws AlKhwarizmixException {
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491}]}",
+				"{\"vehicules\":[{\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491}]}",
 				spyPrototypeService.position(getCurrentPosition(), 1));
 	}
 

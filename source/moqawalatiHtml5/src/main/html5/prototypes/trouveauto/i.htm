@@ -89,7 +89,7 @@
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
         var _NUMBER_MAX_VALUE_ = 10000,
-                _APP_MODE_ = 0, // 0='fares', 1='moqawalatiWeb', 2='p.json'
+                _APP_MODE_ = 0, // 0='trouvauto', 1='moqawalatiWeb', 2='p.json'
                 _IS_PROD_MODE_ = (_APP_MODE_ == 0),
                 _refreshTimeout_ = 0,
                 _autoRefreshEndTime_ = 0,
@@ -160,7 +160,7 @@
         function _getVehiculeHTML_(vehicule) {
             var btnHTML = _attr_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
                     _attr_('div', vehicule.address);
-            return _attr_('button', btnHTML, 'onclick="_gotoCommunauto_()"');
+            return _attr_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, ' + vehicule.lat + ',' + vehicule.lng + ')"');
         }
 
         // _getLoc_
@@ -225,7 +225,7 @@
 
         // _getAlkhwarizmixReservauto_
         function _getAlkhwarizmixReservauto_(latitude, longitude) {
-            var context = ['fares', 'moqawalatiWeb', ''][_APP_MODE_];
+            var context = ['trouvauto', 'moqawalatiWeb', ''][_APP_MODE_];
             return (context
                     ? '/' + context + '/alkhwarizmix/json/prototype/p/' + latitude + '/' + longitude + '/' + 3 + '/'
                     : 'json/p.json')
@@ -242,10 +242,16 @@
             _getLoc_(_showPosition_);
         }
 
-        // _gotoCommunauto_
-        function _gotoCommunauto_() {
-            clearTimeout(_refreshTimeout_);
-            _getLoc_(_openCommunauto_);
+        // _vehicule_clickHandler_
+        function _vehicule_clickHandler_(elmnt, latitude, longitude) {
+            if (elmnt.numClick) {
+                clearTimeout(_refreshTimeout_);
+                _getLoc_(_openCommunauto_);
+            }
+            else {
+                elmnt.innerHTML += _getGoogleStaticMap_IMG_(latitude, longitude);
+                elmnt.numClick = 1;
+            }
         }
 
         // ---------- ---------- ---------- ---------- ---------- ---------- --
@@ -334,6 +340,18 @@
         function _setVisible_(id, visible) {
             _elmnt_(id).style.visibility = (visible === false) ? "hidden" : "";
         }
+
+        // _getGoogleStaticMap_
+        function _getGoogleStaticMap_IMG_(latitude, longitude) {
+            return '<img src="https://maps.googleapis.com/maps/api/staticmap?' +
+                    'key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA' +
+                    '&size=320x160' +
+                    '&zoom=16' +
+                    '&format=jpg' +
+                    '&markers=color:green%7C' + latitude + ',' + longitude +
+                    '">';
+        }
+
     </script>
 </head>
 
@@ -342,7 +360,7 @@
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.19</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.22</div>
 </body>
 
 </html>

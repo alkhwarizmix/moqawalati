@@ -50,10 +50,10 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 		super();
 	}
 
-	public WinrakPosition(final Double lat, final Double lon) {
+	public WinrakPosition(final Double lat, final Double lng) {
 		this();
 		Lat = lat;
-		Lon = lon;
+		Lon = lng;
 	}
 
 	protected WinrakPosition(final WinrakPosition other) {
@@ -92,7 +92,7 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	 */
 	@Override
 	protected ToStringBuilder toStringBuilder() {
-		return super.toStringBuilder().append("Lat", Lat).append("Lon", Lon)
+		return super.toStringBuilder().append("Lat", Lat).append("Lng", Lon)
 				.append("address", address);
 	}
 
@@ -159,9 +159,9 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 				? "N"
 				: (getLat() > pos2.getLat()
 						? "S"
-						: "")) + (getLon() < pos2.getLon()
+						: "")) + (getLng() < pos2.getLng()
 				? "E"
-				: (getLon() > pos2.getLon()
+				: (getLng() > pos2.getLng()
 						? "W"
 						: ""));
 	}
@@ -176,10 +176,10 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 		final Double radLat1 = Math.toRadians(pos1.getLat());
 		final Double radLat2 = Math.toRadians(pos2.getLat());
 		final Double deltaLat = Math.toRadians(pos2.getLat() - pos1.getLat());
-		final Double deltaLon = Math.toRadians(pos2.getLon() - pos1.getLon());
+		final Double deltaLng = Math.toRadians(pos2.getLng() - pos1.getLng());
 		final Double a = (Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2))
 				+ (Math.cos(radLat1) * Math.cos(radLat2)
-						* Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2));
+						* Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2));
 		final Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		final Double d = R * c;
 		return (d.intValue());
@@ -220,14 +220,14 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	}
 
 	// ----------------------------------
-	// Lon
+	// Lng
 	// ----------------------------------
 
 	/**
-	 * @return the lon
+	 * @return the lng
 	 */
 	@Override
-	public Double getLon() {
+	public Double getLng() {
 		return Lon;
 	}
 

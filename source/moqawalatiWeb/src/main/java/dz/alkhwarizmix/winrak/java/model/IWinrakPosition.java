@@ -11,7 +11,6 @@
 
 package dz.alkhwarizmix.winrak.java.model;
 
-
 /**
  * <p>
  * TODO: Javadoc
@@ -45,7 +44,7 @@ public interface IWinrakPosition {
 	 *
 	 * @return the longitude
 	 */
-	public Double getLon();
+	public Double getLng();
 
 	/**
 	 *

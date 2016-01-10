@@ -135,7 +135,7 @@ public class WinrakPositionWorker {
 		public void run() {
 			try {
 				pos.setAddress(winrakService.convertPositionToAddress(
-						pos.getLat(), pos.getLon(), timeout_ms));
+						pos.getLat(), pos.getLng(), timeout_ms));
 			} catch (final AlKhwarizmixException e) {
 				getLogger().warn("WinrakPositionThread run: {}",
 						e.getStackTrace());

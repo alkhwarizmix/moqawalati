@@ -182,7 +182,7 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 
 	private String getReservautoVehicleProposals(final IWinrakPosition pos) {
 		final String endPoint = "https://www.reservauto.net/WCF/LSI/LSIBookingService.asmx/GetVehicleProposals?Callback=%22%22&CustomerID=%22%22&Latitude="
-				+ pos.getLat() + "&Longitude=" + pos.getLon();
+				+ pos.getLat() + "&Longitude=" + pos.getLng();
 		String result = getHttpUtil().sendGetRequest(endPoint, null);
 		result = result.substring(3, result.length() - 2);
 		return result;
@@ -281,15 +281,24 @@ public class PrototypeService extends AbstractAlKhwarizmixService implements
 				final IWinrakPosition pos) {
 			super();
 			address = getShortAddress(vehicule.getPosition());
+			lat = roundTo5Decimals(vehicule.getPosition().getLat());
+			lng = roundTo5Decimals(vehicule.getPosition().getLng());
 			name = vehicule.getName();
 			direction = pos.directionTo(vehicule.getPosition());
 			distance = pos.distanceTo(vehicule.getPosition());
 		}
 
 		protected final String address;
+		protected final Double lat;
+		protected final Double lng;
 		protected final String name;
 		protected final String direction;
 		protected final int distance;
+
+		private Double roundTo5Decimals(final Double value) {
+			final Double factor = Math.pow(10, 5);
+			return Math.round(value * factor) / factor;
+		}
 	}
 
 } // Class

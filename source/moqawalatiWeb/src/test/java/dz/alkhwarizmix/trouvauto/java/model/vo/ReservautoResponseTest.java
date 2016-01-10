@@ -20,8 +20,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
-import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
-import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoResponse;
 
 /**
  * <p>
@@ -76,7 +74,7 @@ public class ReservautoResponseTest {
 		Assert.assertNotNull(result.getUserPosition());
 		Assert.assertNotNull(result.getUserPosition().getLat());
 		Assert.assertEquals(45.5416714, result.getUserPosition().getLat(), 0);
-		Assert.assertEquals(-73.5959934, result.getUserPosition().getLon(), 0);
+		Assert.assertEquals(-73.5959934, result.getUserPosition().getLng(), 0);
 		Assert.assertNotNull(result.getVehicules());
 		Assert.assertEquals(1, result.getVehicules().size());
 		Assert.assertEquals("2646", result.getVehicules().get(0).getName());
@@ -91,7 +89,7 @@ public class ReservautoResponseTest {
 		final String json = utReservautoResponse.toJson(jsonUtil);
 		final ReservautoResponse result = new ReservautoResponse(json, jsonUtil);
 		Assert.assertEquals(2.3, result.getUserPosition().getLat(), 0);
-		Assert.assertEquals(4.5, result.getUserPosition().getLon(), 0);
+		Assert.assertEquals(4.5, result.getUserPosition().getLng(), 0);
 	}
 
 	@Ignore("TODO: TDD")
