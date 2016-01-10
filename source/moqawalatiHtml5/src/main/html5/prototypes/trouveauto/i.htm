@@ -82,6 +82,12 @@
             -webkit-margin-before: 1.0em;
         }
 
+        ._button_map_ {
+            osition: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
     </style>
     <script type="text/javascript">
         // ---------- ---------- ---------- ---------- ---------- ---------- --
@@ -343,13 +349,10 @@
 
         // _getGoogleStaticMap_
         function _getGoogleStaticMap_IMG_(latitude, longitude) {
-            return '<img src="https://maps.googleapis.com/maps/api/staticmap?' +
-                    'key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA' +
-                    '&size=320x160' +
-                    '&zoom=16' +
-                    '&format=jpg' +
-                    '&markers=color:green%7C' + latitude + ',' + longitude +
-                    '">';
+            var src = _IS_PROD_MODE_
+                    ? 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA&size=320x160&zoom=16&format=jpg&markers=color:green%7C' + latitude + ',' + longitude
+                    : 'images/staticmap.jpeg';
+            return '<img class="_button_map_" src="' + src + '">';
         }
 
     </script>
@@ -360,7 +363,7 @@
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.22</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.23</div>
 </body>
 
 </html>
