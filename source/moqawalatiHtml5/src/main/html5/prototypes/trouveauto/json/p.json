@@ -5,28 +5,28 @@
       "address": "6320 Rue Marquette",
       "vehicules": [
         {
-          "address": "1215-1217 Rue Beaubien E",
-          "lat": 45.53908,
-          "lng": -73.60048,
-          "name": "3141",
-          "direction": "SW",
-          "distance": 449
-        },
-        {
-          "address": "5900 Rue Chambord",
-          "lat": 45.5376,
-          "lng": -73.59443,
-          "name": "2805",
+          "address": "1600 Rue de Bellechasse",
+          "lat": 45.54059,
+          "lng": -73.59414,
+          "name": "2951",
           "direction": "SE",
-          "distance": 468
+          "distance": 186
         },
         {
-          "address": "6558 Rue de Normanville",
-          "lat": 45.53983,
-          "lng": -73.60156,
-          "name": "2954",
-          "direction": "SW",
-          "distance": 476
+          "address": "5997 Rue Marquette",
+          "lat": 45.54098,
+          "lng": -73.59321,
+          "name": "2689",
+          "direction": "SE",
+          "distance": 230
+        },
+        {
+          "address": "5784 Rue Chabot",
+          "lat": 45.54086,
+          "lng": -73.58847,
+          "name": "3043",
+          "direction": "SE",
+          "distance": 594
         }
       ]
     }

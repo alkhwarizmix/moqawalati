@@ -24,17 +24,6 @@
             font-size: 0.8em;
         }
 
-        .button1 {
-            display: block;
-            font-size: 1.0em;
-            font-weight: bold;
-            -webkit-margin-after: 0.83em;
-            -webkit-margin-before: 0.83em;
-            -webkit-margin-end: 0px;
-            -webkit-margin-start: 0px;
-            width: 100%;
-        }
-
         button {
             /*
             -moz-border-radius:10px;
@@ -83,7 +72,6 @@
         }
 
         ._button_map_ {
-            osition: absolute;
             width: 100%;
             height: 100%;
             z-index: -1;
@@ -99,7 +87,10 @@
                 _IS_PROD_MODE_ = (_APP_MODE_ == 0),
                 _refreshTimeout_ = 0,
                 _autoRefreshEndTime_ = 0,
-                _prevNearestVehiculeDistance_ = _NUMBER_MAX_VALUE_;
+                _prevNearestVehiculeDistance_ = _NUMBER_MAX_VALUE_,
+                _myLatitude_,
+                _myLongitude_,
+                _roundTo5Decimals_factor_ = Math.pow(10, 5);
 
         // ---------- ---------- ---------- ---------- ---------- ---------- --
         // COMMON FUNCTIONS
@@ -166,7 +157,7 @@
         function _getVehiculeHTML_(vehicule) {
             var btnHTML = _attr_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
                     _attr_('div', vehicule.address);
-            return _attr_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, ' + vehicule.lat + ',' + vehicule.lng + ')"');
+            return _attr_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, ' + vehicule.lat + ',' + vehicule.lng + ',' + vehicule.distance + ')"');
         }
 
         // _getLoc_
@@ -175,7 +166,9 @@
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                         function getCurrentPosition_success(p) {
-                            callBack(p);
+                            _myLatitude_ = _roundTo5Decimals_(p.coords.latitude);
+                            _myLongitude_ = _roundTo5Decimals_(p.coords.longitude);
+                            callBack(_myLatitude_, _myLongitude_);
                         }, function getCurrentPosition_error(e) {
                             _getLoc_error_(_i18n_('_GPS_ERROR_') + ' (' + e.code + ')');
                         }, {timeout: 10000});
@@ -189,19 +182,19 @@
             _out_(e, true);
         }
 
-        // _openCommunauto_(pos)
-        function _openCommunauto_(p) {
-            var url = "https://www.reservauto.net/Scripts/Client/Mobile/ReservationDisponibility.asp?stations=false&Latitude=" + p.coords.latitude + "&Longitude=" + p.coords.longitude;
+        // _openCommunauto_
+        function _openCommunauto_(lat, lng) {
+            var url = "https://www.reservauto.net/Scripts/Client/Mobile/ReservationDisponibility.asp?stations=false&Latitude=" + lat + "&Longitude=" + lng;
             window.open(url, "_self");
         }
 
-        // _showPosition_(pos)
-        function _showPosition_(p) {
+        // _showPosition_
+        function _showPosition_(lat, lng) {
             _out_(_i18n_('_FIND_CARS_'), false);
-            _httpGet_(_getAlkhwarizmixReservauto_(p.coords.latitude, p.coords.longitude));
+            _httpGet_(_getAlkhwarizmixReservauto_(lat, lng));
         }
 
-        // _httpGet_(url)
+        // _httpGet_
         function _httpGet_(u) {
             var req = new XMLHttpRequest();
             req.open("GET", u, true);
@@ -249,13 +242,13 @@
         }
 
         // _vehicule_clickHandler_
-        function _vehicule_clickHandler_(elmnt, latitude, longitude) {
+        function _vehicule_clickHandler_(elmnt, lat, lng, distance) {
             if (elmnt.numClick) {
                 clearTimeout(_refreshTimeout_);
                 _getLoc_(_openCommunauto_);
             }
             else {
-                elmnt.innerHTML += _getGoogleStaticMap_IMG_(latitude, longitude);
+                elmnt.innerHTML += _getGoogleStaticMap_IMG_(lat, lng, distance);
                 elmnt.numClick = 1;
             }
         }
@@ -347,12 +340,32 @@
             _elmnt_(id).style.visibility = (visible === false) ? "hidden" : "";
         }
 
-        // _getGoogleStaticMap_
-        function _getGoogleStaticMap_IMG_(latitude, longitude) {
-            var src = _IS_PROD_MODE_
-                    ? 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA&size=320x160&zoom=15&format=jpg&markers=color:green%7C' + latitude + ',' + longitude
-                    : 'images/staticmap.jpeg';
+        // _getGoogleStaticMap_IMG_
+        function _getGoogleStaticMap_IMG_(lat, lng, distance) {
+            var src = 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA' +
+                    '&center=' + _getPosition_CSV_(_middlePoint_(_myLatitude_, lat), _middlePoint_(_myLongitude_, lng)) +
+                    '&size=300x200' +
+                    '&format=jpg' +
+                    _getGoogleMarker_(lat, lng, 'green') +
+                    _getGoogleMarker_(_myLatitude_, _myLongitude_, 'red');
+            // src = 'images/staticmap.jpeg';
             return '<img class="_button_map_" src="' + src + '">';
+        }
+
+        function _getGoogleMarker_(lat, lng, color) {
+            return '&markers=color:' + color + '%7C' + _getPosition_CSV_(lat, lng);
+        }
+
+        function _getPosition_CSV_(lat, lng) {
+            return _roundTo5Decimals_(lat) + ',' + _roundTo5Decimals_(lng);
+        }
+
+        function _middlePoint_(x, y) {
+            return (x + y) / 2;
+        }
+
+        function _roundTo5Decimals_(value) {
+            return Math.round(value * _roundTo5Decimals_factor_) / _roundTo5Decimals_factor_;
         }
 
     </script>
@@ -363,7 +376,7 @@
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.24</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.31</div>
 </body>
 
 </html>
