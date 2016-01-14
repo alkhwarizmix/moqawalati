@@ -8,10 +8,10 @@ source/moqawalatiWeb/.settings/org.eclipse.wst.common.component
 
 source/moqawalatiWeb/.pmd
 
-source/moqawalatiHtml5/src/main/html5/prototypes/trouveauto/.idea/**
+source/moqawalatiHtml5/src/main/html5/prototypes/trouvauto/.idea/**
 
-source/moqawalatiHtml5/src/main/html5/prototypes/trouveauto/node_modules/**
+source/moqawalatiHtml5/src/main/html5/prototypes/trouvauto/node_modules/**
 
-source/moqawalatiHtml5/src/main/html5/prototypes/trouveauto/npm-debug.log
+source/moqawalatiHtml5/src/main/html5/prototypes/trouvauto/npm-debug.log
 
-source/moqawalatiHtml5/src/main/html5/prototypes/trouveauto/i.m.htm
+source/moqawalatiHtml5/src/main/html5/prototypes/trouvauto/i.m.htm
