@@ -101,6 +101,11 @@
             return '<' + a + (aArg ? ' ' + aArg : '') + '>' + v + '</' + a + '>';
         }
 
+        // _img_
+        function _img_(src, clazz) {
+            return '<img ' + (clazz ? 'class="' + clazz + '" ' : '') + 'src="' + src + '">';
+        }
+
         // _config_
         function _config_(p) {
             return {
@@ -272,6 +277,7 @@
         function _outVehicules_(vehicules, address) {
             var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
             var vehiculesHTML = _attr_('div', address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
+            vehiculesHTML += _img_('http://mt.google.com/vt/icon?psize=30&font=fonts/arialuni_t.ttf&color=ff304C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=48&text=%E2%80%A2&scale=0.5');
             if (vehicules && vehicules.length > 0) {
                 var tableContent = '';
                 vehicules.forEach(function (vehicule) {
@@ -349,7 +355,7 @@
                     _getGoogleMarker_(lat, lng, 'green') +
                     _getGoogleMarker_(_myLatitude_, _myLongitude_, 'red');
             // src = 'images/staticmap.jpeg';
-            return '<img class="_button_map_" src="' + src + '">';
+            return _img_(src, '_button_map_');
         }
 
         function _getGoogleMarker_(lat, lng, color) {
