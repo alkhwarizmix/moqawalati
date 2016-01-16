@@ -83,7 +83,7 @@
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
         var _NUMBER_MAX_VALUE_ = 10000,
-                _APP_MODE_ = 2, // 0='trouvauto', 1='moqawalatiWeb', 2='p.json'
+                _APP_MODE_ = 0, // 0='trouvauto', 1='moqawalatiWeb', 2='p.json'
                 _IS_PROD_MODE_ = (_APP_MODE_ == 0),
                 _refreshTimeout_ = 0,
                 _autoRefreshEndTime_ = 0,
@@ -96,14 +96,14 @@
         // COMMON FUNCTIONS
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        // _attr_
-        function _attr_(a, v, aArg) {
+        // _htmlTag_
+        function _htmlTag_(a, v, aArg) {
             return '<' + a + (aArg ? ' ' + aArg : '') + '>' + v + '</' + a + '>';
         }
 
-        // _img_
-        function _img_(src, clazz) {
-            return '<img ' + (clazz ? 'class="' + clazz + '" ' : '') + 'src="' + src + '">';
+        // _imgTag_
+        function _imgTag_(id, src, clazz) {
+            return '<img ' + (id ? 'id="' + id + '" ' : '') + (clazz ? 'class="' + clazz + '" ' : '') + (src ? 'src="' + src + '" ' : '') + '>';
         }
 
         // _config_
@@ -119,10 +119,27 @@
             return document.getElementById(id);
         }
 
+        // _elmnt_insertToInnerHTML_
+        function _elmnt_insertToInnerHTML_(elmnt, valueToInsert, index) {
+            if (_isString_(elmnt))
+                elmnt = _elmnt_(elmnt);
+            if (index === 0)
+                elmnt.innerHTML = valueToInsert + elmnt.innerHTML;
+            else
+                elmnt.innerHTML += valueToInsert;
+        }
+
+        // _elmnt_setInnerHTML_
+        function _elmnt_setInnerHTML_(elmnt, newInnerHTML) {
+            if (_isString_(elmnt))
+                elmnt = _elmnt_(elmnt);
+            elmnt.innerHTML = newInnerHTML;
+        }
+
         // _i18n_
         function _i18n_(p) {
             return {
-                "_DATA_LOAD_TIME_": 'Dernière mise-à-jour ',
+                "_DATA_LOAD_TIME_": 'Ma position à ',
                 "_DISTANCE_HEADER_": 'Distance en mètres',
                 "_ERROR_": 'Erreur',
                 "_FIND_CARS_": 'Recherche de véhicules Automobile...',
@@ -132,6 +149,11 @@
                 "_REFRESH_": 'Rafréchir',
                 "_VEHICULE_HEADER_": 'Véhicule'
             }[p];
+        }
+
+        // _isString_
+        function _isString_(obj) {
+            return (typeof(obj) === 'string');
         }
 
         // _now_
@@ -160,9 +182,10 @@
 
         // _getVehiculeHTML_
         function _getVehiculeHTML_(vehicule) {
-            var btnHTML = _attr_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
-                    _attr_('div', vehicule.address);
-            return _attr_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, ' + vehicule.lat + ',' + vehicule.lng + ',' + vehicule.distance + ')"');
+            var btnHTML = _htmlTag_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
+                    _htmlTag_('div', _imgTag_('_vehiculeImage_' + vehicule.name) + vehicule.address);
+            return _htmlTag_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, '
+                    + vehicule.name + ',' + vehicule.lat + ',' + vehicule.lng + ',' + vehicule.distance + ')"');
         }
 
         // _getLoc_
@@ -200,9 +223,9 @@
         }
 
         // _httpGet_
-        function _httpGet_(u) {
+        function _httpGet_(url) {
             var req = new XMLHttpRequest();
-            req.open("GET", u, true);
+            req.open("GET", url, true);
             req.onerror = _httpGet_onError_;
             req.onreadystatechange = function () {
                 if (req.readyState == 4 && req.status == 200) {
@@ -220,7 +243,7 @@
         // _httpGet_success_()
         function _httpGet_success_(data) {
             if (data.response.status === "SUCCESSFUL") {
-                _outVehicules_(data.response.result.vehicules, data.response.result.address);
+                _outResult_(data.response.result.vehicules, data.response.result.address);
             }
             else {
                 _outError_(-20);
@@ -247,13 +270,15 @@
         }
 
         // _vehicule_clickHandler_
-        function _vehicule_clickHandler_(elmnt, lat, lng, distance) {
+        function _vehicule_clickHandler_(elmnt, name, lat, lng, distance) {
             if (elmnt.numClick) {
                 clearTimeout(_refreshTimeout_);
                 _getLoc_(_openCommunauto_);
             }
             else {
-                elmnt.innerHTML += _getGoogleStaticMap_IMG_(lat, lng, distance);
+                _elmnt_insertToInnerHTML_(elmnt, _getGoogleStaticMap_IMG_(lat, lng, distance));
+                _elmnt_('_myPositionImage_').src = "img/me.png";
+                _elmnt_('_vehiculeImage_' + name).src = "img/car.png";
                 elmnt.numClick = 1;
             }
         }
@@ -264,7 +289,7 @@
 
         // _out_
         function _out_(s, _btnsBarVisibility_) {
-            _elmnt_("_result_").innerHTML = s;
+            _elmnt_setInnerHTML_("_result_", s);
             _setVisible_("_btnsBar_", _btnsBarVisibility_);
         }
 
@@ -273,29 +298,37 @@
             _out_(_i18n_('_ERROR_') + ": " + errorCode, true);
         }
 
-        // _outVehicules_
-        function _outVehicules_(vehicules, address) {
-            var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
-            var vehiculesHTML = _attr_('div', address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
-            vehiculesHTML += _img_('http://mt.google.com/vt/icon?psize=30&font=fonts/arialuni_t.ttf&color=ff304C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=48&text=%E2%80%A2&scale=0.5');
-            if (vehicules && vehicules.length > 0) {
-                var tableContent = '';
-                vehicules.forEach(function (vehicule) {
-                    if (vehicule.distance < nearestVehiculeDistance)
-                        nearestVehiculeDistance = vehicule.distance;
-                    tableContent += _attr_('div', _getVehiculeHTML_(vehicule));
-                });
-                vehiculesHTML += _attr_('div', tableContent, 'style="width:100%"');
-            }
-            _out_(vehiculesHTML, true);
+        function _outResult_(vehicules, address) {
+            var myPositionHTML = _htmlTag_('div', _imgTag_('_myPositionImage_') + address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
+            var vehiculesData = _processVehicules_(vehicules);
+            _out_(myPositionHTML + vehiculesData._html_, true);
             if (_now_ms_() < _autoRefreshEndTime_) {
-                _setNearestVehiculeDistance_(nearestVehiculeDistance);
+                _setNearestVehiculeDistance_(vehiculesData._nearestVehiculeDistance_);
                 _setRefreshTimeout_(_config_('_AUTOREFRESH_DELAY_S_'));
             }
             else {
                 _setNearestVehiculeDistance_();
                 _setBtnRefreshLabel_();
             }
+        }
+
+        // _processVehicules_
+        function _processVehicules_(vehicules) {
+            var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
+            var vehiculesHTML = '';
+            if (vehicules && vehicules.length > 0) {
+                var tableContent = '';
+                vehicules.forEach(function (vehicule) {
+                    if (vehicule.distance < nearestVehiculeDistance)
+                        nearestVehiculeDistance = vehicule.distance;
+                    tableContent += _htmlTag_('div', _getVehiculeHTML_(vehicule));
+                });
+                vehiculesHTML += _htmlTag_('div', tableContent, 'style="width:100%"');
+            }
+            return {
+                _html_: vehiculesHTML,
+                _nearestVehiculeDistance_: nearestVehiculeDistance
+            };
         }
 
         // ---------- ---------- ---------- ---------- ---------- ---------- --
@@ -325,7 +358,7 @@
 
         // _setBtnRefreshLabel_
         function _setBtnRefreshLabel_(epilog) {
-            _elmnt_("_btnRefersh_").innerHTML = _i18n_('_REFRESH_') + (epilog ? epilog : "");
+            _elmnt_setInnerHTML_('_btnRefersh_', _i18n_('_REFRESH_') + (epilog ? epilog : ''));
         }
 
         // _setRefreshTimeout_(delay in seconds)
@@ -354,8 +387,8 @@
                     '&format=jpg' +
                     _getGoogleMarker_(lat, lng, 'green') +
                     _getGoogleMarker_(_myLatitude_, _myLongitude_, 'red');
-            // src = 'images/staticmap.jpeg';
-            return _img_(src, '_button_map_');
+            src = 'img/staticmap.jpeg';
+            return _imgTag_('', src, '_button_map_');
         }
 
         function _getGoogleMarker_(lat, lng, color) {

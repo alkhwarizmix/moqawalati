@@ -35,7 +35,7 @@ fs.readFile(inputFile, 'utf8', function (err, data) {
 function getMinSymbolForIndex(idx) {
     var addUnderscore = false;
     if (idx > 61) {
-        return idx;
+        return '_' + (idx - 52);
     }
     var asciiCode = 65 + idx; // A=65, Z=90
     if (idx > 35) {
