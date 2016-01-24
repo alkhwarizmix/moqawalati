@@ -109,7 +109,7 @@
         // _config_
         function _config_(p) {
             return {
-                "_STOP_AUTOREFRESH_AFTER_S_": (_IS_PROD_MODE_ ? 300 : 0), // seconds
+                "_STOP_AUTOREFRESH_AFTER_S_": (_IS_PROD_MODE_ ? 300 : 60), // seconds
                 "_AUTOREFRESH_DELAY_S_": 30 // seconds
             }[p];
         }
@@ -183,7 +183,7 @@
         // _getVehiculeHTML_
         function _getVehiculeHTML_(vehicule) {
             var btnHTML = _htmlTag_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
-                    _htmlTag_('div', _imgTag_('_vehiculeImage_' + vehicule.name) + vehicule.address);
+                    _htmlTag_('div', _imgTag_('_vehiculeImage_' + vehicule.name) + ' ' + vehicule.address);
             return _htmlTag_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, '
                     + vehicule.name + ',' + vehicule.lat + ',' + vehicule.lng + ',' + vehicule.distance + ')"');
         }
@@ -271,11 +271,12 @@
 
         // _vehicule_clickHandler_
         function _vehicule_clickHandler_(elmnt, name, lat, lng, distance) {
+            clearTimeout(_refreshTimeout_);
             if (elmnt.numClick) {
-                clearTimeout(_refreshTimeout_);
                 _getLoc_(_openCommunauto_);
             }
             else {
+                _setRefreshTimeout_();
                 _elmnt_insertToInnerHTML_(elmnt, _getGoogleStaticMap_IMG_(lat, lng, distance));
                 _elmnt_('_myPositionImage_').src = "img/me.png";
                 _elmnt_('_vehiculeImage_' + name).src = "img/car.png";
@@ -299,12 +300,12 @@
         }
 
         function _outResult_(vehicules, address) {
-            var myPositionHTML = _htmlTag_('div', _imgTag_('_myPositionImage_') + address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
+            var myPositionHTML = _htmlTag_('div', _imgTag_('_myPositionImage_') + ' ' + address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
             var vehiculesData = _processVehicules_(vehicules);
             _out_(myPositionHTML + vehiculesData._html_, true);
             if (_now_ms_() < _autoRefreshEndTime_) {
                 _setNearestVehiculeDistance_(vehiculesData._nearestVehiculeDistance_);
-                _setRefreshTimeout_(_config_('_AUTOREFRESH_DELAY_S_'));
+                _setRefreshTimeout_();
             }
             else {
                 _setNearestVehiculeDistance_();
@@ -363,6 +364,8 @@
 
         // _setRefreshTimeout_(delay in seconds)
         function _setRefreshTimeout_(delay) {
+            if (delay === undefined)
+                delay = _config_('_AUTOREFRESH_DELAY_S_');
             if (delay > 0) {
                 _setBtnRefreshLabel_(" (dans " + delay + ")");
                 _refreshTimeout_ = setTimeout(function () {
@@ -387,7 +390,7 @@
                     '&format=jpg' +
                     _getGoogleMarker_(lat, lng, 'green') +
                     _getGoogleMarker_(_myLatitude_, _myLongitude_, 'red');
-            src = 'img/staticmap.jpeg';
+            // src = 'img/staticmap.jpeg';
             return _imgTag_('', src, '_button_map_');
         }
 
@@ -415,7 +418,7 @@
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.31</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.34</div>
 </body>
 
 </html>
