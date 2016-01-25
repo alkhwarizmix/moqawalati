@@ -27,6 +27,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.utils.DateUtil;
+import dz.alkhwarizmix.winrak.java.model.vo.WinrakPosition;
 
 /**
  * <p>
@@ -70,8 +71,8 @@ public class ReservautoPositionTest {
 	private void setDataForReservautoPositionWithId(
 			final ReservautoPosition obj, final int id) {
 		obj.setId(new Long(id));
-		obj.setLat(1.2 * id);
-		obj.setLng(1.3 * id);
+		obj.setLat(2.0 * id);
+		obj.setLng(3.0 * id);
 		obj.setAddress("Address" + id);
 	}
 
@@ -104,6 +105,11 @@ public class ReservautoPositionTest {
 		final ReservautoPosition obj1 = new ReservautoPosition();
 		final ReservautoPosition obj2 = new ReservautoPosition();
 		Assert.assertTrue(obj1.equals(obj2));
+	}
+
+	@Test
+	public void test00_D_equals_different_class() {
+		Assert.assertFalse(utReservautoPosition.equals(new WinrakPosition()));
 	}
 
 	@Test
@@ -213,7 +219,18 @@ public class ReservautoPositionTest {
 	public void test07_hashCode() {
 		Assert.assertEquals(1705692209, utReservautoPosition.hashCode());
 		setDataForReservautoPositionWithId(utReservautoPosition, 7953);
-		Assert.assertEquals(-1560509197, utReservautoPosition.hashCode());
+		Assert.assertEquals(1395682644, utReservautoPosition.hashCode());
+	}
+
+	@Test
+	public void test08_toString() {
+		setDataForReservautoPositionWithId(utReservautoPosition, 7301);
+		final String result = utReservautoPosition.toString();
+		Assert.assertTrue(result.contains("id=7301"));
+		Assert.assertTrue(result.contains("vo.ReservautoPosition"));
+		Assert.assertTrue(result.contains("Lat=14602."));
+		Assert.assertTrue(result.contains("Lng=21903."));
+		Assert.assertTrue(result.contains("address=Address7301"));
 	}
 
 } // Class

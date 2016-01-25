@@ -71,7 +71,7 @@ public class ReservautoVehiculeTest {
 			final ReservautoVehicule obj, final int id) {
 		obj.setId(new Long(id));
 		obj.setName("Name" + id);
-		obj.setPosition(new ReservautoPosition(1.2 * id, 1.2 * id));
+		obj.setPosition(new ReservautoPosition(1.0 * id, 2.0 * id));
 	}
 
 	private void assertEqualReservautoVehicules(
@@ -104,6 +104,12 @@ public class ReservautoVehiculeTest {
 		final ReservautoVehicule obj1 = new ReservautoVehicule();
 		final ReservautoVehicule obj2 = new ReservautoVehicule();
 		Assert.assertTrue(obj1.equals(obj2));
+	}
+
+	@Test
+	public void test00_D_equals_different_class() {
+		Assert.assertFalse(utReservautoVehicule
+				.equals(mock(AbstractAlKhwarizmixDomainObject.class)));
 	}
 
 	@Test
@@ -175,7 +181,18 @@ public class ReservautoVehiculeTest {
 	public void test04_hashCode() {
 		Assert.assertEquals(887503681, utReservautoVehicule.hashCode());
 		setDataForReservautoVehiculeWithId(utReservautoVehicule, 7953);
-		Assert.assertEquals(-1865065128, utReservautoVehicule.hashCode());
+		Assert.assertEquals(653892920, utReservautoVehicule.hashCode());
+	}
+
+	@Test
+	public void test05_toString() {
+		setDataForReservautoVehiculeWithId(utReservautoVehicule, 7303);
+		final String result = utReservautoVehicule.toString();
+		Assert.assertTrue(result.contains("id=7303"));
+		Assert.assertTrue(result.contains("vo.ReservautoVehicule"));
+		Assert.assertTrue(result.contains("Name=Name7303"));
+		Assert.assertTrue(result.contains("Lat=7303"));
+		Assert.assertTrue(result.contains("Lng=14606"));
 	}
 
 } // Class

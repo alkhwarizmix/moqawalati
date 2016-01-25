@@ -102,6 +102,12 @@ public class ReservautoExtensionDataTest {
 	}
 
 	@Test
+	public void test00_D_equals_different_class() {
+		Assert.assertFalse(utReservautoExtensionData
+				.equals(mock(AbstractAlKhwarizmixDomainObject.class)));
+	}
+
+	@Test
 	public void test01_A_clone_null_properties() {
 		// SetUp
 		final ReservautoExtensionData expected = new ReservautoExtensionData();
@@ -135,6 +141,14 @@ public class ReservautoExtensionDataTest {
 		Assert.assertEquals(923521, utReservautoExtensionData.hashCode());
 		setDataForReservautoExtensionDataWithId(utReservautoExtensionData, 7953);
 		Assert.assertEquals(8566354, utReservautoExtensionData.hashCode());
+	}
+
+	@Test
+	public void test08_toString() {
+		setDataForReservautoExtensionDataWithId(utReservautoExtensionData, 7304);
+		final String result = utReservautoExtensionData.toString();
+		Assert.assertTrue(result.contains("id=7304"));
+		Assert.assertTrue(result.contains("vo.ReservautoExtensionData"));
 	}
 
 } // Class

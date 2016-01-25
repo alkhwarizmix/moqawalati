@@ -77,10 +77,10 @@ public class ReservautoResponseTest {
 	private void setDataForReservautoResponseWithId(
 			final ReservautoResponse response, final int id) {
 		response.setId(new Long(id));
-		response.setUserPosition(new ReservautoPosition(1.2 * id, 1.2 * id));
+		response.setUserPosition(new ReservautoPosition(1.0 * id, 2.0 * id));
 		final ReservautoVehiculeList vehicules = new ReservautoVehiculeList();
 		final ReservautoVehicule vehicule = new ReservautoVehicule();
-		vehicule.setPosition(new ReservautoPosition(1.3 * id, 1.3 * id));
+		vehicule.setPosition(new ReservautoPosition(4.0 * id, 5.0 * id));
 		vehicules.add(vehicule);
 		response.setVehicules(vehicules);
 	}
@@ -118,6 +118,12 @@ public class ReservautoResponseTest {
 		final ReservautoResponse obj1 = new ReservautoResponse();
 		final ReservautoResponse obj2 = new ReservautoResponse();
 		Assert.assertTrue(obj1.equals(obj2));
+	}
+
+	@Test
+	public void test00_D_equals_different_class() {
+		Assert.assertFalse(utReservautoResponse
+				.equals(mock(AbstractAlKhwarizmixDomainObject.class)));
 	}
 
 	@Test
@@ -232,7 +238,18 @@ public class ReservautoResponseTest {
 	public void test07_hashCode() {
 		Assert.assertEquals(1705692209, utReservautoResponse.hashCode());
 		setDataForReservautoResponseWithId(utReservautoResponse, 7953);
-		Assert.assertEquals(1887784336, utReservautoResponse.hashCode());
+		Assert.assertEquals(-1628894800, utReservautoResponse.hashCode());
+	}
+
+	@Test
+	public void test08_toString() {
+		setDataForReservautoResponseWithId(utReservautoResponse, 7302);
+		final String result = utReservautoResponse.toString();
+		Assert.assertTrue(result.contains("id=7302"));
+		Assert.assertTrue(result.contains("vo.ReservautoResponse"));
+		Assert.assertTrue(result.contains("Vehicules=null"));
+		Assert.assertTrue(result.contains("Lat=7302."));
+		Assert.assertTrue(result.contains("Lng=14604."));
 	}
 
 } // Class
