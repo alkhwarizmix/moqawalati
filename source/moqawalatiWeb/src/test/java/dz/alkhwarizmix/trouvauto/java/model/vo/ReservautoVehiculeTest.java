@@ -172,7 +172,7 @@ public class ReservautoVehiculeTest {
 	}
 
 	@Test
-	public void test03_hashCode() {
+	public void test04_hashCode() {
 		Assert.assertEquals(887503681, utReservautoVehicule.hashCode());
 		setDataForReservautoVehiculeWithId(utReservautoVehicule, 7953);
 		Assert.assertEquals(-1865065128, utReservautoVehicule.hashCode());

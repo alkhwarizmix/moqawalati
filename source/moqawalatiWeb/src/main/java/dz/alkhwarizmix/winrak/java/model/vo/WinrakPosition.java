@@ -219,6 +219,10 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 		return Lat;
 	}
 
+	protected void setLat(final Double value) {
+		Lat = value;
+	}
+
 	// ----------------------------------
 	// Lng
 	// ----------------------------------
@@ -229,6 +233,10 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	@Override
 	public Double getLng() {
 		return Lon;
+	}
+
+	protected void setLng(final Double value) {
+		Lon = value;
 	}
 
 } // Class

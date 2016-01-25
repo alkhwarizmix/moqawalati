@@ -85,4 +85,28 @@ public class ReservautoPosition extends WinrakPosition implements
 				: null;
 	}
 
+	// --------------------------------------------------------------------------
+	//
+	// Getters & Setters
+	//
+	// --------------------------------------------------------------------------
+
+	// ----------------------------------
+	// Lat
+	// ----------------------------------
+
+	@Override
+	protected void setLat(final Double value) {
+		super.setLat(value);
+	}
+
+	// ----------------------------------
+	// Lng
+	// ----------------------------------
+
+	@Override
+	protected void setLng(final Double value) {
+		super.setLng(value);
+	}
+
 } // Class
