@@ -17,15 +17,17 @@ fs.readFile(inputFile, 'utf8', function (err, data) {
     });
 
     var symbolsToReplace = minHTML.match(/\b_[a-z|A-Z|0-9|_]*_\b/g);
-    symbolsToReplace = getUniqueSymbolsAndSortByRelevance(symbolsToReplace);
-    var i = 0;
-    symbolsToReplace.forEach(function (symbolObj) {
-        var minSymbol = getMinSymbolForIndex(i);
-        console.log('symbol=' + symbolObj.symbol + ', count=' + symbolObj.count + ", min=" + minSymbol);
-        var regex = new RegExp('\\b' + symbolObj.symbol + '\\b', 'g');
-        minHTML = minHTML.replace(regex, minSymbol);
-        i++;
-    });
+    if (symbolsToReplace) {
+        symbolsToReplace = getUniqueSymbolsAndSortByRelevance(symbolsToReplace);
+        var i = 0;
+        symbolsToReplace.forEach(function (symbolObj) {
+            var minSymbol = getMinSymbolForIndex(i);
+            console.log('symbol=' + symbolObj.symbol + ', count=' + symbolObj.count + ", min=" + minSymbol);
+            var regex = new RegExp('\\b' + symbolObj.symbol + '\\b', 'g');
+            minHTML = minHTML.replace(regex, minSymbol);
+            i++;
+        });
+    }
     fs.writeFile(outputFile, minHTML, 'utf8', function (err) {
         if (err) return console.log(err);
     });
