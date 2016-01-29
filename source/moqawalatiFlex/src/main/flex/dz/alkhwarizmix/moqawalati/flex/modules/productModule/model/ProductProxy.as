@@ -13,12 +13,12 @@ package dz.alkhwarizmix.moqawalati.flex.modules.productModule.model
 {
 
 import mx.collections.ArrayCollection;
+import mx.core.IFactory;
 
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordListVO;
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordVO;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxy;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.ProductModuleConstants;
@@ -100,7 +100,7 @@ public class ProductProxy extends MoqawalatiProxy
 	/**
 	 * @inheritDoc
 	 */
-	override public function getOneItem():AlKhwarizmixVO
+	override public function getItemFactory():IFactory
 	{
 		return new ProductVO();
 	}

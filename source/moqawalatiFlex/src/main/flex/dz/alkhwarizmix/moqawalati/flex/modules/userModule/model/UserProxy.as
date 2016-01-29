@@ -12,10 +12,11 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.userModule.model
 {
 
+import mx.core.IFactory;
+
 import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.UserVO;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxy;
 import dz.alkhwarizmix.moqawalati.flex.modules.userModule.UserModuleConstants;
@@ -96,7 +97,7 @@ public class UserProxy extends MoqawalatiProxy
 	/**
 	 * @inheritDoc
 	 */
-	override public function getOneItem():AlKhwarizmixVO
+	override public function getItemFactory():IFactory
 	{
 		return new UserVO();
 	}

@@ -12,9 +12,10 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.clientModule.model
 {
 
+import mx.core.IFactory;
+
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
-import dz.alkhwarizmix.framework.flex.model.vo.AlKhwarizmixVO;
 import dz.alkhwarizmix.moqawalati.flex.dtos.modules.clientModule.model.vo.ClientVO;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiProxy;
 import dz.alkhwarizmix.moqawalati.flex.model.MoqawalatiProxy;
@@ -96,10 +97,10 @@ public class ClientProxy extends MoqawalatiProxy
 	/**
 	 * @inheritDoc
 	 */
-	override public function getOneItem():AlKhwarizmixVO
+	override public function getItemFactory():IFactory
 	{
 		return new ClientVO();
-	}
+	}	
 	
 } // Class
 } // Package

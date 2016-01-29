@@ -13,7 +13,7 @@ package dz.alkhwarizmix.framework.java.services.impl;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Before;
 import org.junit.Test;

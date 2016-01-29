@@ -14,9 +14,12 @@ package dz.alkhwarizmix.framework.java.dao.impl;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.Assert;
-
-import org.junit.Ignore;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,18 @@ public class UserDAOTest {
 
 	@Autowired
 	private IUserDAO utUserDAO;
+
+	private Transaction transaction;
+
+	@Before
+	public void setUp() throws AlKhwarizmixDAOException {
+		transaction = utUserDAO.beginTransaction();
+	}
+
+	@After
+	public void tearDown() throws AlKhwarizmixDAOException {
+		utUserDAO.rollbackTransaction(transaction);
+	}
 
 	// --------------------------------------------------------------------------
 	//
@@ -153,11 +168,13 @@ public class UserDAOTest {
 
 	// ----- -----
 
-	@Ignore("Find another way to create default user")
 	@Test
 	public void test02_default_users_were_created()
 			throws AlKhwarizmixException {
 
+		final DetachedCriteria criteriaToUse = DetachedCriteria
+				.forClass(User.class);
+		criteriaToUse.addOrder(Order.asc(User.USERID));
 		assertDefaultUser("fbelhaouas@icloud.com", "فارس بلحواس");
 		assertDefaultUser("fares@dz.moqawalati.com", "Fares @ Moqawalati");
 	}

@@ -16,6 +16,7 @@ import flash.events.Event;
 
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordListVO;
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordVO;
+import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.EncryptionVO;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.interfaces.IMoqawalatiMediator;
@@ -168,6 +169,7 @@ public class ProductListMediator extends MoqawalatiDataListMediator
 		recordVO.action = RecordVO.INSERT_ACTION;
 		recordVO.recordId = newProductVO.productId;
 		recordVO.data = newProductVO.toXMLString();
+		recordVO.encryption = new EncryptionVO("3");
 		
 		result.list.addItem(recordVO);
 		return result;

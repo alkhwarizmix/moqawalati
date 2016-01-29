@@ -47,7 +47,7 @@
 	</bean>
 
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>
@@ -63,18 +63,6 @@
 			</list>
 		</property>
 		<property name="entityInterceptor" ref="entityInterceptor" />
-		<property name="eventListeners">
-			<map>
-				<entry key="merge">
-					<bean
-						class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener" />
-				</entry>
-			</map>
-		</property>
-	</bean>
-
-	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -82,7 +70,7 @@
 	</bean>
 
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

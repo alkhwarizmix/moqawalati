@@ -47,13 +47,18 @@ Setup your system and install the needed tools:
   - Command Line Mac OSX# DEVELOPER_HOME/tools/Flash Player.app/Contents/MacOS/Flash Player 
   - Command Line MS DOS# DEVELOPER_HOME/tools/flashplayer_11_sa.exe
 
+* Install PostgreSQL (http://www.postgresql.org/download/)
+* Create needed USER (moqawalati_user) and DATABASE (moqawalati_db)
+  - PostgreSQL Command# CREATE USER moqawalati_user WITH PASSWORD 'reverse';
+  - PostgreSQL Command# CREATE DATABASE moqawalati_db OWNER moqawalati_user ENCODING='UTF8';
+
 Maven Build Moqawalati WAR
 
 * mkdir DEVELOPER_HOME/git
 * mkdir DEVELOPER_HOME/git/alkhwarizmix
 * cd DEVELOPER_HOME/git/alkhwarizmix
-* git clone https://github.com/alkhwarizmix/frameworks.git
-* git clone https://github.com/alkhwarizmix/moqawalati.git
+* git clone https://github.com/alkhwarizmix/frameworks.git -b fares
+* git clone https://github.com/alkhwarizmix/moqawalati.git -b fares
 * cd frameworks/source/
 * mvn -f alkhwarizmix-common.pom.xml clean install
 * mvn -f install-PureMVC_AS3_MultiCore_Framework.pom.xml antrun:run install:install-file -DgroupId=org.puremvc -DartifactId=PureMVC_AS3_MultiCore_Framework -Dversion=1.0.5 -Dpackaging=swc -Dfile=target/download/PureMVC_AS3_MultiCore_1_0_5.swc
@@ -67,3 +72,15 @@ Maven Run WAR
 * cd moqawalatiWeb
 * mvn jetty:run-war
 * http://localhost:9787/moqawalati-webapp/index.html
+
+Generate project for Eclipse
+
+* mvn eclipse:clean eclipse:eclipse -Dwtpversion=2.0
+* edit alkhwarizmix/moqawalati/source/moqawalatiWeb/.settings/org.eclipse.wst.common.project.facet.core.xml
+	<?xml version="1.0" encoding="UTF-8"?>
+	<faceted-project>
+	  <fixed facet="jst.java"/>
+	  <fixed facet="jst.web"/>
+	  <installed facet="jst.web" version="2.4"/>
+	  <installed facet="jst.java" version="1.6"/>
+	</faceted-project>

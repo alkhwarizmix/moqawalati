@@ -44,3 +44,7 @@ jdbc.password=
 #### dz.alkhwarizmix.moqawalati.mail.spring.xml
 mail.mailSender.clazz=dz.alkhwarizmix.framework.java.utils.MyFakeJavaMailSender
 mail.emailServiceSendWorker.fixedDelay=30000
+
+####
+#### WinrakService
+winrak.google.api.key=AIzaBlaBla

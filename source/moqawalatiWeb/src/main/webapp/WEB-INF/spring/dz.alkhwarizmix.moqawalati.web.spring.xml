@@ -48,6 +48,7 @@
 		<property name="alwaysUseFullPath" value="true" />
 		<property name="messageConverters">
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="writeAcceptCharset" value="false"/>
 				<property name="supportedMediaTypes">
 					<util:list>
 						<util:constant static-field="org.springframework.http.MediaType.ALL" />

@@ -29,6 +29,7 @@ import dz.alkhwarizmix.framework.java.dao.IRecordDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.RecordList;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.IRecordService;
 import dz.alkhwarizmix.framework.java.services.IRecordServiceValidator;
@@ -139,7 +140,15 @@ public class RecordService extends AbstractAlKhwarizmixService implements
 	 */
 	private Record insertRecord(final Record record,
 			final boolean validateObjectToPublish) throws AlKhwarizmixException {
-		// record.setOwner(getSessionOwner());
+		if (record.getEncryption() != null) {
+			record.getEncryption().setUser(getSessionData().getLoggedUser());
+			final Encryption existingEncryption = getRecordDAO().getEncryption(
+					record.getEncryption());
+			if (existingEncryption != null)
+				record.setEncryption(existingEncryption);
+			else
+				getRecordDAO().saveOrUpdate(record.getEncryption());
+		}
 		final Record result = (Record) addObject(record,
 				validateObjectToPublish);
 		return result;

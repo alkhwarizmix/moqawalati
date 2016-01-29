@@ -23,7 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dz.alkhwarizmix.framework.java.security.ISecurityManager;
-import dz.alkhwarizmix.framework.java.utils.HTTPUtil;
+import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
+import dz.alkhwarizmix.framework.java.utils.impl.HTTPUtil;
 
 /**
  * <p>
@@ -92,7 +93,7 @@ public class SecurityManager implements ISecurityManager {
 
 	private Map<String, RemoteAddrRestrictedAccessInfo> remoteAddrDico;
 
-	private HTTPUtil httpUtil;
+	private IHTTPUtil httpUtil;
 
 	// --------------------------------------------------------------------------
 	//
@@ -239,13 +240,13 @@ public class SecurityManager implements ISecurityManager {
 	// httpUtil
 	// ----------------------------------
 
-	public HTTPUtil getHttpUtil() {
+	public IHTTPUtil getHttpUtil() {
 		if (httpUtil == null)
 			httpUtil = new HTTPUtil();
 		return httpUtil;
 	}
 
-	public void setHttpUtil(final HTTPUtil value) {
+	public void setHttpUtil(final IHTTPUtil value) {
 		httpUtil = value;
 	}
 

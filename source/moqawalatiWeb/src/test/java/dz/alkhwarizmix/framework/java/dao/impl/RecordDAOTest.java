@@ -13,11 +13,12 @@ package dz.alkhwarizmix.framework.java.dao.impl;
 
 import java.util.List;
 
-import junit.framework.Assert;
-
+import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,8 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.dao.IRecordDAO;
 import dz.alkhwarizmix.framework.java.dtos.domain.model.vo.AlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.dtos.record.model.vo.Record;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.Encryption;
+import dz.alkhwarizmix.framework.java.dtos.security.model.vo.User;
 
 /**
  * <p>
@@ -66,8 +69,10 @@ public class RecordDAOTest {
 	String table2Name;
 	String table2RecordId;
 
+	private Transaction transaction;
+
 	@Before
-	public void setUp() {
+	public void setUp() throws AlKhwarizmixDAOException {
 		schema1Name = "schema1";
 		schema1RecordId = "_S_" + schema1Name;
 		schema2Name = "schema2";
@@ -76,6 +81,12 @@ public class RecordDAOTest {
 		table1RecordId = "_T_" + table1Name;
 		table2Name = "table2";
 		table2RecordId = "_T_" + table2Name;
+		transaction = utRecordDAO.beginTransaction();
+	}
+
+	@After
+	public void tearDown() throws AlKhwarizmixDAOException {
+		utRecordDAO.rollbackTransaction(transaction);
 	}
 
 	// --------------------------------------------------------------------------
@@ -123,6 +134,14 @@ public class RecordDAOTest {
 		String result = "123456789A_ADD";
 		while (result.length() < size)
 			result += result;
+		return result;
+	}
+
+	private Encryption newEncryption() {
+		final Encryption result = new Encryption();
+		final User user = new User("fbelhaouas@alkhwarizmix.com", "Fares");
+		result.setUser(user);
+		result.setEncryptionId("CryptoUtilV2");
 		return result;
 	}
 
@@ -307,6 +326,53 @@ public class RecordDAOTest {
 		Assert.assertEquals(record1.getRecordId(), listOfRecords.get(0)
 				.getRecordId());
 		Assert.assertEquals(data1, listOfRecords.get(0).getData());
+	}
+
+	// ----- -----
+
+	@Test
+	public void test08_add_record_with_encryption()
+			throws AlKhwarizmixException {
+		Assert.assertNull(utRecordDAO.getRecord(newRecord()));
+		// Setup
+		final Encryption encryption = newEncryption();
+		final Record record = newRecord();
+		record.setEncryption(encryption);
+		// Test
+		utRecordDAO.saveOrUpdate(encryption.getUser());
+		utRecordDAO.saveOrUpdate(encryption);
+		utRecordDAO.saveOrUpdate(record);
+		// Asserts
+		final Record savedRecord = utRecordDAO.getRecord(newRecord());
+		Assert.assertNotNull(savedRecord);
+		Assert.assertNotNull(savedRecord.getEncryption());
+		Assert.assertEquals("CryptoUtilV2", savedRecord.getEncryption()
+				.getEncryptionId());
+	}
+
+	// ----- -----
+
+	@Test
+	public void test09_add_then_get_Encryption() throws AlKhwarizmixException {
+		Assert.assertNull(utRecordDAO.getEncryption(newEncryption()));
+		// add
+		final Encryption encryptionToAdd = newEncryption();
+		utRecordDAO.saveOrUpdate(encryptionToAdd.getUser());
+		utRecordDAO.saveOrUpdate(encryptionToAdd);
+		// get
+		final Encryption encryptionToFind = newEncryption();
+		encryptionToFind.setUser(encryptionToAdd.getUser());
+		final Encryption savedEncryption = utRecordDAO
+				.getEncryption(encryptionToFind);
+		// Asserts
+		Assert.assertNotNull(savedEncryption);
+		Assert.assertEquals(encryptionToAdd.getEncryptionId(),
+				savedEncryption.getEncryptionId());
+		Assert.assertNotNull(savedEncryption.getUser());
+		Assert.assertEquals(encryptionToAdd.getUser().getUserId(),
+				savedEncryption.getUser().getUserId());
+		Assert.assertEquals(encryptionToAdd.getUser().getId(), savedEncryption
+				.getUser().getId());
 	}
 
 } // Class

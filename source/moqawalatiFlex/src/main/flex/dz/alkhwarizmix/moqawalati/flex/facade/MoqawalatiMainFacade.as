@@ -17,6 +17,7 @@ import mx.messaging.messages.RemotingMessage;
 import spark.skins.spark.DataGridSkin;
 import spark.skins.spark.ScrollerSkin;
 
+import dz.alkhwarizmix.framework.flex.AlKhwarizmixConstants;
 import dz.alkhwarizmix.framework.flex.errors.AlKhwarizmixTypeError;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
@@ -119,17 +120,17 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	{
 		addCommandToRegister(MoqawalatiConstants.STARTUP,
 			MoqawalatiStartupCommand);
-		addCommandToRegister(MoqawalatiConstants.GET_CUSTOMDATA,
+		addCommandToRegister(AlKhwarizmixConstants.GET_CUSTOMDATA,
 			MoqawalatiGetCustomizedDataCommand);
-		addCommandToRegister(MoqawalatiConstants.SET_CUSTOMDATA,
+		addCommandToRegister(AlKhwarizmixConstants.SET_CUSTOMDATA,
 			MoqawalatiSetCustomizedDataCommand);
-		addCommandToRegister(MoqawalatiConstants.CONNECT,
+		addCommandToRegister(AlKhwarizmixConstants.CONNECT,
 			MoqawalatiConnectCommand);
-		addCommandToRegister(MoqawalatiConstants.SUBSCRIBE,
+		addCommandToRegister(AlKhwarizmixConstants.SUBSCRIBE,
 			MoqawalatiSubscribeCommand);
-		addCommandToRegister(MoqawalatiConstants.LOGIN,
+		addCommandToRegister(AlKhwarizmixConstants.LOGIN,
 			MoqawalatiLoginCommand);
-		addCommandToRegister(MoqawalatiConstants.LOGOUT,
+		addCommandToRegister(AlKhwarizmixConstants.LOGOUT,
 			MoqawalatiLogoutCommand);
 	}
 	
@@ -146,7 +147,7 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	 */  
 	override public function startup(app:*):void
 	{
-		if (!app is IMoqawalatiApplication)
+		if (!(app is IMoqawalatiApplication))
 			throw new AlKhwarizmixTypeError("IMoqawalatiApplication");
 		sendNotification(MoqawalatiConstants.STARTUP, app);
 	}

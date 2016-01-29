@@ -33,8 +33,8 @@ import dz.alkhwarizmix.framework.java.dtos.customize.model.vo.CustomData;
  * @since ١٢ شعبان ١٤٣٥ (June 10, 2014)
  */
 @Repository
-public class CustomDataDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling implements
-		ICustomDataDAO {
+public class CustomDataDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling
+		implements ICustomDataDAO {
 
 	// --------------------------------------------------------------------------
 	//
@@ -76,8 +76,7 @@ public class CustomDataDAO extends AbstractAlKhwarizmixDAOForXMLMarshalling impl
 			throws AlKhwarizmixException {
 		getLogger().trace("getCustomData()");
 		try {
-			final Criteria criteria = getHibernateTemplate()
-					.getSessionFactory().getCurrentSession()
+			final Criteria criteria = getHibernateCurrentSession()
 					.createCriteria(CustomData.class);
 			final Criterion criter1 = Restrictions.eq(CustomData.CUSTOMDATAID,
 					customDataToGet.getCustomDataId());

@@ -34,6 +34,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.EntityInterceptor;
 import dz.alkhwarizmix.framework.java.utils.DateUtil;
+import dz.alkhwarizmix.framework.java.utils.IJSONUtil;
 
 /**
  * <p>
@@ -235,6 +236,13 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	 */
 	public abstract void updateFrom(Object sourceObject)
 			throws AlKhwarizmixException;
+
+	/**
+	 * @throws AlKhwarizmixException
+	 */
+	public String toJson(final IJSONUtil jsonUtil) throws AlKhwarizmixException {
+		return jsonUtil.marshalObjectToJSON((IAlKhwarizmixJsonObject) clone());
+	}
 
 	// --------------------------------------------------------------------------
 	//

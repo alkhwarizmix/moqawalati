@@ -11,7 +11,9 @@
 
 package dz.alkhwarizmix.framework.java.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,7 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ١٢ جمادى الأولى ١٤٣٦ (March 03, 2015)
  */
@@ -61,13 +63,21 @@ public class DateUtilTest {
 
 	@Test
 	public void test01_newDate() {
-		Date expectedBeforeDate = new Date();
-		Date result = utDateUtil.newDate();
-		Date expectedAfterDate = new Date();
+		final Date expectedBeforeDate = new Date();
+		final Date result = utDateUtil.newDate();
+		final Date expectedAfterDate = new Date();
 		Assert.assertTrue(expectedBeforeDate.before(result)
 				|| expectedBeforeDate.equals(result));
 		Assert.assertTrue(expectedAfterDate.after(result)
 				|| expectedAfterDate.equals(result));
+	}
+
+	@Test
+	public void test02_newDate_should_be_UTC_Date() {
+		final Date result = utDateUtil.newDate(2015, 12, 31, 23, 59, 59);
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Assert.assertEquals("2015-12-31 23:59:59", sdf.format(result));
 	}
 
 } // Class

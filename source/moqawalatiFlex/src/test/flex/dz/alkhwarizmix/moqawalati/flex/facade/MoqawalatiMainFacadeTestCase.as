@@ -90,17 +90,17 @@ public class MoqawalatiMainFacadeTestCase extends MoqawalatiPureMVCTestCase
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
 			MoqawalatiConstants.STARTUP) is MoqawalatiStartupCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.GET_CUSTOMDATA) is MoqawalatiGetCustomizedDataCommand);
+			AlKhwarizmixConstants.GET_CUSTOMDATA) is MoqawalatiGetCustomizedDataCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.SET_CUSTOMDATA) is MoqawalatiSetCustomizedDataCommand);
+			AlKhwarizmixConstants.SET_CUSTOMDATA) is MoqawalatiSetCustomizedDataCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.LOGIN) is MoqawalatiLoginCommand);
+			AlKhwarizmixConstants.LOGIN) is MoqawalatiLoginCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.LOGOUT) is MoqawalatiLogoutCommand);
+			AlKhwarizmixConstants.LOGOUT) is MoqawalatiLogoutCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.CONNECT) is MoqawalatiConnectCommand);
+			AlKhwarizmixConstants.CONNECT) is MoqawalatiConnectCommand);
 		assertTrue(newFacadeCommandClassWithKey(utMoqawalatiMainFacade,
-			MoqawalatiConstants.SUBSCRIBE) is MoqawalatiSubscribeCommand);
+			AlKhwarizmixConstants.SUBSCRIBE) is MoqawalatiSubscribeCommand);
 	}
 	
 	[Ignore("TODO")]

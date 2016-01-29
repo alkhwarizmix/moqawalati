@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -31,7 +31,7 @@ import dz.alkhwarizmix.framework.java.utils.DateUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٠٨ ذو الحجة ١٤٣٥ (October 02, 2014)
  */
@@ -49,14 +49,14 @@ public class RecordTest {
 	private Record utRecord;
 
 	@BeforeClass
-	static public void setUp() {
-		DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
+	static public void static_setUp() {
+		final DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
 		Mockito.when(mockDateUtil.newDate()).thenReturn(new Date(1234));
 		AbstractAlKhwarizmixDomainObject.dateUtil = mockDateUtil;
 	}
 
 	@AfterClass
-	static public void tearDown() {
+	static public void static_tearDown() {
 		AbstractAlKhwarizmixDomainObject.dateUtil = null;
 	}
 
@@ -66,7 +66,7 @@ public class RecordTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private void setDataForRecordWithId(Record record, int id) {
+	private void setDataForRecordWithId(final Record record, final int id) {
 		record.setId(new Long(id));
 		record.setRecordId("recordId" + id);
 		record.setSchemaName("SchemaName" + id);
@@ -76,8 +76,8 @@ public class RecordTest {
 		record.setAction(Record.INSERT_ACTION);
 	}
 
-	private void assertEqualRecords(Record expectedRecord, Record cloneRecord,
-			boolean testDeep) {
+	private void assertEqualRecords(final Record expectedRecord,
+			final Record cloneRecord, final boolean testDeep) {
 		Assert.assertEquals("recordId", expectedRecord.getRecordId(),
 				cloneRecord.getRecordId());
 		Assert.assertEquals("schemaName", expectedRecord.getSchemaName(),
@@ -88,11 +88,10 @@ public class RecordTest {
 				cloneRecord.getAction());
 		Assert.assertEquals("parent", expectedRecord.getParent(),
 				cloneRecord.getParent());
-		if (testDeep) {
+		if (testDeep)
 			Assert.assertEquals("parent id",
 					expectedRecord.getParent().getId(), cloneRecord.getParent()
 							.getId());
-		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -113,35 +112,35 @@ public class RecordTest {
 
 	@Test
 	public void test01_recordId_setAndGet() {
-		String valueToSet = "recordId1";
+		final String valueToSet = "recordId1";
 		utRecord.setRecordId(valueToSet);
 		Assert.assertEquals(valueToSet, utRecord.getRecordId());
 	}
 
 	@Test
 	public void test02_schemaName_setAndGet() {
-		String valueToSet = "schemaName";
+		final String valueToSet = "schemaName";
 		utRecord.setSchemaName(valueToSet);
 		Assert.assertEquals(valueToSet, utRecord.getSchemaName());
 	}
 
 	@Test
 	public void test03_tableName_setAndGet() {
-		String valueToSet = "tableName";
+		final String valueToSet = "tableName";
 		utRecord.setTableName(valueToSet);
 		Assert.assertEquals(valueToSet, utRecord.getTableName());
 	}
 
 	@Test
 	public void test04_action_setAndGet() {
-		Integer valueToSet = Record.INSERT_ACTION;
+		final Integer valueToSet = Record.INSERT_ACTION;
 		utRecord.setAction(valueToSet);
 		Assert.assertEquals(valueToSet, utRecord.getAction());
 	}
 
 	@Test
 	public void test05_encryption_setAndGet() {
-		Encryption valueToSet = new Encryption();
+		final Encryption valueToSet = new Encryption();
 		utRecord.setEncryption(valueToSet);
 		Assert.assertEquals(valueToSet, utRecord.getEncryption());
 	}
@@ -149,10 +148,10 @@ public class RecordTest {
 	@Test
 	public void test06_A_clone_null_properties() {
 		// SetUp
-		Record expectedRecord = new Record();
+		final Record expectedRecord = new Record();
 		utRecord = new Record();
 		// Test
-		Record cloneRecord = (Record) utRecord.clone();
+		final Record cloneRecord = (Record) utRecord.clone();
 		// Others
 		setDataForRecordWithId(utRecord, 1567);
 		// Asserts
@@ -162,11 +161,11 @@ public class RecordTest {
 	@Test
 	public void test06_B_clone() {
 		// SetUp
-		Record expectedRecord = new Record();
+		final Record expectedRecord = new Record();
 		setDataForRecordWithId(expectedRecord, 7651);
 		setDataForRecordWithId(utRecord, 7651);
 		// Test
-		Record cloneRecord = (Record) utRecord.clone();
+		final Record cloneRecord = (Record) utRecord.clone();
 		// Others
 		setDataForRecordWithId(utRecord, 1569);
 		// Asserts

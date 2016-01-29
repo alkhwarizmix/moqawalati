@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//  بسم الله الرحمن الرحيم
+//
+//  حقوق التأليف والنشر ١٤٣٧ هجري، فارس بلحواس (Copyright 2016 Fares Belhaouas)
+//  كافة الحقوق محفوظة (All Rights Reserved)
+//
+//  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+--><!---
+/**
+ *  <p>
+ *  TODO:
+ *  </p>
+ * 
+ *  @author فارس بلحواس (Fares Belhaouas)
+ *  @since ٢٦ ربيع الاول ١٤٣٧ (January 05, 2016)
+ */
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	    http://www.springframework.org/schema/cache
+	    http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="dz.alkhwarizmix.winrak.java.services.impl"
+		use-default-filters="false">
+		<context:include-filter type="regex"
+			expression="dz.alkhwarizmix.winrak.java.services.impl.GoogleGeocodingService.*" />
+	</context:component-scan>
+
+	<!-- Enables the caching through annotations -->
+	<cache:annotation-driven />
+
+	<!-- Generic cache manager based on the JDK ConcurrentMap -->
+	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					p:name="google_addresses" />
+			</set>
+		</property>
+	</bean>
+</beans>
