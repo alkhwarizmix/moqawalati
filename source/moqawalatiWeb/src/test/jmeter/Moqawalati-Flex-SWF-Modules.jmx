@@ -55,7 +55,7 @@
             </elementProp>
             <elementProp name="moqawalati-version" elementType="Argument">
               <stringProp name="Argument.name">moqawalati-version</stringProp>
-              <stringProp name="Argument.value">1.6.14.FBEL</stringProp>
+              <stringProp name="Argument.value">1.7.15.FBEL</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
