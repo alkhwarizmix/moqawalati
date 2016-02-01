@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.productModule.facade
 {
 
+import dz.alkhwarizmix.framework.flex.AlKhwarizmixConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.ProductModuleConstants;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.ProductCommitListCommand;
 import dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller.ProductGetListCommand;
@@ -82,9 +83,9 @@ public class ProductModuleFacadeTestCase extends MoqawalatiPureMVCTestCase
 		assertTrue(newFacadeCommandClassWithKey(utProductModuleFacade,
 			ProductModuleConstants.STARTUP) is ProductModuleStartupCommand);
 		assertTrue(newFacadeCommandClassWithKey(utProductModuleFacade,
-			ProductModuleConstants.RECORD_GET_LIST) is ProductGetListCommand);
+			AlKhwarizmixConstants.GET_RECORD_LIST) is ProductGetListCommand);
 		assertTrue(newFacadeCommandClassWithKey(utProductModuleFacade,
-			ProductModuleConstants.RECORD_COMMIT_LIST) is ProductCommitListCommand);
+			AlKhwarizmixConstants.COMMIT_RECORD_LIST) is ProductCommitListCommand);
 	}
 	
 } // class

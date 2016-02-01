@@ -39,10 +39,6 @@ public class ProductModuleConstants
 	public static const STARTUP:String = "ProductModule_startup";
 	public static const STARTUP_COMPLETE:String =
 		"ProductModule_startup_complete";
-	public static const RECORD_GET_LIST:String =
-		"ProductModule_product_get_list";
-	public static const RECORD_COMMIT_LIST:String =
-		"ProductModule_product_commit_list";
 	public static const PRODUCT_PROXY_CHANGED:String =
 		"ProductModule_product_proxy_changed";
 	

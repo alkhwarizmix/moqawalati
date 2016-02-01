@@ -12,6 +12,7 @@
 package dz.alkhwarizmix.moqawalati.flex.modules.productModule.controller
 {
 
+import dz.alkhwarizmix.framework.flex.AlKhwarizmixConstants;
 import dz.alkhwarizmix.framework.flex.logging.AlKhwarizmixLog;
 import dz.alkhwarizmix.framework.flex.logging.IAlKhwarizmixLogger;
 import dz.alkhwarizmix.moqawalati.flex.controller.MoqawalatiSimpleCommand;
@@ -107,7 +108,7 @@ public class ProductModuleStartupCommand extends MoqawalatiSimpleCommand
 	private function sendNotifications():void
 	{
 		sendNotification(ProductModuleConstants.STARTUP_COMPLETE);
-		sendNotification(ProductModuleConstants.RECORD_GET_LIST,
+		sendNotification(AlKhwarizmixConstants.GET_RECORD_LIST,
 			{
 				operationParams : ["Moqawalati", "Product", 0, 50]
 			});

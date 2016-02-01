@@ -14,6 +14,7 @@ package dz.alkhwarizmix.moqawalati.flex.modules.productModule.view
 
 import flash.events.Event;
 
+import dz.alkhwarizmix.framework.flex.AlKhwarizmixConstants;
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordListVO;
 import dz.alkhwarizmix.framework.flex.dtos.record.model.vo.RecordVO;
 import dz.alkhwarizmix.framework.flex.dtos.security.model.vo.EncryptionVO;
@@ -133,7 +134,7 @@ public class ProductListMediator extends MoqawalatiDataListMediator
 	{
 		logger.debug("productListCanvas_refreshHandler");
 		
-		sendNotification(ProductModuleConstants.RECORD_GET_LIST,
+		sendNotification(AlKhwarizmixConstants.GET_RECORD_LIST,
 			{
 				operationParams : ["Moqawalati", "Product", 0, 50]
 			});
@@ -146,7 +147,7 @@ public class ProductListMediator extends MoqawalatiDataListMediator
 	{
 		logger.debug("productListCanvas_commitHandler");
 		
-		sendNotification(ProductModuleConstants.RECORD_COMMIT_LIST,
+		sendNotification(AlKhwarizmixConstants.COMMIT_RECORD_LIST,
 			{
 				operationParams : [getTestingRecordList()]
 			});

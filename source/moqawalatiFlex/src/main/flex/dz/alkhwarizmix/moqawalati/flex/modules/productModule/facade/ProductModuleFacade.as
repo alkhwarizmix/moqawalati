@@ -95,9 +95,9 @@ public class ProductModuleFacade extends MoqawalatiFacade
 	{
 		addCommandToRegister(ProductModuleConstants.STARTUP,
 			ProductModuleStartupCommand);
-		addCommandToRegister(ProductModuleConstants.RECORD_GET_LIST,
+		addCommandToRegister(AlKhwarizmixConstants.GET_RECORD_LIST,
 			ProductGetListCommand);
-		addCommandToRegister(ProductModuleConstants.RECORD_COMMIT_LIST,
+		addCommandToRegister(AlKhwarizmixConstants.COMMIT_RECORD_LIST,
 			ProductCommitListCommand);
 		addCommandToRegister(AlKhwarizmixConstants.REMOTE_SERVER_ERROR,
 			RemoteServerErrorCommand);
