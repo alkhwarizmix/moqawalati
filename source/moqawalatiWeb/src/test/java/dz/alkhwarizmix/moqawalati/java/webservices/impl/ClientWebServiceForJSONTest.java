@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -24,7 +24,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
@@ -63,6 +63,13 @@ public class ClientWebServiceForJSONTest {
 	@Ignore("TODO: TDD")
 	@Test
 	public void test01() throws AlKhwarizmixException {
+		Assert.assertTrue(false);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void test01_A_XYZ_should_return_Internal_Error_500_if_throws_not_AlKhwarizmixException()
+			throws Exception {
 		Assert.assertTrue(false);
 	}
 

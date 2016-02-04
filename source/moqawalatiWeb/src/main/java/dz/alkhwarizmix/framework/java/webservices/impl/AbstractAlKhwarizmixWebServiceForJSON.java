@@ -115,14 +115,35 @@ public abstract class AbstractAlKhwarizmixWebServiceForJSON {
 		final HttpHeaders responseHeaders = getHttpHeadersForJSON();
 
 		return new ResponseEntity<String>(sBuilder.toString(), responseHeaders,
-				HttpStatus.METHOD_FAILURE);
+				errorCode.getHttpStatus());
 	}
 
 	/**
 	 */
 	protected final ResponseEntity<String> errorResponseForJSON(
 			final AlKhwarizmixException exception) {
+		getLogger().error("errorResponseForJSON: {0}", exception);
 		return errorResponseForJSON(exception.getErrorCode());
+	}
+
+	/**
+	 */
+	protected final ResponseEntity<String> errorResponseForJSON(
+			final Exception exception) {
+		return errorResponseForJSON(getAlKhwarizmixException(exception));
+	}
+
+	/**
+	 */
+	protected final AlKhwarizmixException getAlKhwarizmixException(
+			final Exception exception) {
+		AlKhwarizmixException result = null;
+		if (exception instanceof AlKhwarizmixException)
+			result = (AlKhwarizmixException) exception;
+		else
+			result = new AlKhwarizmixException(
+					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR, exception);
+		return result;
 	}
 
 	/**

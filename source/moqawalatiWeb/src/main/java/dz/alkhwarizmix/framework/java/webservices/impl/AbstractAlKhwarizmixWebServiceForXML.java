@@ -124,10 +124,9 @@ public abstract class AbstractAlKhwarizmixWebServiceForXML {
 	/**
 	 */
 	protected final ResponseEntity<String> errorResponseForXML(
-			final AlKhwarizmixException ex) {
-		getLogger().error("{}: {}", ex.getLocalizedMessage(),
-				ex.getStackTrace());
-		return errorResponseForXML(ex.getErrorCode());
+			final AlKhwarizmixException exception) {
+		getLogger().error("errorResponseForXML: {0}", exception);
+		return errorResponseForXML(exception.getErrorCode());
 	}
 
 	/**
@@ -146,7 +145,7 @@ public abstract class AbstractAlKhwarizmixWebServiceForXML {
 			result = (AlKhwarizmixException) exception;
 		else
 			result = new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR);
+					AlKhwarizmixErrorCode.SERVER_INTERNAL_ERROR, exception);
 		return result;
 	}
 

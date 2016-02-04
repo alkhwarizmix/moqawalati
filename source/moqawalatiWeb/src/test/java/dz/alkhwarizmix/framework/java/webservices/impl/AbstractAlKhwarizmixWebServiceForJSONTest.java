@@ -12,11 +12,14 @@
 package dz.alkhwarizmix.framework.java.webservices.impl;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
@@ -42,6 +45,15 @@ public class AbstractAlKhwarizmixWebServiceForJSONTest {
 
 	@Mock
 	private AbstractAlKhwarizmixWebServiceForJSON mockAbstractAlKhwarizmixWebServiceForJSON;
+
+	@Mock
+	private Logger mockLogger;
+
+	@Before
+	public void setUp() throws Exception {
+		Mockito.when(mockAbstractAlKhwarizmixWebServiceForJSON.getLogger())
+				.thenReturn(mockLogger);
+	}
 
 	// --------------------------------------------------------------------------
 	//

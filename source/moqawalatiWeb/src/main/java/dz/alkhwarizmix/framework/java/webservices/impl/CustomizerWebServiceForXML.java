@@ -92,8 +92,7 @@ public class CustomizerWebServiceForXML extends
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> setCustomData(
-			@RequestParam("customData") final String xmlValue)
-			throws AlKhwarizmixException {
+			@RequestParam("customData") final String xmlValue) {
 		getLogger().trace("addCustomData({})", xmlValue);
 
 		try {
@@ -101,7 +100,7 @@ public class CustomizerWebServiceForXML extends
 					xmlValue);
 			final StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -116,8 +115,7 @@ public class CustomizerWebServiceForXML extends
 	 */
 	@RequestMapping(value = "/{customDataId}", method = RequestMethod.GET)
 	public ResponseEntity<String> getCustomDataById(
-			@PathVariable("customDataId") final String customDataId)
-			throws AlKhwarizmixException {
+			@PathVariable("customDataId") final String customDataId) {
 		getLogger().debug("getCustomDataById({})", customDataId);
 
 		try {
@@ -126,7 +124,7 @@ public class CustomizerWebServiceForXML extends
 			final StringBuilder sBuilder = new StringBuilder(
 					getCustomizerService().getCustomDataAsXML(customDataToGet));
 			return successResponseForXML(sBuilder);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForXML(e);
 		}
 	}

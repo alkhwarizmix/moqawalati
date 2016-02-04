@@ -96,7 +96,7 @@ public class WinrakWebServiceForJSON extends
 					.trouvauto(new ReservautoPosition(latitude, longitude),
 							count));
 			return successResponseForJSON(sBuilder);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForJSON(e);
 		}
 	}

@@ -11,7 +11,11 @@
 
 package dz.alkhwarizmix.winrak.java.webservices.impl;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
+
+import javax.management.RuntimeErrorException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,6 +29,7 @@ import org.springframework.http.ResponseEntity;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
 /**
@@ -115,6 +120,18 @@ public class WinrakWebServiceForJSONTest {
 		final ResponseEntity<String> result = utWinrakWebServiceForJSON
 				.trouvauto(1.1, 2.2, 3);
 		Assert.assertEquals("", result.toString());
+	}
+
+	@Test
+	public void test04_trouvauto_should_return_Internal_Error_500_if_throws_not_AlKhwarizmixException()
+			throws Exception {
+		utWinrakWebServiceForJSON.setWinrakService(mockWinrakService);
+		Mockito.doThrow(new RuntimeErrorException(null))
+				.when(mockWinrakService)
+				.trouvauto(any(IWinrakPosition.class), anyInt());
+		final ResponseEntity<String> result = utWinrakWebServiceForJSON
+				.trouvauto(0.0, 0.0, 3);
+		Assert.assertEquals(500, result.getStatusCode().value());
 	}
 
 	@Ignore("TODO: TDD")

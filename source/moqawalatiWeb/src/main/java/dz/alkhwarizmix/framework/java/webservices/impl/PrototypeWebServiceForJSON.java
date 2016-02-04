@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.framework.java.services.IPrototypeService;
 
@@ -85,15 +84,14 @@ public class PrototypeWebServiceForJSON extends
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> protoPost(
-			@RequestParam("param1") final String param1)
-			throws AlKhwarizmixException {
+			@RequestParam("param1") final String param1) {
 		getLogger().trace("protoPost({})", param1);
 
 		try {
 			final String result = getPrototypeService().protoPost(param1);
 			final StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForJSON(sBuilder);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForJSON(e);
 		}
 	}
@@ -102,15 +100,14 @@ public class PrototypeWebServiceForJSON extends
 	 */
 	@RequestMapping(value = "/{param1}", method = RequestMethod.GET)
 	public ResponseEntity<String> protoGet(
-			@PathVariable("param1") final String param1)
-			throws AlKhwarizmixException {
+			@PathVariable("param1") final String param1) {
 		getLogger().debug("protoGet({})", param1);
 
 		try {
 			final StringBuilder sBuilder = new StringBuilder(
 					getPrototypeService().protoGet(param1));
 			return successResponseForJSON(sBuilder);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForJSON(e);
 		}
 	}

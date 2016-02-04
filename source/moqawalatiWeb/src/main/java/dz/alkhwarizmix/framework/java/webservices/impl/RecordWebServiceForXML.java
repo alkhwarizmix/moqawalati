@@ -36,7 +36,8 @@ import dz.alkhwarizmix.framework.java.services.IRecordService;
  */
 @Controller
 @RequestMapping("alkhwarizmix/xml/record")
-public class RecordWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML {
+public class RecordWebServiceForXML extends
+		AbstractAlKhwarizmixWebServiceForXML {
 
 	// --------------------------------------------------------------------------
 	//
@@ -91,14 +92,14 @@ public class RecordWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> commitRecordList(
-			@RequestParam("recordList") final String xmlValue)
-			throws AlKhwarizmixException {
+			@RequestParam("recordList") final String xmlValue) {
 		getLogger().debug("commitRecordList({})", xmlValue);
 		try {
-			final String result = recordService.commitRecordListFromXML(xmlValue);
+			final String result = recordService
+					.commitRecordListFromXML(xmlValue);
 			final StringBuilder sBuilder = new StringBuilder(result);
 			return successResponseForXML(sBuilder);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -115,8 +116,7 @@ public class RecordWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML
 	public ResponseEntity<String> getRecord(
 			@PathVariable("schemaName") final String schemaName,
 			@PathVariable("tableName") final String tableName,
-			@PathVariable("recordId") final String recordId)
-			throws AlKhwarizmixException {
+			@PathVariable("recordId") final String recordId) {
 		getLogger().debug("getRecordById({}, {}, {})", schemaName, tableName,
 				recordId);
 		try {
@@ -127,7 +127,7 @@ public class RecordWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML
 			final StringBuilder sBuilder = new StringBuilder(
 					recordService.getRecordAsXML(recordToGet));
 			return successResponseForXML(sBuilder);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
@@ -147,7 +147,7 @@ public class RecordWebServiceForXML extends AbstractAlKhwarizmixWebServiceForXML
 			result.append(recordService.getRecordListAsXML(schemaName,
 					tableName, null, firstResult, maxResult));
 			return successResponseForXML(result);
-		} catch (final AlKhwarizmixException e) {
+		} catch (final Exception e) {
 			return errorResponseForXML(e);
 		}
 	}
