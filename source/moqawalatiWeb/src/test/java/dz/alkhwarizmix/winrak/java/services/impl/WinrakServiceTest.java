@@ -46,7 +46,7 @@ public class WinrakServiceTest {
 	private WinrakService utWinrakService;
 
 	@Mock
-	private GoogleGeocodingService mockGoogleGeocodingService;
+	private GoogleMapsService mockGoogleGeocodingService;
 
 	@Before
 	public void setUp() throws AlKhwarizmixException {

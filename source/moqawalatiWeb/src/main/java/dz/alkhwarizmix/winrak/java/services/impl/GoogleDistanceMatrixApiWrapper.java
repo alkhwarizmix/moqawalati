@@ -11,13 +11,9 @@
 
 package dz.alkhwarizmix.winrak.java.services.impl;
 
+import com.google.maps.DistanceMatrixApi;
+import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.LatLng;
-
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
-import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
  * <p>
@@ -25,9 +21,9 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٦ ربيع الاول ١٤٣٧ (January 05, 2016)
+ * @since ٢٧ ربيع الثاني ١٤٣٧ (February 06, 2016)
  */
-public class GoogleGeocodingApiWrapper {
+public class GoogleDistanceMatrixApiWrapper {
 
 	// --------------------------------------------------------------------------
 	//
@@ -51,13 +47,8 @@ public class GoogleGeocodingApiWrapper {
 	//
 	// --------------------------------------------------------------------------
 
-	public GeocodingResult[] reverseGeocode(final GeoApiContext context,
-			final LatLng location) throws AlKhwarizmixException {
-		try {
-			return GeocodingApi.reverseGeocode(context, location).await();
-		} catch (final Exception e) {
-			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_WINRAK);
-		}
+	public DistanceMatrixApiRequest newRequest(final GeoApiContext context) {
+		return DistanceMatrixApi.newRequest(context);
 	}
 
 	// --------------------------------------------------------------------------

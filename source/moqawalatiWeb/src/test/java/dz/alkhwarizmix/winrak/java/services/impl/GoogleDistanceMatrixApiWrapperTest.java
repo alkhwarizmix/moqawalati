@@ -11,12 +11,13 @@
 
 package dz.alkhwarizmix.winrak.java.services.impl;
 
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.LatLng;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import dz.alkhwarizmix.framework.java.AlKhwarizmixErrorCode;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 
 /**
@@ -25,47 +26,48 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٦ ربيع الاول ١٤٣٧ (January 05, 2016)
+ * @since ٢٧ ربيع الثاني ١٤٣٧ (February 06, 2016)
  */
-public class GoogleGeocodingApiWrapper {
+@SuppressWarnings("PMD.MethodNamingConventions")
+@RunWith(MockitoJUnitRunner.class)
+public class GoogleDistanceMatrixApiWrapperTest {
 
 	// --------------------------------------------------------------------------
 	//
-	// Constructor
+	// Setup & Teardown
 	//
 	// --------------------------------------------------------------------------
 
-	// EMPTY
+	private GoogleDistanceMatrixApiWrapper utGoogleDistanceMatrixApiWrapper;
 
-	// --------------------------------------------------------------------------
-	//
-	// properties
-	//
-	// --------------------------------------------------------------------------
-
-	// EMPTY
-
-	// --------------------------------------------------------------------------
-	//
-	// Methods
-	//
-	// --------------------------------------------------------------------------
-
-	public GeocodingResult[] reverseGeocode(final GeoApiContext context,
-			final LatLng location) throws AlKhwarizmixException {
-		try {
-			return GeocodingApi.reverseGeocode(context, location).await();
-		} catch (final Exception e) {
-			throw new AlKhwarizmixException(AlKhwarizmixErrorCode.ERROR_WINRAK);
-		}
+	@Before
+	public void setUp() {
+		utGoogleDistanceMatrixApiWrapper = new GoogleDistanceMatrixApiWrapper();
 	}
 
 	// --------------------------------------------------------------------------
 	//
-	// Getters & Setters
+	// Helpers
 	//
 	// --------------------------------------------------------------------------
 
 	// EMPTY
+
+	// --------------------------------------------------------------------------
+	//
+	// Tests
+	//
+	// --------------------------------------------------------------------------
+
+	@Test
+	public void test00_constructor() throws AlKhwarizmixException {
+		Assert.assertNotNull(utGoogleDistanceMatrixApiWrapper);
+	}
+
+	@Ignore("TODO: TDD")
+	@Test
+	public void testXY() throws AlKhwarizmixException {
+		Assert.assertTrue(false);
+	}
 
 } // Class

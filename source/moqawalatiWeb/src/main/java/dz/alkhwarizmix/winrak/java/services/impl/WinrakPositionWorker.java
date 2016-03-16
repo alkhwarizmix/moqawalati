@@ -75,6 +75,16 @@ public class WinrakPositionWorker {
 	 * @param position
 	 * @throws AlKhwarizmixException
 	 */
+	public void fillOriginAddress(final IWinrakPosition position,
+			final long timeout_ms) throws AlKhwarizmixException {
+		fillPositionAddress(position, timeout_ms);
+	}
+
+	/**
+	 *
+	 * @param position
+	 * @throws AlKhwarizmixException
+	 */
 	public void fillPositionAddress(final IWinrakPosition position,
 			final long timeout_ms) throws AlKhwarizmixException {
 		final Thread t = new Thread(new WinrakPositionThread(position,
@@ -93,7 +103,7 @@ public class WinrakPositionWorker {
 				t.join(millis);
 			} catch (final InterruptedException e) {
 				getLogger().warn("waitForAllFillPositionAddress: {}",
-						e.getStackTrace());
+						e.getStackTrace().toString());
 			}
 	}
 
@@ -138,7 +148,7 @@ public class WinrakPositionWorker {
 						pos.getLat(), pos.getLng(), timeout_ms));
 			} catch (final AlKhwarizmixException e) {
 				getLogger().warn("WinrakPositionThread run: {}",
-						e.getStackTrace());
+						e.getStackTrace().toString());
 				pos.setAddress("");
 			}
 		}

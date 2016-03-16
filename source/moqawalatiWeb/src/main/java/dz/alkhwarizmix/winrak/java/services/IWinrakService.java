@@ -11,6 +11,9 @@
 
 package dz.alkhwarizmix.winrak.java.services;
 
+import java.util.List;
+import java.util.Map;
+
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
@@ -34,6 +37,19 @@ public interface IWinrakService extends IAlKhwarizmixService {
 	 */
 	public String convertPositionToAddress(final Double latitude,
 			final Double longitude, long timeout_ms)
+			throws AlKhwarizmixException;
+
+	/**
+	 *
+	 * @param origin
+	 * @param destinations
+	 * @param timeout_ms
+	 * @return
+	 * @throws AlKhwarizmixException
+	 */
+	public Map<IWinrakPosition, Long> getDistances(
+			final IWinrakPosition origin,
+			final List<IWinrakPosition> destinations, final long timeout_ms)
 			throws AlKhwarizmixException;
 
 	/**

@@ -40,7 +40,7 @@ import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @SuppressWarnings("PMD.MethodNamingConventions")
-public class GoogleGeocodingServiceTest {
+public class GoogleMapsServiceTest {
 
 	// --------------------------------------------------------------------------
 	//
@@ -53,27 +53,22 @@ public class GoogleGeocodingServiceTest {
 	private static final String ADDRESS = "1234, My Address";
 
 	@Autowired
-	private GoogleGeocodingService utGoogleGeocodingService;
+	private GoogleMapsService utGoogleGeocodingService;
 
 	@Mock
 	private GoogleGeocodingApiWrapper mockGoogleGeocodingApiWrapper;
-
-	@Mock
-	private GeoApiContext mockGeoApiContext;
 
 	@Before
 	public void setUp() throws AlKhwarizmixException {
 		MockitoAnnotations.initMocks(this);
 		utGoogleGeocodingService.setGoogleAPIKey(GOOGLE_API_KEY);
 		utGoogleGeocodingService
-				.setGoogleGeocodingApiWrapper(mockGoogleGeocodingApiWrapper);
-		Mockito.doReturn(mockGeoApiContext).when(mockGoogleGeocodingApiWrapper)
-				.getGeoApiContext(GOOGLE_API_KEY, 3000);
+				.setGeocodingApiWrapper(mockGoogleGeocodingApiWrapper);
 		final GeocodingResult[] geocodingResults = { new GeocodingResult() };
 		geocodingResults[0].formattedAddress = ADDRESS;
 		Mockito.doReturn(geocodingResults)
 				.when(mockGoogleGeocodingApiWrapper)
-				.reverseGeocode(Mockito.eq(mockGeoApiContext),
+				.reverseGeocode(Mockito.any(GeoApiContext.class),
 						Mockito.any(LatLng.class));
 	}
 

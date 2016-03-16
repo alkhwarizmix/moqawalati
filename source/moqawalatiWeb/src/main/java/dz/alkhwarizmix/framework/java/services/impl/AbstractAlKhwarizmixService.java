@@ -11,14 +11,10 @@
 
 package dz.alkhwarizmix.framework.java.services.impl;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -327,20 +323,7 @@ public abstract class AbstractAlKhwarizmixService implements
 	public String marshalObjectToJSON(
 			final AbstractAlKhwarizmixDomainObject object)
 			throws AlKhwarizmixException {
-
-		final ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.writeValueAsString(object);
-		} catch (final JsonGenerationException exception) {
-			throw new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, exception);
-		} catch (final JsonMappingException exception) {
-			throw new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, exception);
-		} catch (final IOException exception) {
-			throw new AlKhwarizmixException(
-					AlKhwarizmixErrorCode.ERROR_JSON_PARSING, exception);
-		}
+		return "";
 	}
 
 	/**

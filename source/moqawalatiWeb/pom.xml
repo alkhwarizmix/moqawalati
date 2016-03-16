@@ -42,7 +42,7 @@
 		<org.springframework.security.version>4.0.3.RELEASE</org.springframework.security.version>
 		<org.springframework.integration.version>4.2.4.RELEASE</org.springframework.integration.version>
 		<com.adobe.blazeds.version>3.2.0.3978</com.adobe.blazeds.version>
-		<org.codehaus.jackson.version>1.9.10</org.codehaus.jackson.version>
+		<com.google.code.gson.version>2.5</com.google.code.gson.version>
 
 		<hibernate-core.version>4.2.19.Final</hibernate-core.version>
 		<hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
@@ -193,14 +193,6 @@
 			<groupId>com.adobe.blazeds</groupId>
 			<artifactId>blazeds-opt</artifactId>
 			<version>${com.adobe.blazeds.version}</version>
-		</dependency>
-
-		<!-- Jackson JSON Mapper -->
-
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${org.codehaus.jackson.version}</version>
 		</dependency>
 
 		<!-- org.hibernate -->
@@ -392,13 +384,13 @@
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
-			<version>1.4.1</version>
+			<version>1.5.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.5</version>
+			<version>${com.google.code.gson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -604,8 +596,8 @@
 				<configuration>
 					<packagingExcludes>
 						WEB-INF/lib/jetty*.jar,
+						WEB-INF/lib/mockito*.jar,
 						WEB-INF/lib/maven*.jar,
-						WEB-INF/lib/mockito*.jar
 						WEB-INF/lib/powermock*.jar
 					</packagingExcludes>
 				</configuration>
@@ -616,9 +608,6 @@
 				<artifactId>maven-jetty-plugin</artifactId>
 				<version>6.1.25</version>
 				<configuration>
-					<webAppSourceDirectory>
-						${basedir}/target/${project.build.finalName}
-					</webAppSourceDirectory>
 					<webApp>
 						${basedir}/target/${project.build.finalName}.war
 					</webApp>
@@ -654,7 +643,7 @@
 						<id>start-jetty</id>
 						<phase>pre-integration-test</phase>
 						<goals>
-							<goal>run</goal>
+							<goal>run-war</goal>
 						</goals>
 						<configuration>
 							<daemon>true</daemon>

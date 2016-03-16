@@ -11,6 +11,9 @@
 
 package dz.alkhwarizmix.winrak.java.services.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +79,7 @@ public class WinrakService extends AbstractAlKhwarizmixService implements
 	// --------------------------------------------------------------------------
 
 	@Autowired
-	private GoogleGeocodingService googleGeocodingService;
+	private GoogleMapsService googleGeocodingService;
 
 	// --------------------------------------------------------------------------
 	//
@@ -95,6 +98,9 @@ public class WinrakService extends AbstractAlKhwarizmixService implements
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String convertPositionToAddress(final Double latitude,
 			final Double longitude, final long timeout_ms)
@@ -107,6 +113,18 @@ public class WinrakService extends AbstractAlKhwarizmixService implements
 	private Double roundTo5Decimals(final Double value) {
 		final Double factor = Math.pow(10, 5);
 		return Math.round(value * factor) / factor;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<IWinrakPosition, Long> getDistances(
+			final IWinrakPosition origin,
+			final List<IWinrakPosition> destinations, final long timeout_ms)
+			throws AlKhwarizmixException {
+		return googleGeocodingService.getDistances(origin, destinations,
+				timeout_ms);
 	}
 
 	/**
@@ -161,7 +179,7 @@ public class WinrakService extends AbstractAlKhwarizmixService implements
 	 * @param value
 	 *            the googleGeocodingService to set
 	 */
-	public void setGoogleGeocodingService(final GoogleGeocodingService value) {
+	public void setGoogleGeocodingService(final GoogleMapsService value) {
 		googleGeocodingService = value;
 	}
 

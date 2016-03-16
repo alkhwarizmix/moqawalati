@@ -36,7 +36,7 @@
 	<context:component-scan base-package="dz.alkhwarizmix.winrak.java.services.impl"
 		use-default-filters="false">
 		<context:include-filter type="regex"
-			expression="dz.alkhwarizmix.winrak.java.services.impl.GoogleGeocodingService.*" />
+			expression="dz.alkhwarizmix.winrak.java.services.impl.GoogleMapsService.*" />
 	</context:component-scan>
 
 	<!-- Enables the caching through annotations -->

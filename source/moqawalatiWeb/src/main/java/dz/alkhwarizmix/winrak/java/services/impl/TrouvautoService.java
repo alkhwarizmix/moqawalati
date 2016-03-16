@@ -108,15 +108,19 @@ public class TrouvautoService implements ITrouvautoService {
 		final long timeout_ms = 3000;
 		final WinrakPositionWorker winrakPositionWorker = new WinrakPositionWorker(
 				winrakService);
-		winrakPositionWorker.fillPositionAddress(pos, timeout_ms);
+		winrakPositionWorker.fillOriginAddress(pos, timeout_ms);
 		final ReservautoResponse reservautoResponse = jsonToTrouvautoResponse(getReservautoVehicleProposals(pos));
 		final List<ReservautoVehicule> vehicules = getNearest(
 				reservautoResponse, pos, count);
 
-		for (final ReservautoVehicule vehicule : vehicules)
+		final List<IWinrakPosition> destinations = new ArrayList<IWinrakPosition>();
+		for (final ReservautoVehicule vehicule : vehicules) {
+			destinations.add(vehicule.getPosition());
 			winrakPositionWorker.fillPositionAddress(vehicule.getPosition(),
 					timeout_ms);
+		}
 		winrakPositionWorker.waitForAllFillPositionAddress(timeout_ms);
+		winrakService.getDistances(pos, destinations, timeout_ms);
 
 		final TrouvautoResponse response = new TrouvautoResponse(
 				getShortAddress(pos));
