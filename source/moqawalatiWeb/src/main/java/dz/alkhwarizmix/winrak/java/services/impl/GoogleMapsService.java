@@ -28,6 +28,7 @@ import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+import com.google.maps.model.TravelMode;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
@@ -115,11 +116,22 @@ public class GoogleMapsService {
 		final GeoApiContext context = getGeoApiContext(googleAPIKey, timeout_ms);
 		final DistanceMatrixApiRequest request = getDistanceMatrixApiWrapper()
 				.newRequest(context);
+		request.mode(TravelMode.WALKING);
 		request.origins(getLatLng(origin));
-		for (final IWinrakPosition destination : destinations)
-			request.destinations(getLatLng(destination));
+		final int len = destinations.size();
+		final LatLng[] destinationsAsPoints = new LatLng[len];
+		for (int i = 0; i < len; i++) {
+			final IWinrakPosition destination = destinations.get(i);
+			destinationsAsPoints[i] = getLatLng(destination);
+		}
+		request.destinations(destinationsAsPoints);
 
-		final DistanceMatrix matrix = request.awaitIgnoreError();
+		DistanceMatrix matrix = null;
+		try {
+			matrix = request.await();
+		} catch (final Exception e) {
+			logger.warn("getDistances: {}", e.getStackTrace().toString());
+		}
 		final Map<IWinrakPosition, Long> result = new HashMap<IWinrakPosition, Long>();
 		if (matrix != null)
 			for (final DistanceMatrixRow row : matrix.rows)
