@@ -26,6 +26,7 @@ import dz.alkhwarizmix.framework.java.dao.IAlKhwarizmixDAO;
 import dz.alkhwarizmix.framework.java.domain.AbstractAlKhwarizmixDomainObject;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixServiceValidator;
 import dz.alkhwarizmix.framework.java.services.impl.AbstractAlKhwarizmixService;
+import dz.alkhwarizmix.winrak.java.model.IWinrakItinerary;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
@@ -119,11 +120,11 @@ public class WinrakService extends AbstractAlKhwarizmixService implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<IWinrakPosition, Long> getDistances(
+	public Map<IWinrakPosition, IWinrakItinerary> getItineraryData(
 			final IWinrakPosition origin,
 			final List<IWinrakPosition> destinations, final long timeout_ms)
 			throws AlKhwarizmixException {
-		return googleGeocodingService.getDistances(origin, destinations,
+		return googleGeocodingService.getItineraryData(origin, destinations,
 				timeout_ms);
 	}
 

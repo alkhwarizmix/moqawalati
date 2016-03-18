@@ -31,6 +31,7 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
+import dz.alkhwarizmix.winrak.java.model.IWinrakItinerary;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 
 /**
@@ -106,11 +107,12 @@ public class GoogleMapsService {
 		return context;
 	}
 
-	public Map<IWinrakPosition, Long> getDistances(
+	@Cacheable("google_itineraries")
+	public Map<IWinrakPosition, IWinrakItinerary> getItineraryData(
 			final IWinrakPosition origin,
 			final List<IWinrakPosition> destinations, final long timeout_ms)
 			throws AlKhwarizmixException {
-		getLogger().debug("setDistances: {}, {}, {}", origin, destinations,
+		getLogger().debug("getItineraryData: {}, {}, {}", origin, destinations,
 				timeout_ms);
 
 		final GeoApiContext context = getGeoApiContext(googleAPIKey, timeout_ms);
@@ -132,13 +134,19 @@ public class GoogleMapsService {
 		} catch (final Exception e) {
 			logger.warn("getDistances: {}", e.getStackTrace().toString());
 		}
-		final Map<IWinrakPosition, Long> result = new HashMap<IWinrakPosition, Long>();
-		if (matrix != null)
+		final Map<IWinrakPosition, IWinrakItinerary> result = new HashMap<IWinrakPosition, IWinrakItinerary>();
+		if (matrix != null) {
+			origin.setAddress(matrix.originAddresses[0]);
 			for (final DistanceMatrixRow row : matrix.rows)
-				for (final DistanceMatrixElement element : row.elements)
-					for (final IWinrakPosition destination : destinations)
-						result.put(destination,
-								Long.valueOf(element.distance.inMeters));
+				for (int i = 0; i < row.elements.length; i++) {
+					final DistanceMatrixElement element = row.elements[i];
+					final IWinrakPosition destination = destinations.get(i);
+					destination.setAddress(matrix.destinationAddresses[i]);
+					result.put(destination, new GoogleMapsWinrakItinerary(
+							element.distance.inMeters,
+							element.duration.inSeconds));
+				}
+		}
 		return result;
 	}
 
@@ -187,6 +195,33 @@ public class GoogleMapsService {
 
 	public void setGoogleAPIKey(final String value) {
 		googleAPIKey = value;
+	}
+
+	// --------------------------------------------------------------------------
+	//
+	// Internal Classes
+	//
+	// --------------------------------------------------------------------------
+
+	final class GoogleMapsWinrakItinerary implements IWinrakItinerary {
+		public GoogleMapsWinrakItinerary(final long distance,
+				final long duration) {
+			this.distance = distance;
+			this.duration = duration;
+		}
+
+		private final long distance;
+		private final long duration;
+
+		@Override
+		public long getDistance() {
+			return distance;
+		}
+
+		@Override
+		public long getDuration() {
+			return duration;
+		}
 	}
 
 } // Class

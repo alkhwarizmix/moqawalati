@@ -44,6 +44,9 @@
 				<bean
 					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
 					p:name="google_addresses" />
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					p:name="google_itineraries" />
 			</set>
 		</property>
 	</bean>

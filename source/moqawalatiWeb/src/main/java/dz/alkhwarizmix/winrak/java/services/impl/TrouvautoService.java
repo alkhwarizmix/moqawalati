@@ -13,6 +13,7 @@ package dz.alkhwarizmix.winrak.java.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import dz.alkhwarizmix.framework.java.utils.impl.HTTPUtil;
 import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoResponse;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehicule;
+import dz.alkhwarizmix.winrak.java.model.IWinrakItinerary;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.ITrouvautoService;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
@@ -106,26 +108,21 @@ public class TrouvautoService implements ITrouvautoService {
 	private String trouvauto_internal(final IWinrakPosition pos, final int count)
 			throws AlKhwarizmixException {
 		final long timeout_ms = 3000;
-		final WinrakPositionWorker winrakPositionWorker = new WinrakPositionWorker(
-				winrakService);
-		winrakPositionWorker.fillOriginAddress(pos, timeout_ms);
 		final ReservautoResponse reservautoResponse = jsonToTrouvautoResponse(getReservautoVehicleProposals(pos));
 		final List<ReservautoVehicule> vehicules = getNearest(
 				reservautoResponse, pos, count);
 
 		final List<IWinrakPosition> destinations = new ArrayList<IWinrakPosition>();
-		for (final ReservautoVehicule vehicule : vehicules) {
+		for (final ReservautoVehicule vehicule : vehicules)
 			destinations.add(vehicule.getPosition());
-			winrakPositionWorker.fillPositionAddress(vehicule.getPosition(),
-					timeout_ms);
-		}
-		winrakPositionWorker.waitForAllFillPositionAddress(timeout_ms);
-		winrakService.getDistances(pos, destinations, timeout_ms);
+		final Map<IWinrakPosition, IWinrakItinerary> itineraryData = winrakService
+				.getItineraryData(pos, destinations, timeout_ms);
 
 		final TrouvautoResponse response = new TrouvautoResponse(
 				getShortAddress(pos));
 		for (final ReservautoVehicule vehicule : vehicules)
-			response.addVehicule(new TrouvautoVehicule(vehicule, pos));
+			response.addVehicule(new TrouvautoVehicule(pos, vehicule,
+					itineraryData.get(vehicule.getPosition())));
 		final String result = getJsonUtil().marshalObjectToJSON(response);
 		return result;
 	}
@@ -204,23 +201,28 @@ public class TrouvautoService implements ITrouvautoService {
 	}
 
 	final class TrouvautoVehicule implements IAlKhwarizmixJsonObject {
-		public TrouvautoVehicule(final ReservautoVehicule vehicule,
-				final IWinrakPosition pos) {
+		public TrouvautoVehicule(final IWinrakPosition pos,
+				final ReservautoVehicule vehicule,
+				final IWinrakItinerary itinerary) {
 			super();
 			address = getShortAddress(vehicule.getPosition());
+			direction = pos.directionTo(vehicule.getPosition());
+			distance = pos.distanceTo(vehicule.getPosition());
+			itineraryDistance = itinerary.getDistance();
+			itineraryDuration = itinerary.getDuration();
 			lat = roundTo5Decimals(vehicule.getPosition().getLat());
 			lng = roundTo5Decimals(vehicule.getPosition().getLng());
 			name = vehicule.getName();
-			direction = pos.directionTo(vehicule.getPosition());
-			distance = pos.distanceTo(vehicule.getPosition());
 		}
 
 		protected final String address;
+		protected final String direction;
+		protected final int distance;
+		protected long itineraryDistance;
+		protected long itineraryDuration;
 		protected final Double lat;
 		protected final Double lng;
 		protected final String name;
-		protected final String direction;
-		protected final int distance;
 
 		private Double roundTo5Decimals(final Double value) {
 			final Double factor = Math.pow(10, 5);

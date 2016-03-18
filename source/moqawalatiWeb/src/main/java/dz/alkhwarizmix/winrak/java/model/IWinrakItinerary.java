@@ -17,47 +17,20 @@ package dz.alkhwarizmix.winrak.java.model;
  * </p>
  *
  * @author فارس بلحواس (Fares Belhaouas)
- * @since ٢٣ ربيع الاول ١٤٣٧ (January 02, 2016)
+ * @since ٠٩ جمادى الثانية ١٤٣٧ (March 17, 2016)
  */
-public interface IWinrakPosition {
+public interface IWinrakItinerary {
 
 	/**
 	 *
-	 * @return the address
+	 * @return the distance in meters
 	 */
-	public String getAddress();
+	public long getDistance();
 
 	/**
 	 *
-	 * @param value
-	 *            the address to set
+	 * @return the duration in seconds
 	 */
-	public void setAddress(final String value);
-
-	/**
-	 *
-	 * @return the latitude
-	 */
-	public Double getLat();
-
-	/**
-	 *
-	 * @return the longitude
-	 */
-	public Double getLng();
-
-	/**
-	 *
-	 * @param pos2
-	 * @return
-	 */
-	public String directionTo(final IWinrakPosition pos2);
-
-	/**
-	 *
-	 * @param pos2
-	 * @return distance between two positions in meters
-	 */
-	public int distanceTo(final IWinrakPosition pos2);
+	public long getDuration();
 
 } // Class

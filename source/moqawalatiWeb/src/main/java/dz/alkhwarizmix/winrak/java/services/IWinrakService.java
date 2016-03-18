@@ -16,6 +16,7 @@ import java.util.Map;
 
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.services.IAlKhwarizmixService;
+import dz.alkhwarizmix.winrak.java.model.IWinrakItinerary;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 
 /**
@@ -40,6 +41,7 @@ public interface IWinrakService extends IAlKhwarizmixService {
 			throws AlKhwarizmixException;
 
 	/**
+	 * Get itinerary distances, durations and fill addresses
 	 *
 	 * @param origin
 	 * @param destinations
@@ -47,7 +49,7 @@ public interface IWinrakService extends IAlKhwarizmixService {
 	 * @return
 	 * @throws AlKhwarizmixException
 	 */
-	public Map<IWinrakPosition, Long> getDistances(
+	public Map<IWinrakPosition, IWinrakItinerary> getItineraryData(
 			final IWinrakPosition origin,
 			final List<IWinrakPosition> destinations, final long timeout_ms)
 			throws AlKhwarizmixException;

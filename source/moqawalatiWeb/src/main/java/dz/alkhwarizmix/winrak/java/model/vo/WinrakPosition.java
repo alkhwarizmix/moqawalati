@@ -71,9 +71,9 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	//
 	// --------------------------------------------------------------------------
 
+	private String address;
 	private Double Lat;
 	private Double Lon;
-	private String address;
 
 	// --------------------------------------------------------------------------
 	//
@@ -172,7 +172,7 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	@Override
 	public int distanceTo(final IWinrakPosition pos2) {
 		final WinrakPosition pos1 = this;
-		final Double R = 6371000.0; // metres
+		final Double R = 6371000.0; // meters
 		final Double radLat1 = Math.toRadians(pos1.getLat());
 		final Double radLat2 = Math.toRadians(pos2.getLat());
 		final Double deltaLat = Math.toRadians(pos2.getLat() - pos1.getLat());
@@ -212,7 +212,7 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	// ----------------------------------
 
 	/**
-	 * @return the lat
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Double getLat() {
@@ -228,7 +228,7 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	// ----------------------------------
 
 	/**
-	 * @return the lng
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Double getLng() {
