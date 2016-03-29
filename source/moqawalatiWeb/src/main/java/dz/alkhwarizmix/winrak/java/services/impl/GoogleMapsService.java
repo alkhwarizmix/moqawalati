@@ -132,7 +132,7 @@ public class GoogleMapsService {
 		try {
 			matrix = request.await();
 		} catch (final Exception e) {
-			logger.warn("getDistances: {}", e.getStackTrace().toString());
+			logger.warn("getDistances: {}", e.getMessage());
 		}
 		final Map<IWinrakPosition, IWinrakItinerary> result = new HashMap<IWinrakPosition, IWinrakItinerary>();
 		if (matrix != null) {

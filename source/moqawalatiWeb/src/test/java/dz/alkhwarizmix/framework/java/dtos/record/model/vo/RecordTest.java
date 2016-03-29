@@ -180,9 +180,9 @@ public class RecordTest {
 
 	@Test
 	public void test08_hashCode() {
-		Assert.assertEquals(-1787616399, utRecord.hashCode());
+		Assert.assertEquals(-293403007, utRecord.hashCode());
 		setDataForRecordWithId(utRecord, 7953);
-		Assert.assertEquals(1331481537, utRecord.hashCode());
+		Assert.assertEquals(-399167039, utRecord.hashCode());
 	}
 
 	@Ignore("TODO: TDD")

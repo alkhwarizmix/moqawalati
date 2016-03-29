@@ -138,9 +138,9 @@ public class ReservautoExtensionDataTest {
 
 	@Test
 	public void test02_hashCode() {
-		Assert.assertEquals(923521, utReservautoExtensionData.hashCode());
+		Assert.assertEquals(29791, utReservautoExtensionData.hashCode());
 		setDataForReservautoExtensionDataWithId(utReservautoExtensionData, 7953);
-		Assert.assertEquals(8566354, utReservautoExtensionData.hashCode());
+		Assert.assertEquals(7672624, utReservautoExtensionData.hashCode());
 	}
 
 	@Test

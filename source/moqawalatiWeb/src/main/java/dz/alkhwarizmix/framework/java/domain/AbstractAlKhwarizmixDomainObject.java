@@ -176,7 +176,6 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 	@Override
 	public int hashCode() {
 		int result = 1;
-		result = continueHashCode(result, created);
 		result = continueHashCode(result, id);
 		result = continueHashCode(result, modified);
 		result = continueHashCode(result, version);
@@ -202,9 +201,7 @@ public abstract class AbstractAlKhwarizmixDomainObject implements Serializable,
 		else if (getObjectAsThisClass(other) == null)
 			result = false;
 		else
-			result = ObjectUtils.equals(created,
-					getObjectAsThisClass(other).created)
-					&& ObjectUtils.equals(id, getObjectAsThisClass(other).id)
+			result = ObjectUtils.equals(id, getObjectAsThisClass(other).id)
 					&& ObjectUtils.equals(modified,
 							getObjectAsThisClass(other).modified)
 					&& ObjectUtils.equals(version,

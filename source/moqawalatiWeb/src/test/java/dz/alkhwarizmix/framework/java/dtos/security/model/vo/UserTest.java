@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٤ هجري، فارس بلحواس (Copyright 2013 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -33,7 +33,7 @@ import dz.alkhwarizmix.framework.java.utils.DateUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ ذو الحجة ١٤٣٤ (November 01, 2013)
  */
@@ -52,7 +52,7 @@ public class UserTest {
 
 	@BeforeClass
 	static public void setUp() {
-		DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
+		final DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
 		Mockito.when(mockDateUtil.newDate()).thenReturn(new Date(1234));
 		AbstractAlKhwarizmixDomainObject.dateUtil = mockDateUtil;
 	}
@@ -68,7 +68,7 @@ public class UserTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private void setDataForUserWithId(User user, int id) {
+	private void setDataForUserWithId(final User user, final int id) {
 		user.setId(new Long(id));
 		user.setUserId("userId" + id);
 		user.setName("Name" + id);
@@ -77,8 +77,8 @@ public class UserTest {
 		user.getDomainObject().setId(new Long(id + 1));
 	}
 
-	private void assertEqualUsers(User expectedUser, User cloneUser,
-			boolean testDeep) {
+	private void assertEqualUsers(final User expectedUser,
+			final User cloneUser, final boolean testDeep) {
 		Assert.assertEquals(expectedUser.getUserId(), cloneUser.getUserId());
 		Assert.assertEquals(expectedUser.getName(), cloneUser.getName());
 		Assert.assertEquals(expectedUser.getGroup(), cloneUser.getGroup());
@@ -110,14 +110,14 @@ public class UserTest {
 
 	@Test
 	public void test01_set_then_get_UserId() {
-		String value = "UserTest";
+		final String value = "UserTest";
 		utUser.setUserId(value);
 		assertEquals(value, utUser.getUserId());
 	}
 
 	@Test
 	public void test02_set_then_get_DomainObject() {
-		AlKhwarizmixDomainObject value = new AlKhwarizmixDomainObject();
+		final AlKhwarizmixDomainObject value = new AlKhwarizmixDomainObject();
 		utUser.setDomainObject(value);
 		assertEquals(value, utUser.getDomainObject());
 	}
@@ -125,10 +125,10 @@ public class UserTest {
 	@Test
 	public void test03_A_clone_null_properties() {
 		// SetUp
-		User expectedUser = new User();
+		final User expectedUser = new User();
 		utUser = new User();
 		// Test
-		User cloneUser = (User) utUser.clone();
+		final User cloneUser = (User) utUser.clone();
 		// Others
 		setDataForUserWithId(utUser, 1567);
 		// Asserts
@@ -138,11 +138,11 @@ public class UserTest {
 	@Test
 	public void test03_B_clone() {
 		// SetUp
-		User expectedUser = new User();
+		final User expectedUser = new User();
 		setDataForUserWithId(expectedUser, 7651);
 		setDataForUserWithId(utUser, 7651);
 		// Test
-		User cloneUser = (User) utUser.clone();
+		final User cloneUser = (User) utUser.clone();
 		// Others
 		setDataForUserWithId(utUser, 1569);
 		// Asserts
@@ -157,9 +157,9 @@ public class UserTest {
 
 	@Test
 	public void test05_hashCode_TDD() {
-		Assert.assertEquals(1336850927, utUser.hashCode());
+		Assert.assertEquals(1742810335, utUser.hashCode());
 		setDataForUserWithId(utUser, 7357);
-		Assert.assertEquals(-337850297, utUser.hashCode());
+		Assert.assertEquals(-787735241, utUser.hashCode());
 	}
 
 	@Ignore("TODO: TDD")

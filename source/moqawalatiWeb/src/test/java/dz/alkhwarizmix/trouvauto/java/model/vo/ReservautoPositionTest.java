@@ -217,9 +217,9 @@ public class ReservautoPositionTest {
 
 	@Test
 	public void test07_hashCode() {
-		Assert.assertEquals(1705692209, utReservautoPosition.hashCode());
+		Assert.assertEquals(887503681, utReservautoPosition.hashCode());
 		setDataForReservautoPositionWithId(utReservautoPosition, 7953);
-		Assert.assertEquals(1395682644, utReservautoPosition.hashCode());
+		Assert.assertEquals(577494116, utReservautoPosition.hashCode());
 	}
 
 	@Test

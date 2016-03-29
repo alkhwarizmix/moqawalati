@@ -236,9 +236,9 @@ public class ReservautoResponseTest {
 
 	@Test
 	public void test07_hashCode() {
-		Assert.assertEquals(1705692209, utReservautoResponse.hashCode());
+		Assert.assertEquals(887503681, utReservautoResponse.hashCode());
 		setDataForReservautoResponseWithId(utReservautoResponse, 7953);
-		Assert.assertEquals(-1628894800, utReservautoResponse.hashCode());
+		Assert.assertEquals(-2041123920, utReservautoResponse.hashCode());
 	}
 
 	@Test

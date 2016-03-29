@@ -11,11 +11,20 @@
 
 package dz.alkhwarizmix.winrak.java.services.impl;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,6 +35,7 @@ import org.slf4j.Logger;
 import dz.alkhwarizmix.framework.java.AlKhwarizmixException;
 import dz.alkhwarizmix.framework.java.utils.IHTTPUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoPosition;
+import dz.alkhwarizmix.winrak.java.model.IWinrakItinerary;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.IWinrakService;
 
@@ -79,9 +89,28 @@ public class TrouvautoServiceTest {
 	// --------------------------------------------------------------------------
 
 	private ReservautoPosition getCurrentPosition() {
-		final ReservautoPosition position = new ReservautoPosition(45.5417145,
-				-73.59598849999999);
-		return position;
+		return getPosition(45.5417145, -73.59598849999999);
+	}
+
+	private IWinrakItinerary getItinarary(final long distance,
+			final long duration) {
+		final IWinrakItinerary result = mock(IWinrakItinerary.class);
+		when(result.getDistance()).thenReturn(Long.valueOf(distance));
+		when(result.getDuration()).thenReturn(Long.valueOf(duration));
+		return result;
+	}
+
+	private ReservautoPosition getPosition(final Double lat, final Double lon) {
+		return new ReservautoPosition(lat, lon);
+	}
+
+	private Map<IWinrakPosition, IWinrakItinerary> getMockItineraryMap(
+			final Double lat, final Double lon, final long distance,
+			final long duration) {
+		final Map<IWinrakPosition, IWinrakItinerary> itineraryData = new HashMap<IWinrakPosition, IWinrakItinerary>();
+		itineraryData.put(getPosition(lat, lon),
+				getItinarary(distance, duration));
+		return itineraryData;
 	}
 
 	// --------------------------------------------------------------------------
@@ -101,19 +130,46 @@ public class TrouvautoServiceTest {
 	}
 
 	@Test
-	public void test01_trouvauto_should_return_2_vehicules_for_count_2()
+	public void test01_A_trouvauto_should_return_2_vehicules_for_count_2()
 			throws AlKhwarizmixException {
+		final Map<IWinrakPosition, IWinrakItinerary> itineraryData = getMockItineraryMap(
+				45.5383915, -73.59183366666667, 1000, 61);
+		itineraryData.putAll(getMockItineraryMap(45.546632,
+				-73.590737166666671, 3000, 179));
+		when(
+				mockWinrakService.getItineraryData(any(IWinrakPosition.class),
+						anyListOf(IWinrakPosition.class), anyLong()))
+				.thenReturn(itineraryData);
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491},"
-						+ "{\"lat\":45.54663,\"lng\":-73.59074,\"name\":\"2797\",\"direction\":\"NE\",\"distance\":682}]}",
+				"{\"vehicules\":[{\"direction\":\"SE\",\"distance\":491,\"itinDist\":1000,\"itinDura\":2,\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\"},"
+						+ "{\"direction\":\"NE\",\"distance\":682,\"itinDist\":3000,\"itinDura\":3,\"lat\":45.54663,\"lng\":-73.59074,\"name\":\"2797\"}]}",
+				spyTrouvautoService.trouvauto(getCurrentPosition(), 2));
+	}
+
+	@Test
+	public void test01_B_trouvauto_should_return_2_vehicules_without_itinirary_distance_and_duration()
+			throws AlKhwarizmixException {
+		when(
+				mockWinrakService.getItineraryData(any(IWinrakPosition.class),
+						anyListOf(IWinrakPosition.class), anyLong()))
+				.thenReturn(new HashMap<IWinrakPosition, IWinrakItinerary>());
+		Assert.assertEquals(
+				"{\"vehicules\":[{\"direction\":\"SE\",\"distance\":491,\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\"},"
+						+ "{\"direction\":\"NE\",\"distance\":682,\"lat\":45.54663,\"lng\":-73.59074,\"name\":\"2797\"}]}",
 				spyTrouvautoService.trouvauto(getCurrentPosition(), 2));
 	}
 
 	@Test
 	public void test02_trouvauto_should_return_1_vehicule_for_count_1()
 			throws AlKhwarizmixException {
+		final Map<IWinrakPosition, IWinrakItinerary> itineraryData = getMockItineraryMap(
+				45.5383915, -73.59183366666667, 1234, 2);
+		when(
+				mockWinrakService.getItineraryData(any(IWinrakPosition.class),
+						anyListOf(IWinrakPosition.class), anyLong()))
+				.thenReturn(itineraryData);
 		Assert.assertEquals(
-				"{\"vehicules\":[{\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\",\"direction\":\"SE\",\"distance\":491}]}",
+				"{\"vehicules\":[{\"direction\":\"SE\",\"distance\":491,\"itinDist\":1234,\"itinDura\":1,\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\"}]}",
 				spyTrouvautoService.trouvauto(getCurrentPosition(), 1));
 	}
 
@@ -124,6 +180,7 @@ public class TrouvautoServiceTest {
 				spyTrouvautoService.trouvauto(getCurrentPosition(), 0));
 	}
 
+	@Ignore("TODO: CHANGE THE WAY WE SET ADDRESS")
 	@Test
 	public void test04_trouvauto_should_fill_currentPosition_with_address()
 			throws AlKhwarizmixException {
@@ -132,6 +189,11 @@ public class TrouvautoServiceTest {
 		when(
 				mockWinrakService.convertPositionToAddress(45.5417145,
 						-73.59598849999999, 3000)).thenReturn(addressLong);
+		when(
+				mockWinrakService.getItineraryData(any(IWinrakPosition.class),
+						anyListOf(IWinrakPosition.class), eq(3000)))
+				.thenReturn(null);
+
 		final IWinrakPosition myCurrentPosition = getCurrentPosition();
 		final String result = spyTrouvautoService.trouvauto(myCurrentPosition,
 				1);
@@ -140,6 +202,7 @@ public class TrouvautoServiceTest {
 		Assert.assertEquals(addressLong, myCurrentPosition.getAddress());
 	}
 
+	@Ignore("TODO: CHANGE THE WAY WE SET ADDRESS")
 	@Test
 	public void test05_trouvauto_should_return_1_vehicule_with_address()
 			throws AlKhwarizmixException {
@@ -150,6 +213,25 @@ public class TrouvautoServiceTest {
 		final String result = spyTrouvautoService.trouvauto(
 				getCurrentPosition(), 1);
 		Assert.assertTrue(result.contains("\"address\":\"2967 Address\""));
+	}
+
+	@Test
+	public void test06_trouvauto_should_return_itinirary_duration_in_minutes_rounded_to_upper_value()
+			throws AlKhwarizmixException {
+		// 0 seconds should return 1 minute
+		final Map<IWinrakPosition, IWinrakItinerary> itineraryData = getMockItineraryMap(
+				45.5383915, -73.59183366666667, 1, 0);
+		// 180 seconds should return 3 minutes
+		itineraryData.putAll(getMockItineraryMap(45.546632,
+				-73.590737166666671, 2789, 180));
+		when(
+				mockWinrakService.getItineraryData(any(IWinrakPosition.class),
+						anyListOf(IWinrakPosition.class), anyLong()))
+				.thenReturn(itineraryData);
+		Assert.assertEquals(
+				"{\"vehicules\":[{\"direction\":\"SE\",\"distance\":491,\"itinDist\":1,\"itinDura\":1,\"lat\":45.53839,\"lng\":-73.59183,\"name\":\"2967\"},"
+						+ "{\"direction\":\"NE\",\"distance\":682,\"itinDist\":2789,\"itinDura\":3,\"lat\":45.54663,\"lng\":-73.59074,\"name\":\"2797\"}]}",
+				spyTrouvautoService.trouvauto(getCurrentPosition(), 2));
 	}
 
 } // Class

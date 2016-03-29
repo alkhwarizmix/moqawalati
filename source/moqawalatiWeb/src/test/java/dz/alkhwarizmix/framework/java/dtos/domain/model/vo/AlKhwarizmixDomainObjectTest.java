@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  بسم الله الرحمن الرحيم
 //
-//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)  
+//  حقوق التأليف والنشر ١٤٣٥ هجري، فارس بلحواس (Copyright 2014 Fares Belhaouas)
 //  كافة الحقوق محفوظة (All Rights Reserved)
 //
 //  NOTICE: Fares Belhaouas permits you to use, modify, and distribute this file
@@ -31,7 +31,7 @@ import dz.alkhwarizmix.framework.java.utils.DateUtil;
  * <p>
  * TODO: Javadoc
  * </p>
- * 
+ *
  * @author فارس بلحواس (Fares Belhaouas)
  * @since ٢٨ شعبان ١٤٣٥ (June 26, 2014)
  */
@@ -50,7 +50,7 @@ public class AlKhwarizmixDomainObjectTest {
 
 	@BeforeClass
 	static public void setUp() {
-		DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
+		final DateUtil mockDateUtil = Mockito.mock(DateUtil.class);
 		Mockito.when(mockDateUtil.newDate()).thenReturn(new Date(1234));
 		AbstractAlKhwarizmixDomainObject.dateUtil = mockDateUtil;
 	}
@@ -66,13 +66,14 @@ public class AlKhwarizmixDomainObjectTest {
 	//
 	// --------------------------------------------------------------------------
 
-	private AlKhwarizmixDomainObject getObjectWithId(int id) {
+	private AlKhwarizmixDomainObject getObjectWithId(final int id) {
 		return new AlKhwarizmixDomainObject(new Long(id), id, new Date(id),
 				new Date(id + 1));
 	}
 
-	private void assertEqualObjects(AlKhwarizmixDomainObject expectedObject,
-			AlKhwarizmixDomainObject cloneObject) {
+	private void assertEqualObjects(
+			final AlKhwarizmixDomainObject expectedObject,
+			final AlKhwarizmixDomainObject cloneObject) {
 		Assert.assertEquals(expectedObject.getId(), cloneObject.getId());
 		Assert.assertEquals(expectedObject.getVersion(),
 				cloneObject.getVersion());
@@ -107,10 +108,10 @@ public class AlKhwarizmixDomainObjectTest {
 	@Test
 	public void test03_A_clone_null_properties() {
 		// SetUp
-		AlKhwarizmixDomainObject expectedObject = new AlKhwarizmixDomainObject();
+		final AlKhwarizmixDomainObject expectedObject = new AlKhwarizmixDomainObject();
 		utAlKhwarizmixDomainObject = new AlKhwarizmixDomainObject();
 		// Test
-		AlKhwarizmixDomainObject cloneObject = (AlKhwarizmixDomainObject) utAlKhwarizmixDomainObject
+		final AlKhwarizmixDomainObject cloneObject = (AlKhwarizmixDomainObject) utAlKhwarizmixDomainObject
 				.clone();
 		// Others
 		utAlKhwarizmixDomainObject.setId(1567L);
@@ -121,10 +122,10 @@ public class AlKhwarizmixDomainObjectTest {
 	@Test
 	public void test03_B_clone() {
 		// SetUp
-		AlKhwarizmixDomainObject expectedObject = getObjectWithId(7651);
+		final AlKhwarizmixDomainObject expectedObject = getObjectWithId(7651);
 		utAlKhwarizmixDomainObject = getObjectWithId(7651);
 		// Test
-		AlKhwarizmixDomainObject cloneObject = (AlKhwarizmixDomainObject) utAlKhwarizmixDomainObject
+		final AlKhwarizmixDomainObject cloneObject = (AlKhwarizmixDomainObject) utAlKhwarizmixDomainObject
 				.clone();
 		// Others
 		utAlKhwarizmixDomainObject.setId(1568L);
@@ -140,9 +141,9 @@ public class AlKhwarizmixDomainObjectTest {
 
 	@Test
 	public void test05_hashCode_TDD() {
-		Assert.assertEquals(923521, utAlKhwarizmixDomainObject.hashCode());
+		Assert.assertEquals(29791, utAlKhwarizmixDomainObject.hashCode());
 		utAlKhwarizmixDomainObject = getObjectWithId(3677);
-		Assert.assertEquals(114116320, utAlKhwarizmixDomainObject.hashCode());
+		Assert.assertEquals(3681083, utAlKhwarizmixDomainObject.hashCode());
 	}
 
 	@Ignore("TODO: TDD")

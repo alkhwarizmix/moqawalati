@@ -5,28 +5,34 @@
       "address": "6320 Rue Marquette",
       "vehicules": [
         {
-          "address": "1600 Rue de Bellechasse",
-          "lat": 45.54059,
-          "lng": -73.59414,
-          "name": "2951",
-          "direction": "SE",
-          "distance": 186
+          "address": "6605-6607 Rue Chabot",
+          "direction": "NW",
+          "distance": 380,
+          "itinDist": 513,
+          "itinDura": 7,
+          "lat": 45.54498,
+          "lng": -73.59713,
+          "name": "3305-R"
         },
         {
-          "address": "5997 Rue Marquette",
-          "lat": 45.54098,
-          "lng": -73.59321,
-          "name": "2689",
+          "address": "6140 Rue Chambord",
           "direction": "SE",
-          "distance": 230
+          "distance": 390,
+          "itinDist": 502,
+          "itinDura": 7,
+          "lat": 45.53815,
+          "lng": -73.59559,
+          "name": "3046"
         },
         {
-          "address": "5784 Rue Chabot",
-          "lat": 45.54086,
-          "lng": -73.58847,
-          "name": "3043",
-          "direction": "SE",
-          "distance": 594
+          "address": "6700 Rue Cartier",
+          "direction": "NW",
+          "distance": 504,
+          "itinDist": 631,
+          "itinDura": 8,
+          "lat": 45.54535,
+          "lng": -73.59974,
+          "name": "3308-R"
         }
       ]
     }

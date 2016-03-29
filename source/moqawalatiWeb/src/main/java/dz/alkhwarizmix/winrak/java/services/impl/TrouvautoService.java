@@ -208,8 +208,17 @@ public class TrouvautoService implements ITrouvautoService {
 			address = getShortAddress(vehicule.getPosition());
 			direction = pos.directionTo(vehicule.getPosition());
 			distance = pos.distanceTo(vehicule.getPosition());
-			itineraryDistance = itinerary.getDistance();
-			itineraryDuration = itinerary.getDuration();
+			if (itinerary != null) {
+				itinDist = itinerary.getDistance();
+				// Itinerary duration is in seconds.
+				// It is converted to minutes for JSON
+				long durationInSec = itinerary.getDuration();
+				itinDura = 1L;
+				while (durationInSec > 60) {
+					itinDura++;
+					durationInSec -= 60;
+				}
+			}
 			lat = roundTo5Decimals(vehicule.getPosition().getLat());
 			lng = roundTo5Decimals(vehicule.getPosition().getLng());
 			name = vehicule.getName();
@@ -217,9 +226,9 @@ public class TrouvautoService implements ITrouvautoService {
 
 		protected final String address;
 		protected final String direction;
-		protected final int distance;
-		protected long itineraryDistance;
-		protected long itineraryDuration;
+		protected final Integer distance;
+		protected Long itinDist;
+		protected Long itinDura;
 		protected final Double lat;
 		protected final Double lng;
 		protected final String name;
