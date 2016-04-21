@@ -40,8 +40,8 @@
             text-align: left;
             -webkit-margin-after: 0.2em;
             -webkit-margin-before: 0.2em;
-            -webkit-margin-end: 0px;
-            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0;
+            -webkit-margin-start: 0;
             width: 100%;
         }
 
@@ -182,10 +182,10 @@
 
         // _getVehiculeHTML_
         function _getVehiculeHTML_(vehicule) {
-            var btnHTML = _htmlTag_('div', '#' + vehicule.name + ': ' + vehicule.distance + ' m (' + vehicule.direction + ')') +
+            var btnHTML = _htmlTag_('div', '#' + vehicule.name + ': ' + vehicule.itinDist + 'm (&#128694; ' + vehicule.itinDura + 'min)') +
                     _htmlTag_('div', _imgTag_('_vehiculeImage_' + vehicule.name) + ' ' + vehicule.address);
-            return _htmlTag_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, '
-                    + vehicule.name + ',' + vehicule.lat + ',' + vehicule.lng + ',' + vehicule.distance + ')"');
+            return _htmlTag_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, \''
+                    + vehicule.name + '\',' + vehicule.lat + ',' + vehicule.lng + ',' + vehicule.distance + ')"');
         }
 
         // _getLoc_
@@ -273,7 +273,7 @@
         function _vehicule_clickHandler_(elmnt, name, lat, lng, distance) {
             clearTimeout(_refreshTimeout_);
             if (elmnt.numClick) {
-                _getLoc_(_openCommunauto_);
+                _openCommunauto_(_myLatitude_, _myLongitude_);
             }
             else {
                 _setRefreshTimeout_();
@@ -418,7 +418,7 @@
 <div id="_btnsBar_">
     <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
 </div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.35</div>
+<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.36</div>
 </body>
 
 </html>

@@ -147,7 +147,7 @@ public class TrouvautoServiceTest {
 	}
 
 	@Test
-	public void test01_B_trouvauto_should_return_2_vehicules_without_itinirary_distance_and_duration()
+	public void test01_B_trouvauto_should_return_2_vehicules_without_itinerary_distance_and_duration()
 			throws AlKhwarizmixException {
 		when(
 				mockWinrakService.getItineraryData(any(IWinrakPosition.class),
@@ -216,7 +216,7 @@ public class TrouvautoServiceTest {
 	}
 
 	@Test
-	public void test06_trouvauto_should_return_itinirary_duration_in_minutes_rounded_to_upper_value()
+	public void test06_trouvauto_should_return_itinerary_duration_in_minutes_rounded_to_upper_value()
 			throws AlKhwarizmixException {
 		// 0 seconds should return 1 minute
 		final Map<IWinrakPosition, IWinrakItinerary> itineraryData = getMockItineraryMap(
