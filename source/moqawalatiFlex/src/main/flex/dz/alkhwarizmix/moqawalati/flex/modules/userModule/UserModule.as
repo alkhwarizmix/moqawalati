@@ -63,7 +63,7 @@ public class UserModule extends MoqawalatiModule
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	
@@ -110,7 +110,7 @@ public class UserModule extends MoqawalatiModule
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

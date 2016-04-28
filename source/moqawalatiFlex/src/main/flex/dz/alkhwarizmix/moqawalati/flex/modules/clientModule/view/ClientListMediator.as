@@ -72,7 +72,7 @@ public class ClientListMediator extends MoqawalatiDataListMediator
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	

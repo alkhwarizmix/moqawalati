@@ -79,7 +79,7 @@ public class ProductProxy extends MoqawalatiProxy
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	
@@ -93,7 +93,7 @@ public class ProductProxy extends MoqawalatiProxy
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

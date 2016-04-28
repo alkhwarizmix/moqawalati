@@ -58,7 +58,7 @@ public class UserGetListCommand extends MoqawalatiBlazeDSGetDataCommand
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	

@@ -56,7 +56,7 @@ public class ProductGetListCommand extends MoqawalatiGetRecordListCommand
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	

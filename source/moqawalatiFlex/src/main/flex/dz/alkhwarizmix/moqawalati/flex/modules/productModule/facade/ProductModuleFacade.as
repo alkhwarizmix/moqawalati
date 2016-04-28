@@ -84,7 +84,7 @@ public class ProductModuleFacade extends MoqawalatiFacade
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

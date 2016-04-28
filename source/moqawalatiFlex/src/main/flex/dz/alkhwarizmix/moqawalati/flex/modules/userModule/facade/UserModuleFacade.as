@@ -78,7 +78,7 @@ public class UserModuleFacade extends MoqawalatiFacade
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

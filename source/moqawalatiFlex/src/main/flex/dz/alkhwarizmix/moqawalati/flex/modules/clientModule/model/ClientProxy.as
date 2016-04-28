@@ -76,7 +76,7 @@ public class ClientProxy extends MoqawalatiProxy
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	
@@ -90,7 +90,7 @@ public class ClientProxy extends MoqawalatiProxy
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

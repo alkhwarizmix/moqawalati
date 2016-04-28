@@ -52,7 +52,7 @@ public class ProductModuleStartupCommand extends MoqawalatiSimpleCommand
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

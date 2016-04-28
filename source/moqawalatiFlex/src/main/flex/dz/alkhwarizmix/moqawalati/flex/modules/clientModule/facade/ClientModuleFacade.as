@@ -81,7 +81,7 @@ public class ClientModuleFacade extends MoqawalatiFacade
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

@@ -51,7 +51,7 @@ public class UserModuleStartupCommand extends MoqawalatiSimpleCommand
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

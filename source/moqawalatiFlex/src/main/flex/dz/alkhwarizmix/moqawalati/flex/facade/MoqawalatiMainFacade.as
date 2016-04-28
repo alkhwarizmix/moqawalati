@@ -109,7 +109,7 @@ public class MoqawalatiMainFacade extends MoqawalatiFacade
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

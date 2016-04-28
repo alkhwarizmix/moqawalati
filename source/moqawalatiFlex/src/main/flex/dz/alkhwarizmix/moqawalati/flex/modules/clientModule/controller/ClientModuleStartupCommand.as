@@ -51,7 +51,7 @@ public class ClientModuleStartupCommand extends MoqawalatiSimpleCommand
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

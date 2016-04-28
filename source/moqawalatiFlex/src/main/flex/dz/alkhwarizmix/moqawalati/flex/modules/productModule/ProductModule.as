@@ -65,7 +65,7 @@ public class ProductModule extends MoqawalatiModule
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	
@@ -112,7 +112,7 @@ public class ProductModule extends MoqawalatiModule
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

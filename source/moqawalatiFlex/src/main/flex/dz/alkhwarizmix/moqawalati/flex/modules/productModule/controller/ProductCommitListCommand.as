@@ -56,7 +56,7 @@ public class ProductCommitListCommand extends MoqawalatiCommitRecordListCommand
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	

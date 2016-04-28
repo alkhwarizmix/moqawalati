@@ -61,7 +61,7 @@ public class RemoteServerErrorCommand extends MoqawalatiSimpleCommand
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden methods
+	//  Overridden methods
 	//
 	//--------------------------------------------------------------------------
 	

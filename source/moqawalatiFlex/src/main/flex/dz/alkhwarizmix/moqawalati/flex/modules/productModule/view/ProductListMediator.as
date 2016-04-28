@@ -101,7 +101,7 @@ public class ProductListMediator extends MoqawalatiDataListMediator
 	
 	//--------------------------------------------------------------------------
 	//
-	//  Overriden properties
+	//  Overridden properties
 	//
 	//--------------------------------------------------------------------------
 	
