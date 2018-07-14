@@ -1,6 +1,6 @@
 DEVELOPER_HOME=~/Developer
 echo DEVELOPER_HOME=$DEVELOPER_HOME
-FLASH_PLAYER_COMMAND="$DEVELOPER_HOME/tools/Flash-Player-Debugger.app/Contents/MacOS/Flash-Player-Debugger"
+FLASH_PLAYER_COMMAND="$DEVELOPER_HOME/tools/flash-player-debugger/Flash-Player-Debugger.app/Contents/MacOS/Flash-Player-Debugger"
 echo FLASH_PLAYER_COMMAND=$FLASH_PLAYER_COMMAND
 export MAVEN_OPTS="-Xmn128m -Xms1024m -Xmx2048m -Xss2m -XX:PermSize=256m -XX:MaxPermSize=768m -XX:+UseParallelGC -XX:+CMSClassUnloadingEnabled"
 echo MAVEN_OPTS=$MAVEN_OPTS
