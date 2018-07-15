@@ -170,7 +170,7 @@ public class WinrakPosition extends AbstractAlKhwarizmixDomainObject implements
 	 * http://www.movable-type.co.uk/scripts/latlong.html
 	 */
 	@Override
-	public int distanceTo(final IWinrakPosition pos2) {
+	public Integer distanceTo(final IWinrakPosition pos2) {
 		final WinrakPosition pos1 = this;
 		final Double R = 6371000.0; // meters
 		final Double radLat1 = Math.toRadians(pos1.getLat());

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Trouvauto</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
@@ -82,63 +83,54 @@
         // Variables
         // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        var _NUMBER_MAX_VALUE_ = 10000,
-                _APP_MODE_ = 0, // 0='trouvauto', 1='moqawalatiWeb', 2='p.json'
-                _IS_PROD_MODE_ = (_APP_MODE_ == 0),
-                _refreshTimeout_ = 0,
-                _autoRefreshEndTime_ = 0,
-                _prevNearestVehiculeDistance_ = _NUMBER_MAX_VALUE_,
-                _myLatitude_,
-                _myLongitude_,
-                _roundTo5Decimals_factor_ = Math.pow(10, 5);
+        let _NUMBER_MAX_VALUE_ = 10000,
+            _APP_MODE_ = 0, // 0='trouvauto', 1='moqawalatiWeb', 2='p.json'
+            _IS_PROD_MODE_ = (_APP_MODE_ == 0),
+            _refreshTimeout_ = 0,
+            _autoRefreshEndTime_ = 0,
+            _prevNearestVehiculeDistance_ = _NUMBER_MAX_VALUE_,
+            _myLatitude_,
+            _myLongitude_,
+            _roundTo5Decimals_factor_ = Math.pow(10, 5),
 
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
-        // COMMON FUNCTIONS
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
+            // COMMON FUNCTIONS
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        // _htmlTag_
-        function _htmlTag_(a, v, aArg) {
-            return '<' + a + (aArg ? ' ' + aArg : '') + '>' + v + '</' + a + '>';
-        }
+            // _htmlTag_
+            _htmlTag_ = (a, v, aArg) => '<' + a + (aArg ? ' ' + aArg : '') + '>' + v + '</' + a + '>',
 
-        // _imgTag_
-        function _imgTag_(id, src, clazz) {
-            return '<img ' + (id ? 'id="' + id + '" ' : '') + (clazz ? 'class="' + clazz + '" ' : '') + (src ? 'src="' + src + '" ' : '') + '>';
-        }
+            // _imgTag_
+            _imgTag_ = (id, src, clazz) => '<img ' + (id ? 'id="' + id + '" ' : '') + (clazz ? 'class="' + clazz + '" ' : '') + (src ? 'src="' + src + '" ' : '') + '>',
 
-        // _config_
-        function _config_(p) {
-            return {
+            // _config_
+            _config_ = p => ({
                 "_STOP_AUTOREFRESH_AFTER_S_": (_IS_PROD_MODE_ ? 300 : 60), // seconds
                 "_AUTOREFRESH_DELAY_S_": 30 // seconds
-            }[p];
-        }
+            }[p]),
 
-        // _elmnt_
-        function _elmnt_(id) {
-            return document.getElementById(id);
-        }
+            // _elmnt_
+            _elmnt_ = id => document.getElementById(id),
 
-        // _elmnt_insertToInnerHTML_
-        function _elmnt_insertToInnerHTML_(elmnt, valueToInsert, index) {
-            if (_isString_(elmnt))
-                elmnt = _elmnt_(elmnt);
-            if (index === 0)
-                elmnt.innerHTML = valueToInsert + elmnt.innerHTML;
-            else
-                elmnt.innerHTML += valueToInsert;
-        }
+            // _elmnt_insertToInnerHTML_
+            _elmnt_insertToInnerHTML_ = (elmnt, valueToInsert, index) => {
+                if (_isString_(elmnt))
+                    elmnt = _elmnt_(elmnt);
+                if (index === 0)
+                    elmnt.innerHTML = valueToInsert + elmnt.innerHTML;
+                else
+                    elmnt.innerHTML += valueToInsert;
+            },
 
-        // _elmnt_setInnerHTML_
-        function _elmnt_setInnerHTML_(elmnt, newInnerHTML) {
-            if (_isString_(elmnt))
-                elmnt = _elmnt_(elmnt);
-            elmnt.innerHTML = newInnerHTML;
-        }
+            // _elmnt_setInnerHTML_
+            _elmnt_setInnerHTML_ = (elmnt, newInnerHTML) => {
+                if (_isString_(elmnt))
+                    elmnt = _elmnt_(elmnt);
+                elmnt.innerHTML = newInnerHTML;
+            },
 
-        // _i18n_
-        function _i18n_(p) {
-            return {
+            // _i18n_
+            _i18n_ = p => ({
                 "_DATA_LOAD_TIME_": 'Ma position à ',
                 "_DISTANCE_HEADER_": 'Distance en mètres',
                 "_ERROR_": 'Erreur',
@@ -148,277 +140,247 @@
                 "_GPS_NOT_SUPPORTED_": 'Géolocalisation non supportée',
                 "_REFRESH_": 'Rafréchir',
                 "_VEHICULE_HEADER_": 'Véhicule'
-            }[p];
-        }
+            }[p]),
 
-        // _isString_
-        function _isString_(obj) {
-            return (typeof(obj) === 'string');
-        }
+            // _isString_
+            _isString_ = obj => typeof (obj) === 'string',
 
-        // _now_
-        function _now_() {
-            return new Date();
-        }
+            // _now_
+            _now_ = () => new Date(),
 
-        // _now_ms_
-        function _now_ms_() {
-            return _now_().getTime();
-        }
+            // _now_ms_
+            _now_ms_ = () => _now_().getTime(),
 
-        // _timeString_
-        function _time_str_(date) {
-            return _2dig_(date.getHours()) + ":" + _2dig_(date.getMinutes()) + ":" + _2dig_(date.getSeconds());
-        }
+            // _timeString_
+            _time_str_ = date => _2dig_(date.getHours()) + ":" + _2dig_(date.getMinutes()) + ":" + _2dig_(date.getSeconds()),
 
-        // _2dig_
-        function _2dig_(n) {
-            return (n > 9 ? '' : '0') + n;
-        }
+            // _2dig_
+            _2dig_ = n => (n > 9 ? '' : '0') + n,
 
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
-        // FUNCTIONS F09F9A98
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
+            // FUNCTIONS F09F9A98
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        // _getVehiculeHTML_
-        function _getVehiculeHTML_(vehicule) {
-            var btnHTML = _htmlTag_('div', '#' + vehicule.name + ': ' + vehicule.itinDist + 'm (&#128694; ' + vehicule.itinDura + 'min)') +
+            // _getVehiculeHTML_
+            _getVehiculeHTML_ = vehicule => {
+                var btnHTML = _htmlTag_('div', '#' + vehicule.name + ': ' + vehicule.itinDist + 'm (&#128694; ' + vehicule.itinDura + 'min)') +
                     _htmlTag_('div', _imgTag_('_vehiculeImage_' + vehicule.name) + ' ' + vehicule.address);
-            return _htmlTag_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, \''
+                return _htmlTag_('button', btnHTML, 'onclick="_vehicule_clickHandler_(this, \''
                     + vehicule.name + '\',' + vehicule.lat + ',' + vehicule.lng + ',' + vehicule.distance + ')"');
-        }
+            },
 
-        // _getLoc_
-        function _getLoc_(callBack) {
-            _out_(_i18n_('_FIND_POSITION_'), false);
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
+            // _getLoc_
+            _getLoc_ = callBack => {
+                _out_(_i18n_('_FIND_POSITION_'), false);
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
                         function getCurrentPosition_success(p) {
                             _myLatitude_ = _roundTo5Decimals_(p.coords.latitude);
                             _myLongitude_ = _roundTo5Decimals_(p.coords.longitude);
                             callBack(_myLatitude_, _myLongitude_);
                         }, function getCurrentPosition_error(e) {
                             _getLoc_error_(_i18n_('_GPS_ERROR_') + ' (' + e.code + ')');
-                        }, {timeout: 10000});
-            } else {
-                _getLoc_error_(_i18n_('_GPS_NOT_SUPPORTED_'));
-            }
-        }
-
-        // _getLoc_error_
-        function _getLoc_error_(e) {
-            _out_(e, true);
-        }
-
-        // _openCommunauto_
-        function _openCommunauto_(lat, lng) {
-            var url = "https://www.reservauto.net/Scripts/Client/Mobile/ReservationDisponibility.asp?stations=false&Latitude=" + lat + "&Longitude=" + lng;
-            window.open(url, "_self");
-        }
-
-        // _showPosition_
-        function _showPosition_(lat, lng) {
-            _out_(_i18n_('_FIND_CARS_'), false);
-            _httpGet_(_getAlkhwarizmixReservauto_(lat, lng));
-        }
-
-        // _httpGet_
-        function _httpGet_(url) {
-            var req = new XMLHttpRequest();
-            req.open("GET", url, true);
-            req.onerror = _httpGet_onError_;
-            req.onreadystatechange = function () {
-                if (req.readyState == 4 && req.status == 200) {
-                    _httpGet_success_(JSON.parse(req.responseText));
+                        }, { timeout: 10000 });
+                } else {
+                    _getLoc_error_(_i18n_('_GPS_NOT_SUPPORTED_'));
                 }
-            };
-            req.send(null);
-        }
+            },
 
-        // _httpGet_onError_()
-        function _httpGet_onError_(ev) {
-            _outError_(ev.target.status);
-        }
+            // _getLoc_error_
+            _getLoc_error_ = e => _out_(e, true),
 
-        // _httpGet_success_()
-        function _httpGet_success_(data) {
-            if (data.response.status === "SUCCESSFUL") {
-                _outResult_(data.response.result.vehicules, data.response.result.address);
-            }
-            else {
-                _outError_(-20);
-            }
-        }
+            // _openCommunauto_
+            _openCommunauto_ = (lat, lng) => {
+                var url = "https://www.reservauto.net/Scripts/Client/Mobile/ReservationDisponibility.asp?stations=false&Latitude=" + lat + "&Longitude=" + lng;
+                window.open(url, "_self");
+            },
 
-        // _getAlkhwarizmixReservauto_
-        function _getAlkhwarizmixReservauto_(latitude, longitude) {
-            var context = ['trouvauto', 'moqawalatiWeb', ''][_APP_MODE_];
-            return (context
+            // _showPosition_
+            _showPosition_ = (lat, lng) => {
+                _out_(_i18n_('_FIND_CARS_'), false);
+                _httpGet_(_getAlkhwarizmixReservauto_(lat, lng));
+            },
+
+            // _httpGet_
+            _httpGet_ = url => {
+                var req = new XMLHttpRequest();
+                req.open("GET", url, true);
+                req.onerror = _httpGet_onError_;
+                req.onreadystatechange = function () {
+                    if (req.readyState == 4 && req.status == 200) {
+                        _httpGet_success_(JSON.parse(req.responseText));
+                    }
+                };
+                req.send(null);
+            },
+
+            // _httpGet_onError_()
+            _httpGet_onError_ = ev => _outError_(ev.target.status),
+
+            // _httpGet_success_()
+            _httpGet_success_ = data => {
+                if (data.response.status === "SUCCESSFUL") {
+                    _outResult_(data.response.result.vehicules, data.response.result.address);
+                }
+                else {
+                    _outError_(-20);
+                }
+            },
+
+            // _getAlkhwarizmixReservauto_
+            _getAlkhwarizmixReservauto_ = (latitude, longitude) => {
+                var context = ['trouvauto', 'moqawalatiWeb', ''][_APP_MODE_];
+                return (context
                     ? '/' + context + '/alkhwarizmix/json/winrak/trouvauto/' + latitude + '/' + longitude + '/' + 3 + '/'
                     : 'json/p.json')
-        }
+            },
 
-        // _refresh_
-        function _refresh_(startAutoRefresh) {
-            if (startAutoRefresh) {
-                _autoRefreshEndTime_ = _now_ms_() + _config_('_STOP_AUTOREFRESH_AFTER_S_') * 1000;
-                _setNearestVehiculeDistance_();
-            }
-            _setBtnRefreshLabel_();
-            clearTimeout(_refreshTimeout_);
-            _getLoc_(_showPosition_);
-        }
-
-        // _vehicule_clickHandler_
-        function _vehicule_clickHandler_(elmnt, name, lat, lng, distance) {
-            clearTimeout(_refreshTimeout_);
-            if (elmnt.numClick) {
-                _openCommunauto_(_myLatitude_, _myLongitude_);
-            }
-            else {
-                _setRefreshTimeout_();
-                _elmnt_insertToInnerHTML_(elmnt, _getGoogleStaticMap_IMG_(lat, lng, distance));
-                _elmnt_('_myPositionImage_').src = "img/me.png";
-                _elmnt_('_vehiculeImage_' + name).src = "img/car.png";
-                elmnt.numClick = 1;
-            }
-        }
-
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
-        // OUTERS
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
-
-        // _out_
-        function _out_(s, _btnsBarVisibility_) {
-            _elmnt_setInnerHTML_("_result_", s);
-            _setVisible_("_btnsBar_", _btnsBarVisibility_);
-        }
-
-        // _outError_
-        function _outError_(errorCode) {
-            _out_(_i18n_('_ERROR_') + ": " + errorCode, true);
-        }
-
-        function _outResult_(vehicules, address) {
-            var myPositionHTML = _htmlTag_('div', _imgTag_('_myPositionImage_') + ' ' + address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
-            var vehiculesData = _processVehicules_(vehicules);
-            _out_(myPositionHTML + vehiculesData._html_, true);
-            if (_now_ms_() < _autoRefreshEndTime_) {
-                _setNearestVehiculeDistance_(vehiculesData._nearestVehiculeDistance_);
-                _setRefreshTimeout_();
-            }
-            else {
-                _setNearestVehiculeDistance_();
+            // _refresh_
+            _refresh_ = startAutoRefresh => {
+                if (startAutoRefresh) {
+                    _autoRefreshEndTime_ = _now_ms_() + _config_('_STOP_AUTOREFRESH_AFTER_S_') * 1000;
+                    _setNearestVehiculeDistance_();
+                }
                 _setBtnRefreshLabel_();
-            }
-        }
+                clearTimeout(_refreshTimeout_);
+                _getLoc_(_showPosition_);
+            },
 
-        // _processVehicules_
-        function _processVehicules_(vehicules) {
-            var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
-            var vehiculesHTML = '';
-            if (vehicules && vehicules.length > 0) {
-                var tableContent = '';
-                vehicules.forEach(function (vehicule) {
-                    if (vehicule.distance < nearestVehiculeDistance)
-                        nearestVehiculeDistance = vehicule.distance;
-                    tableContent += _htmlTag_('div', _getVehiculeHTML_(vehicule));
-                });
-                vehiculesHTML += _htmlTag_('div', tableContent, 'style="width:100%"');
-            }
-            return {
-                _html_: vehiculesHTML,
-                _nearestVehiculeDistance_: nearestVehiculeDistance
-            };
-        }
+            // _vehicule_clickHandler_
+            _vehicule_clickHandler_ = (elmnt, name, lat, lng, distance) => {
+                clearTimeout(_refreshTimeout_);
+                if (elmnt.numClick) {
+                    _openCommunauto_(_myLatitude_, _myLongitude_);
+                }
+                else {
+                    _setRefreshTimeout_();
+                    _elmnt_insertToInnerHTML_(elmnt, _getGoogleStaticMap_IMG_(lat, lng, distance));
+                    _elmnt_('_myPositionImage_').src = "img/me.png";
+                    _elmnt_('_vehiculeImage_' + name).src = "img/car.png";
+                    elmnt.numClick = 1;
+                }
+            },
 
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
-        // SETTERS
-        // ---------- ---------- ---------- ---------- ---------- ---------- --
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
+            // OUTERS
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
 
-        // _setNearestVehiculeDistance_
-        function _setNearestVehiculeDistance_(value) {
-            var color = 0;
-            if (value) {
-                var delta = value - _prevNearestVehiculeDistance_;
-                if (delta > 10)
-                    color = 1;
-                else if (delta < -10)
-                    color = 2;
-                else
-                    color = 3;
-                _prevNearestVehiculeDistance_ = value;
-            }
-            document.body.style.background = [
-                '',
-                'red',
-                'green',
-                ''
-            ][color];
-        }
+            // _out_
+            _out_ = (s, _btnsBarVisibility_) => {
+                _elmnt_setInnerHTML_("_result_", s);
+                _setVisible_("_btnsBar_", _btnsBarVisibility_);
+            },
 
-        // _setBtnRefreshLabel_
-        function _setBtnRefreshLabel_(epilog) {
-            _elmnt_setInnerHTML_('_btnRefersh_', _i18n_('_REFRESH_') + (epilog ? epilog : ''));
-        }
+            // _outError_
+            _outError_ = errorCode => _out_(_i18n_('_ERROR_') + ": " + errorCode, true),
 
-        // _setRefreshTimeout_(delay in seconds)
-        function _setRefreshTimeout_(delay) {
-            if (delay === undefined)
-                delay = _config_('_AUTOREFRESH_DELAY_S_');
-            if (delay > 0) {
-                _setBtnRefreshLabel_(" (dans " + delay + ")");
-                _refreshTimeout_ = setTimeout(function () {
-                    _setRefreshTimeout_(delay - 1);
-                }, 1000);
-            }
-            else {
-                _refresh_();
-            }
-        }
+            _outResult_ = (vehicules, address) => {
+                var myPositionHTML = _htmlTag_('div', _imgTag_('_myPositionImage_') + ' ' + address + ' (' + _i18n_('_DATA_LOAD_TIME_') + _time_str_(_now_()) + ')', 'class="_mediumfont_"');
+                var vehiculesData = _processVehicules_(vehicules);
+                _out_(myPositionHTML + vehiculesData._html_, true);
+                if (_now_ms_() < _autoRefreshEndTime_) {
+                    _setNearestVehiculeDistance_(vehiculesData._nearestVehiculeDistance_);
+                    _setRefreshTimeout_();
+                }
+                else {
+                    _setNearestVehiculeDistance_();
+                    _setBtnRefreshLabel_();
+                }
+            },
 
-        // _setVisible_
-        function _setVisible_(id, visible) {
-            _elmnt_(id).style.visibility = (visible === false) ? "hidden" : "";
-        }
+            // _processVehicules_
+            _processVehicules_ = vehicules => {
+                var nearestVehiculeDistance = _NUMBER_MAX_VALUE_;
+                var vehiculesHTML = '';
+                if (vehicules && vehicules.length > 0) {
+                    var tableContent = '';
+                    vehicules.forEach(function (vehicule) {
+                        if (vehicule.distance < nearestVehiculeDistance)
+                            nearestVehiculeDistance = vehicule.distance;
+                        tableContent += _htmlTag_('div', _getVehiculeHTML_(vehicule));
+                    });
+                    vehiculesHTML += _htmlTag_('div', tableContent, 'style="width:100%"');
+                }
+                return {
+                    _html_: vehiculesHTML,
+                    _nearestVehiculeDistance_: nearestVehiculeDistance
+                };
+            },
 
-        // _getGoogleStaticMap_IMG_
-        function _getGoogleStaticMap_IMG_(lat, lng, distance) {
-            var src = 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA' +
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
+            // SETTERS
+            // ---------- ---------- ---------- ---------- ---------- ---------- --
+
+            // _setNearestVehiculeDistance_
+            _setNearestVehiculeDistance_ = value => {
+                var color = 0;
+                if (value) {
+                    var delta = value - _prevNearestVehiculeDistance_;
+                    if (delta > 10)
+                        color = 1;
+                    else if (delta < -10)
+                        color = 2;
+                    else
+                        color = 3;
+                    _prevNearestVehiculeDistance_ = value;
+                }
+                document.body.style.background = [
+                    '',
+                    'red',
+                    'green',
+                    ''
+                ][color];
+            },
+
+            // _setBtnRefreshLabel_
+            _setBtnRefreshLabel_ = epilog => _elmnt_setInnerHTML_('_btnRefersh_', _i18n_('_REFRESH_') + (epilog ? epilog : '')),
+
+            // _setRefreshTimeout_(delay in seconds)
+            _setRefreshTimeout_ = (delay) => {
+                if (delay === undefined)
+                    delay = _config_('_AUTOREFRESH_DELAY_S_');
+                if (delay > 0) {
+                    _setBtnRefreshLabel_(" (dans " + delay + ")");
+                    _refreshTimeout_ = setTimeout(function () {
+                        _setRefreshTimeout_(delay - 1);
+                    }, 1000);
+                }
+                else {
+                    _refresh_();
+                }
+            },
+
+            // _setVisible_
+            _setVisible_ = (id, visible) => _elmnt_(id).style.visibility = (visible === false) ? "hidden" : "",
+
+            // _getGoogleStaticMap_IMG_
+            _getGoogleStaticMap_IMG_ = (lat, lng, distance) => {
+                var src = 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyABrR1CQgNRiOmrQUb3ItAMpRu04-1qtWA' +
                     '&center=' + _getPosition_CSV_(_middlePoint_(_myLatitude_, lat), _middlePoint_(_myLongitude_, lng)) +
                     '&size=300x200' +
                     '&format=jpg' +
                     _getGoogleMarker_(lat, lng, 'green') +
                     _getGoogleMarker_(_myLatitude_, _myLongitude_, 'red');
-            // src = 'img/staticmap.jpeg';
-            return _imgTag_('', src, '_button_map_');
-        }
+                // src = 'img/staticmap.jpeg';
+                return _imgTag_('', src, '_button_map_');
+            },
 
-        function _getGoogleMarker_(lat, lng, color) {
-            return '&markers=color:' + color + '%7C' + _getPosition_CSV_(lat, lng);
-        }
+            _getGoogleMarker_ = (lat, lng, color) => '&markers=color:' + color + '%7C' + _getPosition_CSV_(lat, lng),
 
-        function _getPosition_CSV_(lat, lng) {
-            return _roundTo5Decimals_(lat) + ',' + _roundTo5Decimals_(lng);
-        }
+            _getPosition_CSV_ = (lat, lng) => _roundTo5Decimals_(lat) + ',' + _roundTo5Decimals_(lng),
 
-        function _middlePoint_(x, y) {
-            return (x + y) / 2;
-        }
+            _middlePoint_ = (x, y) => (x + y) / 2,
 
-        function _roundTo5Decimals_(value) {
-            return Math.round(value * _roundTo5Decimals_factor_) / _roundTo5Decimals_factor_;
-        }
-
+            _roundTo5Decimals_ = (value) => Math.round(value * _roundTo5Decimals_factor_) / _roundTo5Decimals_factor_;
     </script>
 </head>
 
 <body class="_largefont_" onload="_refresh_(true)">
-<div id="_result_"></div>
-<div id="_btnsBar_">
-    <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
-</div>
-<div class="_footer_ _mediumfont_">Trouvauto, version 0.0.36</div>
+    <div id="_result_"></div>
+    <div id="_btnsBar_">
+        <button id="_btnRefersh_" onclick="_refresh_(true)"></button>
+    </div>
+    <div class="_footer_ _mediumfont_">Trouvauto, version 0.0.38</div>
 </body>
 
 </html>

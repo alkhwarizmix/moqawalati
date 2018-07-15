@@ -58,6 +58,6 @@ public interface IWinrakPosition {
 	 * @param pos2
 	 * @return distance between two positions in meters
 	 */
-	public int distanceTo(final IWinrakPosition pos2);
+	public Integer distanceTo(final IWinrakPosition pos2);
 
 } // Class

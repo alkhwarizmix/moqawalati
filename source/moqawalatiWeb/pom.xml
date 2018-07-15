@@ -35,6 +35,7 @@
 	<artifactId>moqawalatiWeb</artifactId>
 	<packaging>war</packaging>
 	<name>moqawalatiWeb Maven Webapp</name>
+	<version>0.8.17.FBEL</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

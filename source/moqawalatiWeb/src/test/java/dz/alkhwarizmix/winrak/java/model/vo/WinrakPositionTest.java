@@ -87,9 +87,9 @@ public class WinrakPositionTest {
 	public void test04_distanceTo_equlas_1_meter() throws AlKhwarizmixException {
 		final WinrakPosition pos1 = new WinrakPosition(0.0, -0.00001);
 		WinrakPosition pos2 = new WinrakPosition(0.0, -0.00002);
-		Assert.assertEquals(1, pos1.distanceTo(pos2));
+		Assert.assertEquals(1, pos1.distanceTo(pos2).intValue());
 		pos2 = new WinrakPosition(0.00001, -0.00001);
-		Assert.assertEquals(1, pos1.distanceTo(pos2));
+		Assert.assertEquals(1, pos1.distanceTo(pos2).intValue());
 	}
 
 	@Ignore("TODO: TDD")

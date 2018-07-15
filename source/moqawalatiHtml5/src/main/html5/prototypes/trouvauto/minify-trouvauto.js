@@ -1,17 +1,37 @@
+#!/usr/local/bin/node
+
 var fs = require('fs');
+var minify = require('html-minifier').minify;
+var UglifyJS = require('uglify-es'); // ES6-capable JS minifier
+
 var inputFile = 'i.htm';
 var outputFile = 'i.m.htm';
+var uglifyEsOptions = { parse: {} };
+
+// https://github.com/kangax/html-minifier/issues/843
+function minify_es6(text, inline) {
+    var code = text.match(/^\s*\s*$/) ? '' : text;
+    uglifyEsOptions.parse.bare_returns = inline;
+    var result = UglifyJS.minify(code, uglifyEsOptions);
+    if (result.error) {
+        console.log('Uglify-es error:', result.error);
+        return text;
+    }
+    return result.code.replace(/;$/, '');
+}
+
 fs.readFile(inputFile, 'utf8', function (err, data) {
     if (err) {
         return console.log(err);
     }
 
-    var minify = require('html-minifier').minify;
     var minHTML = minify(data, {
+        collapseBooleanAttributes: true,
         collapseWhitespace: true,
-        keepClosingSlash: true,
+        decodeEntities: true,
         minifyCSS: true,
-        minifyJS: true,
+        html5: true,
+        minifyJS: minify_es6,
         removeAttributeQuotes: true,
         removeComments: true
     });

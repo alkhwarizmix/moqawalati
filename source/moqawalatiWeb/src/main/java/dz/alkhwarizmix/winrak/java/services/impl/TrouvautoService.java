@@ -12,6 +12,8 @@
 package dz.alkhwarizmix.winrak.java.services.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import dz.alkhwarizmix.framework.java.utils.impl.HTTPUtil;
 import dz.alkhwarizmix.framework.java.utils.impl.JSONUtil;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoResponse;
 import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehicule;
+import dz.alkhwarizmix.trouvauto.java.model.vo.ReservautoVehiculeList;
 import dz.alkhwarizmix.winrak.java.model.IWinrakItinerary;
 import dz.alkhwarizmix.winrak.java.model.IWinrakPosition;
 import dz.alkhwarizmix.winrak.java.services.ITrouvautoService;
@@ -137,10 +140,23 @@ public class TrouvautoService implements ITrouvautoService {
 		return new JSONUtil();
 	}
 
+	private void sortByPosition(
+			final ReservautoVehiculeList source, final IWinrakPosition pos) {
+		Collections.sort(source, new Comparator<ReservautoVehicule>() {
+			@Override
+			public int compare(final ReservautoVehicule vehicule1,
+					final ReservautoVehicule vehicule2) {
+				return vehicule1.getPosition().distanceTo(pos)
+						.compareTo(vehicule2.getPosition().distanceTo(pos));
+			}
+		});
+	}
+
 	private List<ReservautoVehicule> getNearest(
 			final ReservautoResponse reservautoResponse,
 			final IWinrakPosition pos, int count) throws AlKhwarizmixException {
 		final List<ReservautoVehicule> result = new ArrayList<ReservautoVehicule>();
+		sortByPosition(reservautoResponse.getVehicules(), pos);
 		for (final ReservautoVehicule vehicule : reservautoResponse
 				.getVehicules()) {
 			if ((count--) == 0)

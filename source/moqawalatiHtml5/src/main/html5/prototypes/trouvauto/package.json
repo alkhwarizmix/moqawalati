@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "minify": "html-minifier i.htm -o i.m.htm --remove-comments=true --collapse-whitespace=true --minify-js=true --minify-css=true --keep-closing-slash=true"
+    "minify": "node minify-trouvauto"
   },
   "repository": {
     "type": "git",
@@ -25,11 +25,12 @@
     "communauto"
   ],
   "devDependencies": {
-    "html-minifier": "1.0.1",
-    "html-minifier-cli": "0.1.0"
+    "html-minifier": "3.5.19",
+    "uglify-es": "3.3.9"
   },
   "preferGlobal": true,
   "private": true,
   "analyze": true,
-  "license": "GNU"
+  "license": "GNU",
+  "dependencies": {}
 }

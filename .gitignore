@@ -19,3 +19,5 @@ source/moqawalatiHtml5/src/main/html5/prototypes/trouvauto/i.m.htm
 source/moqawalatiHtml5/src/main/html5/prototypes/trouvauto/.vscode/settings.json
 
 source/moqawalatiHtml5/src/main/html5/prototypes/s.ecu.re/.idea/**
+.DS_Store
+temp.json
